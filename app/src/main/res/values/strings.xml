@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FFH-REP</string>
+
+    <!-- LOGIN STRINGS -->
+    <string name="title_login">¡Hora de Cazar!</string>
+    <string name="user_input">Usuario</string>
+    <string name="password_input">Clave</string>
+    <string name="init_btn">Iniciar Sesion</string>
+    <string name="hunter_register_btn">Registrarme como hunter</string>
+    <string name="comercio_register_btn">Registrarme como Comercio</string>
 </resources>
