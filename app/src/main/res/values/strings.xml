@@ -1,11 +1,44 @@
 <resources>
     <string name="app_name">FFH-REP</string>
 
-    <!-- LOGIN STRINGS -->
+    <!-- ======================= -->
+    <!-- = START LOGIN STRINGS = -->
+    <!-- ======================= -->
     <string name="title_login">¡Hora de Cazar!</string>
     <string name="user_input">Usuario</string>
     <string name="password_input">Clave</string>
     <string name="init_btn">Iniciar Sesion</string>
     <string name="hunter_register_btn">Registrarme como hunter</string>
     <string name="comercio_register_btn">Registrarme como Comercio</string>
+    <!-- ===================== -->
+    <!-- = END LOGIN STRINGS = -->
+    <!-- =====================-->
+
+
+    <!-- ================================= -->
+    <!-- = START REGISTER STRINGS = -->
+    <!-- ================================= -->
+    <string name="register_title">Formulario de Registro</string>
+    <string name="register_title_comercio">Comercio</string>
+    <string name="register_title_hunter">Hunter</string>
+
+    <string name="input_nombre_rh">Nombre</string>
+    <string name="input_apellido_rh">Apellido</string>
+    <string name="input_dni_rh">DNI</string>
+    <string name="input_sexo_rh">Sexo</string>
+    <string name="input_email_r">Correo Electronico</string>
+    <string name="input_telefono_r">Telefono</string>
+    <string name="input_direccion_r">Direccion</string>
+    <string name="input_fechanacimiento_rh">Fecha de Nacimiento</string>
+
+    <string name="input_razonsocial_rc">Razon Social</string>
+    <string name="input_cuit_rc">CUIT</string>
+    <string name="input_rubro_rc">Rubro</string>
+
+    <string name="btn_registrarme">Registrarme</string>
+    <!-- ================================ -->
+    <!-- = END REGISTER STRINGS = -->
+    <!-- ================================ -->
+
+
 </resources>
