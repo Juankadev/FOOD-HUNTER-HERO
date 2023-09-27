@@ -13,10 +13,10 @@
         android:theme="@style/Theme.FFHREP"
         tools:targetApi="31">
         <activity
-            android:name=".RegistroHunter"
+            android:name=".activitys.RegistroHunter"
             android:exported="false" />
         <activity
-            android:name=".RegistroComercio"
+            android:name=".activitys.RegistroComercio"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -1,8 +1,10 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.ffh_rep.R;
 
 public class RegistroHunter extends AppCompatActivity {
 
