@@ -9,5 +9,58 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:background="#106806"
+            android:backgroundTint="#106806"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editTextText"
+                android:layout_width="311dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/input_inapp"
+                android:ems="10"
+                android:inputType="text"
+                android:padding="15dp"
+                android:text="Name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center|start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="221dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="TextView" />
+        </LinearLayout>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="225dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="181dp"
+            android:layout_height="27dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:text="TextView" />
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="248dp" />
+    </LinearLayout>
+
 </FrameLayout>
