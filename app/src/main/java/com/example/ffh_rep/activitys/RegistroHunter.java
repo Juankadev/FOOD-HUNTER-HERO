@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.utils.EmailSender;
 
 public class RegistroHunter extends AppCompatActivity {
     private EditText et_nombre, et_apellido, et_telefono, et_direccion, et_dni, et_sexo, et_correo;
@@ -56,6 +57,11 @@ public class RegistroHunter extends AppCompatActivity {
         hunter.setCorreo_electronico(et_correo.getText().toString());
         hunter.setTelefono(et_telefono.getText().toString());
 
+        //PRUEBA!! SACAR LUEGO
+        String recipient = et_nombre.getText().toString();
+        String subject = et_nombre.getText().toString() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
+        String messageText = EmailSender.plantillaRegistroExitoso(et_nombre.getText().toString(), et_correo.getText().toString(), et_correo.getText().toString());
 
+        EmailSender.sendEmail(recipient, subject, messageText);
     }
 }
