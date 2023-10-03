@@ -12,6 +12,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.example.ffh_rep.utils.EmailSender;
+
+
 public class RegistrarHunterTask extends AsyncTask<Void, Void, Boolean> {
 private Context ctx;
 private Hunter hunter;
@@ -42,6 +45,13 @@ protected Boolean doInBackground(Void... voids) {
         preparedStatement.setInt(11, 0);
 
         con.close();
+
+        String recipient = this.hunter.getCorreo_electronico();
+        String subject = this.hunter.getNombre() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
+        String messageText = EmailSender.plantillaRegistroExitoso(this.hunter.getNombre(), this.hunter.getCorreo_electronico(), this.hunter.getCorreo_electronico());
+
+        EmailSender.sendEmail(recipient, subject, messageText);
+
         return true;
 
     } catch (Exception e) {
@@ -54,6 +64,7 @@ protected Boolean doInBackground(Void... voids) {
 protected void onPostExecute(Boolean response) {
     if(response){
         Toast.makeText(ctx, "Registro exitoso", Toast.LENGTH_SHORT).show();
+
     }
     else{
         Toast.makeText(ctx, "Error al registrarse", Toast.LENGTH_SHORT).show();

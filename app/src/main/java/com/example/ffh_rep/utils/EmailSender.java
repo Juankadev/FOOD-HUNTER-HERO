@@ -37,4 +37,18 @@ public class EmailSender {
             e.printStackTrace();
         }
     }
+
+    public static String plantillaRegistroExitoso(String name, String email, String password) {
+        String htmlContent = "<html><body>";
+        htmlContent += "<h1>Bienvenidx a FoodHunterHero</h1>";
+        htmlContent += "<p>Hola " + name + ",</p>";
+        htmlContent += "<p>Tu registro en FoodHunterHero se ha realizado con éxito. Aquí están tus detalles de inicio de sesión:</p>";
+        htmlContent += "<p>User    : " + email + "</p>";
+        htmlContent += "<p>Password: " + password + "</p>";
+        htmlContent += "<p>Gracias por unirte a nuestra plataforma.</p>";
+        htmlContent += "</body></html>";
+
+        return htmlContent;
+    }
+
 }
