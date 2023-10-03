@@ -182,7 +182,7 @@
         android:layout_height="46dp"
         android:layout_marginEnd="180dp"
         android:backgroundTint="#B6B6B6"
-        android:text="Volver"
+        android:text="@string/btn_volver"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

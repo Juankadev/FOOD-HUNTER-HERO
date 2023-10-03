@@ -42,13 +42,14 @@ public class HunterHomeViewModel extends ViewModel {
          while(rs.next()){
             int id = rs.getInt("id_comercio");
             String razonsocial = rs.getString("razon_social");
-            int cuit = rs.getInt("cuit");
+            String cuit = rs.getString("cuit");
             String rubro = rs.getString("rubro");
             String email = rs.getString("correo_electronico");
             String telefono = rs.getString("telefono");
             String direccion = rs.getString("direccion");
+            String aprobado = rs.getString("aprobado");
 
-            Comercio cData = new Comercio(id, razonsocial, cuit, rubro, email, telefono, direccion);
+            Comercio cData = new Comercio(id, razonsocial, cuit, rubro, email, telefono, direccion, aprobado);
             lComercios.add(cData);
          }
 

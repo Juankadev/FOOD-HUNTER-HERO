@@ -36,6 +36,7 @@
     <string name="input_rubro_rc">Rubro</string>
 
     <string name="btn_registrarme">Registrarme</string>
+    <string name="btn_volver">Volver</string>
     <string name="title_activity_navigation_controller">NavigationController</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

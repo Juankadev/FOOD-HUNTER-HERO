@@ -3,36 +3,39 @@ package com.example.ffh_rep.entidades;
 public class Comercio {
 
     private int Id;
+    private Usuario user;
+    private String Cuit;
     private String RazonSocial;
-    private int Cuit;
     private String Rubro;
     private String Email;
     private String Telefono;
     private String direccion;
-    private Usuario user;
+    private String aprobado;
 
     public Comercio(){
 
     }
-    public Comercio(int id, String razonSocial, int cuit, String rubro, String email, String telefono, String direccion, Usuario user) {
-        Id = id;
-        RazonSocial = razonSocial;
-        Cuit = cuit;
-        Rubro = rubro;
-        Email = email;
-        Telefono = telefono;
+    public Comercio(int id, String razonSocial, String cuit, String rubro, String email, String telefono, String direccion, Usuario user, String aprobado) {
+        this.Id = id;
+        this.RazonSocial = razonSocial;
+        this.Cuit = cuit;
+        this.Rubro = rubro;
+        this.Email = email;
+        this.Telefono = telefono;
         this.direccion = direccion;
         this.user = user;
+        this.aprobado = aprobado;
     }
 
-    public Comercio(int id, String razonSocial, int cuit, String rubro, String email, String telefono, String direccion) {
-        Id = id;
-        RazonSocial = razonSocial;
-        Cuit = cuit;
-        Rubro = rubro;
-        Email = email;
-        Telefono = telefono;
+    public Comercio(int id, String razonSocial, String cuit, String rubro, String email, String telefono, String direccion, String aprobado) {
+        this.Id = id;
+        this.RazonSocial = razonSocial;
+        this.Cuit = cuit;
+        this.Rubro = rubro;
+        this.Email = email;
+        this.Telefono = telefono;
         this.direccion = direccion;
+        this.aprobado = aprobado;
     }
 
     public int getId() {
@@ -43,7 +46,7 @@ public class Comercio {
         return RazonSocial;
     }
 
-    public int getCuit() {
+    public String getCuit() {
         return Cuit;
     }
 
@@ -67,15 +70,17 @@ public class Comercio {
         return user;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public String getAprobado() {
+        return aprobado;
     }
+
+    public void setId(int id) {Id = id;}
 
     public void setRazonSocial(String razonSocial) {
         RazonSocial = razonSocial;
     }
 
-    public void setCuit(int cuit) {
+    public void setCuit(String cuit) {
         Cuit = cuit;
     }
 
@@ -95,6 +100,8 @@ public class Comercio {
         this.direccion = direccion;
     }
 
+    public void setAprobado(String aprobado){this.aprobado = aprobado;}
+
     public void setUser(Usuario user) {
         this.user = user;
     }
@@ -109,7 +116,8 @@ public class Comercio {
                 ", Email='" + Email + '\'' +
                 ", Telefono='" + Telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
-                ", user=" + user +
+                ", user=" + user + '\'' +
+                ", aprobado=" + aprobado +
                 '}';
     }
 }
