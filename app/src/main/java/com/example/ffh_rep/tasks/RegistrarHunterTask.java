@@ -6,13 +6,11 @@ import android.widget.Toast;
 
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.DB_Env;
+import com.example.ffh_rep.utils.EmailSender;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import com.example.ffh_rep.utils.EmailSender;
 
 
 public class RegistrarHunterTask extends AsyncTask<Void, Void, Boolean> {
@@ -46,11 +44,9 @@ protected Boolean doInBackground(Void... voids) {
 
         con.close();
 
-        String recipient = this.hunter.getCorreo_electronico();
-        String subject = this.hunter.getNombre() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
-        String messageText = EmailSender.plantillaRegistroExitoso(this.hunter.getNombre(), this.hunter.getCorreo_electronico(), this.hunter.getCorreo_electronico());
 
-        EmailSender.sendEmail(recipient, subject, messageText);
+
+
 
         return true;
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
@@ -57,11 +58,32 @@ public class RegistroHunter extends AppCompatActivity {
         hunter.setCorreo_electronico(et_correo.getText().toString());
         hunter.setTelefono(et_telefono.getText().toString());
 
-        //PRUEBA!! SACAR LUEGO
-        String recipient = et_nombre.getText().toString();
-        String subject = et_nombre.getText().toString() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
-        String messageText = EmailSender.plantillaRegistroExitoso(et_nombre.getText().toString(), et_correo.getText().toString(), et_correo.getText().toString());
 
-        EmailSender.sendEmail(recipient, subject, messageText);
+        //PRUEBA!! SACAR LUEGO
+        String recipient = hunter.getCorreo_electronico();
+        String subject = hunter.getNombre() + ", bienvenidx a Food Hunter Hero \uD83D\uDE0E";
+        String messageText = EmailSender.plantillaRegistroExitoso(hunter.getNombre(), hunter.getCorreo_electronico(), hunter.getCorreo_electronico());
+
+        new EmailSender(recipient, subject, messageText, new EmailSender.EmailSendListener() {
+            @Override
+            public void onEmailSendSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RegistroHunter.this, "Correo electrónico enviado con éxito", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onEmailSendError() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RegistroHunter.this, "Error al enviar el correo electrónico", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).execute();
     }
 }
