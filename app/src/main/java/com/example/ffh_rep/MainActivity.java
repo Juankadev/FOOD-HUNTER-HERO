@@ -46,13 +46,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        btnRegistroComercio.setOnClickListener(new View.OnClickListener() {
+        /*btnRegistroComercio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RegistroComercio.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
 }
