@@ -58,8 +58,8 @@ public class RegistroComercio extends AppCompatActivity {
         comercio.setEmail(et_email_c.getText().toString());
         comercio.setTelefono(et_telefono_c.getText().toString());
         comercio.setDireccion(et_direccion_c.getText().toString());*/
-        String username = "foodhunterhero.reply@gmail.com";
-        String password = "foodhunterhero";
+        String username = "sendertoreset@gmail.com";
+        String password = "agjrqmkskscduqsa";
         String recipientEmail = "ichigohollow667@gmail.com";
         String subject = "Hola";
         String messageBody = "Probando";
