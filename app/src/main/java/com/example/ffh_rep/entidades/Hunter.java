@@ -3,23 +3,36 @@ package com.example.ffh_rep.entidades;
 import java.sql.Date;
 
 public class Hunter {
-    Integer id_usuario;
-    String nombre;
-    String apellido;
-    String dni;
-    String sexo;
-    String correo_electronico;
-    String telefono;
-    String direccion;
-    Date fecha_nacimiento;
-    Integer id_rango;
-    Integer puntaje;
+    private Usuario user;
+    private String nombre;
+    private String apellido;
+    private String dni;
+    private String sexo;
+    private String correo_electronico;
+    private String telefono;
+    private String direccion;
+    private Date fecha_nacimiento;
+    private Integer id_rango;
+    private Integer puntaje;
 
     public Hunter() {
     }
 
-    public Hunter(Integer id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Integer id_rango, Integer puntaje) {
-        this.id_usuario = id_usuario;
+    //For Register
+    public Hunter(Integer id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento){
+        this.user = user;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.sexo = sexo;
+        this.correo_electronico = correo_electronico;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public Hunter(Usuario user, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Integer id_rango, Integer puntaje) {
+        this.user = user;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -33,9 +46,6 @@ public class Hunter {
     }
 
 
-    public Integer getId_usuario() {
-        return id_usuario;
-    }
 
     public String getNombre() {
         return nombre;
@@ -117,15 +127,19 @@ public class Hunter {
         this.puntaje = puntaje;
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
+
+    public Usuario getUser() {
+        return user;
     }
 
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
 
     @Override
     public String toString() {
         return "Hunter{" +
-                "id_usuario=" + id_usuario +
+                "id_usuario=" + user +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +

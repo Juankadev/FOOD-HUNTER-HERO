@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
 import com.example.ffh_rep.utils.EmailSender;
 
@@ -16,9 +17,11 @@ import java.sql.PreparedStatement;
 public class RegistrarHunterTask extends AsyncTask<Void, Void, Boolean> {
 private Context ctx;
 private Hunter hunter;
-public RegistrarHunterTask(Context ctx, Hunter hunter) {
+private RegistrarUsuarioCallback ruCallback;
+public RegistrarHunterTask(Context ctx, Hunter hunter, RegistrarUsuarioCallback ruc) {
     this.ctx = ctx;
     this.hunter = hunter;
+    this.ruCallback = ruc;
 }
 @Override
 protected Boolean doInBackground(Void... voids) {
@@ -30,7 +33,7 @@ protected Boolean doInBackground(Void... voids) {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = con.prepareStatement(query);
-        preparedStatement.setInt(1, 1);
+        preparedStatement.setInt(1, this.hunter.getUser().getId_usuario());
         preparedStatement.setString(2, this.hunter.getNombre());
         preparedStatement.setString(3, this.hunter.getApellido());
         preparedStatement.setString(4, this.hunter.getDni());
@@ -56,7 +59,7 @@ protected Boolean doInBackground(Void... voids) {
 protected void onPostExecute(Boolean response) {
     if(response){
         Toast.makeText(ctx, "Registro exitoso", Toast.LENGTH_SHORT).show();
-
+        ruCallback.onCompleteInsert("Hola", "Probando");
     }
     else{
         Toast.makeText(ctx, "Error al registrarse", Toast.LENGTH_SHORT).show();

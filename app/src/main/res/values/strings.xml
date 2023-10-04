@@ -8,7 +8,7 @@
     <string name="user_input">Usuario</string>
     <string name="password_input">Clave</string>
     <string name="init_btn">Iniciar Sesion</string>
-    <string name="hunter_register_btn">Registrarme como hunter</string>
+    <string name="hunter_register_btn">¡Registrarme!</string>
     <string name="comercio_register_btn">Registrarme como Comercio</string>
     <!-- ===================== -->
     <!-- = END LOGIN STRINGS = -->

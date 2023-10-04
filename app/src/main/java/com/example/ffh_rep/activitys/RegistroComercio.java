@@ -75,7 +75,7 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         comercio.setDireccion(et_direccion_c.getText().toString());
         comercio.setAprobado("Aprobado");
 
-        RegistrarComercioTask rct = new RegistrarComercioTask(this, comercio);
+        RegistrarComercioTask rct = new RegistrarComercioTask(this, comercio, this);
         rct.execute();
 
         /*String username = "sendertoreset@gmail.com";
@@ -99,5 +99,11 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
     @Override
     public void onUsuarioError() {
         Toast.makeText(this, "Ha ocurrido un error al crear su usuario", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onCompleteInsert(String username, String password) {
+        Intent intent = new Intent(RegistroComercio.this, MainActivity.class);
+        startActivity(intent);
     }
 }

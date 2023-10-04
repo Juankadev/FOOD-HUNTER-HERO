@@ -12,10 +12,13 @@ import android.widget.Toast;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Usuario;
+import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.tasks.RegistrarHunterTask;
+import com.example.ffh_rep.tasks.RegistrarUsuario;
 import com.example.ffh_rep.utils.EmailSender;
 
-public class RegistroHunter extends AppCompatActivity {
+public class RegistroHunter extends AppCompatActivity implements RegistrarUsuarioCallback {
     private EditText et_nombre, et_apellido, et_telefono, et_direccion, et_dni, et_sexo, et_correo;
     private Button btnRegistro, btnVolver;
     @Override
@@ -41,7 +44,9 @@ public class RegistroHunter extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registrarHunter();
+                Usuario u = new Usuario(1, username, password, "Activo");
+                RegistrarUsuario ru = new RegistrarUsuario(RegistroHunter.this, u, RegistroHunter.this);
+                ru.execute();
             }
         });
 
@@ -54,8 +59,10 @@ public class RegistroHunter extends AppCompatActivity {
         });
     }
 
-    private void registrarHunter(){
+    private void registrarHunter(Integer userId){
         Hunter hunter = new Hunter();
+        hunter.setUser(new Usuario());
+        hunter.getUser().setId_usuario(userId);
         hunter.setNombre(et_nombre.getText().toString());
         hunter.setApellido(et_apellido.getText().toString());
         hunter.setDni(et_dni.getText().toString());
@@ -64,8 +71,8 @@ public class RegistroHunter extends AppCompatActivity {
         hunter.setCorreo_electronico(et_correo.getText().toString());
         hunter.setTelefono(et_telefono.getText().toString());
 
-        RegistrarHunterTask rht = new RegistrarHunterTask(RegistroHunter.this, hunter);
-
+        RegistrarHunterTask rht = new RegistrarHunterTask(RegistroHunter.this, hunter, RegistroHunter.this);
+        rht.execute();
         //PRUEBA!! SACAR LUEGO
         /*tring recipient = hunter.getCorreo_electronico();
         String subject = hunter.getNombre() + ", bienvenidx a Food Hunter Hero \uD83D\uDE0E";
@@ -92,5 +99,21 @@ public class RegistroHunter extends AppCompatActivity {
                 });
             }
         }).execute();*/
+    }
+
+    @Override
+    public void onUsuarioInsertado(Integer userId) {
+        registrarHunter(userId);
+    }
+
+    @Override
+    public void onUsuarioError() {
+
+    }
+
+    @Override
+    public void onCompleteInsert(String username, String password) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

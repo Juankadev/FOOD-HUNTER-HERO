@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
 import com.example.ffh_rep.utils.EmailSender;
 
@@ -16,9 +17,11 @@ import java.sql.PreparedStatement;
 public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
     private Context ctx;
     private Comercio comercio;
-    public RegistrarComercioTask(Context ctx, Comercio comercio) {
+    private RegistrarUsuarioCallback ruc;
+    public RegistrarComercioTask(Context ctx, Comercio comercio, RegistrarUsuarioCallback ruc) {
         this.ctx = ctx;
         this.comercio = comercio;
+        this.ruc = ruc;
     }
     @Override
     protected Boolean doInBackground(Void... voids) {
@@ -60,7 +63,7 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean response) {
         if(response){
             Toast.makeText(ctx, "Registro exitoso", Toast.LENGTH_SHORT).show();
-
+            ruc.onCompleteInsert("Hola","Hola");
         }
         else{
             Toast.makeText(ctx, "Error al registrarse", Toast.LENGTH_SHORT).show();
