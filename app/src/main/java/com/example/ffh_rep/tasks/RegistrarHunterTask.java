@@ -44,10 +44,6 @@ protected Boolean doInBackground(Void... voids) {
 
         con.close();
 
-
-
-
-
         return true;
 
     } catch (Exception e) {

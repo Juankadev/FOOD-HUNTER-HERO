@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.tasks.RegistrarHunterTask;
 import com.example.ffh_rep.utils.EmailSender;
 
 public class RegistroHunter extends AppCompatActivity {
@@ -63,9 +64,10 @@ public class RegistroHunter extends AppCompatActivity {
         hunter.setCorreo_electronico(et_correo.getText().toString());
         hunter.setTelefono(et_telefono.getText().toString());
 
+        RegistrarHunterTask rht = new RegistrarHunterTask(RegistroHunter.this, hunter);
 
         //PRUEBA!! SACAR LUEGO
-        String recipient = hunter.getCorreo_electronico();
+        /*tring recipient = hunter.getCorreo_electronico();
         String subject = hunter.getNombre() + ", bienvenidx a Food Hunter Hero \uD83D\uDE0E";
         String messageText = EmailSender.plantillaRegistroExitoso(hunter.getNombre(), hunter.getCorreo_electronico(), hunter.getCorreo_electronico());
 
@@ -89,6 +91,6 @@ public class RegistroHunter extends AppCompatActivity {
                     }
                 });
             }
-        }).execute();
+        }).execute();*/
     }
 }

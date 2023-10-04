@@ -7,16 +7,17 @@ import java.sql.SQLException;
 public class DBUtil {
 
     public static Connection getConnection(){
-        Connection con = null;
 
         try {
             Class.forName(DB_Env.DB_DRIVER);
-            con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
+            Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
+            return con;
         }
         catch (ClassNotFoundException | SQLException e){
             e.printStackTrace();
+            return null;
         }
-        return con;
+
     }
 
 

@@ -26,7 +26,7 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
             Class.forName(DB_Env.DB_DRIVER);
             Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
 
-            String query = "INSERT INTO Comercio (id_usuario, cuit, razon_social, rubro, correo_electronico, telefono, direccion, aprobado) " +
+            String query = "INSERT INTO Comercios (id_usuario, cuit, razon_social, rubro, correo_electronico, telefono, direccion, aprobado) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = con.prepareStatement(query);

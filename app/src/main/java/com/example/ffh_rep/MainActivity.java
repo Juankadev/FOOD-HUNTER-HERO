@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ffh_rep.activitys.RegistroBasic;
 import com.example.ffh_rep.activitys.RegistroComercio;
 import com.example.ffh_rep.activitys.RegistroHunter;
 import com.example.ffh_rep.tasks.IniciarSesionTask;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnRegistroHunter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegistroHunter.class);
+                Intent intent = new Intent(MainActivity.this, RegistroBasic.class);
                 startActivity(intent);
             }
         });

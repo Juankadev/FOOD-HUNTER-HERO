@@ -38,4 +38,11 @@ public class Usuario {
         this.estado = estado;
     }
 
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public void setId_rol(Integer id_rol) {
+        this.id_rol = id_rol;
+    }
 }
