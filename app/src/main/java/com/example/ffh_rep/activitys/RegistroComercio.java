@@ -13,6 +13,7 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.EmailSender;
+import com.example.ffh_rep.utils.EmailSenderTask;
 
 public class RegistroComercio extends AppCompatActivity {
 
@@ -50,19 +51,22 @@ public class RegistroComercio extends AppCompatActivity {
     }
 
     private void registrarComercio(){
-        Comercio comercio = new Comercio();
-        comercio.setRazonSocial(et_razonsocial.getText().toString());
-        comercio.setCuit(et_cuit.getText().toString());
-        comercio.setRubro(et_rubro.getText().toString());
+        //Comercio comercio = new Comercio();
+        //comercio.setRazonSocial(et_razonsocial.getText().toString());
+        //comercio.setCuit(et_cuit.getText().toString());
+        /*comercio.setRubro(et_rubro.getText().toString());
         comercio.setEmail(et_email_c.getText().toString());
         comercio.setTelefono(et_telefono_c.getText().toString());
-        comercio.setDireccion(et_direccion_c.getText().toString());
+        comercio.setDireccion(et_direccion_c.getText().toString());*/
+        String username = "foodhunterhero.reply@gmail.com";
+        String password = "foodhunterhero";
+        String recipientEmail = "ichigohollow667@gmail.com";
+        String subject = "Hola";
+        String messageBody = "Probando";
 
-        //PRUEBA!! SACAR LUEGO
-        String recipient = et_razonsocial.getText().toString();
-        String subject = et_razonsocial.getText().toString() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
-        String messageText = EmailSender.plantillaRegistroExitoso(et_razonsocial.getText().toString(), et_email_c.getText().toString(), et_email_c.getText().toString());
+        EmailSenderTask emailSenderTask = new EmailSenderTask(username, password, recipientEmail, subject, messageBody);
+        emailSenderTask.execute();
 
-        EmailSender.sendEmail(recipient, subject, messageText);
+
     }
 }

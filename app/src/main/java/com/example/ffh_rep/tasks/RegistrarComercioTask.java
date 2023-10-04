@@ -47,7 +47,6 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
             String subject = this.comercio.getRazonSocial() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
             String messageText = EmailSender.plantillaRegistroExitoso(this.comercio.getRazonSocial(), this.comercio.getEmail(), this.comercio.getEmail());
 
-            EmailSender.sendEmail(recipient, subject, messageText);
 
             return rowsAffected > 0;
 

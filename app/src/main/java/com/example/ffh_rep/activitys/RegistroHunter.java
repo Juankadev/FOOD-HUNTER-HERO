@@ -22,6 +22,11 @@ public class RegistroHunter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_hunter);
 
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        String password = intent.getStringExtra("password");
+
         et_nombre = findViewById(R.id.et_nombre);
         et_apellido = findViewById(R.id.et_apellido);
         et_telefono = findViewById(R.id.et_telefono);

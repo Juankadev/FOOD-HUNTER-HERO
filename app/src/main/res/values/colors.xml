@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="input_inapp">#68dd6b</color>
+    <color name="bck_green">#68dd6b</color>
+    <color name="bck_inputs">#75FFFFFF</color>
 </resources>
