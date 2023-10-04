@@ -51,6 +51,9 @@ public class EmailSenderTask extends AsyncTask<Void, Void, Boolean> {
             message.setSubject(subject);
             message.setText(messageBody);
 
+            message.setContent(messageBody, "text/html");
+
+
             Transport.send(message);
 
             Log.d(TAG, "Correo electrónico enviado con éxito");
