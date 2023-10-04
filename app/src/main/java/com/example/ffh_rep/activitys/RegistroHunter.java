@@ -16,7 +16,6 @@ import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.tasks.RegistrarHunterTask;
 import com.example.ffh_rep.tasks.RegistrarUsuario;
-import com.example.ffh_rep.utils.EmailSender;
 
 public class RegistroHunter extends AppCompatActivity implements RegistrarUsuarioCallback {
     private EditText et_nombre, et_apellido, et_telefono, et_direccion, et_dni, et_sexo, et_correo;
@@ -73,32 +72,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
 
         RegistrarHunterTask rht = new RegistrarHunterTask(RegistroHunter.this, hunter, RegistroHunter.this);
         rht.execute();
-        //PRUEBA!! SACAR LUEGO
-        /*tring recipient = hunter.getCorreo_electronico();
-        String subject = hunter.getNombre() + ", bienvenidx a Food Hunter Hero \uD83D\uDE0E";
-        String messageText = EmailSender.plantillaRegistroExitoso(hunter.getNombre(), hunter.getCorreo_electronico(), hunter.getCorreo_electronico());
 
-        new EmailSender(recipient, subject, messageText, new EmailSender.EmailSendListener() {
-            @Override
-            public void onEmailSendSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(RegistroHunter.this, "Correo electrónico enviado con éxito", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onEmailSendError() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(RegistroHunter.this, "Error al enviar el correo electrónico", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).execute();*/
     }
 
     @Override

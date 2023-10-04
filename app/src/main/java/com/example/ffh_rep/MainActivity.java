@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         btnRegistroHunter = findViewById(R.id.btnRegistroHunter);
-        btnRegistroComercio = findViewById(R.id.btnRegistroComercio);
+        //btnRegistroComercio = findViewById(R.id.btnRegistroComercio);
 
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

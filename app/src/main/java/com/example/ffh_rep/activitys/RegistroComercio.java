@@ -18,7 +18,7 @@ import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.tasks.RegistrarComercioTask;
 import com.example.ffh_rep.tasks.RegistrarUsuario;
-import com.example.ffh_rep.utils.EmailSender;
+import com.example.ffh_rep.utils.EmailTemplate;
 import com.example.ffh_rep.utils.EmailSenderTask;
 
 public class RegistroComercio extends AppCompatActivity implements RegistrarUsuarioCallback {
@@ -78,14 +78,14 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         RegistrarComercioTask rct = new RegistrarComercioTask(this, comercio, this);
         rct.execute();
 
-        /*String username = "sendertoreset@gmail.com";
-        String password = "agjrqmkskscduqsa";
-        String recipientEmail = "ichigohollow667@gmail.com";
-        String subject = "Hola";
-        String messageBody = "Probando";
 
-        EmailSenderTask emailSenderTask = new EmailSenderTask(username, password, recipientEmail, subject, messageBody);
-        emailSenderTask.execute();*/
+        //Asunto y Cuerpo del Mail
+        String subjectMail = "Registro de Comercio "+et_razonsocial.getText().toString()+" Exitoso ";
+        EmailTemplate plantilla = new EmailTemplate();
+        String messageBodyMail = plantilla.templateRegistroExitosoComercio(et_razonsocial.getText().toString(), et_email_c.getText().toString(), et_email_c.getText().toString() );
+
+        EmailSenderTask emailSenderTask = new EmailSenderTask(et_email_c.getText().toString(), subjectMail, messageBodyMail);
+        emailSenderTask.execute();
 
 
     }

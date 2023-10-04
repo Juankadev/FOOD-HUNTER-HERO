@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
-import com.example.ffh_rep.utils.EmailSender;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

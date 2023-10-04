@@ -8,7 +8,7 @@ import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
-import com.example.ffh_rep.utils.EmailSender;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -46,11 +46,7 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
             preparedStatement.close();
             con.close();
 
-            String recipient = this.comercio.getEmail();
-            String subject = this.comercio.getRazonSocial() +", bienvenidx a Food Hunter Hero \uD83D\uDE0E" ;
-            String messageText = EmailSender.plantillaRegistroExitoso(this.comercio.getRazonSocial(), this.comercio.getEmail(), this.comercio.getEmail());
-
-
+           
             return rowsAffected > 0;
 
         } catch (Exception e) {

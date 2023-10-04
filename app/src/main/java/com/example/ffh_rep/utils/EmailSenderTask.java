@@ -22,9 +22,9 @@ public class EmailSenderTask extends AsyncTask<Void, Void, Boolean> {
     private final String subject;
     private final String messageBody;
 
-    public EmailSenderTask(String username, String password, String recipientEmail, String subject, String messageBody) {
-        this.username = username;
-        this.password = password;
+    public EmailSenderTask(String recipientEmail, String subject, String messageBody) {
+        this.username = "sendertoreset@gmail.com";
+        this.password = "irup orpk ltfk kwxw";
         this.recipientEmail = recipientEmail;
         this.subject = subject;
         this.messageBody = messageBody;
