@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ffh_rep.activitys.NavigationController;
 import com.example.ffh_rep.activitys.RegistroBasic;
 import com.example.ffh_rep.activitys.RegistroComercio;
 import com.example.ffh_rep.activitys.RegistroHunter;
+import com.example.ffh_rep.entidades.Usuario;
+import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
 import com.example.ffh_rep.tasks.IniciarSesionTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoginUsuarioCallback {
 
     private EditText et_username, et_password;
     private Button btnIniciarSesion, btnRegistroHunter,btnRegistroComercio;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IniciarSesionTask task = new IniciarSesionTask(MainActivity.this, et_username.getText().toString(),et_password.getText().toString());
+                IniciarSesionTask task = new IniciarSesionTask(MainActivity.this, et_username.getText().toString(),et_password.getText().toString(), MainActivity.this);
                 task.execute();
             }
         });
@@ -55,4 +58,10 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
+    @Override
+    public void onSuccessLogin(Usuario user) {
+        Intent intent = new Intent(MainActivity.this, NavigationController.class);
+        intent.putExtra("usuario", user);
+        startActivity(intent);
+    }
 }

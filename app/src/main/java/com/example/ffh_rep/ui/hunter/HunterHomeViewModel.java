@@ -18,7 +18,8 @@ import java.util.List;
 public class HunterHomeViewModel extends ViewModel {
    private Context context;
    private MutableLiveData<List<Comercio>> mlDataComercio;
-
+   public HunterHomeViewModel() {
+   }
    public HunterHomeViewModel(Context ctx){
       this.context = ctx;
       this.mlDataComercio = new MutableLiveData<>();

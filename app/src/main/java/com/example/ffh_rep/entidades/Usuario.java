@@ -1,11 +1,15 @@
 package com.example.ffh_rep.entidades;
 
-public class Usuario {
-    Integer id_usuario;
-    Integer id_rol;
-    String username;
-    String password;
-    String estado;
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
+    private Integer id_usuario;
+    private Integer id_rol;
+    private String username;
+    private String password;
+    private String estado;
+
+    private Rol rol;
 
     public Usuario (){}
     public Usuario(Integer id_rol, String username, String password, String estado) {
@@ -13,6 +17,15 @@ public class Usuario {
         this.username = username;
         this.password = password;
         this.estado = estado;
+    }
+
+    public Usuario(Integer id_usuario, Integer id_rol, String username, String password, String estado, Rol rol) {
+        this.id_usuario = id_usuario;
+        this.id_rol = id_rol;
+        this.username = username;
+        this.password = password;
+        this.estado = estado;
+        this.rol = rol;
     }
 
     public Integer getId_usuario() {
@@ -42,7 +55,27 @@ public class Usuario {
         this.id_usuario = id_usuario;
     }
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
     public void setId_rol(Integer id_rol) {
         this.id_rol = id_rol;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id_usuario=" + id_usuario +
+                ", id_rol=" + id_rol +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", estado='" + estado + '\'' +
+                ", rol=" + rol +
+                '}';
     }
 }

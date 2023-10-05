@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_hunter"
+    app:startDestination="@id/nav_hunter_Home">
+
+    <fragment
+        android:id="@+id/nav_hunter_Home"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_Home"
+        android:label="fragment_hunter__home"
+        tools:layout="@layout/fragment_hunter__home" >
+        <action
+            android:id="@+id/action_hunter_Home_to_hunter_MiCuenta"
+            app:destination="@id/nav_hunter_MiCuenta" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_hunter_MiCuenta"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCuenta"
+        android:label="fragment_hunter__mi_cuenta"
+        tools:layout="@layout/fragment_hunter__mi_cuenta" />
+</navigation>
