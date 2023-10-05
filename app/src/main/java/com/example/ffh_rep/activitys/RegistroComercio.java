@@ -14,6 +14,7 @@ import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.tasks.RegistrarComercioTask;
@@ -47,7 +48,11 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Usuario u = new Usuario(1, username, password, "Activo");
+                Rol rol = new Rol();
+                rol.setIdRol(1);
+                rol.setDescripcion("Comercio");
+
+                Usuario u = new Usuario(rol, username, password, "Activo");
                 RegistrarUsuario ru = new RegistrarUsuario(RegistroComercio.this, u, RegistroComercio.this);
                 ru.execute();
             }

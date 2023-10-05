@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.tasks.RegistrarHunterTask;
@@ -43,7 +44,11 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Usuario u = new Usuario(1, username, password, "Activo");
+                Rol rol = new Rol();
+                rol.setIdRol(2);
+                rol.setDescripcion("Hunter");
+
+                Usuario u = new Usuario(rol, username, password, "Activo");
                 RegistrarUsuario ru = new RegistrarUsuario(RegistroHunter.this, u, RegistroHunter.this);
                 ru.execute();
             }

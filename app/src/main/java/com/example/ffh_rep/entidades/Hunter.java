@@ -3,6 +3,7 @@ package com.example.ffh_rep.entidades;
 import java.sql.Date;
 
 public class Hunter {
+    private Integer idHunter;
     private Usuario user;
     private String nombre;
     private String apellido;
@@ -12,14 +13,14 @@ public class Hunter {
     private String telefono;
     private String direccion;
     private Date fecha_nacimiento;
-    private Integer id_rango;
+    private Rango id_rango;
     private Integer puntaje;
 
-    public Hunter() {
-    }
+    public Hunter() {}
 
     //For Register
-    public Hunter(Integer id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento){
+    public Hunter(Integer idHunter, Integer id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento){
+        this.idHunter = idHunter;
         this.user = user;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -31,7 +32,7 @@ public class Hunter {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public Hunter(Usuario user, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Integer id_rango, Integer puntaje) {
+    public Hunter(Usuario user, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Rango id_rango, Integer puntaje) {
         this.user = user;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -46,7 +47,7 @@ public class Hunter {
     }
 
 
-
+    public Integer getIdHunter (){return idHunter;}
     public String getNombre() {
         return nombre;
     }
@@ -79,7 +80,7 @@ public class Hunter {
         return fecha_nacimiento;
     }
 
-    public Integer getId_rango() {
+    public Rango getId_rango() {
         return id_rango;
     }
 
@@ -119,14 +120,13 @@ public class Hunter {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public void setId_rango(Integer id_rango) {
+    public void setId_rango(Rango id_rango) {
         this.id_rango = id_rango;
     }
 
     public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
     }
-
 
     public Usuario getUser() {
         return user;
@@ -139,7 +139,8 @@ public class Hunter {
     @Override
     public String toString() {
         return "Hunter{" +
-                "id_usuario=" + user +
+                "id_hunter=" + idHunter +
+                "id_usuario=" + user + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +

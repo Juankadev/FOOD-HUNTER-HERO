@@ -4,42 +4,31 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable {
     private Integer id_usuario;
-    private Integer id_rol;
+    private Rol rol;
     private String username;
     private String password;
     private String estado;
 
-    private Rol rol;
-
     public Usuario (){}
-    public Usuario(Integer id_rol, String username, String password, String estado) {
-        this.id_rol = id_rol;
+
+    public Usuario(Rol rol, String username, String password, String estado) {
+        this.rol = rol;
         this.username = username;
         this.password = password;
         this.estado = estado;
     }
 
-    public Usuario(Integer id_usuario, Integer id_rol, String username, String password, String estado, Rol rol) {
-        this.id_usuario = id_usuario;
-        this.id_rol = id_rol;
-        this.username = username;
-        this.password = password;
-        this.estado = estado;
-        this.rol = rol;
-    }
 
     public Integer getId_usuario() {
         return id_usuario;
     }
-    public Integer getId_rol() {
-        return id_rol;
-    }
+
     public String getUsuario() {return username;}
     public String getPassword() {return password;}
     public String getEstado() {return estado;}
 
-    public void setRol(Integer rol) {
-        this.id_rol = rol;
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
     }
     public void setUsername(String username) {
         this.username = username;
@@ -51,10 +40,6 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-    public void setId_usuario(Integer id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
     public Rol getRol() {
         return rol;
     }
@@ -63,15 +48,11 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
-    public void setId_rol(Integer id_rol) {
-        this.id_rol = id_rol;
-    }
 
     @Override
     public String toString() {
         return "Usuario{" +
                 "id_usuario=" + id_usuario +
-                ", id_rol=" + id_rol +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", estado='" + estado + '\'' +
