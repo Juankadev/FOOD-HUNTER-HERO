@@ -66,5 +66,15 @@
     <!--  FIN FRAGMENT HUNTER MI CUENTA   -->
     <!-- ================================ -->
 
+    <!-- ================================ -->
+    <!-- == FRAGMENT COMERCIO MI CUENTA  == -->
+    <!-- ================================ -->
+
+    <string name="comercio_micuenta_btn_eliminar">Eliminar mi cuenta</string>
+
+    <!-- ================================ -->
+    <!--  FIN FRAGMENT COMERCIO MI CUENTA   -->
+    <!-- ================================ -->
+
 
 </resources>

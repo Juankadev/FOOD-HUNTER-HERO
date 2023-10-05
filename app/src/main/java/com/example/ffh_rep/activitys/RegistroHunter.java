@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
@@ -31,7 +30,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         String username = intent.getStringExtra("username");
         String password = intent.getStringExtra("password");
 
-        et_nombre = findViewById(R.id.et_nombre);
+        et_nombre = findViewById(R.id.et_razonSocial);
         et_apellido = findViewById(R.id.et_apellido);
         et_telefono = findViewById(R.id.et_telefono);
         et_direccion = findViewById(R.id.et_direccion);

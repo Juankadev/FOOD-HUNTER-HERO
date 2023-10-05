@@ -39,7 +39,7 @@ public class RegistrarUsuario extends AsyncTask<Void, Void, Integer> {
             Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
             String query = "Insert into Usuarios (id_rol, username, password, estado) values (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, this.usuario.getId_rol());
+            ps.setInt(1, this.usuario.getRol().getIdRol());
             ps.setString(2, this.usuario.getUsuario());
             ps.setString(3, this.usuario.getPassword());
             ps.setString(4, "1");
