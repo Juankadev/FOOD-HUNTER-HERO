@@ -37,8 +37,8 @@ public class AltaArticuloTask extends AsyncTask<Void, Void, Boolean> {
             preparedStatement.setString(2, this.articulo.getDescripcion());
             preparedStatement.setDouble(3, this.articulo.getPrecio());
             preparedStatement.setString(4, this.articulo.getImagen());
-            preparedStatement.setInt(5, this.articulo.getCategoria().getIdCategoria()); // Suponiendo que Categoria tiene un id
-            preparedStatement.setInt(6, this.articulo.getMarca().getIdMarca()); // Suponiendo que Marca tiene un id
+            preparedStatement.setInt(5, this.articulo.getCategoria().getIdCategoria());
+            preparedStatement.setInt(6, this.articulo.getMarca().getIdMarca()); 
             preparedStatement.setString(7, this.articulo.getEstado());
 
             int rowsAffected = preparedStatement.executeUpdate();
