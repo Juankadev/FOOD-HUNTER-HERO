@@ -49,7 +49,7 @@ public class EmailTemplate {
 
         htmlContent += "<tr>";
         htmlContent += "<td class=\"container-padding\" style=\"text-align: justify;color: #344054;font-size: 18px;line-height: 28px;padding: 40px 20px 15px;\" colspan=\"2\">";
-        htmlContent += "Que tengas un gran d&iacute;a y una excelente cacer&iacute;a 😉";
+        htmlContent += "Que tengas un gran d&iacute;a y una excelente cacer&iacute;a.";
         htmlContent += "<br><br>";
         htmlContent += "Equipo de Food Hunter Hero";
         htmlContent += "</td>";
@@ -99,7 +99,7 @@ public class EmailTemplate {
         htmlContent += "<div style=\"padding: 15px 20px;text-align: justify;color: #344054;font-size: 18px;line-height: 28px;\">";
         htmlContent += "El registro de su comercio en Food Hunter Hero se ha realizado con &eacute;xito.";
         htmlContent += "<br><br>";
-        htmlContent += "Aqu&iacute; están tus detalles de inicio de sesi&oacute;n:";
+        htmlContent += "Aqu&iacute; est&aacute;n tus detalles de inicio de sesi&oacute;n:";
         htmlContent += "<br><br>";
         htmlContent += "<strong>Usuario: </strong>" + email;
         htmlContent += "<br>";
@@ -120,7 +120,7 @@ public class EmailTemplate {
 
         htmlContent += "<tr>";
         htmlContent += "<td class=\"container-padding\" style=\"text-align: justify;color: #344054;font-size: 18px;line-height: 28px;padding: 40px 20px 15px;\" colspan=\"2\">";
-        htmlContent += "Que tengas un gran d&iacute;a y una excelente experiencia en la plataforma 😉";
+        htmlContent += "Que tengas un gran d&iacute;a";
         htmlContent += "<br><br>";
         htmlContent += "Equipo de Food Hunter Hero";
         htmlContent += "</td>";
@@ -182,7 +182,7 @@ public class EmailTemplate {
 
         htmlContent += "<tr>";
         htmlContent += "<td class=\"container-padding\" style=\"text-align: justify;color: #344054;font-size: 18px;line-height: 28px;padding: 40px 20px 15px;\" colspan=\"2\">";
-        htmlContent += "Agradecemos tu participaci&oacute;n 😉";
+        htmlContent += "Agradecemos tu participaci&oacute;n.";
         htmlContent += "<br><br>";
         htmlContent += "Equipo de Food Hunter Hero";
         htmlContent += "</td>";
@@ -232,7 +232,7 @@ public class EmailTemplate {
         htmlContent += "<div style=\"padding: 15px 20px;text-align: justify;color: #344054;font-size: 18px;line-height: 28px;\">";
         htmlContent += "Su password ha sido cambiado con &eacute;xito";
         htmlContent += "<br><br>";
-        htmlContent += "Credenciañes nuevas para inicio de sesi&oacute;n:";
+        htmlContent += "Credenciales para inicio de sesi&oacute;n:";
         htmlContent += "<br><br>";
         htmlContent += "<strong>Usuario: </strong>" + email;
         htmlContent += "<br>";
@@ -250,7 +250,7 @@ public class EmailTemplate {
 
         htmlContent += "<tr>";
         htmlContent += "<td class=\"container-padding\" style=\"text-align: justify;color: #344054;font-size: 18px;line-height: 28px;padding: 40px 20px 15px;\" colspan=\"2\">";
-        htmlContent += "Que tengas un gran d&iacute;a 😉";
+        htmlContent += "Que tengas un gran d&iacute;a.";
         htmlContent += "<br><br>";
         htmlContent += "Equipo de Food Hunter Hero";
         htmlContent += "</td>";
