@@ -76,5 +76,9 @@
     <!--  FIN FRAGMENT COMERCIO MI CUENTA   -->
     <!-- ================================ -->
 
+    <string name="te_scanQR">Escanear QR</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="te_generarQR1">Se ha generado un nuevo QR</string>
+    <string name="te_generarQR2"> Por favor, presentelo</string>
 
 </resources>
