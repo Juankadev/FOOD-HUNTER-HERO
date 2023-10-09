@@ -2,6 +2,7 @@ package com.example.ffh_rep.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.ffh_rep.entidades.Rol;
@@ -40,7 +41,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
             ResultSet rs = preparedStatement.executeQuery();
             Usuario uData = new Usuario();
             uData.setRol(new Rol());
-            while(rs.next()){
+            if(rs.next()){
                 Integer idUser = rs.getInt("id_usuario");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
@@ -54,6 +55,10 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
                 uData.setEstado(estado);
                 uData.getRol().setIdRol(idRol);
                 uData.getRol().setDescripcion(descripcion);
+            }
+            else{
+                Log.d("Error en RS", "Hubo un error al obtener results");
+                return null;
             }
             rs.close();
             preparedStatement.close();
@@ -69,6 +74,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
     protected void onPostExecute(Usuario user) {
         if(user != null){
             Toast.makeText(ctx, "Haz ingresado con exito", Toast.LENGTH_SHORT).show();
+            Log.d("En TASk Iniciar sesion", user.toString());
             luCallback.onSuccessLogin(user);
         }
         else{

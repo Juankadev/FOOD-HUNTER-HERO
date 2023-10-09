@@ -27,4 +27,13 @@ public class Rol implements Serializable {
     public void setDescripcion(String descripcion) {
         Descripcion = descripcion;
     }
+
+
+    @Override
+    public String toString() {
+        return "Rol{" +
+                "IdRol=" + IdRol +
+                ", Descripcion='" + Descripcion + '\'' +
+                '}';
+    }
 }

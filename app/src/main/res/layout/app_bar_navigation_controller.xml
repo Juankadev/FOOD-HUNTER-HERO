@@ -20,23 +20,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/nav_host_fragment_content_commerce"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- Contenedor para el fragmento de host de navegación del rol 2 -->
-    <FrameLayout
-        android:id="@+id/nav_host_fragment_content_hunter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- Contenedor para el fragmento de host de navegación del rol 3 -->
-    <FrameLayout
-        android:id="@+id/nav_host_fragment_content_navigation_controller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+    <include layout="@layout/content_navigation_controller"></include>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

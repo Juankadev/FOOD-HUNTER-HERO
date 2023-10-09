@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
-
-import com.example.ffh_rep.MainActivity;
-import com.example.ffh_rep.R;
-import com.example.ffh_rep.entidades.Usuario;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.ffh_rep.MainActivity;
+import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.ActivityNavigationControllerBinding;
+import com.example.ffh_rep.entidades.Usuario;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class NavigationController extends AppCompatActivity {
 
@@ -46,57 +43,60 @@ public class NavigationController extends AppCompatActivity {
             }
         });
 
-        // SETEO DE RUTAS POR ROL
-        Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
 
-        int navHostFragmentId = -1;
-        NavController navController = null;
-        switch(userRol(userLogged)){
-            case 1:
-                navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_commerce);
-                mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_slideshow)
-                        .setOpenableLayout(drawer)
-                        .build();
-            break;
-            case 2:
-                navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_hunter);
-                mAppBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.nav_hunter_Home, R.id.nav_hunter_MiCuenta)
-                        .setOpenableLayout(drawer)
-                        .build();
-            break;
-            case 3:
-                navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
-                mAppBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.nav_home, R.id.nav_gallery)
-                        .setOpenableLayout(drawer)
-                        .build();
-                break;
-            default:
-                Intent intent = new Intent(NavigationController.this, MainActivity.class);
-                startActivity(intent);
-                break;
+        Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
+        int userRole = userRol(userLogged);
+
+        int navGraphResId = R.navigation.mobile_navigation;
+        int menuResId = R.menu.activity_main_drawer;
+
+        if (userRole == 1) {
+            navGraphResId = R.navigation.nav_graph_commerce;
+            menuResId = R.menu.menu_commerce;
+        } else if (userRole == 2) {
+            navGraphResId = R.navigation.nav_graph_hunter;
+            menuResId = R.menu.menu_hunter;
         }
 
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(menuResId);
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
+        navController.setGraph(navGraphResId);
+
         NavigationUI.setupWithNavController(navigationView, navController);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
+                .setOpenableLayout(drawer)
+                .build();
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.navigation_controller, menu);
+        int menuResId = R.menu.activity_main_drawer;
+
+        Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
+        int userRole = userRol(userLogged);
+
+        if (userRole == 1) {
+            Log.d("Comercio MENU", "Entro al rol comercio");
+            menuResId = R.menu.menu_commerce;
+        } else if (userRole == 2) {
+            Log.d("Hunter MENU", "Entro al rol hunter");
+            menuResId = R.menu.menu_hunter;
+        }
+
+        getMenuInflater().inflate(menuResId, menu);
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
-    private Integer userRol(Usuario user){
+    private int userRol(Usuario user) {
         return user.getRol().getIdRol();
     }
 }
