@@ -5,8 +5,24 @@
     >
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:id="@+id/nav_hunter_MiCuenta"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mi Cuenta"
+            />
+        <item
+            android:id="@+id/nav_hunter_MisArticulos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mis Articulos"
+            />
+        <item
+            android:id="@+id/nav_hunter_AniadirDescuentos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Añadir descuentos"
+            />
+        <item
+            android:id="@+id/nav_hunter_ValidarCompras"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Validar Compras"
+            />
     </group>
 </menu>

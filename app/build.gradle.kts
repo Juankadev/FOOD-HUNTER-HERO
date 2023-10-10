@@ -7,7 +7,9 @@ plugins {
 android {
     namespace = "com.example.ffh_rep"
     compileSdk = 34
-    buildFeatures { dataBinding = true }
+    buildFeatures { dataBinding = true
+        viewBinding = true
+    }
     viewBinding {
         enable = true
     }
@@ -64,6 +66,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment:2.7.3")
     implementation("androidx.navigation:navigation-ui:2.7.3")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
 
 
     testImplementation("junit:junit:4.13.2")

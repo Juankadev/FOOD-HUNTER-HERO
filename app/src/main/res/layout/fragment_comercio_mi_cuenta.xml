@@ -12,7 +12,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/imgComercio"
+            android:id="@+id/imComercio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:srcCompat="@tools:sample/avatars" />

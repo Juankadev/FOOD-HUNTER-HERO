@@ -5,13 +5,29 @@
     >
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_hunter_Home"
+            android:id="@+id/nav_hunter_MiCuenta"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Home Hunter"
+            android:title="Mi Cuenta"
             />
         <item
-            android:id="@+id/nav_hunter_MiCuenta"
-            android:title="Mi Cuenta Hunter"
-            ></item>
+            android:id="@+id/nav_hunter_MisCompras"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mis Compras"
+            />
+        <item
+            android:id="@+id/nav_hunter_MiCarrito"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mi Carrito"
+            />
+        <item
+            android:id="@+id/nav_hunter_MisComerciosFavoritos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mis Comercios Favoritos"
+            />
+        <item
+            android:id="@+id/nav_hunter_MisDescuentos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Mis Descuentos"
+            />
     </group>
 </menu>

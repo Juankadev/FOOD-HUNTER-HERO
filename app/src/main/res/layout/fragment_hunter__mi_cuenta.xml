@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_razonSocial"
@@ -29,8 +29,8 @@
             android:id="@+id/et_apellido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
             android:layout_marginTop="15dp"
+            android:background="@drawable/border"
             android:backgroundTint="#68dd6b"
             android:ems="10"
             android:inputType="text"
@@ -94,8 +94,8 @@
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#2400FF"
             android:layout_marginTop="15dp"
+            android:backgroundTint="#2400FF"
             android:text="@string/hunter_micuenta_btn_editar" />
 
         <Button

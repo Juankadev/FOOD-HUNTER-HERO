@@ -57,6 +57,10 @@ public class NavigationController extends AppCompatActivity {
             navGraphResId = R.navigation.nav_graph_hunter;
             menuResId = R.menu.menu_hunter;
         }
+        else {
+            navGraphResId = R.navigation.nav_graph_admin;
+            menuResId = R.menu.menu_admin;
+        }
 
         navigationView.getMenu().clear();
         navigationView.inflateMenu(menuResId);
@@ -84,6 +88,10 @@ public class NavigationController extends AppCompatActivity {
         } else if (userRole == 2) {
             Log.d("Hunter MENU", "Entro al rol hunter");
             menuResId = R.menu.menu_hunter;
+        }
+        else{
+            Log.d("Admin MENU", "Entro al rol admin");
+            menuResId = R.menu.menu_admin;
         }
 
         getMenuInflater().inflate(menuResId, menu);
