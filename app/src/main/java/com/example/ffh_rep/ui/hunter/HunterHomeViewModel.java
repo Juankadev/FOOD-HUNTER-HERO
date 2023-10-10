@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.utils.DBUtil;
+import com.example.ffh_rep.utils.DB_Env;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ public class HunterHomeViewModel extends ViewModel {
    private MutableLiveData<List<Comercio>> mlDataComercio;
    public HunterHomeViewModel() {
    }
+
    public HunterHomeViewModel(Context ctx){
       this.context = ctx;
       this.mlDataComercio = new MutableLiveData<>();
@@ -30,13 +33,12 @@ public class HunterHomeViewModel extends ViewModel {
       this.mlDataComercio.setValue(lComercios);
    }
 
-
    public List<Comercio> databinding_onDB(){
       List<Comercio> lComercios = new ArrayList<>();
-      Connection con = DBUtil.getConnection();
-      String query = "Select * from Comercios where aprobado = 1";
-
-      try {
+      try{
+         Class.forName(DB_Env.DB_DRIVER);
+         Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
+      String query = "Select * from Comercios where aprobado = 'aprobado";
          PreparedStatement ps = con.prepareStatement(query);
          ResultSet rs = ps.executeQuery();
 
@@ -56,14 +58,17 @@ public class HunterHomeViewModel extends ViewModel {
 
          rs.close();
          ps.close();
+         con.close();
       }
       catch (Exception e){
          e.printStackTrace();
       }
-      finally {
-         DBUtil.closeConnection(con);
-      }
 
       return lComercios;
+   }
+
+
+   public MutableLiveData<List<Comercio>> getMlDataComercio() {
+      return mlDataComercio;
    }
 }
