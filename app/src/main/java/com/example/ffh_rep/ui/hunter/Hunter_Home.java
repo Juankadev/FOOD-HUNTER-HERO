@@ -9,14 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.adapters.ArticulosListAdapter;
 import com.example.ffh_rep.adapters.ComercioListAdapter;
 import com.example.ffh_rep.databinding.FragmentHomeBinding;
+import com.example.ffh_rep.databinding.FragmentHunterHomeBinding;
+import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.factory.HunterHomeViewModelFactory;
 
@@ -26,9 +30,10 @@ import java.util.List;
 public class Hunter_Home extends Fragment {
 
     private HunterHomeViewModel mViewModel;
-    private FragmentHomeBinding binding;
-    private GridView gv_comercios_list;
+    private FragmentHunterHomeBinding binding;
+    private GridView gv_comercios_list, gv_productos_hunter_home;
     private ComercioListAdapter cla;
+    private ArticulosListAdapter ala;
 
     public static Hunter_Home newInstance() {
         return new Hunter_Home();
@@ -37,9 +42,10 @@ public class Hunter_Home extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHunterHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         gv_comercios_list = view.findViewById(R.id.gv_comercios_hunter_home);
+        gv_productos_hunter_home = view.findViewById(R.id.gv_productos_hunter_home);
 
         mViewModel = new ViewModelProvider(requireActivity(), new HunterHomeViewModelFactory(getActivity())).get(HunterHomeViewModel.class);
         cla = new ComercioListAdapter(getContext(), new ArrayList<>());
@@ -48,9 +54,12 @@ public class Hunter_Home extends Fragment {
         mViewModel.getMlDataComercio().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
             @Override
             public void onChanged(List<Comercio> comercios) {
+
+                Log.d("Matriculas en obverser", comercios.toString());
                 cla.setComercioList(comercios);
             }
         });
+
 
         gv_comercios_list.setAdapter(cla);
         return view;

@@ -67,6 +67,7 @@
             android:text="Productos" />
 
         <GridView
+            android:id="@+id/gv_productos_hunter_home"
             android:layout_width="match_parent"
             android:layout_height="248dp" />
     </LinearLayout>

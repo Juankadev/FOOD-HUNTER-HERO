@@ -1,72 +1,56 @@
 package com.example.ffh_rep.ui.hunter;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.utils.DBUtil;
-import com.example.ffh_rep.utils.DB_Env;
+import com.example.ffh_rep.repositories.ArticuloRepository;
+import com.example.ffh_rep.repositories.ComercioRepository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
+
 import java.util.List;
+
+import kotlinx.coroutines.GlobalScope;
 
 public class HunterHomeViewModel extends ViewModel {
    private Context context;
    private MutableLiveData<List<Comercio>> mlDataComercio;
+   private MutableLiveData<List<Articulo>> mlDataArticulo;
+   private ComercioRepository cRepo;
+   private ArticuloRepository aRepo;
    public HunterHomeViewModel() {
    }
 
    public HunterHomeViewModel(Context ctx){
       this.context = ctx;
       this.mlDataComercio = new MutableLiveData<>();
+      this.mlDataArticulo = new MutableLiveData<>();
+      this.cRepo = new ComercioRepository();
+      this.aRepo = new ArticuloRepository();
    }
 
    public void cargarComercios(){
-      List<Comercio> lComercios = databinding_onDB();
-      this.mlDataComercio.setValue(lComercios);
+      cRepo.getComercios(mlDataComercio);
+
    }
 
-   public List<Comercio> databinding_onDB(){
-      List<Comercio> lComercios = new ArrayList<>();
-      try{
-         Class.forName(DB_Env.DB_DRIVER);
-         Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
-      String query = "Select * from Comercios where aprobado = 'aprobado";
-         PreparedStatement ps = con.prepareStatement(query);
-         ResultSet rs = ps.executeQuery();
-
-         while(rs.next()){
-            int id = rs.getInt("id_comercio");
-            String razonsocial = rs.getString("razon_social");
-            String cuit = rs.getString("cuit");
-            String rubro = rs.getString("rubro");
-            String email = rs.getString("correo_electronico");
-            String telefono = rs.getString("telefono");
-            String direccion = rs.getString("direccion");
-            String aprobado = rs.getString("aprobado");
-
-            Comercio cData = new Comercio(id, razonsocial, cuit, rubro, email, telefono, direccion, aprobado);
-            lComercios.add(cData);
-         }
-
-         rs.close();
-         ps.close();
-         con.close();
-      }
-      catch (Exception e){
-         e.printStackTrace();
-      }
-
-      return lComercios;
+   public void cargarListArticulo(){
+      aRepo.getArticulos(mlDataArticulo);
    }
 
+
+   public MutableLiveData<List<Articulo>> getMlDataArticulo() {
+      return mlDataArticulo;
+   }
+
+   public void setMlDataArticulo(MutableLiveData<List<Articulo>> mlDataArticulo) {
+      this.mlDataArticulo = mlDataArticulo;
+   }
 
    public MutableLiveData<List<Comercio>> getMlDataComercio() {
       return mlDataComercio;

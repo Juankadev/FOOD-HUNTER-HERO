@@ -28,6 +28,7 @@ public class ComercioListAdapter extends BaseAdapter {
 
     public void setComercioList(List<Comercio> comercioList) {
         this.comercioList = comercioList;
+        notifyDataSetChanged();
     }
 
     public LayoutInflater getInflater() {
