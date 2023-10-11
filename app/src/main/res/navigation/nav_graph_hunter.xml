@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_hunter_Home_to_hunter_MiCuenta"
             app:destination="@id/nav_hunter_MiCuenta" />
+        <action
+            android:id="@+id/action_nav_hunter_Home_to_comercios"
+            app:destination="@id/comercios" />
     </fragment>
     <fragment
         android:id="@+id/nav_hunter_MiCuenta"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCuenta"
         android:label="fragment_hunter__mi_cuenta"
         tools:layout="@layout/fragment_hunter__mi_cuenta" />
+    <fragment
+        android:id="@+id/comercios"
+        android:name="com.example.ffh_rep.ui.hunter.Comercios"
+        android:label="fragment_comercios_list"
+        tools:layout="@layout/fragment_comercios_list" />
 </navigation>

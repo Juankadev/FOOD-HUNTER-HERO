@@ -1,14 +1,13 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
-import com.example.ffh_rep.databinding.FragmentMisComerciosFavoritosItemBinding;
+import com.example.ffh_rep.databinding.FragmentArticulosComercioItemBinding;
 
 import java.util.List;
 
@@ -16,18 +15,18 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MisComerciosFavoritosViewAdapter extends RecyclerView.Adapter<MisComerciosFavoritosViewAdapter.ViewHolder> {
+public class ArticulosComercioViewAdapter extends RecyclerView.Adapter<ArticulosComercioViewAdapter.ViewHolder> {
 
     private final List<PlaceholderItem> mValues;
 
-    public MisComerciosFavoritosViewAdapter(List<PlaceholderItem> items) {
+    public ArticulosComercioViewAdapter(List<PlaceholderItem> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentMisComerciosFavoritosItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(FragmentArticulosComercioItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -48,7 +47,7 @@ public class MisComerciosFavoritosViewAdapter extends RecyclerView.Adapter<MisCo
         public final TextView mContentView;
         public PlaceholderItem mItem;
 
-        public ViewHolder(FragmentMisComerciosFavoritosItemBinding binding) {
+        public ViewHolder(FragmentArticulosComercioItemBinding binding) {
             super(binding.getRoot());
             mIdView = binding.itemNumber;
             mContentView = binding.content;

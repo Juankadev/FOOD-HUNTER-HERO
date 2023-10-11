@@ -41,14 +41,29 @@
             android:gravity="center|start"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="221dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Comercios"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="221dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Comercios"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_mas_comercios_hunter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#00FFFFFF"
+                    android:text="Ver Mas"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <GridView

@@ -1,4 +1,4 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.ui.hunter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ffh_rep.R;
+import com.example.ffh_rep.adapters.ComerciosAdapter;
 import com.example.ffh_rep.placeholder.PlaceholderContent;
 
 /**

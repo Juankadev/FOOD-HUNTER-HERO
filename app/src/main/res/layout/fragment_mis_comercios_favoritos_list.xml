@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".MisComerciosFavoritos"
+    tools:context=".ui.hunter.MisComerciosFavoritos"
     tools:listitem="@layout/fragment_mis_comercios_favoritos_item" />

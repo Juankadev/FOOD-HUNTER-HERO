@@ -1,4 +1,4 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
-import com.example.ffh_rep.databinding.FragmentAprobarComerciosBinding;
+import com.example.ffh_rep.databinding.ComprasItemBinding;
 
 import java.util.List;
 
@@ -15,18 +15,18 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class AprobarComerciosViewAdapter extends RecyclerView.Adapter<AprobarComerciosViewAdapter.ViewHolder> {
+public class MisComprasViewAdapter extends RecyclerView.Adapter<MisComprasViewAdapter.ViewHolder> {
 
     private final List<PlaceholderItem> mValues;
 
-    public AprobarComerciosViewAdapter(List<PlaceholderItem> items) {
+    public MisComprasViewAdapter(List<PlaceholderItem> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentAprobarComerciosBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(ComprasItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -47,7 +47,7 @@ public class AprobarComerciosViewAdapter extends RecyclerView.Adapter<AprobarCom
         public final TextView mContentView;
         public PlaceholderItem mItem;
 
-        public ViewHolder(FragmentAprobarComerciosBinding binding) {
+        public ViewHolder(ComprasItemBinding binding) {
             super(binding.getRoot());
             mIdView = binding.itemNumber;
             mContentView = binding.content;
