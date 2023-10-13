@@ -68,6 +68,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:2.7.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
 
     testImplementation("junit:junit:4.13.2")

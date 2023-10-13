@@ -5,4 +5,5 @@
     <color name="input_inapp">#68dd6b</color>
     <color name="bck_green">#68dd6b</color>
     <color name="bck_inputs">#75FFFFFF</color>
+    <color name="bck_gray">#B6B6B6</color>
 </resources>
