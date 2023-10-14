@@ -26,5 +26,31 @@
         android:id="@+id/comercios"
         android:name="com.example.ffh_rep.ui.hunter.Comercios"
         android:label="fragment_comercios_list"
-        tools:layout="@layout/fragment_comercios_list" />
+        tools:layout="@layout/fragment_comercios_list" >
+        <action
+            android:id="@+id/action_comercios_to_hunter_VerComercio"
+            app:destination="@id/hunter_VerComercio" />
+    </fragment>
+    <fragment
+        android:id="@+id/hunter_VerComercio"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerComercio"
+        android:label="fragment_hunter__ver_comercio"
+        tools:layout="@layout/fragment_hunter__ver_comercio" >
+        <action
+            android:id="@+id/action_hunter_VerComercio_to_hunter_MiCarrito"
+            app:destination="@id/hunter_MiCarrito" />
+        <action
+            android:id="@+id/action_hunter_VerComercio_to_hunter_ReseniasComercio"
+            app:destination="@id/hunter_ReseniasComercio" />
+    </fragment>
+    <fragment
+        android:id="@+id/hunter_MiCarrito"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCarrito"
+        android:label="fragment_hunter__mi_carrito"
+        tools:layout="@layout/fragment_hunter__mi_carrito" />
+    <fragment
+        android:id="@+id/hunter_ReseniasComercio"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
+        android:label="fragment_hunter__resenias_comercio"
+        tools:layout="@layout/fragment_hunter__resenias_comercio" />
 </navigation>

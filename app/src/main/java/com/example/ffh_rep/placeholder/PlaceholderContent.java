@@ -50,9 +50,6 @@ public class PlaceholderContent {
         return builder.toString();
     }
 
-    /**
-     * A placeholder item representing a piece of content.
-     */
     public static class PlaceholderItem {
         public final String id;
         public final String content;

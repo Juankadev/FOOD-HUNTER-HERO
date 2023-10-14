@@ -17,17 +17,24 @@ import java.util.List;
  */
 public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private List<PlaceholderItem> mValues;
 
     public ComerciosAdapter(List<PlaceholderItem> items) {
         mValues = items;
     }
+
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         return new ViewHolder(FragmentComerciosItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
+    }
+
+    public void setData(List<PlaceholderItem> newData) {
+        mValues = newData;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -52,6 +59,7 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
             mIdView = binding.itemNumber;
             mContentView = binding.content;
         }
+
 
         @Override
         public String toString() {

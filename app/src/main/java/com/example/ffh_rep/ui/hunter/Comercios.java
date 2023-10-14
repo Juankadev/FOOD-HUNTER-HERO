@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,22 +16,20 @@ import android.view.ViewGroup;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ComerciosAdapter;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.factory.ComercioViewModelFactory;
 import com.example.ffh_rep.placeholder.PlaceholderContent;
 
-/**
- * A fragment representing a list of Items.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comercios extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+    private ComerciosViewModel viewModel;
+    private ComerciosAdapter cAdapter;
     private int mColumnCount = 2;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public Comercios() {
     }
 
@@ -56,18 +56,20 @@ public class Comercios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercios_list, container, false);
+        viewModel = new ViewModelProvider(requireActivity(), new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
+        RecyclerView rview = (RecyclerView) view;
+        cAdapter = new ComerciosAdapter(new ArrayList<>());
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        viewModel.cargarComercios();
+
+        viewModel.getMldComercios().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
+            @Override
+            public void onChanged(List<Comercio> comercios) {
+                cAdapter.setData(comercios);
             }
-            recyclerView.setAdapter(new ComerciosAdapter(PlaceholderContent.ITEMS));
-        }
+        });
+
+
         return view;
     }
 }
