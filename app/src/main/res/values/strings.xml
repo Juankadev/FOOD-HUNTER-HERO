@@ -139,5 +139,9 @@
     <string name="precio">Precio</string>
     <string name="comentario">Dejanos un comentario</string>
     <string name="enviar">Enviar</string>
+    <string name="btn_VerResenias">Ver reseñas</string>
+    <string name="et_Articulos">Articulos</string>
+
+
 
 </resources>
