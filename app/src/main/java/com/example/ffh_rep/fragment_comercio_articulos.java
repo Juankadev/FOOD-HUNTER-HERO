@@ -23,7 +23,7 @@ public class fragment_comercio_articulos extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_fragment_comercio_articulos, container, false);
+        return inflater.inflate(R.layout.fragment_comercio_articulos, container, false);
     }
 
     @Override
