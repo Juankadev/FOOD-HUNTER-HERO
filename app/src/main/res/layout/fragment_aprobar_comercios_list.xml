@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".ui.admin.AprobarComercios"
-    tools:listitem="@layout/fragment_aprobar_comercios_item" />
+    tools:listitem="@layout/fragment_aprobar_comercios_item"/>

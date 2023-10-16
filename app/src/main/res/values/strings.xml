@@ -141,7 +141,8 @@
     <string name="enviar">Enviar</string>
     <string name="btn_VerResenias">Ver reseñas</string>
     <string name="et_Articulos">Mis Articulos</string>
-
+    <string name="comercios_adheridos">Cantidad de comercios adheridos</string>
+    <string name="hunters_adheridos">Cantidad de hunters adheridos</string>
 
 
 </resources>

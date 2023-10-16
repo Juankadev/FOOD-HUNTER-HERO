@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:text="ID"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:text="Usuario"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
@@ -23,14 +25,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="Fecha" />
 
     <TextView
         android:id="@+id/montoCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="Monto" />
 
     <Button
         android:id="@+id/btnAprobarCompra"
