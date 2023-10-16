@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ffh_rep.databinding.FragmentMisComprasItemBinding;
+import com.example.ffh_rep.databinding.FragmentMisComprasListBinding;
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
-import com.example.ffh_rep.databinding.ComprasItemBinding;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class MisComprasViewAdapter extends RecyclerView.Adapter<MisComprasViewAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(ComprasItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(FragmentMisComprasItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -47,10 +48,10 @@ public class MisComprasViewAdapter extends RecyclerView.Adapter<MisComprasViewAd
         public final TextView mContentView;
         public PlaceholderItem mItem;
 
-        public ViewHolder(ComprasItemBinding binding) {
+        public ViewHolder(FragmentMisComprasItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idCompra;
+            mContentView = binding.razonSocial;
         }
 
         @Override

@@ -49,8 +49,8 @@ public class MisComerciosFavoritosViewAdapter extends RecyclerView.Adapter<MisCo
 
         public ViewHolder(FragmentMisComerciosFavoritosItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idComercio;
+            mContentView = binding.razonSocial;
         }
 
         @Override

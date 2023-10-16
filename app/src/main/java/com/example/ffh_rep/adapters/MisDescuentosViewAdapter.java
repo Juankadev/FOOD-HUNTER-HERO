@@ -49,8 +49,8 @@ public class MisDescuentosViewAdapter extends RecyclerView.Adapter<MisDescuentos
 
         public ViewHolder(FragmentMisDescuentosItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idDescuento;
+            mContentView = binding.tvDescripcionArt;
         }
 
         @Override

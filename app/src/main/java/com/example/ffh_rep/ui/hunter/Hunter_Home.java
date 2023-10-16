@@ -55,7 +55,7 @@ public class Hunter_Home extends Fragment {
         btnMasComercios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(Hunter_Home.this).navigate(R.id.list);
+                NavHostFragment.findNavController(Hunter_Home.this).navigate(R.id.comercios);
             }
         });
 

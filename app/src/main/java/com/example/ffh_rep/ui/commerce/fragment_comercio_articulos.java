@@ -1,4 +1,4 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.ui.commerce;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentAgregarDescuentoComercio extends Fragment {
+import com.example.ffh_rep.R;
 
-    private FragmentAgregarDescuentoComercioViewModel mViewModel;
+public class fragment_comercio_articulos extends Fragment {
 
-    public static FragmentAgregarDescuentoComercio newInstance() {
-        return new FragmentAgregarDescuentoComercio();
+    private FragmentComercioArticulosViewModel mViewModel;
+
+    public static fragment_comercio_articulos newInstance() {
+        return new fragment_comercio_articulos();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_fragment_agregar_descuento_comercio, container, false);
+        return inflater.inflate(R.layout.fragment_comercio_articulos, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(FragmentAgregarDescuentoComercioViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(FragmentComercioArticulosViewModel.class);
         // TODO: Use the ViewModel
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ffh_rep.databinding.FragmentAprobarComerciosItemBinding;
 import com.example.ffh_rep.databinding.FragmentAprobarComerciosListBinding;
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
 
@@ -26,7 +27,7 @@ public class AprobarComerciosViewAdapter extends RecyclerView.Adapter<AprobarCom
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentAprobarComerciosListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(FragmentAprobarComerciosItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
 
@@ -47,10 +48,10 @@ public class AprobarComerciosViewAdapter extends RecyclerView.Adapter<AprobarCom
         public final TextView mContentView;
         public PlaceholderItem mItem;
 
-        public ViewHolder(FragmentAprobarComerciosBinding binding) {
+        public ViewHolder(FragmentAprobarComerciosItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idComercio;
+            mContentView = binding.razonSocial;
         }
 
         @Override

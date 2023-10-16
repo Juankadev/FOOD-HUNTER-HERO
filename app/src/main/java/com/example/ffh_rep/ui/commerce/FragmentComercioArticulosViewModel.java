@@ -1,4 +1,4 @@
-package com.example.ffh_rep;
+package com.example.ffh_rep.ui.commerce;
 
 import androidx.lifecycle.ViewModel;
 

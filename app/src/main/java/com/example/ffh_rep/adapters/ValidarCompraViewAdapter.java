@@ -49,8 +49,8 @@ public class ValidarCompraViewAdapter extends RecyclerView.Adapter<ValidarCompra
 
         public ViewHolder(FragmentValidarCompraItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idCompra;
+            mContentView = binding.nombreUsuario;
         }
 
         @Override

@@ -49,8 +49,8 @@ public class ArticulosViewAdapter extends RecyclerView.Adapter<ArticulosViewAdap
 
         public ViewHolder(FragmentArticulosItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
-            mContentView = binding.content;
+            mIdView = binding.idArticulo;
+            mContentView = binding.tvDescripcionArt;
         }
 
         @Override

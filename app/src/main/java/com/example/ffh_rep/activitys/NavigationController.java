@@ -48,7 +48,7 @@ public class NavigationController extends AppCompatActivity {
         int userRole = userRol(userLogged);
 
         int navGraphResId = R.navigation.mobile_navigation;
-        int menuResId = R.menu.activity_main_drawer;
+        int menuResId = R.menu.menu_admin;
 
         if (userRole == 1) {
             navGraphResId = R.navigation.nav_graph_commerce;
@@ -77,7 +77,7 @@ public class NavigationController extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int menuResId = R.menu.activity_main_drawer;
+        int menuResId = R.menu.menu_admin;
 
         Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
         int userRole = userRol(userLogged);
