@@ -36,7 +36,6 @@ public class HunterHomeViewModel extends ViewModel {
 
    public void cargarComercios(){
       cRepo.getComercios(mlDataComercio);
-
    }
 
    public void cargarListArticulo(){

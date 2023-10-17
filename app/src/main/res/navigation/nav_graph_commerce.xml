@@ -9,4 +9,14 @@
         android:name="com.example.ffh_rep.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/fragment_comercio_articulos"
+        android:name="com.example.ffh_rep.ui.commerce.fragment_comercio_articulos"
+        android:label="fragment_comercio_articulos"
+        tools:layout="@layout/fragment_comercio_articulos" />
+    <fragment
+        android:id="@+id/fragmentAgregarDescuentoComercio"
+        android:name="com.example.ffh_rep.ui.commerce.FragmentAgregarDescuentoComercio"
+        android:label="fragment_fragment_agregar_descuento_comercio"
+        tools:layout="@layout/fragment_fragment_agregar_descuento_comercio" />
 </navigation>

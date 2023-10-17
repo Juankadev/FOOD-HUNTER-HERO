@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/baseline_store_24"
                 android:gravity="center"
-                android:text="Mi Carrito"
+                android:text="Shop"
                 android:textColor="#FDFDFD"
                 android:textSize="20sp" />
 
