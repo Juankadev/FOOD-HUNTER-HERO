@@ -92,6 +92,10 @@ public class Hunter {
         this.nombre = nombre;
     }
 
+    public void setIdHunter(Integer id) {
+        this.idHunter = id;
+    }
+
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
