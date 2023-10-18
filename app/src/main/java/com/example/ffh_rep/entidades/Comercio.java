@@ -1,6 +1,8 @@
 package com.example.ffh_rep.entidades;
 
-public class Comercio {
+import java.io.Serializable;
+
+public class Comercio implements Serializable {
 
     private int Id;
     private Usuario user;

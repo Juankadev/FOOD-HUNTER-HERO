@@ -68,7 +68,6 @@ public class Hunter_Home extends Fragment {
             @Override
             public void onChanged(List<Comercio> comercios) {
 
-                Log.d("Comercios en obverser", comercios.toString());
                 cla.setComercioList(comercios);
             }
         });

@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="102dp"
         android:backgroundTint="@color/bck_green"
         android:theme="@style/Theme.FFHREP.AppBarOverlay">
 

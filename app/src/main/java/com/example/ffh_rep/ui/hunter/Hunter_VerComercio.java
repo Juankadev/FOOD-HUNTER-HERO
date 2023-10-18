@@ -11,12 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.databinding.FragmentHunterVerComercioBinding;
+import com.example.ffh_rep.entidades.Comercio;
 
 public class Hunter_VerComercio extends Fragment {
 
     private HunterVerComercioViewModel mViewModel;
+    private Comercio commerce;
+    private TextView descripcion;
+
+    private FragmentHunterVerComercioBinding binding;
 
     public static Hunter_VerComercio newInstance() {
         return new Hunter_VerComercio();
@@ -25,14 +32,26 @@ public class Hunter_VerComercio extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_hunter__ver_comercio, container, false);
+        binding = FragmentHunterVerComercioBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        descripcion = view.findViewById(R.id.txt_shop_name_description);
+        Bundle bundle = getArguments();
+
+        if(bundle != null){
+            if(bundle.containsKey("comercioSelect")){
+                commerce = (Comercio) bundle.getSerializable("comercioSelect");
+            }
+        }
+
+        descripcion.setText(commerce.getRazonSocial());
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HunterVerComercioViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

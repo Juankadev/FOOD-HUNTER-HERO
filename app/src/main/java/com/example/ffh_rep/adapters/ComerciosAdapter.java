@@ -1,11 +1,16 @@
 package com.example.ffh_rep.adapters;
 
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.ffh_rep.databinding.FragmentComerciosItemBinding;
@@ -19,14 +24,18 @@ import java.util.List;
 public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.ViewHolder> {
 
     private List<Comercio> mValues;
+    private Context ctx;
+    private NavController navCon;
 
-    public ComerciosAdapter(List<Comercio> items) {
+    public ComerciosAdapter(List<Comercio> items, Context ctx, NavController con) {
         mValues = items;
+        this.ctx = ctx;
+        this.navCon = con;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentComerciosItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(FragmentComerciosItemBinding.inflate(LayoutInflater.from(this.ctx), parent, false));
 
     }
 
@@ -36,9 +45,18 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.shopName.setText(mValues.get(position).getRazonSocial());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putSerializable("comercioSelect", mValues.get(position));
+                navCon.navigate(R.id.action_comercios_to_hunter_VerComercio, args);
+            }
+        });
     }
 
     @Override
@@ -61,4 +79,6 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
             return super.toString() + " '" + shopName.getText() + "'";
         }
     }
+
+
 }

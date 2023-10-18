@@ -6,10 +6,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,28 +31,10 @@ public class Comercios extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private ComerciosViewModel viewModel;
     private ComerciosAdapter cAdapter;
+    private NavController nav;
     private int mColumnCount = 2;
 
     public Comercios() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static Comercios newInstance(int columnCount) {
-        Comercios fragment = new Comercios();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -58,7 +43,9 @@ public class Comercios extends Fragment {
         View view = inflater.inflate(R.layout.fragment_comercios_list, container, false);
         viewModel = new ViewModelProvider(requireActivity(), new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
         RecyclerView rview = (RecyclerView) view;
-        cAdapter = new ComerciosAdapter(new ArrayList<>());
+        nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation_controller);
+
+        cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav);
 
         viewModel.cargarComercios();
 
@@ -69,7 +56,7 @@ public class Comercios extends Fragment {
             }
         });
 
-
-        return view;
+        rview.setAdapter(cAdapter);
+        return rview;
     }
 }
