@@ -11,12 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.databinding.FragmentHunterVerArticuloBinding;
+import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Comercio;
 
 public class Hunter_VerArticulo extends Fragment {
 
     private HunterVerArticuloViewModel mViewModel;
+    private Articulo article;
+    private FragmentHunterVerArticuloBinding binding;
+    private TextView descripcion, precio;
 
     public static Hunter_VerArticulo newInstance() {
         return new Hunter_VerArticulo();
@@ -25,7 +32,23 @@ public class Hunter_VerArticulo extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_hunter__ver_articulo, container, false);
+
+        binding  = FragmentHunterVerArticuloBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+        descripcion = view.findViewById(R.id.tvDescripcionArt);
+        precio = view.findViewById(R.id.tvPrecioArt);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            if(bundle.containsKey("articuloSelected")){
+                article = (Articulo) bundle.getSerializable("articuloSelected");
+            }
+        }
+
+        precio.setText(String.valueOf(article.getPrecio()));
+        descripcion.setText(article.getDescripcion());
+
+       return view;
     }
 
     @Override

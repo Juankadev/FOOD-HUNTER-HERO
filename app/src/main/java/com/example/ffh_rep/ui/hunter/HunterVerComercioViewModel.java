@@ -15,6 +15,8 @@ public class HunterVerComercioViewModel extends ViewModel {
     private MutableLiveData<List<Articulo>> mldArticulos;
 
     private ArticuloRepository aRepo;
+
+    public HunterVerComercioViewModel(){}
     public HunterVerComercioViewModel(Context ctx){
         this.ctx = ctx;
         this.mldArticulos = new MutableLiveData<>();

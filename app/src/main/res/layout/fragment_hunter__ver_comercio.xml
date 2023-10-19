@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="419dp"
+        android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@color/bck_green"
         android:gravity="center"
@@ -64,6 +64,9 @@
         android:id="@+id/gv_articulos_comerciodetail"
         android:layout_width="415dp"
         android:layout_height="596dp"
+        android:horizontalSpacing="16dp"
+        android:verticalSpacing="16dp"
+        android:numColumns="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

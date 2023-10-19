@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ffh_rep.ui.home.HomeViewModel;
 import com.example.ffh_rep.ui.hunter.HunterHomeViewModel;
 
 public class HunterHomeViewModelFactory implements ViewModelProvider.Factory {

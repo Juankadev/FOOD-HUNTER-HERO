@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_hunter_VerComercio_to_hunter_ReseniasComercio"
             app:destination="@id/hunter_ReseniasComercio" />
+        <action
+            android:id="@+id/action_hunter_VerComercio_to_hunter_VerArticulo"
+            app:destination="@id/hunter_VerArticulo" />
     </fragment>
     <fragment
         android:id="@+id/hunter_MiCarrito"
@@ -53,4 +56,9 @@
         android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
         android:label="fragment_hunter__resenias_comercio"
         tools:layout="@layout/fragment_hunter__resenias_comercio" />
+    <fragment
+        android:id="@+id/hunter_VerArticulo"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerArticulo"
+        android:label="fragment_hunter__ver_articulo"
+        tools:layout="@layout/fragment_hunter__ver_articulo" />
 </navigation>

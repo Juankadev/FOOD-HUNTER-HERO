@@ -3,19 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/admin_Home">
+
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.ffh_rep.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/admin_Home"
+        android:name="com.example.ffh_rep.ui.admin.Admin_Home"
+        android:label="fragment_admin__home"
+        tools:layout="@layout/fragment_admin__home" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.ffh_rep.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-
+        android:id="@+id/adminEstadisticas"
+        android:name="com.example.ffh_rep.ui.admin.AdminEstadisticas"
+        android:label="fragment_admin_estadisticas"
+        tools:layout="@layout/fragment_admin_estadisticas" />
+    <fragment
+        android:id="@+id/aprobarComercios"
+        android:name="com.example.ffh_rep.ui.admin.AprobarComercios"
+        android:label="fragment_aprobar_comercios_list"
+        tools:layout="@layout/fragment_aprobar_comercios_list" />
 </navigation>

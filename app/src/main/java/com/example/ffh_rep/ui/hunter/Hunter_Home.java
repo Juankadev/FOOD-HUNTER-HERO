@@ -20,11 +20,8 @@ import android.widget.GridView;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ArticulosListAdapter;
 import com.example.ffh_rep.adapters.ComercioListAdapter;
-import com.example.ffh_rep.databinding.FragmentHomeBinding;
 import com.example.ffh_rep.databinding.FragmentHunterHomeBinding;
-import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.factory.HunterHomeViewModelFactory;
 
 import java.util.ArrayList;

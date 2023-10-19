@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.databinding.FragmentHomeBinding;
 import com.example.ffh_rep.entidades.Usuario;
 
 public class Hunter_MiCuenta extends Fragment {

@@ -9,9 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -64,7 +66,15 @@ public class Hunter_VerComercio extends Fragment {
         mViewModel.getMldArticulos().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
             @Override
             public void onChanged(List<Articulo> articulos) {
+                Log.d("Articulo listener", articulos.toString());
                 aclAdapter.setData(articulos);
+            }
+        });
+
+        gv_articulos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
 
@@ -78,5 +88,4 @@ public class Hunter_VerComercio extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HunterVerComercioViewModel.class);
     }
-
 }
