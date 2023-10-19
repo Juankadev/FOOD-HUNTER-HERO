@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Mi Carrito"
+            android:text="@string/mi_carrito"
             android:textColor="#FDFDFD"
             android:textSize="20sp" />
     </LinearLayout>
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="20dp"
-        android:text="Puntos"
+        android:text="@string/puntos"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hunter_lista_miCarrito" />
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:backgroundTint="@color/bck_gray"
-        android:text="Volver"
+        android:text="@string/btn_volver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:backgroundTint="@color/bck_green"
-        android:text="Finalizar Caza"
+        android:text="@string/finalizar_caza"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnVolver_carrito" />

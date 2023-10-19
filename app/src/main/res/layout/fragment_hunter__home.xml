@@ -28,9 +28,9 @@
                 android:drawableStart="@drawable/baseline_search_20"
                 android:drawablePadding="10dp"
                 android:ems="10"
+                android:hint="@string/buscar"
                 android:inputType="text"
                 android:padding="15dp"
-                android:text="Buscar"
                 android:textColor="#000000" />
 
         </LinearLayout>
@@ -51,7 +51,7 @@
                     android:layout_width="221dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="Comercios"
+                    android:text="@string/comercio"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#00FFFFFF"
-                    android:text="Ver Mas"
+                    android:text="@string/ver"
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -76,10 +76,10 @@
             android:layout_width="181dp"
             android:layout_height="27dp"
             android:layout_marginLeft="25dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginTop="25dp"
-            android:text="Productos" />
+            android:text="@string/productos"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <GridView
             android:id="@+id/gv_productos_hunter_home"

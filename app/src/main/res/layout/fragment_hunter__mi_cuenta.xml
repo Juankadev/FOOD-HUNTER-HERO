@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="#B6B6B6"
-            android:text="Volver"
+            android:text="@string/btn_volver"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

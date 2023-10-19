@@ -27,7 +27,6 @@
             android:ems="10"
             android:inputType="text"
             android:padding="10dp"
-            android:text="@string/input_razonsocial_rc"
             android:textColor="#FFFFFF" />
 
     <EditText

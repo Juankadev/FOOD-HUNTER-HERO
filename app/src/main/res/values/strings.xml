@@ -143,6 +143,36 @@
     <string name="et_Articulos">Mis Articulos</string>
     <string name="comercios_adheridos">Cantidad de comercios adheridos</string>
     <string name="hunters_adheridos">Cantidad de hunters adheridos</string>
+    <string name="hunter">Hunter</string>
+    <string name="usuario">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="confirm_contraseña">Confirmar contraseña</string>
+    <string name="comercio">Comercio</string>
+    <string name="eligeRol">Elige tu rol!</string>
+    <string name="nombreUsuario">Nombre de usuario</string>
+    <string name="estadisticas_titulo">Por favor, ingrese las fechas para generar las estadisticas</string>
+    <string name="desde">Desde</string>
+    <string name="hasta">Hasta</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="productos_cazados">Productos cazados</string>
+    <string name="comercios_aprobados">Comercios aprobados</string>
+    <string name="cazadores_rango">Cazadores con rango maximo</string>
+    <string name="cazadores_rango_m">Cazadores con rango minimo</string>
+    <string name="editar_articulo">Editar articulo</string>
+    <string name="ver">Ver</string>
+    <string name="shop">Shop</string>
+    <string name="mis_articulos">Mis Articulos</string>
+    <string name="mis_descuentos"> Mis Descuentos</string>
+    <string name="aniadir_desc">Añadir descuentos</string>
+    <string name="buscar">Buscar</string>
+    <string name="productos">Productos</string>
+    <string name="mi_carrito">Mi Carrito</string>
+    <string name="puntos">Puntos</string>
+    <string name="finalizar_caza">Finalizar Caza</string>
+    <string name="resenias">Reseñas del comercio</string>
+    <string name="articulos">Articulos</string>
+    <string name="rechazar">Rechazar</string>
+    <string name="aprobar">Aprobar</string>
 
 
 </resources>

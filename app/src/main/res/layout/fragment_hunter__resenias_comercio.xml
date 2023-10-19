@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/baseline_store_24"
                 android:gravity="center"
-                android:text="Resenias del Comercio"
+                android:text="@string/resenias"
                 android:textColor="#FDFDFD"
                 android:textSize="20sp" />
         </LinearLayout>

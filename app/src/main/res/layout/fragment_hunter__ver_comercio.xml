@@ -34,7 +34,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/baseline_store_24"
                 android:gravity="center"
-                android:text="Shop"
+                android:text="@string/shop"
                 android:textColor="#FDFDFD"
                 android:textSize="20sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/bck_gray"
-                android:text="Ver Reseñas" />
+                android:text="@string/btn_VerResenias" />
         </LinearLayout>
 
     </LinearLayout>
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Articulos"
+        android:text="@string/articulos"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
