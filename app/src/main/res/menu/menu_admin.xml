@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_hunter_GestionarComercios"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/shop"
             android:title="Gestionar Comercios"
             />
         <item
