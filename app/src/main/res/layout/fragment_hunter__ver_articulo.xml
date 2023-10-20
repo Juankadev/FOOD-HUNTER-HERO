@@ -18,26 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
+
     <Button
         android:id="@+id/btnAgregarCarrito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="208dp"
+        android:backgroundTint="@color/bck_green"
         android:text="@string/agregar_carrito"
-        app:layout_constraintBottom_toTopOf="@+id/btnVolverArticulos"
+        android:drawableLeft="@drawable/baseline_add_shopping_cart_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnVolverArticulos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
-        android:text="@string/btn_volver"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivArticulo" />
 
     <TextView
         android:id="@+id/tvDescripcionArt"
