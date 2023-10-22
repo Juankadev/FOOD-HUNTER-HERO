@@ -24,80 +24,91 @@ import com.example.ffh_rep.utils.EmailSenderTask;
 
 public class RegistroComercio extends AppCompatActivity implements RegistrarUsuarioCallback {
 
-    private EditText et_razonsocial, et_cuit, et_rubro, et_email_c, et_telefono_c, et_direccion_c;
+    private EditText etRazonSocial, etCuit, etRubro, etEmailC, etTelefonoC, etDireccionC;
     private Button btnRegistro, btnVolver;
-
+    private String username, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_comercio);
 
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        String password = intent.getStringExtra("password");
-
-        et_razonsocial = findViewById(R.id.et_razonsocial);
-        et_cuit = findViewById(R.id.et_cuit);
-        et_rubro = findViewById(R.id.et_rubro);
-        et_email_c = findViewById(R.id.et_email_c);
-        et_telefono_c = findViewById(R.id.et_telefono_c);
-        et_direccion_c = findViewById(R.id.et_direccion_c);
-        btnRegistro = findViewById(R.id.btnRegistrarme);
-        btnVolver = findViewById(R.id.btnVolver);
-
-        btnRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Rol rol = new Rol();
-                rol.setIdRol(1);
-                rol.setDescripcion("Comercio");
-
-                Usuario u = new Usuario(rol, username, password, "Activo");
-                RegistrarUsuario ru = new RegistrarUsuario(RegistroComercio.this, u, RegistroComercio.this);
-                ru.execute();
-            }
-        });
-
-        btnVolver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegistroComercio.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        extractIntentData();
+        initializeViews();
+        setupButtonClickListeners();
     }
 
+    private void extractIntentData() {
+        Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        password = intent.getStringExtra("password");
+    }
 
-    private void registro(Integer uID){
+    private void initializeViews() {
+        etRazonSocial = findViewById(R.id.et_razonsocial);
+        etCuit = findViewById(R.id.et_cuit);
+        etRubro = findViewById(R.id.et_rubro);
+        etEmailC = findViewById(R.id.et_email_c);
+        etTelefonoC = findViewById(R.id.et_telefono_c);
+        etDireccionC = findViewById(R.id.et_direccion_c);
+        btnRegistro = findViewById(R.id.btnRegistrarme);
+        btnVolver = findViewById(R.id.btnVolver);
+    }
+
+    private void setupButtonClickListeners() {
+        btnRegistro.setOnClickListener(v -> onRegistroButtonClick());
+        btnVolver.setOnClickListener(v -> onVolverButtonClick());
+    }
+
+    private void onRegistroButtonClick() {
+        Rol rol = new Rol(1, "Comercio");
+        Usuario usuario = new Usuario(rol, username, password, "Activo");
+
+        RegistrarUsuario registrarUsuarioTask = new RegistrarUsuario(this, usuario, this);
+        registrarUsuarioTask.execute();
+    }
+
+    private void onVolverButtonClick() {
+        Intent intent = new Intent(RegistroComercio.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void registro(Integer userId) {
+        Comercio comercio = buildComercioObject(userId);
+        RegistrarComercioTask registrarComercioTask = new RegistrarComercioTask(this, comercio, this);
+        registrarComercioTask.execute();
+
+        sendRegistrationEmail();
+    }
+
+    private Comercio buildComercioObject(Integer userId) {
         Comercio comercio = new Comercio();
         comercio.setUser(new Usuario());
-        comercio.getUser().setId_usuario(uID);
-        comercio.setRazonSocial(et_razonsocial.getText().toString());
-        comercio.setCuit(et_cuit.getText().toString());
-        comercio.setRubro(et_rubro.getText().toString());
-        comercio.setEmail(et_email_c.getText().toString());
-        comercio.setTelefono(et_telefono_c.getText().toString());
-        comercio.setDireccion(et_direccion_c.getText().toString());
+        comercio.getUser().setId_usuario(userId);
+        comercio.setRazonSocial(etRazonSocial.getText().toString());
+        comercio.setCuit(etCuit.getText().toString());
+        comercio.setRubro(etRubro.getText().toString());
+        comercio.setEmail(etEmailC.getText().toString());
+        comercio.setTelefono(etTelefonoC.getText().toString());
+        comercio.setDireccion(etDireccionC.getText().toString());
         comercio.setAprobado("Aprobado");
+        return comercio;
+    }
 
-        RegistrarComercioTask rct = new RegistrarComercioTask(this, comercio, this);
-        rct.execute();
-
-
-        //Asunto y Cuerpo del Mail
-        String subjectMail = "Registro de Comercio "+et_razonsocial.getText().toString()+" Exitoso ";
+    private void sendRegistrationEmail() {
+        String subjectMail = "Registro de Comercio " + etRazonSocial.getText().toString() + " Exitoso ";
         EmailTemplate plantilla = new EmailTemplate();
-        String messageBodyMail = plantilla.templateRegistroExitosoComercio(et_razonsocial.getText().toString(), et_email_c.getText().toString(), et_email_c.getText().toString() );
+        String messageBodyMail = plantilla.templateRegistroExitosoComercio(
+                etRazonSocial.getText().toString(),
+                etEmailC.getText().toString(),
+                etEmailC.getText().toString()
+        );
 
-        EmailSenderTask emailSenderTask = new EmailSenderTask(et_email_c.getText().toString(), subjectMail, messageBodyMail);
+        EmailSenderTask emailSenderTask = new EmailSenderTask(etEmailC.getText().toString(), subjectMail, messageBodyMail);
         emailSenderTask.execute();
-
-
     }
 
     @Override
     public void onUsuarioInsertado(Integer userId) {
-        Log.d("Recibido", String.valueOf(userId));
         registro(userId);
     }
 

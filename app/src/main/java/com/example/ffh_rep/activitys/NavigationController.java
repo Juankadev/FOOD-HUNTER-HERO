@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,7 +25,8 @@ public class NavigationController extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationControllerBinding binding;
-
+    private Usuario userLogged;
+    TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,26 +38,41 @@ public class NavigationController extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-
-
-        Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
+        userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
         int userRole = userRol(userLogged);
 
-        int navGraphResId = R.navigation.mobile_navigation;
-        int menuResId = R.menu.menu_admin;
-
-        if (userRole == 1) {
-            navGraphResId = R.navigation.nav_graph_commerce;
-            menuResId = R.menu.menu_commerce;
-        } else if (userRole == 2) {
-            navGraphResId = R.navigation.nav_graph_hunter;
-            menuResId = R.menu.menu_hunter;
+        int navGraphResId = getNavGraphResId(userRole);
+        int menuResId = getMenuResId(userRole);
+        initializeViews();
+        setupNavigation(userRole, navGraphResId, menuResId, navigationView, drawer);
+    }
+    private void initializeViews() {
+        username = findViewById(R.id.username);
+        username.setText(userLogged.getUsername());
+    }
+    private int getNavGraphResId(int userRole) {
+        switch (userRole) {
+            case 1:
+                return R.navigation.nav_graph_commerce;
+            case 2:
+                return R.navigation.nav_graph_hunter;
+            default:
+                return R.navigation.mobile_navigation;
         }
-        else {
-            navGraphResId = R.navigation.nav_graph_admin;
-            menuResId = R.menu.menu_admin;
-        }
+    }
 
+    private int getMenuResId(int userRole) {
+        switch (userRole) {
+            case 1:
+                return R.menu.menu_commerce;
+            case 2:
+                return R.menu.menu_hunter;
+            default:
+                return R.menu.menu_admin;
+        }
+    }
+
+    private void setupNavigation(int userRole, int navGraphResId, int menuResId, NavigationView navigationView, DrawerLayout drawer) {
         navigationView.getMenu().clear();
         navigationView.inflateMenu(menuResId);
 
@@ -70,23 +88,8 @@ public class NavigationController extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int menuResId = R.menu.menu_admin;
-
-        Usuario userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
-        int userRole = userRol(userLogged);
-
-        if (userRole == 1) {
-            Log.d("Comercio MENU", "Entro al rol comercio");
-            menuResId = R.menu.menu_commerce;
-        } else if (userRole == 2) {
-            Log.d("Hunter MENU", "Entro al rol hunter");
-            menuResId = R.menu.menu_hunter;
-        }
-        else{
-            Log.d("Admin MENU", "Entro al rol admin");
-            menuResId = R.menu.menu_admin;
-        }
-
+        int userRole = userRol((Usuario) getIntent().getSerializableExtra("usuario"));
+        int menuResId = getMenuResId(userRole);
         getMenuInflater().inflate(menuResId, menu);
         return true;
     }

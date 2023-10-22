@@ -9,7 +9,8 @@ public class Usuario implements Serializable {
     private String password;
     private String estado;
 
-    public Usuario (){}
+    public Usuario() {
+    }
 
     public Usuario(Rol rol, String username, String password, String estado) {
         this.rol = rol;
@@ -18,26 +19,12 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-
     public Integer getId_usuario() {
         return id_usuario;
     }
 
-    public String getUsuario() {return username;}
-    public String getPassword() {return password;}
-    public String getEstado() {return estado;}
-
     public void setId_usuario(Integer id_usuario) {
         this.id_usuario = id_usuario;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public Rol getRol() {
@@ -48,6 +35,29 @@ public class Usuario implements Serializable {
         this.rol = rol;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     @Override
     public String toString() {
@@ -59,6 +69,4 @@ public class Usuario implements Serializable {
                 ", rol=" + rol +
                 '}';
     }
-
-
 }

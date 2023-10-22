@@ -45,33 +45,44 @@ public class Hunter_Home extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentHunterHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        initViews(view);
+        setupListeners();
+        setupViewModel();
+        setupComerciosGridView();
+
+        return view;
+    }
+
+    private void initViews(View view) {
         gv_comercios_list = view.findViewById(R.id.gv_comercios_hunter_home);
         gv_productos_hunter_home = view.findViewById(R.id.gv_productos_hunter_home);
         btnMasComercios = view.findViewById(R.id.btn_mas_comercios_hunter);
+    }
 
+    private void setupListeners() {
         btnMasComercios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(Hunter_Home.this).navigate(R.id.comercios);
             }
         });
+    }
 
-
+    private void setupViewModel() {
         mViewModel = new ViewModelProvider(requireActivity(), new HunterHomeViewModelFactory(getActivity())).get(HunterHomeViewModel.class);
-        cla = new ComercioListAdapter(getContext(), new ArrayList<>());
-        mViewModel.cargarComercios();
+    }
 
+    private void setupComerciosGridView() {
+        cla = new ComercioListAdapter(getContext(), new ArrayList<>());
+        gv_comercios_list.setAdapter(cla);
+
+        mViewModel.cargarComercios();
         mViewModel.getMlDataComercio().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
             @Override
             public void onChanged(List<Comercio> comercios) {
-
                 cla.setComercioList(comercios);
             }
         });
-
-
-        gv_comercios_list.setAdapter(cla);
-        return view;
     }
 
     @Override
@@ -79,5 +90,4 @@ public class Hunter_Home extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HunterHomeViewModel.class);
     }
-
 }

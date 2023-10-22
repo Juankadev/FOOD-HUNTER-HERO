@@ -40,7 +40,7 @@ public class RegistrarUsuario extends AsyncTask<Void, Void, Integer> {
             String query = "Insert into Usuarios (id_rol, username, password, estado) values (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, this.usuario.getRol().getIdRol());
-            ps.setString(2, this.usuario.getUsuario());
+            ps.setString(2, this.usuario.getUsername());
             ps.setString(3, this.usuario.getPassword());
             ps.setString(4, "1");
 

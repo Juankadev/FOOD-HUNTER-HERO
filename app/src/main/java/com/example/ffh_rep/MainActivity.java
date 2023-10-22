@@ -10,52 +10,49 @@ import android.widget.EditText;
 
 import com.example.ffh_rep.activitys.NavigationController;
 import com.example.ffh_rep.activitys.RegistroBasic;
-import com.example.ffh_rep.activitys.RegistroComercio;
-import com.example.ffh_rep.activitys.RegistroHunter;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
 import com.example.ffh_rep.tasks.IniciarSesionTask;
 
 public class MainActivity extends AppCompatActivity implements LoginUsuarioCallback {
 
-    private EditText et_username, et_password;
-    private Button btnIniciarSesion, btnRegistroHunter,btnRegistroComercio;
+    private EditText etUsername, etPassword;
+    private Button btnIniciarSesion, btnRegistro;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        et_username = findViewById(R.id.et_username);
-        et_password = findViewById(R.id.et_password);
+        initializeViews();
+        setupButtonClickListeners();
+    }
+
+    private void initializeViews() {
+        etUsername = findViewById(R.id.et_username);
+        etPassword = findViewById(R.id.et_password);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
-        btnRegistroHunter = findViewById(R.id.btnRegistroHunter);
-        //btnRegistroComercio = findViewById(R.id.btnRegistroComercio);
+        btnRegistro = findViewById(R.id.btnRegistro);
+    }
 
-        btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IniciarSesionTask task = new IniciarSesionTask(MainActivity.this, et_username.getText().toString(),et_password.getText().toString(), MainActivity.this);
-                task.execute();
-            }
-        });
+    private void setupButtonClickListeners() {
+        btnIniciarSesion.setOnClickListener(v -> iniciarSesion());
+        btnRegistro.setOnClickListener(v -> irARegistro());
+    }
 
+    private void iniciarSesion() {
+        IniciarSesionTask task = new IniciarSesionTask(
+                this,
+                etUsername.getText().toString(),
+                etPassword.getText().toString(),
+                this
+        );
+        task.execute();
+    }
 
-        btnRegistroHunter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegistroBasic.class);
-                startActivity(intent);
-            }
-        });
-
-
-        /*btnRegistroComercio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegistroComercio.class);
-                startActivity(intent);
-            }
-        });*/
+    private void irARegistro() {
+        Intent intent = new Intent(MainActivity.this, RegistroBasic.class);
+        startActivity(intent);
     }
 
     @Override

@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_1" />
 
     <EditText
-        android:id="@+id/et_razonSocial"
+        android:id="@+id/et_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -94,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_razonSocial" />
+        app:layout_constraintTop_toBottomOf="@+id/et_nombre" />
 
     <EditText
         android:id="@+id/et_dni"
@@ -114,23 +114,6 @@
         app:layout_constraintTop_toBottomOf="@+id/et_apellido" />
 
     <EditText
-        android:id="@+id/et_sexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/border"
-        android:backgroundTint="#A3FFFFFF"
-        android:ems="10"
-        android:hint="@string/input_sexo_rh"
-        android:inputType="text"
-        android:padding="10dp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_dni" />
-
-    <EditText
         android:id="@+id/et_correo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,7 +128,7 @@
         android:textColorHint="#515151"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_sexo" />
+        app:layout_constraintTop_toBottomOf="@+id/et_dni" />
 
     <EditText
         android:id="@+id/et_direccion"
@@ -163,6 +146,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_correo" />
+
+    <Spinner
+        android:id="@+id/spinner_sexo"
+        android:layout_width="400px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_with_arrow"
+        android:backgroundTint="#A3FFFFFF"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#515151"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_telefono"
+        app:layout_constraintWidth_default="spread" />
 
     <Button
         android:id="@+id/btn_register"

@@ -14,82 +14,63 @@ import com.example.ffh_rep.R;
 
 public class RegistroBasic extends AppCompatActivity {
 
-    private EditText et_r_user, et_r_pass, et_rc_pass;
+    private EditText etRUser, etRPass, etRcPass;
     private Button btnBack, btnHunter, btnCommerce;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_basic);
 
-        et_r_user = findViewById(R.id.et_r_user);
-        et_r_pass = findViewById(R.id.et_r_password);
-        et_rc_pass= findViewById(R.id.et_rc_password);
+        initializeViews();
+        setupButtonClickListeners();
+    }
+
+    private void initializeViews() {
+        etRUser = findViewById(R.id.et_r_user);
+        etRPass = findViewById(R.id.et_r_password);
+        etRcPass = findViewById(R.id.et_rc_password);
 
         btnBack = findViewById(R.id.btn_rc_back);
         btnCommerce = findViewById(R.id.btn_rc_commerce);
         btnHunter = findViewById(R.id.btn_rc_Hunter);
+    }
 
-        btnHunter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isAllComplete(et_r_user.getText().toString(), et_r_pass.getText().toString(), et_rc_pass.getText().toString())){
-                    if(samePasswords(et_r_pass.getText().toString(), et_rc_pass.getText().toString())){
-                        Intent intent = new Intent(RegistroBasic.this, RegistroHunter.class);
+    private void setupButtonClickListeners() {
+        btnHunter.setOnClickListener(v -> onTypeSelected(RegistroHunter.class));
+        btnCommerce.setOnClickListener(v -> onTypeSelected(RegistroComercio.class));
+        btnBack.setOnClickListener(v -> goBackToMainActivity());
+    }
 
-                        String username = et_r_user.getText().toString();
-                        String password = et_r_pass.getText().toString();
-                        intent.putExtra("username", username);
-                        intent.putExtra("password", password);
-
-                        startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(RegistroBasic.this, "Las contraseñas deben ser iguales", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(RegistroBasic.this, "Por favor, antes de continuar complete todos los datos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnCommerce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isAllComplete(et_r_user.getText().toString(), et_r_pass.getText().toString(), et_rc_pass.getText().toString())){
-                    if(samePasswords(et_r_pass.getText().toString(), et_rc_pass.getText().toString())){
-                        Intent intent = new Intent(RegistroBasic.this, RegistroComercio.class);
-                        String username = et_r_user.getText().toString();
-                        String password = et_r_pass.getText().toString();
-                        intent.putExtra("username", username);
-                        intent.putExtra("password", password);
-
-                        startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(RegistroBasic.this, "Las contraseñas deben ser iguales", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(RegistroBasic.this, "Por favor, antes de continuar complete todos los datos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegistroBasic.this, MainActivity.class);
+    private void onTypeSelected(Class<?> registrationType) {
+        if (isAllComplete(etRUser.getText().toString(), etRPass.getText().toString(), etRcPass.getText().toString())) {
+            if (samePasswords(etRPass.getText().toString(), etRcPass.getText().toString())) {
+                Intent intent = new Intent(RegistroBasic.this, registrationType);
+                intent.putExtra("username", etRUser.getText().toString());
+                intent.putExtra("password", etRPass.getText().toString());
                 startActivity(intent);
+            } else {
+                showToast("Las contraseñas deben ser iguales");
             }
-        });
+        } else {
+            showToast("Por favor, antes de continuar complete todos los datos");
+        }
     }
 
-    private boolean isAllComplete(String campito1, String campito2, String campito3){
-        return !campito1.isEmpty() && !campito2.isEmpty() && !campito3.isEmpty();
+    private void goBackToMainActivity() {
+        Intent intent = new Intent(RegistroBasic.this, MainActivity.class);
+        startActivity(intent);
     }
 
-    private boolean samePasswords(String pass, String c_pass){
-        return pass.equals(c_pass);
+    private boolean isAllComplete(String field1, String field2, String field3) {
+        return !field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty();
+    }
+
+    private boolean samePasswords(String pass, String cPass) {
+        return pass.equals(cPass);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(RegistroBasic.this, message, Toast.LENGTH_SHORT).show();
     }
 }
