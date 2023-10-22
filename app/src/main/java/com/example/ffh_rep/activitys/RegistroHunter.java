@@ -93,7 +93,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         hunter.setApellido(etApellido.getText().toString());
         hunter.setDni(etDni.getText().toString());
         hunter.setDireccion(etDireccion.getText().toString());
-        hunter.setSexo(etSexo.getText().toString());
+        hunter.setSexo(spinnerSexo.getSelectedItem().toString());
         hunter.setCorreo_electronico(etCorreo.getText().toString());
         hunter.setTelefono(etTelefono.getText().toString());
         return hunter;

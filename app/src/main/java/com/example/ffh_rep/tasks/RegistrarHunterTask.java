@@ -29,7 +29,7 @@ protected Boolean doInBackground(Void... voids) {
         Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
 
         String query = "INSERT INTO Hunter (id_usuario, nombre, apellido, dni, sexo, correo_electronico, telefono, direccion, fecha_nacimiento, id_rango, puntaje) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = con.prepareStatement(query);
         preparedStatement.setInt(1, this.hunter.getUser().getId_usuario());
@@ -40,9 +40,9 @@ protected Boolean doInBackground(Void... voids) {
         preparedStatement.setString(6, this.hunter.getCorreo_electronico());
         preparedStatement.setString(7, this.hunter.getTelefono());
         preparedStatement.setString(8, this.hunter.getDireccion());
-        preparedStatement.setDate(9,this.hunter.getFecha_nacimiento());
-        preparedStatement.setInt(10, 1);
-        preparedStatement.setInt(11, 0);
+        //preparedStatement.setDate(9,this.hunter.getFecha_nacimiento());
+        preparedStatement.setInt(9, 1);
+        preparedStatement.setInt(10, 0);
 
         con.close();
 
