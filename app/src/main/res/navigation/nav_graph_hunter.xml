@@ -50,7 +50,11 @@
         android:id="@+id/hunter_MiCarrito"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCarrito"
         android:label="fragment_hunter__mi_carrito"
-        tools:layout="@layout/fragment_hunter__mi_carrito" />
+        tools:layout="@layout/fragment_hunter__mi_carrito" >
+        <action
+            android:id="@+id/action_hunter_MiCarrito_to_hunter_GenerarQr"
+            app:destination="@id/hunter_GenerarQr" />
+    </fragment>
     <fragment
         android:id="@+id/hunter_ReseniasComercio"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
@@ -61,4 +65,9 @@
         android:name="com.example.ffh_rep.ui.hunter.Hunter_VerArticulo"
         android:label="fragment_hunter__ver_articulo"
         tools:layout="@layout/fragment_hunter__ver_articulo" />
+    <fragment
+        android:id="@+id/hunter_GenerarQr"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_GenerarQr"
+        android:label="fragment_hunter__generar_qr"
+        tools:layout="@layout/fragment_hunter__generar_qr" />
 </navigation>
