@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
+import com.example.ffh_rep.utils.GeneralHelper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,8 +29,8 @@ protected Boolean doInBackground(Void... voids) {
         Class.forName(DB_Env.DB_DRIVER);
         Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
 
-        String query = "INSERT INTO Hunter (id_usuario, nombre, apellido, dni, sexo, correo_electronico, telefono, direccion, fecha_nacimiento, id_rango, puntaje) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Hunters (id_usuario, nombre, apellido, dni, sexo, correo_electronico, telefono, direccion, fecha_nacimiento, id_rango, puntaje) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = con.prepareStatement(query);
         preparedStatement.setInt(1, this.hunter.getUser().getId_usuario());
@@ -40,13 +41,15 @@ protected Boolean doInBackground(Void... voids) {
         preparedStatement.setString(6, this.hunter.getCorreo_electronico());
         preparedStatement.setString(7, this.hunter.getTelefono());
         preparedStatement.setString(8, this.hunter.getDireccion());
-        //preparedStatement.setDate(9,this.hunter.getFecha_nacimiento());
-        preparedStatement.setInt(9, 1);
-        preparedStatement.setInt(10, 0);
+        preparedStatement.setDate(9, this.hunter.getFecha_nacimiento());
+        preparedStatement.setInt(10, 1);
+        preparedStatement.setInt(11, 0);
 
+
+        int rowsAffected = preparedStatement.executeUpdate();
         con.close();
 
-        return true;
+        return rowsAffected > 0;
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -57,7 +60,6 @@ protected Boolean doInBackground(Void... voids) {
 @Override
 protected void onPostExecute(Boolean response) {
     if(response){
-        Toast.makeText(ctx, "Registro exitoso", Toast.LENGTH_SHORT).show();
         ruCallback.onCompleteInsert("Hola", "Probando");
     }
     else{

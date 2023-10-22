@@ -74,8 +74,6 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
     @Override
     protected void onPostExecute(Usuario user) {
         if (user != null) {
-            Toast.makeText(ctx, "Haz ingresado con éxito", Toast.LENGTH_SHORT).show();
-            Log.d("En TASk Iniciar sesión", user.toString());
             luCallback.onSuccessLogin(user);
         } else {
             Toast.makeText(ctx, "Usuario o contraseña inválida", Toast.LENGTH_SHORT).show();
