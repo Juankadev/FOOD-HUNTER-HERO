@@ -50,7 +50,6 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
-
         if(convertView == null){
             convertView = inflater.inflate(R.layout.item_hunter__comercios_articulo_item, null);
             vh = new ViewHolder();
@@ -61,11 +60,11 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
         else{
             vh = (ViewHolder) convertView.getTag();
         }
-
         Articulo a = this.lArticulos.get(position);
         vh.nombre.setText(a.getDescripcion());
         vh.fecha.setText(a.getEstado());
-
+        vh.marca.setText(a.getMarca().getDescripcion());
+        vh.categoria.setText(a.getCategoria().getDescripcion());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,13 +73,11 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
                 Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_VerArticulo, args);
             }
         });
-
-
         return convertView;
     }
 
 
     static class ViewHolder{
-        TextView nombre, fecha;
+        TextView nombre, fecha, marca, categoria;
     }
 }

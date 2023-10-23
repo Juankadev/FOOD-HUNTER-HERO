@@ -26,7 +26,7 @@ public class Hunter_VerArticulo extends Fragment {
     private CarritoViewModel carrito;
     private Articulo article;
     private FragmentHunterVerArticuloBinding binding;
-    private TextView descripcion, precio;
+    private TextView descripcion, precio, categoria, marca;
     private Button btnAniadirCarrito;
 
     public static Hunter_VerArticulo newInstance() {
@@ -39,12 +39,11 @@ public class Hunter_VerArticulo extends Fragment {
 
         binding  = FragmentHunterVerArticuloBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
 
 
-        descripcion = view.findViewById(R.id.tvDescripcionArt);
-        precio = view.findViewById(R.id.tvPrecioArt);
-        btnAniadirCarrito = view.findViewById(R.id.btnAgregarCarrito);
+        initComponentes(view);
+
+
         Bundle bundle = getArguments();
         if(bundle != null){
             if(bundle.containsKey("articuloSelected")){
@@ -52,17 +51,32 @@ public class Hunter_VerArticulo extends Fragment {
             }
         }
 
-        precio.setText(String.valueOf(article.getPrecio()));
-        descripcion.setText(article.getDescripcion());
+        settingComponents(article);
+        setUpListeners(article);
 
-        btnAniadirCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                carrito.addArticleToCart(article);
-            }
-        });
 
        return view;
+    }
+
+    public void initComponentes(View view){
+        carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
+        descripcion = view.findViewById(R.id.tvDescripcionArt);
+        precio = view.findViewById(R.id.tvPrecioArt);
+        marca = view.findViewById(R.id.tvMarcaArt);
+        categoria = view.findViewById(R.id.tvCategoriaArt);
+        btnAniadirCarrito = view.findViewById(R.id.btnAgregarCarrito);
+    }
+
+    public void settingComponents(Articulo article){
+        precio.setText(String.valueOf(article.getPrecio()));
+        descripcion.setText(article.getDescripcion());
+        marca.setText(article.getMarca().getDescripcion());
+        categoria.setText(article.getCategoria().getDescripcion());
+    }
+
+    public void setUpListeners(Articulo article){
+
+        btnAniadirCarrito.setOnClickListener(v -> carrito.addArticleToCart(article));
     }
 
     @Override

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +28,18 @@
                 android:layout_height="wrap_content"
                 android:text="Nombre"
                 android:textColor="#131313" />
-
+            <TextView
+                android:id="@+id/tv_item_articulo_marca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marca"
+                android:textColor="#131313" />
+            <TextView
+                android:id="@+id/tv_item_articulo_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoria"
+                android:textColor="#131313" />
             <TextView
                 android:id="@+id/tv_item_articulo_fecha_vencimiento"
                 android:layout_width="wrap_content"

@@ -29,7 +29,7 @@ public class ArticuloRepository {
                 ResultSet rs = null;
                 try {
                     con = DBUtil.getConnection();
-                    String query = "Select a.id_articulo, a.descripcion, a.precio, a.id_categoria, m.descripcion as marca from Articulos a inner join Stocks s on s.id_articulo = a.id_articulo inner join Comercios c on c.id_comercio = s.id_comercio inner join Marcas m on m.id_marca = a.id_marca where a.estado = 1 and c.id_comercio = ?" ;
+                    String query = "Select a.id_articulo, a.descripcion, a.precio, a.id_categoria as id_categoria, m.descripcion as marca, cat.descripcion as categoria from Articulos a inner join Stocks s on s.id_articulo = a.id_articulo inner join Comercios c on c.id_comercio = s.id_comercio inner join Marcas m on m.id_marca = a.id_marca inner join Categorias cat on cat.id_categoria = a.id_categoria where a.estado = 1 and c.id_comercio = ?" ;
                     ps = con.prepareStatement(query);
                     ps.setInt(1, id);
                     rs = ps.executeQuery();
@@ -37,11 +37,14 @@ public class ArticuloRepository {
                     while(rs.next()){
                         Articulo aData = new Articulo();
                         aData.setMarca(new Marca());
+                        aData.setCategoria(new Categoria());
                         int id = rs.getInt("id_articulo");
                         String descripcion = rs.getString("descripcion");
                         Double precio = rs.getDouble("precio");
                         int id_categoria = rs.getInt("id_categoria");
                         aData.getMarca().setDescripcion(rs.getString("marca"));
+                        aData.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                        aData.getCategoria().setDescripcion(rs.getString("categoria"));
                         aData.setIdArticulo(id);
                         aData.setDescripcion(descripcion);
                         aData.setPrecio(precio);

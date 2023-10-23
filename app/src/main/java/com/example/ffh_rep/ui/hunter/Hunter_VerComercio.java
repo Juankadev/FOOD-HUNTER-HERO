@@ -55,11 +55,7 @@ public class Hunter_VerComercio extends Fragment {
         binding = FragmentHunterVerComercioBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        descripcion = view.findViewById(R.id.txt_shop_name_description);
-        gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail);
-        btnAbrirCarrito = view.findViewById(R.id.btnAbrirCarrito);
-        cantArticulos = view.findViewById(R.id.tv_cantArticulos);
-        bottomBar = view.findViewById(R.id.bottomNavCart);
+        initializeComponents(view);
         Bundle bundle = getArguments();
 
         if(bundle != null){
@@ -68,12 +64,34 @@ public class Hunter_VerComercio extends Fragment {
             }
         }
 
+        mViewModel.cargarArticulos(commerce.getId());
+
+        setUpListeners();
+        setUpObservers();
+
+        descripcion.setText(commerce.getRazonSocial());
+        gv_articulos.setAdapter(aclAdapter);
+        return view;
+    }
+
+
+    public void initializeComponents(View view){
+        descripcion = view.findViewById(R.id.txt_shop_name_description);
+        gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail);
+        btnAbrirCarrito = view.findViewById(R.id.btnAbrirCarrito);
+        cantArticulos = view.findViewById(R.id.tv_cantArticulos);
+        bottomBar = view.findViewById(R.id.bottomNavCart);
+
         mViewModel = new ViewModelProvider(requireActivity(), new HunterVerComercioViewModelFactory(getActivity())).get(HunterVerComercioViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
-
         aclAdapter = new ArticuloComercioListAdapter(new ArrayList<>(), getContext());
+    }
 
-        mViewModel.cargarArticulos(commerce.getId());
+    public void setUpListeners(){
+        btnAbrirCarrito.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito));
+    }
+
+    public void setUpObservers(){
 
         mViewModel.getMldArticulos().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
             @Override
@@ -90,6 +108,7 @@ public class Hunter_VerComercio extends Fragment {
             }
         });
 
+
         carrito.getTotArticulos().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -102,20 +121,7 @@ public class Hunter_VerComercio extends Fragment {
                 }
             }
         });
-
-
-        btnAbrirCarrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito);
-            }
-        });
-
-        descripcion.setText(commerce.getRazonSocial());
-        gv_articulos.setAdapter(aclAdapter);
-        return view;
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
