@@ -78,6 +78,8 @@ dependencies {
 
     implementation("com.google.zxing:core:3.4.0")
 
+    implementation("com.google.code.gson:gson:2.8.8")
+
 
     implementation(group = "mysql", name = "mysql-connector-java", version="5.1.47")
 

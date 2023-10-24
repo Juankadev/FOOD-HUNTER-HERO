@@ -1,6 +1,8 @@
 package com.example.ffh_rep.activitys;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +22,12 @@ import com.example.ffh_rep.databinding.ActivityNavigationControllerBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
+import com.example.ffh_rep.utils.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class NavigationController extends AppCompatActivity {
 
@@ -32,6 +38,8 @@ public class NavigationController extends AppCompatActivity {
     private Comercio commerceLogged;
     private int IdRole;
     private Intent intent;
+
+    private SessionManager sessionManager;
 
     TextView username;
     @Override
@@ -44,26 +52,29 @@ public class NavigationController extends AppCompatActivity {
         setSupportActionBar(binding.appBarNavigationController.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        sessionManager = new SessionManager(this);
+
 
         this.intent = getIntent();
 
         if(intent.hasExtra("hunter")){
             hunterLogged = (Hunter) intent.getSerializableExtra("hunter");
             this.IdRole = userRol(hunterLogged.getUser());
+            sessionManager.saveHunterSession(hunterLogged);
             initializeViews(hunterLogged.getUser());
         }
         else if(intent.hasExtra("comercio")){
             commerceLogged = (Comercio) intent.getSerializableExtra("comercio");
             this.IdRole = userRol(commerceLogged.getUser());
+            sessionManager.saveCommerceSession(commerceLogged);
             initializeViews(commerceLogged.getUser());
         }
         else{
             userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
             this.IdRole = userRol(userLogged);
+            sessionManager.saveUserSession(userLogged);
             initializeViews(userLogged);
         }
-
-
 
         int navGraphResId = getNavGraphResId(this.IdRole);
         int menuResId = getMenuResId(this.IdRole);
