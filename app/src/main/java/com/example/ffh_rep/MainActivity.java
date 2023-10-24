@@ -10,9 +10,12 @@ import android.widget.EditText;
 
 import com.example.ffh_rep.activitys.NavigationController;
 import com.example.ffh_rep.activitys.RegistroBasic;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
 import com.example.ffh_rep.tasks.IniciarSesionTask;
+import com.example.ffh_rep.tasks.UserDetailsByRoleTask;
 
 public class MainActivity extends AppCompatActivity implements LoginUsuarioCallback {
 
@@ -60,5 +63,25 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
         Intent intent = new Intent(MainActivity.this, NavigationController.class);
         intent.putExtra("usuario", user);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSuccessLoginHunter(Hunter hunter) {
+        Intent intent = new Intent(MainActivity.this, NavigationController.class);
+        intent.putExtra("hunter", hunter);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onSuccessLoginCommerce(Comercio commerce) {
+        Intent intent = new Intent(MainActivity.this, NavigationController.class);
+        intent.putExtra("comercio", commerce);
+        startActivity(intent);
+    }
+
+    @Override
+    public void doGetUserDescriptionByRole(Usuario user) {
+        UserDetailsByRoleTask  userDetailsTask = new UserDetailsByRoleTask(user.getRol().getIdRol(), user, user.getId_usuario(), this, this);
+        userDetailsTask.execute();
     }
 }

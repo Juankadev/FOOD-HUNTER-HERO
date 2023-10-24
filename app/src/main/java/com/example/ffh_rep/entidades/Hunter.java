@@ -1,8 +1,9 @@
 package com.example.ffh_rep.entidades;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Hunter {
+public class Hunter implements Serializable {
     private Integer idHunter;
     private Usuario user;
     private String nombre;

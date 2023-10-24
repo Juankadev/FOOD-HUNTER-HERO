@@ -17,6 +17,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.ActivityNavigationControllerBinding;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,6 +28,11 @@ public class NavigationController extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavigationControllerBinding binding;
     private Usuario userLogged;
+    private Hunter hunterLogged;
+    private Comercio commerceLogged;
+    private int IdRole;
+    private Intent intent;
+
     TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +45,34 @@ public class NavigationController extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
-        int userRole = userRol(userLogged);
+        this.intent = getIntent();
 
-        int navGraphResId = getNavGraphResId(userRole);
-        int menuResId = getMenuResId(userRole);
-        initializeViews();
-        setupNavigation(userRole, navGraphResId, menuResId, navigationView, drawer);
+        if(intent.hasExtra("hunter")){
+            hunterLogged = (Hunter) intent.getSerializableExtra("hunter");
+            this.IdRole = userRol(hunterLogged.getUser());
+            initializeViews(hunterLogged.getUser());
+        }
+        else if(intent.hasExtra("comercio")){
+            commerceLogged = (Comercio) intent.getSerializableExtra("comercio");
+            this.IdRole = userRol(commerceLogged.getUser());
+            initializeViews(commerceLogged.getUser());
+        }
+        else{
+            userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
+            this.IdRole = userRol(userLogged);
+            initializeViews(userLogged);
+        }
+
+
+
+        int navGraphResId = getNavGraphResId(this.IdRole);
+        int menuResId = getMenuResId(this.IdRole);
+
+        setupNavigation(this.IdRole, navGraphResId, menuResId, navigationView, drawer);
     }
-    private void initializeViews() {
+    private void initializeViews(Usuario u) {
         username = findViewById(R.id.username);
-        username.setText(userLogged.getUsername());
+        username.setText(u.getUsername());
     }
     private int getNavGraphResId(int userRole) {
         switch (userRole) {
@@ -88,8 +112,22 @@ public class NavigationController extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        int userRole = userRol((Usuario) getIntent().getSerializableExtra("usuario"));
-        int menuResId = getMenuResId(userRole);
+        if(this.intent.hasExtra("hunter")){
+            hunterLogged = (Hunter) intent.getSerializableExtra("hunter");
+            this.IdRole = userRol(hunterLogged.getUser());
+            initializeViews(hunterLogged.getUser());
+        }
+        else if(this.intent.hasExtra("comercio")){
+            commerceLogged = (Comercio) intent.getSerializableExtra("comercio");
+            this.IdRole = userRol(commerceLogged.getUser());
+            initializeViews(commerceLogged.getUser());
+        }
+        else{
+            userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
+            this.IdRole = userRol(userLogged);
+            initializeViews(userLogged);
+        }
+        int menuResId = getMenuResId(this.IdRole);
         getMenuInflater().inflate(menuResId, menu);
         return true;
     }

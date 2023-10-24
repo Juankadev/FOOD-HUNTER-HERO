@@ -1,6 +1,8 @@
 package com.example.ffh_rep.entidades;
 
-public class Rango {
+import java.io.Serializable;
+
+public class Rango implements Serializable {
     private Integer id_rango;
     private String descripcion;
     private Integer puntaje;
