@@ -103,12 +103,7 @@ public class Hunter_MiCuenta extends Fragment {
         updateHunter.setCorreo_electronico(et_correo.getText().toString());
         updateHunter.setDireccion(et_direccion.getText().toString());
 
-        mViewModel.updateInformation();
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(HunterMiCuentaViewModel.class);
+        mViewModel.updateInformation(updateHunter);
     }
 
 }

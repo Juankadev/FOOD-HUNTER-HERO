@@ -13,13 +13,14 @@ import java.sql.PreparedStatement;
 
 public class ModificarHunterTask extends AsyncTask<Void, Void, Boolean> {
 
-    private Context ctx;
     private Hunter hun;
 
-    public ModificarHunterTask(Context contexto, Hunter hunter){
-        this.ctx = contexto;
+
+    public ModificarHunterTask(Hunter hunter){
         this.hun = hunter;
     }
+
+
 
     @Override
     protected Boolean doInBackground(Void... voids) {
@@ -52,11 +53,6 @@ public class ModificarHunterTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean response) {
-        if(response){
-            Toast.makeText(ctx, "Hunter Modificado exitosamente", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(ctx, "Error, ID inexistente", Toast.LENGTH_SHORT).show();
-        }
+
     }
 }

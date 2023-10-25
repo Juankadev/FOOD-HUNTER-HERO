@@ -18,7 +18,7 @@ public class BajaArticuloTask extends AsyncTask<Void, Void, Boolean> {
     public BajaArticuloTask(Context ctx, Articulo articulo) {
         this.ctx = ctx;
         this.articulo = articulo;
-¿    }
+    }
 
     @Override
     protected Boolean doInBackground(Void... voids) {

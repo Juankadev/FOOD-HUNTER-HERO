@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,9 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ArticulosListAdapter;
 import com.example.ffh_rep.databinding.FragmentHunterMiCarritoBinding;
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.factory.CarritoViewModelFactory;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +39,7 @@ public class Hunter_MiCarrito extends Fragment {
     private ArticulosListAdapter alAdapter;
     private ListView lvArticulos;
     private Button btnEndHunting;
-    private List<Articulo> _currChart;
+    private List<ItemCarrito> _currChart;
 
     public static Hunter_MiCarrito newInstance() {
         return new Hunter_MiCarrito();
@@ -54,9 +57,9 @@ public class Hunter_MiCarrito extends Fragment {
 
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
 
-        carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
+        carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
             @Override
-            public void onChanged(List<Articulo> articulos) {
+            public void onChanged(List<ItemCarrito> articulos) {
                 alAdapter.setlArticulos(articulos);
                 _currChart = articulos;
             }
@@ -67,8 +70,10 @@ public class Hunter_MiCarrito extends Fragment {
             public void onClick(View v) {
                 try {
                     Bundle args = new Bundle();
+                    Gson gson = new Gson();
+                    String jsonDataArr = gson.toJson(_currChart);
                     JSONObject jsonData = new JSONObject();
-                    JSONArray jArray = new JSONArray(_currChart);
+                    JSONArray jArray = new JSONArray(jsonDataArr);
                     jsonData.put("articulos", jArray);
 
                     String data = jsonData.toString();

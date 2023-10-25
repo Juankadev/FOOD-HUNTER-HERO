@@ -25,16 +25,17 @@ public class HunterMiCuentaViewModel extends ViewModel {
     }
 
 
-    public void updateInformation(){
-        Log.d("Mutable Live Data", this.hunterData.toString());
-    }
+
     public MutableLiveData<Hunter> getHunterData() {
         return hunterData;
     }
 
     public void setHunterDataWithHunte(Hunter hunter){
-        this.hunterData.postValue(hunter);
-        Log.d("SETTING", "setHunterDataWithHunte: " + this.hunterData.toString());
+        this.hunterData.setValue(hunter);
+    }
+
+    public void updateInformation(Hunter hunter){
+        hunterRepo.updateUserInfo(this.hunterData, hunter);
     }
     public void setHunterData(MutableLiveData<Hunter> hunterData) {
         this.hunterData = hunterData;

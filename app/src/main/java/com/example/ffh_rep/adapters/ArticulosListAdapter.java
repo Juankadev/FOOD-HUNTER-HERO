@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.repositories.ArticuloRepository;
 
 import org.w3c.dom.Text;
@@ -17,23 +18,23 @@ import java.util.List;
 
 public class ArticulosListAdapter extends BaseAdapter {
 
-    private List<Articulo> lArticulos;
+    private List<ItemCarrito> lArticulos;
     private LayoutInflater inflater;
 
     public ArticulosListAdapter(Context contxt){
         this.inflater = LayoutInflater.from(contxt);
     }
 
-    public ArticulosListAdapter(List<Articulo> lista, Context contxt){
+    public ArticulosListAdapter(List<ItemCarrito> lista, Context contxt){
         this.inflater = LayoutInflater.from(contxt);
         this.lArticulos = lista;
     }
 
-    public List<Articulo> getlArticulos() {
+    public List<ItemCarrito> getlArticulos() {
         return lArticulos;
     }
 
-    public void setlArticulos(List<Articulo> lArticulos) {
+    public void setlArticulos(List<ItemCarrito> lArticulos) {
         this.lArticulos = lArticulos;
 
     }
@@ -67,9 +68,9 @@ public class ArticulosListAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        Articulo a = lArticulos.get(position);
-        vh.precio.setText(String.valueOf(a.getPrecio()));
-        vh.descripcion.setText(a.getDescripcion());
+        ItemCarrito a = lArticulos.get(position);
+        vh.precio.setText(String.valueOf(a.getArtc().getPrecio()));
+        vh.descripcion.setText(a.getArtc().getDescripcion());
 
         return convertView;
     }

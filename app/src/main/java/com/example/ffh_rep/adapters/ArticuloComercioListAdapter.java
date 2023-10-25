@@ -3,6 +3,7 @@ package com.example.ffh_rep.adapters;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
             vh = new ViewHolder();
             vh.nombre = convertView.findViewById(R.id.tv_item_articulo_nombre);
             vh.fecha = convertView.findViewById(R.id.tv_item_articulo_fecha_vencimiento);
+            vh.marca = convertView.findViewById(R.id.tv_item_articulo_marca);
+            vh.categoria = convertView.findViewById(R.id.tv_item_articulo_categoria);
             convertView.setTag(vh);
         }
         else{
@@ -62,7 +65,6 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
         }
         Articulo a = this.lArticulos.get(position);
         vh.nombre.setText(a.getDescripcion());
-        vh.fecha.setText(a.getEstado());
         vh.marca.setText(a.getMarca().getDescripcion());
         vh.categoria.setText(a.getCategoria().getDescripcion());
         convertView.setOnClickListener(new View.OnClickListener() {

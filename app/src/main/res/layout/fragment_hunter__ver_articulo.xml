@@ -7,6 +7,19 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.hunter.Hunter_VerArticulo" >
 
+    <TextView
+        android:id="@+id/tv_cantidadItem"
+        android:layout_width="28dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="0"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAgregarCarrito"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategoriaArt"
+        app:layout_constraintVertical_bias="0.662" />
+
     <ImageView
         android:id="@+id/ivArticulo"
         android:layout_width="wrap_content"
@@ -75,4 +88,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMarcaArt"
         app:layout_constraintVertical_bias="0.28" />
+
+    <Button
+        android:id="@+id/btnRestarItem"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:text="-"
+        app:layout_constraintEnd_toStartOf="@+id/tv_cantidadItem"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategoriaArt" />
+
+    <Button
+        android:id="@+id/btnSumarItem"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:text="+"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.362"
+        app:layout_constraintStart_toEndOf="@+id/tv_cantidadItem"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategoriaArt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

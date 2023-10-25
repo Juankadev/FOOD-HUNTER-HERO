@@ -45,7 +45,7 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
                     query = "Select c.id_comercio, c.cuit, c.razon_social, c.rubro, c.correo_electronico, c.telefono, c.direccion from Comercios c where c.aprobado like 'aprobado' and c.id_usuario = ?";
                 }
                 if(IdRol == 2){
-                    query = "Select h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
+                    query = "Select h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
                 }
 
                 PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -82,6 +82,7 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
         hunter.setUser(this.user);
         hunter.setId_rango(new Rango());
         hunter.getId_rango().setIdRango(rs.getInt("id_rango"));
+        hunter.setIdHunter(rs.getInt("id_hunter"));
         hunter.getId_rango().setDescripcion(rs.getString("rangodesc"));
         hunter.setNombre(rs.getString("nombre"));
         hunter.setApellido(rs.getString("apellido"));
@@ -98,10 +99,12 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
     public Comercio extractCommerceFromResult(ResultSet rs) throws SQLException {
         Comercio c = new Comercio();
         c.setUser(this.user);
+        c.setId(rs.getInt("id_comercio"));
         c.setCuit(rs.getString("cuit"));
         c.setRazonSocial(rs.getString("razon_social"));
         c.setRubro(rs.getString("rubro"));
-        c.setTelefono(rs.getString("telefono"));
+        c.setTelefono(rs.getString("" +
+                "telefono"));
         c.setDireccion(rs.getString("direccion"));
         c.setEmail(rs.getString("correo_electronico"));
 

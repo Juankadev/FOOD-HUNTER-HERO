@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.factory.CarritoViewModelFactory;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class CarritoViewModel extends ViewModel{
 
-    private MutableLiveData<List<Articulo>> carrito;
+    private MutableLiveData<List<ItemCarrito>> carrito;
     private MutableLiveData<Integer> totArticulos;
     private Context ctx;
 
@@ -26,12 +27,12 @@ public class CarritoViewModel extends ViewModel{
     }
 
 
-    public MutableLiveData<List<Articulo>> getCarrito() {
+    public MutableLiveData<List<ItemCarrito>> getCarrito() {
         return carrito;
     }
 
-    public void addArticleToCart(Articulo article){
-        List<Articulo> _currCart = this.carrito.getValue();
+    public void addArticleToCart(ItemCarrito article){
+        List<ItemCarrito> _currCart = this.carrito.getValue();
         Integer _currTot = this.totArticulos.getValue();
         if(_currCart == null){
             _currCart = new ArrayList<>();
@@ -41,7 +42,7 @@ public class CarritoViewModel extends ViewModel{
         this.carrito.setValue(_currCart);
         this.totArticulos.setValue(_currTot);
     }
-    public void setCarrito(MutableLiveData<List<Articulo>> carrito) {
+    public void setCarrito(MutableLiveData<List<ItemCarrito>> carrito) {
         this.carrito = carrito;
     }
 

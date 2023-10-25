@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.tasks.ModificarHunterTask;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
@@ -17,7 +18,10 @@ import java.util.List;
 
 public class HunterRepository {
 
+    private ModificarHunterTask modificarTask;
+
     public void updateUserInfo(MutableLiveData<Hunter> mlHunter, Hunter hunter){
+
         new AsyncTask<Void, Void, Boolean>(){
             @Override
             protected Boolean doInBackground(Void... voids) {
@@ -25,7 +29,7 @@ public class HunterRepository {
                 PreparedStatement ps = null;
                 try {
                     con = DBUtil.getConnection();
-                    String query = "Update Hunters set nombre = ?, apellido = ?, dni = ?, sexo = ?, correo_electronico = ?, direccion = ?where id_hunter = ?";
+                    String query = "Update Hunters set nombre = ?, apellido = ?, dni = ?, sexo = ?, correo_electronico = ?, direccion = ? where id_hunter = ?";
                     ps = con.prepareStatement(query);
 
                     ps.setString(1, hunter.getNombre());
@@ -33,7 +37,8 @@ public class HunterRepository {
                     ps.setString(3, hunter.getDni());
                     ps.setString(4, hunter.getSexo());
                     ps.setString(5, hunter.getCorreo_electronico());
-                    ps.setString(7, hunter.getDireccion());
+                    ps.setString(6, hunter.getDireccion());
+                    ps.setInt(7, hunter.getIdHunter());
 
                     int rowsAffected = ps.executeUpdate();
                     ps.close();

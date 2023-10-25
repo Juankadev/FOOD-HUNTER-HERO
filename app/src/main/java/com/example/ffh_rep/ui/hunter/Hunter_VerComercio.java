@@ -25,6 +25,7 @@ import com.example.ffh_rep.adapters.ArticuloComercioListAdapter;
 import com.example.ffh_rep.databinding.FragmentHunterVerComercioBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.factory.CarritoViewModelFactory;
 import com.example.ffh_rep.factory.HunterVerComercioViewModelFactory;
 import com.example.ffh_rep.repositories.ArticuloRepository;
@@ -96,14 +97,13 @@ public class Hunter_VerComercio extends Fragment {
         mViewModel.getMldArticulos().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
             @Override
             public void onChanged(List<Articulo> articulos) {
-                Log.d("Articulo listener", articulos.toString());
                 aclAdapter.setData(articulos);
             }
         });
 
-        carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
+        carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
             @Override
-            public void onChanged(List<Articulo> articulos) {
+            public void onChanged(List<ItemCarrito> articulos) {
                 Log.d("carrito actual", articulos.toString());
             }
         });
