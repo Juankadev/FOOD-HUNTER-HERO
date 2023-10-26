@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
-import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.utils.DBUtil;
 
@@ -157,8 +156,8 @@ public class ArticuloRepository {
                     ps.setInt(3, articulo.getCategoria().getIdCategoria());
                     ps.setInt(4, articulo.getMarca().getIdMarca());
                     ps.setInt(5, articulo.getIdArticulo());
-                    ps.setInt(6, articulo.getImagen());
-                    ps.setInt(7, articulo.getEstado());
+                    ps.setString(6, articulo.getImagen());
+                    ps.setString(7, articulo.getEstado());
 
                     int rowsAffected = ps.executeUpdate();
 
@@ -206,7 +205,7 @@ public class ArticuloRepository {
                     ps.setDouble(2, articulo.getPrecio());
                     ps.setInt(3, articulo.getCategoria().getIdCategoria());
                     ps.setInt(4, articulo.getMarca().getIdMarca());
-                    ps.setInt(5, articulo.getImagen());
+                    ps.setString(5, articulo.getImagen());
                     ps.setString(6, articulo.getEstado());
                     ps.setInt(7, articulo.getIdArticulo());
 
@@ -240,7 +239,7 @@ public class ArticuloRepository {
         }.execute();
     }
 
-    public Articulo buscarArticuloPorID(Context context, int idArticulo) {
+    public void buscarArticuloPorID(Context context, int idArticulo) {
         new AsyncTask<Void, Void, Articulo>() {
             @Override
             protected Articulo doInBackground(Void... voids) {
@@ -292,6 +291,7 @@ public class ArticuloRepository {
                 super.onPostExecute(articulo);
             }
         }.execute();
+
     }
 
     public void buscarArticuloPorDescripcion(MutableLiveData<List<Articulo>> ldata, String descripcion) {
@@ -321,7 +321,7 @@ public class ArticuloRepository {
                         articulo.setMarca(new Marca());
                         articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
                         articulo.setImagen(rs.getString("imagen"));
-                        articulo.setEstado(rs.getInt("estado"));
+                        articulo.setEstado(rs.getString("estado"));
 
                         articulos.add(articulo);
                     }
@@ -346,7 +346,17 @@ public class ArticuloRepository {
             @Override
             protected void onPostExecute(List<Articulo> articulos) {
                 super.onPostExecute(articulos);
-                ldata.postValue(articulos);
+                if(articulos != null){
+                    if(articulos.isEmpty()){
+                        ldata.postValue(new ArrayList<>());
+                    }
+                    else{
+                        ldata.postValue(articulos);
+                    }
+                }
+                else{
+                    ldata.postValue(new ArrayList<>());
+                }
             }
         }.execute();
     }
