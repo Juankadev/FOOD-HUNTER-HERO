@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,7 +11,6 @@ import android.widget.Toast;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;

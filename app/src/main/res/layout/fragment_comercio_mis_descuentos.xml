@@ -4,75 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.commerce.FragmentAgregarDescuentoComercio">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+    tools:context=".ui.commerce.MisDescuentosComercio">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.commerce.fragment_comercio_articulos">
-
-        <GridLayout
-            android:id="@+id/gv_descuentos_container_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_below="@+id/et_Articulos"
-            android:layout_marginTop="170dp"
-            android:columnCount="3"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/img_Art1"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_menu_gallery" />
-
-                <TextView
-                    android:id="@+id/et_Art1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Descuento 2" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#FF0000"
-                        android:text="x" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#FFD500"
-                        android:text="✎" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Agregar nuevas celdas -->
-
-        </GridLayout>
 
         <LinearLayout
             android:id="@+id/shopLayout"
@@ -174,16 +111,16 @@
             android:layout_marginTop="16dp"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="@string/aniadir_desc" />
+            tools:text="@string/descuentos" />
 
         <GridLayout
-            android:id="@+id/gridLayout"
+            android:id="@+id/gv_descuentos_container_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_below="@+id/et_Articulos"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
             android:columnCount="3"
             android:gravity="center">
 
@@ -195,19 +132,25 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_Art2"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_menu_gallery" />
+                <TextView
+                    android:id="@+id/IdDescuento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Id descuento" />
 
                 <TextView
-                    android:id="@+id/et_Art2"
+                    android:id="@+id/etDescDescuento"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Descuento 1" />
+                    android:text="Descripcion" />
+
+                <TextView
+                    android:id="@+id/etPuntosReq"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Punto requeridos" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -216,12 +159,14 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnEliminarDescuento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#FF0000"
                         android:text="x" />
 
                     <Button
+                        android:id="@+id/btnModificarDescuento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#FFD500"

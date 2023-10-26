@@ -105,7 +105,7 @@
                 app:srcCompat="@drawable/ic_menu_gallery" />
 
             <TextView
-                android:id="@+id/et_Art1"
+                android:id="@+id/etDescDescuento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

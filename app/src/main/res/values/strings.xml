@@ -163,7 +163,7 @@
     <string name="shop">Shop</string>
     <string name="mis_articulos">Mis Articulos</string>
     <string name="mis_descuentos"> Mis Descuentos</string>
-    <string name="aniadir_desc">Añadir descuentos</string>
+    <string name="descuentos">Mis descuentos</string>
     <string name="buscar">Buscar</string>
     <string name="productos">Productos</string>
     <string name="mi_carrito">Mi Carrito</string>
@@ -175,6 +175,10 @@
     <string name="aprobar">Aprobar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titulo_agregar_desc">Agregar descuento\nDebe agregar una descripcion para el descuento y una cantidad de puntos para que el hunter pueda obtenerlo</string>
+    <string name="agregar_desc">Agregar descuento</string>
+    <string name="titulo_modificar_descuento">Modificar descuento\nDebe ingresar una descripcion y/o cantidad de puntos requeridos nuevo</string>
+    <string name="modificar_descuento">Modificar descuento\n</string>
 
 
 </resources>
