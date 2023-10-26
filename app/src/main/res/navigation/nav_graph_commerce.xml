@@ -19,4 +19,9 @@
         android:name="com.example.ffh_rep.ui.commerce.FragmentAgregarDescuentoComercio"
         android:label="fragment_fragment_agregar_descuento_comercio"
         tools:layout="@layout/fragment_fragment_agregar_descuento_comercio" />
+    <fragment
+        android:id="@+id/agregarArticulo"
+        android:name="com.example.ffh_rep.ui.commerce.AgregarArticulo"
+        android:label="fragment_agregar_articulo"
+        tools:layout="@layout/fragment_agregar_articulo" />
 </navigation>

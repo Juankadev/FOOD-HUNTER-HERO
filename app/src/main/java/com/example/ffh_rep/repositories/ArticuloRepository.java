@@ -18,6 +18,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.ffh_rep.repositories.ArticuloRepository;
+
+
 public class ArticuloRepository {
 
     public void getArticulos_by_idComercio(MutableLiveData<List<Articulo>> ldata, int id){
