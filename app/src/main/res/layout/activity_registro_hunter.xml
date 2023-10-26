@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +10,11 @@
 
     <EditText
         android:id="@+id/et_fechanacimiento"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -20,16 +23,17 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toBottomOf="@+id/et_telefono"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_telefono2" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/et_telefono2"
-        android:layout_width="wrap_content"
+        android:id="@+id/et_telefono"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -38,10 +42,9 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toBottomOf="@+id/et_direccion"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_direccion" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -62,10 +65,9 @@
         android:text="@string/register_title"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/tv_2"
@@ -76,15 +78,17 @@
         android:text="@string/register_title_hunter"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_1" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/et_nombre"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -93,15 +97,17 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_2" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/et_apellido"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -110,16 +116,17 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintTop_toBottomOf="@+id/et_nombre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_nombre" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/et_dni"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -128,15 +135,17 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_apellido"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_apellido" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/et_correo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -145,15 +154,17 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_dni"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_dni" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/et_direccion"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
@@ -162,54 +173,55 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_correo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_correo" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <Spinner
         android:id="@+id/spinner_sexo"
-        android:layout_width="400px"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/border_with_arrow"
         android:backgroundTint="#A3FFFFFF"
         android:ems="10"
+        android:padding="10dp"
         android:textColor="#000000"
         android:textColorHint="#515151"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/et_fechanacimiento"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_fechanacimiento"
-        app:layout_constraintWidth_default="spread" />
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FFFFFF"
-        android:text="@string/btn_registrarme"
-        android:textColor="#2400FF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.559"
-        app:layout_constraintStart_toEndOf="@+id/btn_back_menu"
-        app:layout_constraintTop_toBottomOf="@+id/et_fechanacimiento"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btn_back_menu"
-        android:layout_width="127dp"
+        android:layout_width="0dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="180dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
         android:backgroundTint="#B6B6B6"
         android:text="@string/btn_volver"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_sexo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_fechanacimiento"
-        app:layout_constraintVertical_bias="0.843" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_register" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="@string/btn_registrarme"
+        android:textColor="#2400FF"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_sexo"
+        app:layout_constraintStart_toEndOf="@+id/btn_back_menu"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

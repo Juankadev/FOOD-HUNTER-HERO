@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.tasks.IniciarSesionTask;
+import com.example.ffh_rep.tasks.UserExistsTask;
 
 public class RegistroBasic extends AppCompatActivity {
 
@@ -25,7 +27,10 @@ public class RegistroBasic extends AppCompatActivity {
         initializeViews();
         setupButtonClickListeners();
     }
-
+    /**
+     * Inicializa las vistas necesarias para la interfaz de registro.
+     * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
+     */
     private void initializeViews() {
         etRUser = findViewById(R.id.et_r_user);
         etRPass = findViewById(R.id.et_r_password);
@@ -35,42 +40,86 @@ public class RegistroBasic extends AppCompatActivity {
         btnCommerce = findViewById(R.id.btn_rc_commerce);
         btnHunter = findViewById(R.id.btn_rc_Hunter);
     }
-
+    /**
+     * Configura los listeners de clic para los botones de la interfaz.
+     * Asigna los métodos correspondientes a los eventos de clic en los botones.
+     */
     private void setupButtonClickListeners() {
         btnHunter.setOnClickListener(v -> onTypeSelected(RegistroHunter.class));
         btnCommerce.setOnClickListener(v -> onTypeSelected(RegistroComercio.class));
         btnBack.setOnClickListener(v -> goBackToMainActivity());
     }
-
+    /**
+     * Método llamado al seleccionar un tipo de registro (Hunter o Comercio).
+     * Verifica la validez de los campos y, si son válidos, inicia la actividad de registro correspondiente.
+     *
+     * @param registrationType Clase de la actividad de registro seleccionada.
+     */
     private void onTypeSelected(Class<?> registrationType) {
-        if (isAllComplete(etRUser.getText().toString(), etRPass.getText().toString(), etRcPass.getText().toString())) {
-            if (samePasswords(etRPass.getText().toString(), etRcPass.getText().toString())) {
-                Intent intent = new Intent(RegistroBasic.this, registrationType);
-                intent.putExtra("username", etRUser.getText().toString());
-                intent.putExtra("password", etRPass.getText().toString());
-                startActivity(intent);
-            } else {
-                showToast("Las contraseñas deben ser iguales");
-            }
-        } else {
-            showToast("Por favor, antes de continuar complete todos los datos");
+        // Verificar si los campos son válidos antes de iniciar la actividad de registro
+        if (validateFields()) {
+            // Crear un intent para iniciar la actividad de registro
+            Intent intent = new Intent(RegistroBasic.this, registrationType);
+
+            // Agregar datos extra al intent (nombre de usuario y contraseña)
+            intent.putExtra("username", etRUser.getText().toString());
+            intent.putExtra("password", etRPass.getText().toString());
+
+            // Iniciar la actividad de registro
+            startActivity(intent);
         }
     }
+    /**
+     * Valida los campos del formulario de registro.
+     * Verifica si el nombre de usuario ya existe y si las contraseñas coinciden.
+     *
+     * @return true si todos los campos son válidos, false de lo contrario.
+     */
+    private boolean validateFields() {
+        boolean isValid = true;
 
+        // Obtener los valores de los campos
+        String username = etRUser.getText().toString();
+        String password = etRPass.getText().toString();
+        String confirmPassword = etRcPass.getText().toString();
+
+        // Verificar si los campos están vacíos
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            isValid = false;
+        }
+
+        // Verificar si las contraseñas coinciden
+        if (!password.equals(confirmPassword)) {
+            isValid = false;
+        }
+
+        // Mostrar mensaje de error si los campos no son válidos
+        if (!isValid) {
+            Toast.makeText(RegistroBasic.this, "Por favor, antes de continuar verifique todos los datos.", Toast.LENGTH_SHORT).show();
+            return isValid;
+        }
+
+        // Verificar si el nombre de usuario ya existe en la base de datos
+        try {
+            UserExistsTask task = new UserExistsTask(this, username);
+            boolean userExists = task.execute().get(); // Esperar a que se complete la tarea
+
+            // Si el nombre de usuario ya existe, marcar como no válido y mostrar mensaje de error
+            if (userExists) {
+                isValid = false;
+                Toast.makeText(RegistroBasic.this, "El nombre de usuario ya está en uso.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isValid;
+    }
+    /**
+     * Navega de nuevo a la actividad principal (MainActivity).
+     */
     private void goBackToMainActivity() {
         Intent intent = new Intent(RegistroBasic.this, MainActivity.class);
         startActivity(intent);
-    }
-
-    private boolean isAllComplete(String field1, String field2, String field3) {
-        return !field1.isEmpty() && !field2.isEmpty() && !field3.isEmpty();
-    }
-
-    private boolean samePasswords(String pass, String cPass) {
-        return pass.equals(cPass);
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(RegistroBasic.this, message, Toast.LENGTH_SHORT).show();
     }
 }
