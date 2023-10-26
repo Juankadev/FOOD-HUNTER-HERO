@@ -75,7 +75,7 @@ public class NavigationController extends AppCompatActivity {
             sessionManager.saveUserSession(userLogged);
             initializeViews(userLogged);
         }
-
+        Log.d("ROL", String.valueOf(this.IdRole));
         int navGraphResId = getNavGraphResId(this.IdRole);
         int menuResId = getMenuResId(this.IdRole);
 

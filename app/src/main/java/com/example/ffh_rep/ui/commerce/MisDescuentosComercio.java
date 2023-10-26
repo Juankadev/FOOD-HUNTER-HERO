@@ -60,12 +60,12 @@ public class MisDescuentosComercio extends Fragment {
             }
         });
 
-        btnMisArticulos.setOnClickListener(new View.OnClickListener() {
+      /*  btnMisArticulos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.fragment_comercio_articulos);
             }
-        });
+        });*/
 
         return view;
     }

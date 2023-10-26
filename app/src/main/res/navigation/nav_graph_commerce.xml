@@ -3,22 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_commerce"
-    app:startDestination="@id/nav_slideshow">
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.ffh_rep.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/fragment_comercio_articulos"
-        android:name="com.example.ffh_rep.ui.commerce.fragment_comercio_articulos"
-        android:label="fragment_comercio_articulos"
-        tools:layout="@layout/fragment_comercio_articulos" />
+    app:startDestination="@id/commerce_MisArticulos">
+
     <fragment
         android:id="@+id/fragmentAgregarDescuentoComercio"
         android:name="com.example.ffh_rep.ui.commerce.MisDescuentosComercio"
         android:label="fragment_fragment_agregar_descuento_comercio"
-        tools:layout="@layout/fragment_comercio_mis_descuentos" />
+        tools:layout="@layout/fragment_comercio_mis_descuentos" >
+        <action
+            android:id="@+id/action_fragmentAgregarDescuentoComercio_to_agregarDescuento"
+            app:destination="@id/agregarDescuento" />
+        <action
+            android:id="@+id/action_fragmentAgregarDescuentoComercio_to_modificarDescuento"
+            app:destination="@id/modificarDescuento" />
+    </fragment>
     <fragment
         android:id="@+id/agregarArticulo"
         android:name="com.example.ffh_rep.ui.commerce.AgregarArticulo"
@@ -34,4 +32,16 @@
         android:name="com.example.ffh_rep.ui.commerce.ModificarDescuento"
         android:label="fragment_modificar_descuento"
         tools:layout="@layout/fragment_modificar_descuento" />
+    <fragment
+        android:id="@+id/commerce_MisArticulos"
+        android:name="com.example.ffh_rep.ui.commerce.Commerce_MisArticulos"
+        android:label="fragment_commerce__mis_articulos"
+        tools:layout="@layout/fragment_commerce__mis_articulos" >
+        <action
+            android:id="@+id/action_commerce_MisArticulos_to_agregarArticulo"
+            app:destination="@id/agregarArticulo" />
+        <action
+            android:id="@+id/action_commerce_MisArticulos_to_fragmentAgregarDescuentoComercio"
+            app:destination="@id/fragmentAgregarDescuentoComercio" />
+    </fragment>
 </navigation>
