@@ -1,7 +1,9 @@
 package com.example.ffh_rep.repositories;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -138,4 +140,219 @@ public class ArticuloRepository {
             }
         }.execute();
     }
+
+    public void insertArticulo(Context context, Articulo articulo) {
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                Connection con = null;
+                PreparedStatement ps = null;
+
+                try {
+                    con = DBUtil.getConnection();
+                    String query = "INSERT INTO Articulos (descripcion, precio, id_categoria, id_marca, id_articulo, imagen, precio, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    ps = con.prepareStatement(query);
+                    ps.setString(1, articulo.getDescripcion());
+                    ps.setDouble(2, articulo.getPrecio());
+                    ps.setInt(3, articulo.getCategoria().getIdCategoria());
+                    ps.setInt(4, articulo.getMarca().getIdMarca());
+                    ps.setInt(5, articulo.getIdArticulo());
+                    ps.setInt(6, articulo.getImagen());
+                    ps.setInt(7, articulo.getEstado());
+
+                    int rowsAffected = ps.executeUpdate();
+
+                    return rowsAffected > 0;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                } finally {
+                    try {
+                        if (ps != null) {
+                            ps.close();
+                        }
+                        DBUtil.closeConnection(con);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                if (result) {
+                    Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }.execute();
+    }
+
+    public void updateArticulo(Context context, Articulo articulo) {
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                Connection con = null;
+                PreparedStatement ps = null;
+
+                try {
+                    con = DBUtil.getConnection();
+                    String query = "UPDATE Articulos SET descripcion = ?, precio = ?, id_categoria = ?, id_marca = ?, imagen = ?, estado = ? WHERE id_articulo = ?";
+                    ps = con.prepareStatement(query);
+                    ps.setString(1, articulo.getDescripcion());
+                    ps.setDouble(2, articulo.getPrecio());
+                    ps.setInt(3, articulo.getCategoria().getIdCategoria());
+                    ps.setInt(4, articulo.getMarca().getIdMarca());
+                    ps.setInt(5, articulo.getImagen());
+                    ps.setString(6, articulo.getEstado());
+                    ps.setInt(7, articulo.getIdArticulo());
+
+                    int rowsAffected = ps.executeUpdate();
+
+                    return rowsAffected > 0;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                } finally {
+                    try {
+                        if (ps != null) {
+                            ps.close();
+                        }
+                        DBUtil.closeConnection(con);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                if (result) {
+                    Toast.makeText(context, "Artículo actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
+    }
+
+    public Articulo buscarArticuloPorID(Context context, int idArticulo) {
+        new AsyncTask<Void, Void, Articulo>() {
+            @Override
+            protected Articulo doInBackground(Void... voids) {
+                Connection con = null;
+                PreparedStatement ps = null;
+                ResultSet rs = null;
+
+                try {
+                    con = DBUtil.getConnection();
+                    String query = "SELECT * FROM Articulos WHERE id_articulo = ?";
+                    ps = con.prepareStatement(query);
+                    ps.setInt(1, idArticulo);
+                    rs = ps.executeQuery();
+
+                    if (rs.next()) {
+                        Articulo articulo = new Articulo();
+                        articulo.setIdArticulo(rs.getInt("id_articulo"));
+                        articulo.setDescripcion(rs.getString("descripcion"));
+                        articulo.setPrecio(rs.getDouble("precio"));
+                        articulo.setCategoria(new Categoria());
+                        articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                        articulo.setMarca(new Marca());
+                        articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
+                        articulo.setImagen(rs.getString("imagen"));
+                        articulo.setEstado(rs.getString("estado"));
+
+                        return articulo;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                        DBUtil.closeConnection(con);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Articulo articulo) {
+                super.onPostExecute(articulo);
+            }
+        }.execute();
+    }
+
+    public void buscarArticuloPorDescripcion(MutableLiveData<List<Articulo>> ldata, String descripcion) {
+        new AsyncTask<Void, Void, List<Articulo>>() {
+            @Override
+            protected List<Articulo> doInBackground(Void... voids) {
+                List<Articulo> articulos = new ArrayList<>();
+                Connection con = null;
+                PreparedStatement ps = null;
+                ResultSet rs = null;
+
+                try {
+                    con = DBUtil.getConnection();
+                    String query = "SELECT * FROM Articulos WHERE descripcion LIKE ?";
+                    ps = con.prepareStatement(query);
+                    ps.setString(1, "%" + descripcion + "%");
+
+                    rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        Articulo articulo = new Articulo();
+                        articulo.setIdArticulo(rs.getInt("id_articulo"));
+                        articulo.setDescripcion(rs.getString("descripcion"));
+                        articulo.setPrecio(rs.getDouble("precio"));
+                        articulo.setCategoria(new Categoria());
+                        articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                        articulo.setMarca(new Marca());
+                        articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
+                        articulo.setImagen(rs.getString("imagen"));
+                        articulo.setEstado(rs.getInt("estado"));
+
+                        articulos.add(articulo);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (rs != null) {
+                            rs.close();
+                        }
+                        if (ps != null) {
+                            ps.close();
+                        }
+                        DBUtil.closeConnection(con);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return articulos;
+            }
+
+            @Override
+            protected void onPostExecute(List<Articulo> articulos) {
+                super.onPostExecute(articulos);
+                ldata.postValue(articulos);
+            }
+        }.execute();
+    }
+
+
+
+
+
 }
