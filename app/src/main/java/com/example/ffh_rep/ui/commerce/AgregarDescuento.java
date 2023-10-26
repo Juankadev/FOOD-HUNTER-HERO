@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +34,7 @@ public class AgregarDescuento extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercio_agregardescuento, container, false);
 
-        txtDescripcion = view.findViewById(R.id.edtDesc);
-        txtPuntos = view.findViewById(R.id.edtPuntos);
-
-        btnAgregarDescuento = view.findViewById(R.id.btnAgregarDescuento);
-        btnVolverMisDescuentos = view.findViewById(R.id.btnVolver);
+        initComponentes(view);
 
         btnAgregarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +51,22 @@ public class AgregarDescuento extends Fragment {
             }
         });
 
+        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AgregarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
+            }
+        });
+
         return view;
+    }
+
+    public void initComponentes(View view){
+        txtDescripcion = view.findViewById(R.id.edtDesc);
+        txtPuntos = view.findViewById(R.id.edtPuntos);
+
+        btnAgregarDescuento = view.findViewById(R.id.btnAgregarDescuento);
+        btnVolverMisDescuentos = view.findViewById(R.id.btnVolver);
     }
 
 }

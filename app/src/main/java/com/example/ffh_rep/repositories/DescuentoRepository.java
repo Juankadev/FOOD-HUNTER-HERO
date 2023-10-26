@@ -26,7 +26,7 @@ public class DescuentoRepository {
                     Class.forName(DB_Env.DB_DRIVER);
                     Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
 
-                    String query = "UPDATE Beneficios set descripcion = ?, puntos_requeridos = ? where id_beneficio = ? AND where id_comercio = ?";
+                    String query = "UPDATE Beneficios set descripcion = ?, puntos_requeridos = ? where id_beneficio = ?";
                     PreparedStatement preparedStatement = con.prepareStatement(query);
 
                     preparedStatement.setString(1, beneficio.getDescripcion());
@@ -110,12 +110,10 @@ public class DescuentoRepository {
                     Class.forName(DB_Env.DB_DRIVER);
                     Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
 
-                    String query = "UPDATE Beneficios set estado = 0 where id_beneficio = ? AND where id_comercio = ?";
+                    String query = "UPDATE Beneficios set estado = 0 where id_beneficio = ?";
 
                     PreparedStatement preparedStatement = con.prepareStatement(query);
                     preparedStatement.setInt(1, beneficio.getId_beneficio());
-                    preparedStatement.setInt(2, beneficio.getId_comercio().getId());
-
 
                     int rowsAffected = preparedStatement.executeUpdate();
                     preparedStatement.close();

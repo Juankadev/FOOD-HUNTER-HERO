@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +36,7 @@ public class ModificarDescuento extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modificar_descuento, container, false);
 
-        txtDescripcion = view.findViewById(R.id.edtModificarDescripcionDescuento);
-        txtPuntos = view.findViewById(R.id.edtModificarPrecioDescuento);
-
-        btnModificarDescuento = view.findViewById(R.id.btnModificarDescuentoOK);
-        btnVolverMisDescuentos = view.findViewById(R.id.btnVolverMisDescuentosDesdeModificar);
+        initComponentes(view);
 
         btnModificarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +44,7 @@ public class ModificarDescuento extends Fragment {
                 String descripcion = txtDescripcion.getText().toString();
                 int puntos = Integer.parseInt(txtPuntos.getText().toString());
 
-                ///Falta setearle el ID de comercio y el ID del descuento
+                ///Falta enviarle el ID del descuento a modificar
                 Beneficio beneficio = new Beneficio();
                 beneficio.setDescripcion(descripcion);
                 beneficio.setPuntos_requeridos(puntos);
@@ -56,7 +53,23 @@ public class ModificarDescuento extends Fragment {
             }
         });
 
+        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(ModificarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
+            }
+        });
+
         return view;
+    }
+
+    public void initComponentes(View view){
+        txtDescripcion = view.findViewById(R.id.edtModificarDescripcionDescuento);
+        txtPuntos = view.findViewById(R.id.edtModificarPrecioDescuento);
+
+        btnModificarDescuento = view.findViewById(R.id.btnModificarDescuentoOK);
+        btnVolverMisDescuentos = view.findViewById(R.id.btnVolverMisDescuentosDesdeModificar);
+
     }
 
 }

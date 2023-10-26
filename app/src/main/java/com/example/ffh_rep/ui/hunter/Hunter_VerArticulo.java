@@ -47,7 +47,6 @@ public class Hunter_VerArticulo extends Fragment {
 
         initComponentes(view);
 
-
         Bundle bundle = getArguments();
         if(bundle != null){
             if(bundle.containsKey("articuloSelected")){
