@@ -3,7 +3,6 @@ package com.example.ffh_rep.ui.commerce;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,26 +15,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioMisDescuentosBinding;
-import com.example.ffh_rep.databinding.FragmentMisDescuentosItemBinding;
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.factory.CarritoViewModelFactory;
 import com.example.ffh_rep.factory.DescuentosViewModelFactory;
-import com.example.ffh_rep.repositories.DescuentoRepository;
-import com.example.ffh_rep.ui.hunter.CarritoViewModel;
 
 import java.util.List;
 
 public class MisDescuentosComercio extends Fragment {
-
+    private MisDescuentosComercioViewModel mViewModel;
     private FragmentComercioMisDescuentosBinding binding;
-    private DescuentosViewModel mViewModel;
+    private GridView gv_descuentos_container;
     private TextView shopName, descDescuento, puntosDescuento, idDescuento;
-    private Button btnMisArticulos, btnEliminarDescuento, btnModificarDescuento;
+    private Button btnMisArticulos, btnEliminarDescuento, btnModificarDescuento, btnAddDescuento;
 
     public static MisDescuentosComercio newInstance() {
         return new MisDescuentosComercio();
@@ -44,14 +39,13 @@ public class MisDescuentosComercio extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         binding = FragmentComercioMisDescuentosBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         initComponentes(view);
-        this.mViewModel.listarDescuentos();
         setUpListeners();
         setUpObserver();
-
+        this.mViewModel.listarDescuentos();
         return view;
     }
 
@@ -63,37 +57,47 @@ public class MisDescuentosComercio extends Fragment {
 
         this.btnMisArticulos = view.findViewById(R.id.btnMisArticulos);
         this.btnEliminarDescuento = view.findViewById(R.id.btnEliminarDescuento);
-        //btnModificarDescuento = view.findViewById(R.id.btnModificarDescuento);
+        this.btnModificarDescuento = view.findViewById(R.id.btnModificarDescuento);
+        this.btnAddDescuento = view.findViewById(R.id.btnAddDescuento);
 
-        this.mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(DescuentosViewModel.class);
+        this.gv_descuentos_container = view.findViewById(R.id.gv_descuentos_container);
+
+        this.mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
 
-    public void setUpListeners(){
+    public void setUpListeners() {
         btnEliminarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer id = Integer.parseInt(idDescuento.getText().toString());
-
                 Beneficio beneficio = new Beneficio();
                 beneficio.setId_beneficio(id);
-
+                mViewModel.eliminarBeneficio(beneficio);
             }
         });
 
-        /*.setOnClickListener(new View.OnClickListener() {
+        btnModificarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.modificarDescuento);
                 // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
             }
-        });*/
+        });
 
-      /*  btnMisArticulos.setOnClickListener(new View.OnClickListener() {
+        btnAddDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.fragment_comercio_articulos);
+                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.agregarDescuento);
+                // ENVIARLE EL ID DEL COMERCIO EN DONDE SE AGREGARA EL DESCUENTO
             }
-        });*/
+        });
+
+        btnMisArticulos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.commerce_MisArticulos);
+            }
+        });
     }
 
     private void setUpObserver(){

@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hunter_Home extends Fragment {
-
     private HunterHomeViewModel mViewModel;
     private FragmentHunterHomeBinding binding;
     private GridView gv_comercios_list, gv_productos_hunter_home;

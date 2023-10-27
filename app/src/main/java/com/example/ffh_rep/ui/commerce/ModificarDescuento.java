@@ -17,49 +17,31 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.databinding.FragmentComercioAgregardescuentoBinding;
+import com.example.ffh_rep.databinding.FragmentModificarDescuentoBinding;
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.factory.DescuentosViewModelFactory;
 import com.example.ffh_rep.repositories.DescuentoRepository;
+import com.example.ffh_rep.ui.hunter.Hunter_Home;
 
 public class ModificarDescuento extends Fragment {
-
+    private FragmentModificarDescuentoBinding binding;
     private EditText txtDescripcion, txtPuntos;
     private Button btnModificarDescuento, btnVolverMisDescuentos;
-    Context context = requireContext();
-    DescuentoRepository descuentoRepository = new DescuentoRepository();
+    private MisDescuentosComercioViewModel mViewModel;
 
-    public static AgregarDescuento newInstance() {
-        return new AgregarDescuento();
+    public static ModificarDescuento newInstance() {
+        return new ModificarDescuento();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_modificar_descuento, container, false);
+        binding = FragmentModificarDescuentoBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         initComponentes(view);
-
-        btnModificarDescuento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String descripcion = txtDescripcion.getText().toString();
-                int puntos = Integer.parseInt(txtPuntos.getText().toString());
-
-                ///Falta enviarle el ID del descuento a modificar
-                Beneficio beneficio = new Beneficio();
-                beneficio.setDescripcion(descripcion);
-                beneficio.setPuntos_requeridos(puntos);
-
-                descuentoRepository.modificarDescuento(context, beneficio);
-            }
-        });
-
-        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(ModificarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
-            }
-        });
-
+        setupListeners();
         return view;
     }
 
@@ -70,6 +52,31 @@ public class ModificarDescuento extends Fragment {
         btnModificarDescuento = view.findViewById(R.id.btnModificarDescuentoOK);
         btnVolverMisDescuentos = view.findViewById(R.id.btnVolverMisDescuentosDesdeModificar);
 
+        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
+    }
+
+    private void setupListeners() {
+        btnModificarDescuento.setOnClickListener((v-> modBeneficio()));
+
+        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(ModificarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
+            }
+        });
+    }
+
+    private void modBeneficio(){
+        String descripcion = txtDescripcion.getText().toString();
+        int puntos = Integer.parseInt(txtPuntos.getText().toString());
+        ///Falta enviarle el ID del descuento a modificar
+        Beneficio beneficio = new Beneficio();
+        beneficio.setDescripcion(descripcion);
+        beneficio.setPuntos_requeridos(puntos);
+        mViewModel.editarBeneficio(beneficio);
+
+        txtDescripcion.setText("");
+        txtPuntos.setText("");
     }
 
 }

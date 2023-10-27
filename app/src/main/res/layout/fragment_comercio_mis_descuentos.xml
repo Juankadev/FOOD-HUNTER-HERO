@@ -114,13 +114,13 @@
             tools:text="@string/descuentos" />
 
         <GridLayout
-            android:id="@+id/gv_descuentos_container_1"
+            android:id="@+id/gv_descuentos_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_below="@+id/et_Articulos"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="9dp"
             android:columnCount="3"
             android:gravity="center">
 
@@ -181,7 +181,7 @@
         </GridLayout>
 
         <Button
-            android:id="@+id/btnAddArticulo"
+            android:id="@+id/btnAddDescuento"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentEnd="true"
