@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.utils.DBUtil;
@@ -12,8 +14,13 @@ import com.example.ffh_rep.utils.DB_Env;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 public class DescuentoRepository {
+
+    public void listarDescuentos(MutableLiveData<List<Beneficio>> listBeneficios){
+
+    }
 
     public void modificarDescuento(Context context, Beneficio beneficio) {
 

@@ -6,8 +6,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +17,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.databinding.FragmentAgregarArticuloBinding;
+import com.example.ffh_rep.databinding.FragmentComercioAgregardescuentoBinding;
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.factory.DescuentosViewModelFactory;
+import com.example.ffh_rep.factory.HunterHomeViewModelFactory;
 import com.example.ffh_rep.repositories.DescuentoRepository;
 
 public class AgregarDescuento extends Fragment {
 
+    private FragmentComercioAgregardescuentoBinding binding;
     private EditText txtDescripcion, txtPuntos;
     private Button btnAgregarDescuento, btnVolverMisDescuentos;
-    Context context = requireContext();
-    DescuentoRepository descuentoRepository = new DescuentoRepository();
+    private DescuentosViewModel mViewModel;
 
     public static AgregarDescuento newInstance() {
         return new AgregarDescuento();
@@ -32,32 +38,12 @@ public class AgregarDescuento extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_comercio_agregardescuento, container, false);
+
+        binding = FragmentComercioAgregardescuentoBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         initComponentes(view);
-
-        btnAgregarDescuento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String descripcion = txtDescripcion.getText().toString();
-                int puntos = Integer.parseInt(txtPuntos.getText().toString());
-
-                ///Falta setearle el ID de comercio
-                Beneficio beneficio = new Beneficio();
-                beneficio.setDescripcion(descripcion);
-                beneficio.setPuntos_requeridos(puntos);
-
-                descuentoRepository.agregarDescuento(context, beneficio);
-            }
-        });
-
-        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(AgregarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
-            }
-        });
-
+        setUpListeners();
         return view;
     }
 
@@ -67,6 +53,35 @@ public class AgregarDescuento extends Fragment {
 
         btnAgregarDescuento = view.findViewById(R.id.btnAgregarDescuento);
         btnVolverMisDescuentos = view.findViewById(R.id.btnVolver);
+
+        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(DescuentosViewModel.class);
+
+    }
+
+    public void setUpListeners() {
+
+        btnAgregarDescuento.setOnClickListener(v-> addBeneficio());
+
+        btnVolverMisDescuentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(AgregarDescuento.this).navigate(R.id.fragmentAgregarDescuentoComercio);
+            }
+        });
+
+    }
+
+
+    private void addBeneficio(){
+        String descripcion = txtDescripcion.getText().toString();
+        int puntos = Integer.parseInt(txtPuntos.getText().toString());
+        Beneficio beneficio = new Beneficio();
+        beneficio.setDescripcion(descripcion);
+        beneficio.setPuntos_requeridos(puntos);
+        mViewModel.insertarBeneficio(beneficio);
+
+        txtDescripcion.setText("");
+        txtPuntos.setText("");
     }
 
 }

@@ -22,7 +22,7 @@ public class Commerce_MisArticulos extends Fragment {
 
     private CommerceMisArticulosViewModel mViewModel;
     private FragmentCommerceMisArticulosBinding binding;
-    private Button btnAniadirArticulo;
+    private Button btnAniadirArticulo, btnIrBeneficios;
 
 
     public static Commerce_MisArticulos newInstance() {
@@ -44,10 +44,12 @@ public class Commerce_MisArticulos extends Fragment {
 
     private void initViews(View view){
         btnAniadirArticulo = view.findViewById(R.id.btn_commerce_addArticle);
+        btnIrBeneficios = view.findViewById(R.id.btn_MisDescuentos);
     }
 
     private void setUpListeners(){
         btnAniadirArticulo.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_agregarArticulo));
+        btnIrBeneficios.setOnClickListener(v->Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_fragmentAgregarDescuentoComercio));
     }
 
     @Override
