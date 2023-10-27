@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.hunter.Hunter_Home">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Barra de búsqueda -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="115dp"
-            android:background="#106806"
-            android:backgroundTint="#106806"
+            android:background="#68dd6b"
+            android:backgroundTint="#68dd6b"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -24,7 +25,8 @@
                 android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/border"
-                android:backgroundTint="@color/input_inapp"
+                android:backgroundTint="#8DCA8F"
+                android:backgroundTintMode="add"
                 android:drawableStart="@drawable/baseline_search_20"
                 android:drawablePadding="10dp"
                 android:ems="10"
@@ -35,56 +37,77 @@
 
         </LinearLayout>
 
+        <!-- Sección de comercios -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:gravity="center|start"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/comercio"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="221dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/comercio"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btn_mas_comercios_hunter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:text="@string/ver"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
 
+        <!-- GridView de comercios -->
         <GridView
             android:id="@+id/gv_comercios_hunter_home"
             android:layout_width="match_parent"
-            android:layout_height="225dp" />
+            android:layout_height="160dp"
+            android:backgroundTint="#FFFFFF"
+            android:numColumns="3"
+            android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp" />
 
+        <!-- Botón Ver -->
+        <Button
+            android:id="@+id/btn_mas_comercios_hunter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border"
+            android:text="@string/btn_VerMas"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- Título de productos -->
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="181dp"
+            android:layout_width="match_parent"
             android:layout_height="27dp"
-            android:layout_marginLeft="25dp"
             android:layout_marginTop="25dp"
+            android:gravity="center"
             android:text="@string/productos"
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!-- GridView de productos -->
         <GridView
             android:id="@+id/gv_productos_hunter_home"
             android:layout_width="match_parent"
-            android:layout_height="248dp" />
+            android:layout_height="160dp"
+            android:backgroundTint="#FFFFFF"
+            android:numColumns="3"
+            android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp" />
+
+        <!-- Botón Ver -->
+        <Button
+            android:id="@+id/btn_mas_articulos_hunter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border"
+            android:text="@string/btn_VerMas"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
     </LinearLayout>
 
 </FrameLayout>

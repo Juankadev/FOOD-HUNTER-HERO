@@ -101,7 +101,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         }
         else
         {
-            Toast.makeText(this, "Por favor, antes de continuar verifique todos los datos.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor, antes de continuar verifique la informacio provista sea correcta.", Toast.LENGTH_SHORT).show();
         }
     }
     /**
@@ -115,6 +115,11 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         if(etApellido.getText().toString().isEmpty() || etDireccion.getText().toString().isEmpty() || etCorreo.getText().toString().isEmpty() ||
             etDni.getText().toString().isEmpty() || spinnerSexo.getSelectedItem().toString().isEmpty() || etNombre.getText().toString().isEmpty() ||
             etFechaNac.getText().toString().isEmpty() || etTelefono.getText().toString().isEmpty())
+        {
+            isValid = false;
+        }
+
+        if(!GeneralHelper.isValidEmailAddress(etCorreo.getText().toString()))
         {
             isValid = false;
         }

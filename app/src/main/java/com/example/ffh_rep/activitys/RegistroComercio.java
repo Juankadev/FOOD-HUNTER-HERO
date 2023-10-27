@@ -18,6 +18,7 @@ import com.example.ffh_rep.tasks.RegistrarComercioTask;
 import com.example.ffh_rep.tasks.RegistrarUsuario;
 import com.example.ffh_rep.utils.EmailTemplate;
 import com.example.ffh_rep.utils.EmailSenderTask;
+import com.example.ffh_rep.utils.GeneralHelper;
 
 public class RegistroComercio extends AppCompatActivity implements RegistrarUsuarioCallback {
 
@@ -88,6 +89,10 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
             isValid = false;
         }
 
+        if(!GeneralHelper.isValidEmailAddress(etEmailC.getText().toString()))
+        {
+            isValid = false;
+        }
         return isValid;
     }
     /**

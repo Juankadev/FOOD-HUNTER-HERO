@@ -19,7 +19,7 @@
     <!-- = START REGISTER STRINGS = -->
     <!-- ================================= -->
     <string name="register_title">Formulario de Registro</string>
-    <string name="register_title_comercio">Comercio</string>
+    <string name="register_title_comercio">Comercios</string>
     <string name="register_title_hunter">Hunter</string>
 
     <string name="input_nombre_rh">Nombre</string>
@@ -147,7 +147,7 @@
     <string name="usuario">Usuario</string>
     <string name="contraseña">Contraseña</string>
     <string name="confirm_contraseña">Confirmar contraseña</string>
-    <string name="comercio">Comercio</string>
+    <string name="comercio">Comercios</string>
     <string name="eligeRol">Elige tu rol!</string>
     <string name="nombreUsuario">Nombre de usuario</string>
     <string name="estadisticas_titulo">Por favor, ingrese las fechas para generar las estadisticas</string>
@@ -160,6 +160,7 @@
     <string name="cazadores_rango_m">Cazadores con rango minimo</string>
     <string name="editar_articulo">Editar articulo</string>
     <string name="ver">Ver</string>
+    <string name="btn_VerMas">Ver más</string>
     <string name="shop">Shop</string>
     <string name="mis_articulos">Mis Articulos</string>
     <string name="mis_descuentos"> Mis Descuentos</string>

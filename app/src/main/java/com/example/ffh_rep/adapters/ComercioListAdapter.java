@@ -13,30 +13,17 @@ import com.example.ffh_rep.entidades.Comercio;
 import java.util.List;
 
 public class ComercioListAdapter extends BaseAdapter {
-
     private List<Comercio> comercioList;
     private LayoutInflater inflater;
 
-    public ComercioListAdapter(Context context, List<Comercio> lComercio){
-        this.comercioList = lComercio;
+    public ComercioListAdapter(Context context, List<Comercio> comercioList) {
+        this.comercioList = comercioList;
         this.inflater = LayoutInflater.from(context);
-    }
-
-    public List<Comercio> getComercioList() {
-        return comercioList;
     }
 
     public void setComercioList(List<Comercio> comercioList) {
         this.comercioList = comercioList;
         notifyDataSetChanged();
-    }
-
-    public LayoutInflater getInflater() {
-        return inflater;
-    }
-
-    public void setInflater(LayoutInflater inflater) {
-        this.inflater = inflater;
     }
 
     @Override
@@ -51,30 +38,48 @@ public class ComercioListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position; // Devuelve la posición como ID por simplicidad
     }
-
+    /**
+     * Devuelve la vista que representa un elemento en el GridView.
+     *
+     * @param position    La posición del elemento en la lista de datos.
+     * @param convertView La vista reciclada para reutilizar, si está disponible.
+     * @param parent      El ViewGroup al que pertenece la vista.
+     * @return La vista que representa un elemento en el GridView.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        ViewHolder holder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_comercio_home, null);
-            vh = new ViewHolder();
-            vh.nombre = convertView.findViewById(R.id.txtNombre);
-            convertView.setTag(vh);
+            convertView = inflater.inflate(R.layout.grid_item_layout, parent, false);
+
+            // Inicializar el ViewHolder
+            holder = new ViewHolder();
+            // TODO: Asignar vistas a los elementos del ViewHolder
+            // holder.imageView = convertView.findViewById(R.id.imageView);
+            holder.textView = convertView.findViewById(R.id.textView);
+
+            convertView.setTag(holder);
         } else {
-            vh = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
+        // Obtener datos del modelo
         Comercio comercio = comercioList.get(position);
-        vh.nombre.setText(comercio.getRazonSocial());
+
+        // Configurar las vistas con datos del modelo
+        // TODO: Asignar datos a las vistas del ViewHolder
+        // holder.imageView.setImageResource(comercio.getImageResource());
+        holder.textView.setText(comercio.getRazonSocial());
 
         return convertView;
     }
 
-
-    static class ViewHolder{
-        TextView nombre;
+    // ViewHolder para almacenar las referencias de las vistas
+    private static class ViewHolder {
+        //ImageView imageView;
+        TextView textView;
     }
 }
