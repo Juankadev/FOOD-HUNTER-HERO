@@ -187,7 +187,7 @@ public class ArticuloRepository {
                 if (result) {
                     Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Error al insertar el artículooooo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
                 }
             }
 
