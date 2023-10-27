@@ -2,6 +2,7 @@ package com.example.ffh_rep.ui.commerce;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,10 +83,22 @@ public class AgregarArticulo extends Fragment {
                 articulo.setPrecio(precio);
                 articulo.setImagen(urlImagen);
                 //SON SOLO PRUEBAS DE LOS SPINNERS
-                articulo.setCategoria(new Categoria());
-                articulo.getCategoria().setIdCategoria(1);
-                articulo.setMarca(new Marca());
-                articulo.getMarca().setIdMarca(1);
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(1);
+                articulo.setCategoria(categoria);
+
+                Marca marca = new Marca();
+                marca.setIdMarca(1);
+                articulo.setMarca(marca);
+
+                articulo.setEstado("1");
+
+
+                Log.d("LOG","---------------------------");
+                Log.d("LOG","---------------------------");
+                Log.d("LOG",articulo.toString());
+                Log.d("LOG","---------------------------");
+                Log.d("LOG","---------------------------");
 
                 simularInsercion(articulo);
             }
@@ -116,9 +129,9 @@ public class AgregarArticulo extends Fragment {
 
             Context context = requireContext();
 
-            articuloRepository.insertArticulo(context, articulo);
 
-            Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
+
+            articuloRepository.insertArticulo(context, articulo);
 
     }
 }

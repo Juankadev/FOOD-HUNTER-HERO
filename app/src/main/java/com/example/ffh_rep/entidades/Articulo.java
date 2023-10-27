@@ -87,8 +87,8 @@ public class Articulo implements Serializable {
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
                 ", imagen='" + imagen + '\'' +
-                ", marca=" + marca.getDescripcion() +
-                ", categoria=" + categoria.getDescripcion() +
+                ", marca=" + marca.getIdMarca() +
+                ", categoria=" + categoria.getIdCategoria() +
                 ", estado='" + estado + '\'' +
                 '}';
     }

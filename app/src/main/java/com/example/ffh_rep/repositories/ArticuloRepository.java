@@ -151,8 +151,9 @@ public class ArticuloRepository {
                 PreparedStatement ps = null;
 
                 try {
+
                     con = DBUtil.getConnection();
-                    String query = "INSERT INTO Articulos (descripcion, precio, id_categoria, id_marca, id_articulo, imagen, precio, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    String query = "INSERT INTO Articulos (descripcion, precio, id_categoria, id_marca, id_articulo, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
                     ps = con.prepareStatement(query);
                     ps.setString(1, articulo.getDescripcion());
                     ps.setDouble(2, articulo.getPrecio());
@@ -186,7 +187,7 @@ public class ArticuloRepository {
                 if (result) {
                     Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error al insertar el artículooooo", Toast.LENGTH_SHORT).show();
                 }
             }
 
