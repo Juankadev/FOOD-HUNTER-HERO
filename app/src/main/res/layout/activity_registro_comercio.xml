@@ -94,7 +94,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/input_rubro_rc"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:minHeight="48dp"
         android:padding="10dp"
         android:textColorHint="#F8F6F6"

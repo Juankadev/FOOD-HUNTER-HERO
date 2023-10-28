@@ -71,7 +71,7 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
      */
     private void onRegistroButtonClick() {
         Rol rol = new Rol(1, "Comercio");
-        Usuario usuario = new Usuario(rol, username, password, "Activo");
+        Usuario usuario = new Usuario(rol, username, password, true);
 
         RegistrarUsuario registrarUsuarioTask = new RegistrarUsuario(this, usuario, this);
         registrarUsuarioTask.execute();

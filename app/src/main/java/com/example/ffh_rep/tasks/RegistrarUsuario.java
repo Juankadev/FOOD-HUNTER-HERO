@@ -42,7 +42,7 @@ public class RegistrarUsuario extends AsyncTask<Void, Void, Integer> {
             ps.setInt(1, this.usuario.getRol().getIdRol());
             ps.setString(2, this.usuario.getUsername());
             ps.setString(3, this.usuario.getPassword());
-            ps.setString(4, "1");
+            ps.setBoolean(4, true);
 
             int rowsAffected = ps.executeUpdate();
 
