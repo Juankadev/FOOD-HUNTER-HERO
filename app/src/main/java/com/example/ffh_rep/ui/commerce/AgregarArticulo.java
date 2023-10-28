@@ -92,7 +92,7 @@ public class AgregarArticulo extends Fragment {
                 Log.d("LOG", articulo.toString());
                 Log.d("LOG", "---------------------------");
                 Log.d("LOG", "---------------------------");
-                
+
                 insertarArticulo(articulo);
             }
         });

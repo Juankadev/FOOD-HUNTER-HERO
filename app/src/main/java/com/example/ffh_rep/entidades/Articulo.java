@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Articulo implements Serializable {
     private int idArticulo;
+    private Comercio comercio; //Composición de Comercio
     private String descripcion;
     private double precio;
     private String imagen;
@@ -14,7 +15,8 @@ public class Articulo implements Serializable {
     public Articulo() {
     }
 
-    public Articulo(int idArticulo, String descripcion, double precio, String imagen, Marca marca, Categoria categoria, String estado) {
+    public Articulo(int idArticulo, Comercio comercio, String descripcion, double precio, String imagen, Marca marca, Categoria categoria, String estado) {
+        this.comercio = comercio;
         this.idArticulo = idArticulo;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -31,6 +33,15 @@ public class Articulo implements Serializable {
     public void setIdArticulo(int idArticulo) {
         this.idArticulo = idArticulo;
     }
+
+    public Comercio getComercio() {
+        return comercio;
+    }
+
+    public void setComercio(Comercio comercio) {
+        this.comercio = comercio;
+    }
+
 
     public String getDescripcion() {
         return descripcion;
@@ -84,6 +95,7 @@ public class Articulo implements Serializable {
     public String toString() {
         return "Articulo{" +
                 "idArticulo=" + idArticulo +
+                ", idComercio='" + comercio.getId() + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", precio=" + precio +
                 ", imagen='" + imagen + '\'' +

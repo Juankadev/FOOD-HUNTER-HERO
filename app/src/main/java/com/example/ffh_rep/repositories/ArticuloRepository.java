@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.utils.DBUtil;
 
@@ -101,7 +102,7 @@ public class ArticuloRepository {
                 ResultSet rs = null;
                 try {
                     con = DBUtil.getConnection();
-                    String query = "Select * from Articulos a where a.estado = 1";
+                    String query = "Select * from Articulos a where a.estado = 'Activo'";
                     ps = con.prepareStatement(query);
                     rs = ps.executeQuery();
 
@@ -153,15 +154,16 @@ public class ArticuloRepository {
                 try {
 
                     con = DBUtil.getConnection();
-                    String query = "INSERT INTO Articulos (descripcion, precio, id_categoria, id_marca, id_articulo, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    String query = "INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, id_articulo, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     ps = con.prepareStatement(query);
                     ps.setString(1, articulo.getDescripcion());
-                    ps.setDouble(2, articulo.getPrecio());
-                    ps.setInt(3, articulo.getCategoria().getIdCategoria());
-                    ps.setInt(4, articulo.getMarca().getIdMarca());
-                    ps.setInt(5, articulo.getIdArticulo());
-                    ps.setString(6, articulo.getImagen());
-                    ps.setString(7, articulo.getEstado());
+                    ps.setInt(2, articulo.getComercio().getId());
+                    ps.setDouble(3, articulo.getPrecio());
+                    ps.setInt(4, articulo.getCategoria().getIdCategoria());
+                    ps.setInt(5, articulo.getMarca().getIdMarca());
+                    ps.setInt(6, articulo.getIdArticulo());
+                    ps.setString(7, articulo.getImagen());
+                    ps.setString(8, articulo.getEstado());
 
                     int rowsAffected = ps.executeUpdate();
 
@@ -203,15 +205,16 @@ public class ArticuloRepository {
 
                 try {
                     con = DBUtil.getConnection();
-                    String query = "UPDATE Articulos SET descripcion = ?, precio = ?, id_categoria = ?, id_marca = ?, imagen = ?, estado = ? WHERE id_articulo = ?";
+                    String query = "UPDATE Articulos SET descripcion = ?, id_comercio = ?, precio = ?, id_categoria = ?, id_marca = ?, imagen = ?, estado = ? WHERE id_articulo = ?";
                     ps = con.prepareStatement(query);
                     ps.setString(1, articulo.getDescripcion());
-                    ps.setDouble(2, articulo.getPrecio());
-                    ps.setInt(3, articulo.getCategoria().getIdCategoria());
-                    ps.setInt(4, articulo.getMarca().getIdMarca());
-                    ps.setString(5, articulo.getImagen());
-                    ps.setString(6, articulo.getEstado());
-                    ps.setInt(7, articulo.getIdArticulo());
+                    ps.setInt(2, articulo.getComercio().getId());
+                    ps.setDouble(3, articulo.getPrecio());
+                    ps.setInt(4, articulo.getCategoria().getIdCategoria());
+                    ps.setInt(5, articulo.getMarca().getIdMarca());
+                    ps.setString(6, articulo.getImagen());
+                    ps.setString(7, articulo.getEstado());
+                    ps.setInt(8, articulo.getIdArticulo());
 
                     int rowsAffected = ps.executeUpdate();
 
@@ -262,6 +265,8 @@ public class ArticuloRepository {
                         Articulo articulo = new Articulo();
                         articulo.setIdArticulo(rs.getInt("id_articulo"));
                         articulo.setDescripcion(rs.getString("descripcion"));
+                        articulo.setComercio(new Comercio());
+                        articulo.getComercio().setId(rs.getInt("id_comercio"));
                         articulo.setPrecio(rs.getDouble("precio"));
                         articulo.setCategoria(new Categoria());
                         articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
@@ -319,6 +324,8 @@ public class ArticuloRepository {
                         Articulo articulo = new Articulo();
                         articulo.setIdArticulo(rs.getInt("id_articulo"));
                         articulo.setDescripcion(rs.getString("descripcion"));
+                        articulo.setComercio(new Comercio());
+                        articulo.getComercio().setId(rs.getInt("id_comercio"));
                         articulo.setPrecio(rs.getDouble("precio"));
                         articulo.setCategoria(new Categoria());
                         articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
