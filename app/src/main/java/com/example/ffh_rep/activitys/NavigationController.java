@@ -22,6 +22,7 @@ import com.example.ffh_rep.databinding.ActivityNavigationControllerBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
+import com.example.ffh_rep.ui.hunter.Hunter_VerComercio;
 import com.example.ffh_rep.utils.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -147,6 +148,19 @@ public class NavigationController extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_controller) instanceof Hunter_VerComercio) {
+            Hunter_VerComercio fragment = (Hunter_VerComercio) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_controller);
+            if (fragment != null) {
+                fragment.mensajeSalir();
+            }
+        } else {
+            // En otros casos, llama al comportamiento predeterminado de retroceso
+            super.onBackPressed();
+        }
     }
 
     private int userRol(Usuario user) {
