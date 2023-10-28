@@ -63,4 +63,36 @@ public class HunterRepository {
             }
         }.execute();
         }
+
+    public void eliminarCuenta(Hunter hunter, MutableLiveData<Boolean> isDelete){
+        new AsyncTask<Void, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                Connection con = null;
+                PreparedStatement ps = null;
+                try {
+                    con = DBUtil.getConnection();
+                    String query = "Update Usuarios set estado = '0' where id_usuario = ?";
+                    ps = con.prepareStatement(query);
+
+                    ps.setInt(1, hunter.getUser().getId_usuario());
+
+                    int rowsAffected = ps.executeUpdate();
+                    ps.close();
+                    DBUtil.closeConnection(con);
+                    return rowsAffected > 0;
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                isDelete.postValue(aBoolean);
+            }
+        }.execute();
+    }
     }
