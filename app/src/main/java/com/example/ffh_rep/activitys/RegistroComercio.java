@@ -32,7 +32,7 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
 
         extractIntentData();
         initializeViews();
-        setupButtonClickListeners();
+        setupListeners();
     }
     /**
      * Extrae datos del Intent pasado a la actividad.
@@ -57,10 +57,10 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         btnVolver = findViewById(R.id.btnVolver);
     }
     /**
-     * Configura los listeners de clic para los botones de la interfaz.
-     * Asigna los métodos correspondientes a los eventos de clic en los botones.
+     * Configura los listeners de la interfaz.
+     * Asigna los métodos correspondientes a los eventos.
      */
-    private void setupButtonClickListeners() {
+    private void setupListeners() {
         btnRegistro.setOnClickListener(v -> onRegistroButtonClick());
         btnVolver.setOnClickListener(v -> onVolverButtonClick());
     }

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ComerciosAdapter;
@@ -41,22 +42,68 @@ public class Comercios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercios_list, container, false);
-        viewModel = new ViewModelProvider(requireActivity(), new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
+        initializeViews(view);
+        setupRecyclerView();
+        observeViewModel();
+
+        return view;
+    }
+    /**
+     * Inicializa las vistas necesarias para la interfaz de comercios.
+     * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
+     */
+    private void initializeViews(View view) {
         RecyclerView rview = (RecyclerView) view;
         nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation_controller);
-
         cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav);
+        rview.setAdapter(cAdapter);
+    }
 
-        viewModel.cargarComercios();
+    private void setupRecyclerView() {
+    }
+    /**
+     * Observa los cambios en el ViewModel y realiza acciones correspondientes.
+     * - Actualiza el adaptador con la lista de comercios cuando hay cambios.
+     * - Verifica si hay argumentos proporcionados y carga los comercios correspondientes, aplicando el filtro por razón social.
+     * - Si no hay argumentos, carga todos los comercios.
+     */
+    private void observeViewModel() {
+        viewModel = new ViewModelProvider(this, new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
 
-        viewModel.getMldComercios().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
-            @Override
-            public void onChanged(List<Comercio> comercios) {
-                cAdapter.setData(comercios);
+        // Observa los cambios en la lista de comercios y actualiza el adaptador.
+        viewModel.getMldComercios().observe(getViewLifecycleOwner(), comercios -> {
+            cAdapter.setData(comercios);
+
+            // Verifica si la lista de comercios está vacía y muestra un Toast en consecuencia.
+            if (comercios == null || comercios.isEmpty()) {
+                Toast.makeText(getContext(), "No se encontraron comercios.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        rview.setAdapter(cAdapter);
-        return rview;
+        // Verifica si hay argumentos y carga los comercios correspondientes.
+        Bundle args = getArguments();
+        if (args != null) {
+            String filtro = args.getString("razonSocial");
+            cargarComercios(filtro);
+        }
+        else
+        {
+            cargarComercios(null);
+        }
+    }
+    /**
+     * Carga los comercios según el filtro de razón social proporcionado.
+     * @param razonSocial Filtro de razón social para buscar comercios específicos. Puede ser nulo para cargar todos los comercios.
+     */
+    private void cargarComercios(String razonSocial) {
+        if(razonSocial != null)
+        {
+            viewModel.cargarComerciosByName(razonSocial);
+        }
+        else
+        {
+            viewModel.cargarComercios();
+        }
     }
 }
+

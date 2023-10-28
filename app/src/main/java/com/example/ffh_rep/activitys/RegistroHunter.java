@@ -39,7 +39,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
 
         extractIntentData();
         initializeViews();
-        setupButtonClickListeners();
+        setupListeners();
     }
     /**
      * Extrae datos del Intent pasado a la actividad.
@@ -77,10 +77,10 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         spinnerSexo.setAdapter(adapter);
     }
     /**
-     * Configura los listeners de clic para los botones de la interfaz.
-     * Asigna los métodos correspondientes a los eventos de clic en los botones.
+     * Configura los listeners de la interfaz.
+     * Asigna los métodos correspondientes a los eventos.
      */
-    private void setupButtonClickListeners() {
+    private void setupListeners() {
         btnRegistro.setOnClickListener(v -> onRegistroButtonClick());
         btnVolver.setOnClickListener(v -> onVolverButtonClick());
         etFechaNac.setOnClickListener(v -> showDatePicker());

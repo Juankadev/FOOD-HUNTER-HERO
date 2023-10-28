@@ -25,7 +25,7 @@ public class RegistroBasic extends AppCompatActivity {
         setContentView(R.layout.activity_registro_basic);
 
         initializeViews();
-        setupButtonClickListeners();
+        setupListeners();
     }
     /**
      * Inicializa las vistas necesarias para la interfaz de registro.
@@ -41,10 +41,10 @@ public class RegistroBasic extends AppCompatActivity {
         btnHunter = findViewById(R.id.btn_rc_Hunter);
     }
     /**
-     * Configura los listeners de clic para los botones de la interfaz.
-     * Asigna los métodos correspondientes a los eventos de clic en los botones.
+     * Configura los listeners de la interfaz.
+     * Asigna los métodos correspondientes a los eventos.
      */
-    private void setupButtonClickListeners() {
+    private void setupListeners() {
         btnHunter.setOnClickListener(v -> onTypeSelected(RegistroHunter.class));
         btnCommerce.setOnClickListener(v -> onTypeSelected(RegistroComercio.class));
         btnBack.setOnClickListener(v -> goBackToMainActivity());

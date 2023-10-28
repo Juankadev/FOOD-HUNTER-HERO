@@ -21,9 +21,17 @@ public class ComerciosViewModel extends ViewModel {
         this.cRepo = new ComercioRepository();
         this.mldComercios = new MutableLiveData<>();
     }
-
+    /**
+     * Carga todos los comercios disponibles utilizando el repositorio de comercios.
+     */
     public void cargarComercios(){
         cRepo.getComercios(mldComercios);
+    }
+    /**
+     * Carga los comercios disponibles filtrando por razon social utilizando el repositorio de comercios.
+     */
+    public void cargarComerciosByName(String razonSocial){
+        cRepo.getComercioByName(mldComercios, razonSocial);
     }
 
     public MutableLiveData<List<Comercio>> getMldComercios() {
