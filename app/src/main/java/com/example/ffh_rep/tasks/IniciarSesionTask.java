@@ -37,7 +37,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
 
             String query = "SELECT u.id_usuario, u.username, u.password, u.estado, r.id_rol, r.descripcion " +
                     "FROM Usuarios u INNER JOIN Roles r ON r.id_rol = u.id_rol " +
-                    "WHERE u.username = ? AND u.password = ?";
+                    "WHERE u.username = ? AND u.password = ? and estado = '1'";
             try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
                 preparedStatement.setString(1, this.username);
                 preparedStatement.setString(2, this.password);
