@@ -1,8 +1,11 @@
 package com.example.ffh_rep.ui.hunter;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -67,12 +70,27 @@ public class Hunter_VerComercio extends Fragment {
 
         mViewModel.cargarArticulos(commerce.getId());
 
+        if (isAdded() && isVisible()) {
+            Log.d("primer plano", "aniadido");
+        } else {
+            Log.d("Segundo plano", "no se");
+        }
         setUpListeners();
         setUpObservers();
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("PRESIONADO", "PRESIONADO");
+            }
+        };
+        Log.d("Callback", "Callback added: " + callback.isEnabled());
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        //pressBackValidation();
         descripcion.setText(commerce.getRazonSocial());
         gv_articulos.setAdapter(aclAdapter);
         return view;
+
+
     }
 
 
@@ -90,6 +108,22 @@ public class Hunter_VerComercio extends Fragment {
 
     public void setUpListeners(){
         btnAbrirCarrito.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito));
+    }
+
+    public void pressBackValidation(){
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d("string", "string");
+                if(carrito.getTotArticulos().getValue() != null && carrito.getTotArticulos().getValue() > 0){
+                    mensajeSalir();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
+
     }
 
     public void setUpObservers(){
@@ -121,8 +155,33 @@ public class Hunter_VerComercio extends Fragment {
                 }
             }
         });
+
+
     }
-    @Override
+
+
+    public void mensajeSalir() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Confirmar salida");
+        builder.setMessage("Hay artículos en el carrito. ¿Estás seguro de que quieres salir?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requireActivity().onBackPressed();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+   @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HunterVerComercioViewModel.class);
