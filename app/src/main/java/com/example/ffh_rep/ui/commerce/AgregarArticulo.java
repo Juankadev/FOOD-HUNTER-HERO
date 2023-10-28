@@ -19,10 +19,13 @@ import androidx.fragment.app.Fragment;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.repositories.ArticuloRepository;
 import com.example.ffh_rep.repositories.CategoriaRepository;
 import com.example.ffh_rep.repositories.MarcaRepository;
+import com.example.ffh_rep.utils.SessionManager;
+
 import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +77,19 @@ public class AgregarArticulo extends Fragment {
                 Articulo articulo = new Articulo();
                 articulo.setIdArticulo(idArticulo);
                 articulo.setDescripcion(descripcion);
+
+                Comercio comercio;
+                SessionManager session = new SessionManager(getContext());
+                comercio = session.getCommerceSession();
+                articulo.setComercio(comercio);
+
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", comercio.toString());
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", "---------------------------");
+
+
                 articulo.setPrecio(precio);
                 articulo.setImagen(urlImagen);
 

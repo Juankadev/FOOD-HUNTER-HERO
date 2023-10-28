@@ -34,33 +34,26 @@ public class ArticuloRepository {
                 ResultSet rs = null;
                 try {
                     con = DBUtil.getConnection();
-                    String query = "Select a.id_articulo, a.descripcion, a.precio, a.id_categoria as id_categoria, m.id_marca as idmarca, m.descripcion as marca, cat.descripcion as categoria from Articulos a "
-                    + "inner join Stocks s on s.id_articulo = a.id_articulo " +
-                            "inner join Comercios c on c.id_comercio = s.id_comercio " +
-                            "inner join Marcas m on m.id_marca = a.id_marca " +
-                            "inner join Categorias cat on cat.id_categoria = a.id_categoria " +
-                            "where a.estado = 1 and c.id_comercio = ?" ;
+                    String query = "SELECT id_articulo, id_comercio, descripcion, precio, id_categoria, id_marca, imagen, estado FROM Articulos WHERE estado = 'Activo' and id_comercio = ?" ;
                     ps = con.prepareStatement(query);
                     ps.setInt(1, id);
                     rs = ps.executeQuery();
 
                     while(rs.next()){
-                        Articulo aData = new Articulo();
-                        int id = rs.getInt("id_articulo");
-                        String descripcion = rs.getString("descripcion");
-                        Double precio = rs.getDouble("precio");
+                        Articulo articulo = new Articulo();
+                        articulo.setIdArticulo(rs.getInt("id_articulo"));
+                        articulo.setDescripcion(rs.getString("descripcion"));
+                        articulo.setComercio(new Comercio());
+                        articulo.getComercio().setId(rs.getInt("id_comercio"));
+                        articulo.setPrecio(rs.getDouble("precio"));
+                        articulo.setCategoria(new Categoria());
+                        articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                        articulo.setMarca(new Marca());
+                        articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
+                        articulo.setImagen(rs.getString("imagen"));
+                        articulo.setEstado(rs.getString("estado"));
 
-                        aData.setMarca(new Marca());
-                        aData.getMarca().setIdMarca(rs.getInt("idmarca"));
-                        aData.getMarca().setDescripcion(rs.getString("marca"));
-
-                        aData.setCategoria(new Categoria());
-                        aData.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
-                        aData.getCategoria().setDescripcion(rs.getString("categoria"));
-                        aData.setIdArticulo(id);
-                        aData.setDescripcion(descripcion);
-                        aData.setPrecio(precio);
-                        lArticulos.add(aData);
+                        lArticulos.add(articulo);
                     }
                     rs.close();
                     ps.close();
@@ -70,7 +63,7 @@ public class ArticuloRepository {
                     e.printStackTrace();
                     return null;
                 }
-                Log.d("Comercios task", lArticulos.toString());
+                Log.d("Listado articulos por comercio task", lArticulos.toString());
                 return lArticulos;
             }
 
