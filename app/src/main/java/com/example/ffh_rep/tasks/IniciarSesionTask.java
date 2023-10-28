@@ -64,7 +64,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
         uData.setId_usuario(rs.getInt("id_usuario"));
         uData.setUsername(rs.getString("username"));
         uData.setPassword(rs.getString("password"));
-        uData.setEstado(rs.getString("estado"));
+        uData.setEstado(rs.getBoolean("estado"));
         uData.getRol().setIdRol(rs.getInt("id_rol"));
         uData.getRol().setDescripcion(rs.getString("descripcion"));
 

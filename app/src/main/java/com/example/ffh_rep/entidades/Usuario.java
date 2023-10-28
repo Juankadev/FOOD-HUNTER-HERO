@@ -7,12 +7,12 @@ public class Usuario implements Serializable {
     private Rol rol;
     private String username;
     private String password;
-    private String estado;
+    private boolean estado;
 
     public Usuario() {
     }
 
-    public Usuario(Rol rol, String username, String password, String estado) {
+    public Usuario(Rol rol, String username, String password, boolean estado) {
         this.rol = rol;
         this.username = username;
         this.password = password;
@@ -51,11 +51,11 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public String getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 

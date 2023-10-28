@@ -94,7 +94,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         if (validateFields())
         {
             Rol rol = new Rol(2, "Hunter");
-            Usuario usuario = new Usuario(rol, username, password, "Activo");
+            Usuario usuario = new Usuario(rol, username, password, true);
 
             RegistrarUsuario registrarUsuarioTask = new RegistrarUsuario(this, usuario, this);
             registrarUsuarioTask.execute();
