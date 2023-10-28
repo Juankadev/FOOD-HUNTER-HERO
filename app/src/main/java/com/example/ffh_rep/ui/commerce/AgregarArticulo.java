@@ -21,7 +21,9 @@ import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.repositories.ArticuloRepository;
-
+import com.example.ffh_rep.repositories.CategoriaRepository;
+import com.example.ffh_rep.repositories.MarcaRepository;
+import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +57,8 @@ public class AgregarArticulo extends Fragment {
         spinnerIDMarcaArticulo = view.findViewById(R.id.spinnerIDMarcaArticulo);
         btnAgregarArticulo = view.findViewById(R.id.btnAgregarArticulo);
 
-        // SPINNERS ADAPTADORES DE EJEMPLO, FALTA CARGAR LOS LISTADOS DE C/U
-        categorias = obtenerCategoriasEjemplo();
-        marcas = obtenerMarcasEjemplo();
-
-        ArrayAdapter<String> categoriaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categorias);
-        ArrayAdapter<String> marcaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, marcas);
-
-        spinnerIDCategoriaArticulo.setAdapter(categoriaAdapter);
-        spinnerIDMarcaArticulo.setAdapter(marcaAdapter);
+        obtenerCategoriasDesdeRepositorio();
+        obtenerMarcasDesdeRepositorio();
 
         btnAgregarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +68,6 @@ public class AgregarArticulo extends Fragment {
                 double precio = Double.parseDouble(txtPrecioArticulo.getText().toString());
                 String urlImagen = txtURLImagenArticulo.getText().toString();
 
-                //NO SE UTILIZA, HAY QUE CARGAR LOS SPINNERS
                 int idCategoria = spinnerIDCategoriaArticulo.getSelectedItemPosition();
                 int idMarca = spinnerIDMarcaArticulo.getSelectedItemPosition();
 
@@ -82,57 +76,69 @@ public class AgregarArticulo extends Fragment {
                 articulo.setDescripcion(descripcion);
                 articulo.setPrecio(precio);
                 articulo.setImagen(urlImagen);
-                //SON SOLO PRUEBAS DE LOS SPINNERS
+
                 Categoria categoria = new Categoria();
-                categoria.setIdCategoria(1);
+                categoria.setIdCategoria(idCategoria);
                 articulo.setCategoria(categoria);
 
                 Marca marca = new Marca();
-                marca.setIdMarca(1);
+                marca.setIdMarca(idMarca);
                 articulo.setMarca(marca);
 
                 articulo.setEstado("1");
 
-
-                Log.d("LOG","---------------------------");
-                Log.d("LOG","---------------------------");
-                Log.d("LOG",articulo.toString());
-                Log.d("LOG","---------------------------");
-                Log.d("LOG","---------------------------");
-
-                simularInsercion(articulo);
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", articulo.toString());
+                Log.d("LOG", "---------------------------");
+                Log.d("LOG", "---------------------------");
+                
+                insertarArticulo(articulo);
             }
         });
 
         return view;
     }
 
-    //SPINNERS DE EJEMPLO
-    private List<String> obtenerCategoriasEjemplo() {
-        List<String> categorias = new ArrayList<>();
-        categorias.add("Categoria 1");
-        categorias.add("Categoria 2");
-        categorias.add("Categoria 3");
-        return categorias;
+    private void obtenerCategoriasDesdeRepositorio() {
+        CategoriaRepository categoriaRepository = new CategoriaRepository();
+        MutableLiveData<List<Categoria>> categoriaLiveData = new MutableLiveData<>();
+        categoriaRepository.getCategorias(categoriaLiveData);
+        categoriaLiveData.observe(getViewLifecycleOwner(), categorias -> {
+            this.categorias = new ArrayList<>();
+            for (Categoria categoria : categorias) {
+                this.categorias.add(categoria.getDescripcion());
+            }
+            cargarDatosEnSpinners();
+        });
     }
 
-    private List<String> obtenerMarcasEjemplo() {
-        List<String> marcas = new ArrayList<>();
-        marcas.add("Marca 1");
-        marcas.add("Marca 2");
-        marcas.add("Marca 3");
-        return marcas;
+    private void obtenerMarcasDesdeRepositorio() {
+        MarcaRepository marcaRepository = new MarcaRepository();
+        MutableLiveData<List<Marca>> marcaLiveData = new MutableLiveData<>();
+        marcaRepository.getMarcas(marcaLiveData);
+        marcaLiveData.observe(getViewLifecycleOwner(), marcas -> {
+            this.marcas = new ArrayList<>();
+            for (Marca marca : marcas) {
+                this.marcas.add(marca.getDescripcion());
+            }
+            cargarDatosEnSpinners();
+        });
     }
 
-    private void simularInsercion(Articulo articulo) {
-            ArticuloRepository articuloRepository = new ArticuloRepository();
+    private void cargarDatosEnSpinners() {
+        if (categorias != null && marcas != null) {
+            ArrayAdapter<String> categoriaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categorias);
+            ArrayAdapter<String> marcaAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, marcas);
 
-            Context context = requireContext();
+            spinnerIDCategoriaArticulo.setAdapter(categoriaAdapter);
+            spinnerIDMarcaArticulo.setAdapter(marcaAdapter);
+        }
+    }
 
-
-
-            articuloRepository.insertArticulo(context, articulo);
-
+    private void insertarArticulo(Articulo articulo) {
+        ArticuloRepository articuloRepository = new ArticuloRepository();
+        Context context = requireContext();
+        articuloRepository.insertArticulo(context, articulo);
     }
 }
-
