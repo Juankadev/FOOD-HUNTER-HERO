@@ -57,6 +57,7 @@ public class Hunter_Home extends Fragment {
         setupListeners();
         setupViewModel();
         setupComerciosGridView();
+        setupArticulosGridView();
         return view;
     }
     /**
@@ -114,7 +115,17 @@ public class Hunter_Home extends Fragment {
         viewModel.cargarComercios();
         viewModel.getMlDataComercio().observe(getViewLifecycleOwner(), comercios -> comercioListAdapter.setComercioList(comercios));
     }
+    /**
+     * Configura el GridView de articulos con un adaptador y observa los cambios en la lista de articulos desde el ViewModel.
+     * Carga inicialmente los articulos y actualiza la interfaz gráfica cuando hay cambios en la lista.
+     */
+    private void setupArticulosGridView() {
+        articulosListAdapter = new ArticulosListAdapter(this.getContext(),  new ArrayList<>());
+        gvProductosHunterHome.setAdapter(articulosListAdapter);
 
+        viewModel.cargarListArticulo();
+        viewModel.getMlDataArticulo().observe(getViewLifecycleOwner(), articulos -> articulosListAdapter.setlArticulos(articulos));
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

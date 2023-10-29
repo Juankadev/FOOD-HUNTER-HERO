@@ -24,7 +24,7 @@ public class HunterVerComercioViewModel extends ViewModel {
     }
 
     public void cargarArticulos(int id){
-        aRepo.getArticulos_by_idComercio(mldArticulos, id);
+        aRepo.getArticulosByIdComercio(mldArticulos, id);
     }
 
     public MutableLiveData<List<Articulo>> getMldArticulos() {

@@ -17,8 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,8 @@ public class Hunter_MiCuenta extends Fragment {
 
     private HunterMiCuentaViewModel mViewModel;
     private FragmentHunterMiCuentaBinding binding;
-    private TextView et_nombre, et_apellido, et_dni, et_sexo, et_correo, et_direccion;
+    private TextView et_nombre, et_apellido, et_dni, et_correo, et_direccion;
+    private Spinner spinnerSexo;
     private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel;
     private Hunter userSession;
     private String originalNombre, originalApellido, originalDNI, originalSexo, originalCorreo, originalDireccion;
@@ -52,7 +55,7 @@ public class Hunter_MiCuenta extends Fragment {
 
         binding = FragmentHunterMiCuentaBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        initComponents(view);
+        initializeViews(view);
 
         sessionManager = new SessionManager(requireActivity());
         userSession = sessionManager.getHunterSession();
@@ -60,40 +63,72 @@ public class Hunter_MiCuenta extends Fragment {
         mViewModel.setHunterDataWithHunte(this.userSession);
 
         settingObservers();
-        settingListeners();
+        setupListeners();
         return view;
     }
-    private void initComponents(View view) {
+    /**
+     * Inicializa las vistas necesarias para la interfaz de registro.
+     * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
+     */
+    private void initializeViews(View view) {
         et_apellido = view.findViewById(R.id.et_apellido);
         et_nombre = view.findViewById(R.id.et_nombre);
         et_dni = view.findViewById(R.id.et_dni);
-        et_sexo = view.findViewById(R.id.et_sexo);
+        spinnerSexo = view.findViewById(R.id.spinner_sexo);
         et_correo = view.findViewById(R.id.et_correo);
         et_direccion = view.findViewById(R.id.et_direccion);
         btnEditarInformacion = view.findViewById(R.id.btn_editInformacion);
         btnEliminarCuenta = view.findViewById(R.id.btn_deleteaccount);
         btnEditAction = view.findViewById(R.id.btn_edit_actioner);
         btnCancel = view.findViewById(R.id.btn_Cancel_Edit);
-
+        setupSpinner();
         mViewModel = new ViewModelProvider(requireActivity(), new HunterMiCuentaViewModelFactory(getActivity())).get(HunterMiCuentaViewModel.class);
     }
-
+    /**
+     * Configura el Spinner de género con las opciones predefinidas.
+     * Crea un ArrayAdapter con las opciones de género y lo asigna al Spinner.
+     */
+    private void setupSpinner() {
+        String[] opcionesSexo = {"Masculino", "Femenino", "Otro"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, opcionesSexo);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSexo.setAdapter(adapter);
+        spinnerSexo.setEnabled(false);
+    }
+    /**
+     * Configura los elementos de entrada (EditText y Spinner) con los datos del usuario.
+     *
+     * @param user Objeto Hunter que contiene la información del usuario.
+     */
     private void settingInputs(Hunter user){
         et_apellido.setText(user.getApellido());
         et_nombre.setText(user.getNombre());
         et_dni.setText(user.getDni());
-        et_sexo.setText(user.getSexo());
         et_correo.setText(user.getCorreo_electronico());
         et_direccion.setText(user.getDireccion());
+        String sexo = user.getSexo();
+        if ("Masculino".equals(sexo)) {
+            spinnerSexo.setSelection(0);
+        } else if ("Femenino".equals(sexo)) {
+            spinnerSexo.setSelection(1);
+        } else if ("Otro".equals(sexo)) {
+            spinnerSexo.setSelection(2);
+        }
     }
-
-    public void settingListeners(){
+    /**
+     * Configura los listeners de la interfaz.
+     * Asigna los métodos correspondientes a los eventos.
+     */
+    private void setupListeners() {
         btnEliminarCuenta.setOnClickListener(v -> deleteMyAccount());
         btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
         btnEditAction.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
     }
-
+    /**
+     * Configura los observadores de la interfaz.
+     * Implementa las unciones correspondientes.
+     */
     private void settingObservers(){
         mViewModel.getHunterData().observe(getViewLifecycleOwner(), new Observer<Hunter>() {
             @Override
@@ -112,7 +147,10 @@ public class Hunter_MiCuenta extends Fragment {
             }
         });
     }
-
+    /**
+     * Actualiza la información del usuario con los valores ingresados en los campos de edición.
+     * Crea un objeto Hunter con los datos actualizados y lo envía al ViewModel para su procesamiento.
+     */
     private void updateInformation(){
         Hunter updateHunter = new Hunter();
 
@@ -120,18 +158,23 @@ public class Hunter_MiCuenta extends Fragment {
         updateHunter.setApellido(et_apellido.getText().toString());
         updateHunter.setNombre(et_nombre.getText().toString());
         updateHunter.setDni(et_dni.getText().toString());
-        updateHunter.setSexo(et_sexo.getText().toString());
+        updateHunter.setSexo(spinnerSexo.getSelectedItem().toString());
         updateHunter.setCorreo_electronico(et_correo.getText().toString());
         updateHunter.setDireccion(et_direccion.getText().toString());
 
         mViewModel.updateInformation(updateHunter);
     }
-
+    /**
+     * Habilita o deshabilita la edición de los campos de información del usuario y ajusta la visibilidad
+     * de los botones según el estado proporcionado. Si '_var' es verdadero, habilita la edición, oculta
+     * los botones de editar y eliminar, y muestra los botones de confirmar y cancelar. Si '_var' es falso,
+     * deshabilita la edición, revierte los cambios y muestra los botones de editar y eliminar.
+     */
     private void enabledInputs(boolean _var){
         et_apellido.setEnabled(_var);
         et_nombre.setEnabled(_var);
         et_dni.setEnabled(_var);
-        et_sexo.setEnabled(_var);
+        spinnerSexo.setEnabled(_var);
         et_correo.setEnabled(_var);
         et_direccion.setEnabled(_var);
 
@@ -152,25 +195,39 @@ public class Hunter_MiCuenta extends Fragment {
             btnCancel.setVisibility(View.GONE);
         }
     }
-
+    /**
+     * Guarda los valores originales de los campos de información del usuario antes de realizar
+     * modificaciones. Esto permite revertir los cambios en caso de que se cancele la edición.
+     */
     private void saveOriginals(){
         originalNombre = et_nombre.getText().toString();
         originalApellido = et_apellido.getText().toString();
         originalDNI = et_dni.getText().toString();
-        originalSexo = et_sexo.getText().toString();
+        originalSexo = spinnerSexo.getSelectedItem().toString();
         originalCorreo = et_correo.getText().toString();
         originalDireccion = et_direccion.getText().toString();
     }
-
+    /**
+     * Revierte la edición restaurando los valores originales a los campos de información del usuario.
+     */
     private void rollbackEdit(){
         et_nombre.setText(originalNombre);
         et_apellido.setText(originalApellido);
         et_dni.setText(originalDNI);
-        et_sexo.setText(originalSexo);
         et_correo.setText(originalCorreo);
         et_direccion.setText(originalDireccion);
+        if ("Masculino".equals(originalSexo)) {
+            spinnerSexo.setSelection(0);
+        } else if ("Femenino".equals(originalSexo)) {
+            spinnerSexo.setSelection(1);
+        } else if ("Otro".equals(originalSexo)) {
+            spinnerSexo.setSelection(2);
+        }
     }
-
+    /**
+     * Muestra un cuadro de diálogo de confirmación para eliminar la cuenta del usuario.
+     * Si el usuario confirma, se invoca el método para eliminar la cuenta a través del ViewModel.
+     */
     private void deleteMyAccount(){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Eliminar cuenta");

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.adapters.ArticulosCarritoListAdapter;
 import com.example.ffh_rep.adapters.ArticulosListAdapter;
 import com.example.ffh_rep.databinding.FragmentHunterMiCarritoBinding;
 import com.example.ffh_rep.entidades.Articulo;
@@ -36,7 +37,7 @@ public class Hunter_MiCarrito extends Fragment {
 
     private CarritoViewModel carrito;
     private FragmentHunterMiCarritoBinding binding;
-    private ArticulosListAdapter alAdapter;
+    private ArticulosCarritoListAdapter alAdapter;
     private ListView lvArticulos;
     private Button btnEndHunting;
     private List<ItemCarrito> _currChart;
@@ -53,7 +54,7 @@ public class Hunter_MiCarrito extends Fragment {
 
         lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
-        alAdapter = new ArticulosListAdapter(new ArrayList<>(), getContext());
+        alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
 
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
 

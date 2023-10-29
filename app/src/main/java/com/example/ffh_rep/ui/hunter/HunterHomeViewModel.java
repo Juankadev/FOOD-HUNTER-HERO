@@ -47,10 +47,6 @@ public class HunterHomeViewModel extends ViewModel {
       return mlDataArticulo;
    }
 
-   public void setMlDataArticulo(MutableLiveData<List<Articulo>> mlDataArticulo) {
-      this.mlDataArticulo = mlDataArticulo;
-   }
-
    public MutableLiveData<List<Comercio>> getMlDataComercio() {
       return mlDataComercio;
    }

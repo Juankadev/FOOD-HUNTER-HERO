@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.repositories.ArticuloRepository;
 
@@ -18,59 +19,67 @@ import java.util.List;
 
 public class ArticulosListAdapter extends BaseAdapter {
 
-    private List<ItemCarrito> lArticulos;
+    private List<Articulo> articulosList;
     private LayoutInflater inflater;
 
-    public ArticulosListAdapter(Context contxt){
+    public ArticulosListAdapter(Context contxt, List<Articulo> articulosList){
+        this.articulosList = articulosList;
         this.inflater = LayoutInflater.from(contxt);
     }
 
-    public ArticulosListAdapter(List<ItemCarrito> lista, Context contxt){
-        this.inflater = LayoutInflater.from(contxt);
-        this.lArticulos = lista;
-    }
-
-    public List<ItemCarrito> getlArticulos() {
-        return lArticulos;
-    }
-
-    public void setlArticulos(List<ItemCarrito> lArticulos) {
-        this.lArticulos = lArticulos;
-
+    public void setlArticulos(List<Articulo> lArticulos) {
+        this.articulosList = lArticulos;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return lArticulos.size();
+        return articulosList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return lArticulos.get(position);
+        return articulosList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
-
+    /**
+     * Devuelve la vista que representa un elemento en el GridView.
+     *
+     * @param position    La posición del elemento en la lista de datos.
+     * @param convertView La vista reciclada para reutilizar, si está disponible.
+     * @param parent      El ViewGroup al que pertenece la vista.
+     * @return La vista que representa un elemento en el GridView.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        ArticulosListAdapter.ViewHolder holder;
 
-        if(convertView == null){
-            convertView = inflater.inflate(R.layout.item_producto_home, null);
-            vh = new ViewHolder();
-            vh.descripcion = convertView.findViewById(R.id.txt_descripcion_producto);
-            vh.precio = convertView.findViewById(R.id.txt_precio_producto);
-            convertView.setTag(vh);
-        }else{
-            vh = (ViewHolder) convertView.getTag();
+        if (convertView == null) {
+            // TODO: Crear nueva grid_item_layout para el articulo
+            convertView = inflater.inflate(R.layout.grid_item_layout, parent, false);
+
+            // Inicializar el ViewHolder
+            holder = new ArticulosListAdapter.ViewHolder();
+            // TODO: Asignar vistas a los elementos del ViewHolder
+            // holder.imageView = convertView.findViewById(R.id.imageView);
+            holder.descripcion = convertView.findViewById(R.id.textView);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ArticulosListAdapter.ViewHolder) convertView.getTag();
         }
 
-        ItemCarrito a = lArticulos.get(position);
-        vh.precio.setText(String.valueOf(a.getArtc().getPrecio()));
-        vh.descripcion.setText(a.getArtc().getDescripcion());
+        // Obtener datos del modelo
+        Articulo articulo = articulosList.get(position);
+
+        // Configurar las vistas con datos del modelo
+        // TODO: Asignar datos a las vistas del ViewHolder
+        // holder.imageView.setImageResource(comercio.getImageResource());
+        holder.descripcion.setText(articulo.getDescripcion());
 
         return convertView;
     }

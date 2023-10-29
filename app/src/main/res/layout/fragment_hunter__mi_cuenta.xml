@@ -3,101 +3,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#68dd6b"
     tools:context=".ui.hunter.Hunter_MiCuenta">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#68dd6b"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/indicaciones"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="Información personal"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_nombre"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
-            android:enabled="false"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/input_nombre_rh"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
-            android:text="@string/input_nombre_rh"
-            android:textColor="#FFFFFF" />
+            android:textColorHint="#F8F6F6" />
 
         <EditText
             android:id="@+id/et_apellido"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_apellido_rh"
             android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_dni"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_dni_rh"
             android:textColor="#FFFFFF" />
 
-        <EditText
-            android:id="@+id/et_sexo"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinner_sexo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/border_with_arrow"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_sexo_rh"
             android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_correo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_email_r"
             android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_direccion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_direccion_r"
             android:textColor="#FFFFFF" />
@@ -116,8 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:backgroundTint="#2400FF"
-            android:visibility="gone"
-            android:text="Editar" />
+            android:text="Editar"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_deleteaccount"
@@ -128,14 +152,15 @@
             android:text="@string/comercio_micuenta_btn_eliminar"
             android:textColor="#FFFFFF" />
 
-        <Button
+
+        <!-- <Button
             android:id="@+id/btn_back_to_home"
             android:layout_width="169dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="#B6B6B6"
             android:text="@string/btn_volver"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF" /> -->
 
         <Button
             android:id="@+id/btn_Cancel_Edit"
@@ -144,8 +169,8 @@
             android:layout_marginTop="5dp"
             android:backgroundTint="#B6B6B6"
             android:text="Cancelar"
-            android:visibility="gone"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:visibility="gone" />
 
     </LinearLayout>
 </FrameLayout>
