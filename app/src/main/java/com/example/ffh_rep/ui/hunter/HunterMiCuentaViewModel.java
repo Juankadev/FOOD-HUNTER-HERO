@@ -37,12 +37,12 @@ public class HunterMiCuentaViewModel extends ViewModel {
     }
 
     public void updateInformation(Hunter hunter){
-        hunterRepo.updateUserInfo(this.hunterData, hunter);
+        hunterRepo.updateUserInfo(this.hunterData, hunter, this.ctx);
     }
 
     public void eliminarMiCuenta(){
         Hunter aux = this.hunterData.getValue();
-        hunterRepo.eliminarCuenta(aux, deleteAccount);
+        hunterRepo.eliminarCuenta(aux, deleteAccount, ctx);
     }
     public void setHunterData(MutableLiveData<Hunter> hunterData) {
         this.hunterData = hunterData;

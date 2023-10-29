@@ -70,27 +70,13 @@ public class Hunter_VerComercio extends Fragment {
 
         mViewModel.cargarArticulos(commerce.getId());
 
-        if (isAdded() && isVisible()) {
-            Log.d("primer plano", "aniadido");
-        } else {
-            Log.d("Segundo plano", "no se");
-        }
         setUpListeners();
         setUpObservers();
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                Log.d("PRESIONADO", "PRESIONADO");
-            }
-        };
-        Log.d("Callback", "Callback added: " + callback.isEnabled());
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-        //pressBackValidation();
+
+        pressBackValidation();
         descripcion.setText(commerce.getRazonSocial());
         gv_articulos.setAdapter(aclAdapter);
         return view;
-
-
     }
 
 
@@ -120,10 +106,7 @@ public class Hunter_VerComercio extends Fragment {
                 }
             }
         };
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
-
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     public void setUpObservers(){
@@ -180,8 +163,24 @@ public class Hunter_VerComercio extends Fragment {
         dialog.show();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("FragmentVisible", "Fragment is now visible");
+    }
 
-   @Override
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("FragmentNotVisible", "Fragment is no longer visible");
+    }
+
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(HunterVerComercioViewModel.class);

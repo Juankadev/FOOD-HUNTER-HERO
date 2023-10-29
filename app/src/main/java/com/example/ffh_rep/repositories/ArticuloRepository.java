@@ -35,9 +35,8 @@ public class ArticuloRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT id_articulo, id_comercio, descripcion, precio, id_categoria, id_marca, imagen, estado FROM Articulos WHERE estado = 1 and id_comercio = ?");
+                 PreparedStatement ps = con.prepareStatement("SELECT id_articulo, id_comercio, descripcion, precio, id_categoria, id_marca, imagen, estado FROM Articulos WHERE estado = 1 and id_comercio ="+id);
                  ResultSet rs = ps.executeQuery()) {
-                ps.setInt(1, id);
 
                 while (rs.next()) {
                     Articulo articulo = new Articulo();

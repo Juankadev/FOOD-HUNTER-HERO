@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -149,20 +150,6 @@ public class NavigationController extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_controller) instanceof Hunter_VerComercio) {
-            Hunter_VerComercio fragment = (Hunter_VerComercio) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_navigation_controller);
-            if (fragment != null) {
-                fragment.mensajeSalir();
-            }
-        } else {
-            // En otros casos, llama al comportamiento predeterminado de retroceso
-            super.onBackPressed();
-        }
-    }
-
     private int userRol(Usuario user) {
         return user.getRol().getIdRol();
     }

@@ -52,12 +52,15 @@ public class Hunter_MiCarrito extends Fragment {
         binding = FragmentHunterMiCarritoBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
-        btnEndHunting = view.findViewById(R.id.btnEndHunting);
-        alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
+        initComponents(view);
+        setUpObservers();
+        setUpListeners();
 
-        carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
+        lvArticulos.setAdapter(alAdapter);
+        return view;
+    }
 
+    public void setUpObservers(){
         carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
             @Override
             public void onChanged(List<ItemCarrito> articulos) {
@@ -65,7 +68,9 @@ public class Hunter_MiCarrito extends Fragment {
                 _currChart = articulos;
             }
         });
+    }
 
+    public void setUpListeners(){
         btnEndHunting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,9 +91,15 @@ public class Hunter_MiCarrito extends Fragment {
                 }
             }
         });
+    }
 
-        lvArticulos.setAdapter(alAdapter);
-        return view;
+    public void initComponents(View view){
+        lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
+        btnEndHunting = view.findViewById(R.id.btnEndHunting);
+        alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
+
+        carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
+
     }
 
     @Override

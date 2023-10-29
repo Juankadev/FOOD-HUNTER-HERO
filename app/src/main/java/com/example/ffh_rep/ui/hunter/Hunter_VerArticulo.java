@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterVerArticuloBinding;
@@ -92,7 +93,7 @@ public class Hunter_VerArticulo extends Fragment {
         if(this._cantidadArticulo > 0){
             item = new ItemCarrito(article, this._cantidadArticulo);
             carrito.addArticleToCart(item);
-
+            Toast.makeText(getContext(), "Articulo Agregado", Toast.LENGTH_LONG).show();
         }
     }
 
