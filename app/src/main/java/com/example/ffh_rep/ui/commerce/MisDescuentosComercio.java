@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -19,18 +20,26 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.adapters.ComercioListAdapter;
+import com.example.ffh_rep.adapters.MisDescuentosComercioListAdapter;
 import com.example.ffh_rep.databinding.FragmentComercioMisDescuentosBinding;
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.factory.DescuentosViewModelFactory;
+import com.example.ffh_rep.factory.HunterHomeViewModelFactory;
+import com.example.ffh_rep.ui.hunter.HunterHomeViewModel;
+import com.example.ffh_rep.utils.SessionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MisDescuentosComercio extends Fragment {
-    private MisDescuentosComercioViewModel mViewModel;
     private FragmentComercioMisDescuentosBinding binding;
     private GridView gv_descuentos_container;
-    private TextView shopName, descDescuento, puntosDescuento, idDescuento;
+    private MisDescuentosComercioListAdapter descuentosComercioListAdapterListAdapter;
     private Button btnMisArticulos, btnEliminarDescuento, btnModificarDescuento, btnAddDescuento;
+    private MisDescuentosComercioViewModel mViewModel;
+    private TextView shopName, descDescuento, puntosDescuento, idDescuento;
 
     public static MisDescuentosComercio newInstance() {
         return new MisDescuentosComercio();
@@ -41,15 +50,18 @@ public class MisDescuentosComercio extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentComercioMisDescuentosBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-        initComponentes(view);
+        initializeViews(view);
         setUpListeners();
-        setUpObserver();
-        this.mViewModel.listarDescuentos();
+        setupViewModel();
+        setupBeneficiosGridView();
+        //setUpObserver();
         return view;
     }
-
-    public void initComponentes(View view){
+    /**
+     * Inicializa las vistas necesarias para la interfaz de usuario.
+     * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
+     */
+    public void initializeViews(View view){
         this.shopName = view.findViewById(R.id.et_ShopName);
         this.idDescuento = view.findViewById(R.id.IdDescuento);
         this.descDescuento = view.findViewById(R.id.etDescDescuento);
@@ -62,45 +74,52 @@ public class MisDescuentosComercio extends Fragment {
 
         this.gv_descuentos_container = view.findViewById(R.id.gv_descuentos_container);
 
+    }
+    /**
+     * Configura los listeners de la interfaz.
+     * Asigna los métodos correspondientes a los eventos.
+     */
+    public void setUpListeners() {
+        btnEliminarDescuento.setOnClickListener(v-> eliminarBeneficio());
+        btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.agregarDescuento));
+        btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
+        // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
+        btnModificarDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.modificarDescuento));
+    }
+    /**
+     * Configura y obtiene la instancia del ViewModel asociado a la pantalla de mis beneficios (Comercio).
+     * Utiliza el DescuentosViewModelFactory para proporcionar el contexto de la actividad.
+     */
+    private void setupViewModel() {
         this.mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
+    /**
+     * Configura el GridView de beneficios con un adaptador y observa los cambios en la lista de beneficios desde el ViewModel.
+     * Carga inicialmente los beneficios y actualiza la interfaz gráfica cuando hay cambios en la lista.
+     */
+    private void setupBeneficiosGridView() {
+        descuentosComercioListAdapterListAdapter = new MisDescuentosComercioListAdapter(getContext(), new ArrayList<>());
+        gv_descuentos_container.setAdapter(descuentosComercioListAdapterListAdapter);
 
-    public void setUpListeners() {
-        btnEliminarDescuento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer id = Integer.parseInt(idDescuento.getText().toString());
-                Beneficio beneficio = new Beneficio();
-                beneficio.setId_beneficio(id);
-                mViewModel.eliminarBeneficio(beneficio);
-            }
-        });
+        mViewModel.listarDescuentos();
+        mViewModel.getMldListaBeneficios().observe(getViewLifecycleOwner(), beneficios -> descuentosComercioListAdapterListAdapter.setBeneficiosList(beneficios));
+    }
+    /**
+     * Metodo utilizado para eliminar beneficios
+     */
+    private void eliminarBeneficio(){
+        // OBTENGO EL ID DEL TXT
+        Integer id = Integer.parseInt(idDescuento.getText().toString());
 
-        btnModificarDescuento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.modificarDescuento);
-                // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
-            }
-        });
+        /// INSTANCIO UN OBJETO BENEFICIO Y SETEO EL VALOR
+        Beneficio beneficio = new Beneficio();
+        beneficio.setId_beneficio(id);
 
-        btnAddDescuento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.agregarDescuento);
-                // ENVIARLE EL ID DEL COMERCIO EN DONDE SE AGREGARA EL DESCUENTO
-            }
-        });
-
-        btnMisArticulos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavHostFragment.findNavController(MisDescuentosComercio.this).navigate(R.id.commerce_MisArticulos);
-            }
-        });
+        /// USO EL METODO PARA ELIMINAR EL BENEFICIO
+        mViewModel.eliminarBeneficio(beneficio);
     }
 
-    private void setUpObserver(){
+    /*private void setUpObserver(){
         mViewModel.getMldBeneficio().observe(getViewLifecycleOwner(), new Observer<Beneficio>() {
             @Override
             public void onChanged(Beneficio beneficio) {
@@ -114,6 +133,6 @@ public class MisDescuentosComercio extends Fragment {
                 Log.d("beneficios", beneficios.toString());
             }
         });
-    }
+    }*/
 
 }

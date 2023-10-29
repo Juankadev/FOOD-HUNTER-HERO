@@ -15,7 +15,6 @@ public class MisDescuentosComercioViewModel extends ViewModel {
    private MutableLiveData<Beneficio> mldBeneficio;
    private MutableLiveData<List<Beneficio>> mldListaBeneficios;
    private DescuentoRepository dRepo;
-
    public MisDescuentosComercioViewModel(){}
 
    public MisDescuentosComercioViewModel(Context ctx){
@@ -30,7 +29,6 @@ public class MisDescuentosComercioViewModel extends ViewModel {
    }
    public void eliminarBeneficio(Beneficio bene){dRepo.eliminarDescuento(ctx, bene);}
    public void editarBeneficio(Beneficio bene){dRepo.modificarDescuento(ctx, bene);}
-
    public void listarDescuentos(){
       dRepo.listarDescuentos(mldListaBeneficios);
    }

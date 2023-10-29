@@ -5,11 +5,11 @@ public class Beneficio {
     private Comercio id_comercio;
     private String descripcion;
     private Integer puntos_requeridos;
-    private String estado;
+    private boolean estado;
 
     public Beneficio() {}
 
-    public Beneficio(Integer id_beneficio, Comercio id_comercio, String descripcion, Integer puntos_requeridos, String estado) {
+    public Beneficio(Integer id_beneficio, Comercio id_comercio, String descripcion, Integer puntos_requeridos, boolean estado) {
         this.id_beneficio = id_beneficio;
         this.id_comercio = id_comercio;
         this.descripcion = descripcion;
@@ -28,12 +28,12 @@ public class Beneficio {
         descripcion = descripcion;
     }
     public void setPuntos_requeridos(Integer puntos_requeridos) {puntos_requeridos = puntos_requeridos;}
-    public void setEstado(String estado) {estado = estado;}
+    public void setEstado(boolean estado) {estado = estado;}
 
     public Integer getId_beneficio() {return this.id_beneficio;}
     public Comercio getId_comercio() {return this.id_comercio;}
     public String getDescripcion() {return this.descripcion;}
     public Integer getPuntos_requeridos() {return this.puntos_requeridos;}
-    public String getEstado() {return this.estado;}
+    public boolean getEstado() {return this.estado;}
 
 }

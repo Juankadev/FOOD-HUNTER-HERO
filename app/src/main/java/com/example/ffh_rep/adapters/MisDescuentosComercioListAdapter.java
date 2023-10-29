@@ -8,38 +8,40 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Beneficio;
 
 import java.util.List;
 
-public class ComercioListAdapter extends BaseAdapter {
-    private List<Comercio> comercioList;
+public class MisDescuentosComercioListAdapter extends BaseAdapter {
+
+    private List<Beneficio> beneficioList;
     private LayoutInflater inflater;
 
-    public ComercioListAdapter(Context context, List<Comercio> comercioList) {
-        this.comercioList = comercioList;
+    public MisDescuentosComercioListAdapter(Context context, List<Beneficio> beneficioList) {
+        this.beneficioList = beneficioList;
         this.inflater = LayoutInflater.from(context);
     }
 
-    public void setComercioList(List<Comercio> comercioList) {
-        this.comercioList = comercioList;
+    public void setBeneficiosList(List<Beneficio> beneficioList) {
+        this.beneficioList = beneficioList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return comercioList.size();
+        return beneficioList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return comercioList.get(position);
+        return beneficioList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position; // Devuelve la posición como ID por simplicidad
     }
+
     /**
      * Devuelve la vista que representa un elemento en el GridView.
      *
@@ -50,35 +52,36 @@ public class ComercioListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        MisDescuentosComercioListAdapter.ViewHolder holder;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.grid_item_layout, parent, false);
 
             // Inicializar el ViewHolder
-            holder = new ViewHolder();
+            holder = new MisDescuentosComercioListAdapter.ViewHolder();
             // TODO: Asignar vistas a los elementos del ViewHolder
             // holder.imageView = convertView.findViewById(R.id.imageView);
             holder.textView = convertView.findViewById(R.id.textView);
 
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (MisDescuentosComercioListAdapter.ViewHolder) convertView.getTag();
         }
 
         // Obtener datos del modelo
-        Comercio comercio = comercioList.get(position);
+        Beneficio beneficio = beneficioList.get(position);
 
         // Configurar las vistas con datos del modelo
         // TODO: Asignar datos a las vistas del ViewHolder
-        // holder.imageView.setImageResource(comercio.getImageResource());
-        holder.textView.setText(comercio.getRazonSocial());
+        holder.textView.setText(beneficio.getId_beneficio());
+        holder.textView.setText(beneficio.getDescripcion());
+        holder.textView.setText(beneficio.getPuntos_requeridos());
 
         return convertView;
     }
 
     // ViewHolder para almacenar las referencias de las vistas
-    static class ViewHolder {
+    private static class ViewHolder {
         //ImageView imageView;
         TextView textView;
     }
