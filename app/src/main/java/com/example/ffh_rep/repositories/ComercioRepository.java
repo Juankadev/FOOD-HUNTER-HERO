@@ -1,8 +1,12 @@
 package com.example.ffh_rep.repositories;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
@@ -13,6 +17,65 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ComercioRepository {
+
+    public void updateUserInfo(MutableLiveData<Comercio> mlCommerce, Comercio comercio, Context ctx){
+        CompletableFuture.runAsync(() -> {
+
+            try {
+                Connection con = DBUtil.getConnection();
+                String query = "UPDATE Comercios set rubro = ?, correo_electronico = ?, telefono = ?, direccion = ? where Id = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+
+                ps.setString(1, comercio.getRubro());
+                ps.setString(2, comercio.getEmail());
+                ps.setString(3, comercio.getTelefono());
+                ps.setString(4, comercio.getDireccion());
+                ps.setInt(5, comercio.getId());
+
+                int rowsAffected = ps.executeUpdate();
+                ps.close();
+                DBUtil.closeConnection(con);
+                if(rowsAffected > 0){
+                    Toast.makeText(ctx, "Información actualizada con exito", Toast.LENGTH_LONG);
+                    mlCommerce.postValue(comercio);
+                }
+                else{
+                    Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    public void eliminarCuenta(Comercio comercio, MutableLiveData<Boolean> isDelete, Context ctx){
+        CompletableFuture.runAsync(() -> {
+            try {
+                Connection con = DBUtil.getConnection();
+                String query = "Update Usuarios set estado = '0' where id_usuario = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+
+                ps.setInt(1, comercio.getUser().getId_usuario());
+
+                int rowsAffected = ps.executeUpdate();
+                ps.close();
+                DBUtil.closeConnection(con);
+                if(rowsAffected > 0){
+                    isDelete.postValue(true);
+                }
+                else{
+                    Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG);
+            }
+        });
+
+    }
     /**
      * Obtiene y retorna la lista de comercios aprobados desde la base de datos de manera asíncrona.
      * Utiliza un CompletableFuture para ejecutar la consulta en un hilo separado y actualiza el MutableLiveData con los resultados.

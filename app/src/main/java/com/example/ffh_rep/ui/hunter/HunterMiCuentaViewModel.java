@@ -12,12 +12,10 @@ import com.example.ffh_rep.repositories.HunterRepository;
 public class HunterMiCuentaViewModel extends ViewModel {
 
     private Context ctx;
-
     private MutableLiveData<Hunter> hunterData;
     private HunterRepository hunterRepo;
     private MutableLiveData<Boolean> deleteAccount;
     public HunterMiCuentaViewModel(){}
-
 
     public HunterMiCuentaViewModel(Context ctx) {
         this.ctx = ctx;
