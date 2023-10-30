@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -115,6 +117,7 @@ public class NavigationController extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         navController.setGraph(navGraphResId);
+        Log.d("Graphs", String.valueOf(navController.getGraph()));
 
         NavigationUI.setupWithNavController(navigationView, navController);
         mAppBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph())
@@ -150,6 +153,12 @@ public class NavigationController extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private int userRol(Usuario user) {
         return user.getRol().getIdRol();
     }

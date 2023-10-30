@@ -50,7 +50,20 @@ public class CarritoViewModel extends ViewModel{
         return totArticulos;
     }
 
+    public Integer getTotalIntegervalue(){
+        return this.totArticulos.getValue();
+    }
+
     public void setTotArticulos(MutableLiveData<Integer> totArticulos) {
         this.totArticulos = totArticulos;
+    }
+
+    public void clearChart(){
+        List<ItemCarrito> curr = carrito.getValue();
+        if(curr != null){
+            curr.clear();
+        }
+        carrito.postValue(curr);
+        this.totArticulos.postValue(0);
     }
 }

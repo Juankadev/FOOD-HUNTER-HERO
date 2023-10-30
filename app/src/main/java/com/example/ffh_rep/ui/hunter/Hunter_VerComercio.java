@@ -72,8 +72,6 @@ public class Hunter_VerComercio extends Fragment {
 
         setUpListeners();
         setUpObservers();
-
-        pressBackValidation();
         descripcion.setText(commerce.getRazonSocial());
         gv_articulos.setAdapter(aclAdapter);
         return view;
@@ -87,6 +85,10 @@ public class Hunter_VerComercio extends Fragment {
         cantArticulos = view.findViewById(R.id.tv_cantArticulos);
         bottomBar = view.findViewById(R.id.bottomNavCart);
 
+    }
+
+    public void initModelsAndAdapters(){
+
         mViewModel = new ViewModelProvider(requireActivity(), new HunterVerComercioViewModelFactory(getActivity())).get(HunterVerComercioViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
         aclAdapter = new ArticuloComercioListAdapter(new ArrayList<>(), getContext());
@@ -97,16 +99,19 @@ public class Hunter_VerComercio extends Fragment {
     }
 
     public void pressBackValidation(){
+        Log.d("pressback", "llamando");
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Log.d("string", "string");
-                if(carrito.getTotArticulos().getValue() != null && carrito.getTotArticulos().getValue() > 0){
+                if(carrito.getTotalIntegervalue() > 0 && carrito.getTotalIntegervalue() != null){
                     mensajeSalir();
+                }
+                else{
+                    Navigation.findNavController(requireView()).popBackStack();
                 }
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     public void setUpObservers(){
@@ -150,7 +155,9 @@ public class Hunter_VerComercio extends Fragment {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                requireActivity().onBackPressed();
+                carrito.clearChart();
+                dialog.dismiss();
+                Navigation.findNavController(requireView()).popBackStack();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -166,7 +173,11 @@ public class Hunter_VerComercio extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initModelsAndAdapters();
+        pressBackValidation();
     }
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -180,10 +191,4 @@ public class Hunter_VerComercio extends Fragment {
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(HunterVerComercioViewModel.class);
-        carrito = new ViewModelProvider(this).get(CarritoViewModel.class);
-    }
 }
