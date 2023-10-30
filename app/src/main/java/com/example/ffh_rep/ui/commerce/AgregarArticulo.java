@@ -1,6 +1,8 @@
 package com.example.ffh_rep.ui.commerce;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
@@ -28,7 +32,11 @@ import com.example.ffh_rep.utils.SessionManager;
 
 import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.cloudinary.*;
 
 public class AgregarArticulo extends Fragment {
 
@@ -43,14 +51,20 @@ public class AgregarArticulo extends Fragment {
     private List<String> categorias;
     private List<String> marcas;
 
+    private Button btnCargarImagen;
+    private Uri selectedImageUri;
+
     public static AgregarArticulo newInstance() {
         return new AgregarArticulo();
     }
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_agregar_articulo, container, false);
+
 
         txtIDArticulo = view.findViewById(R.id.txtIDArticulo);
         txtDescripcionArticulo = view.findViewById(R.id.txtDescripcionArticulo);
@@ -62,6 +76,16 @@ public class AgregarArticulo extends Fragment {
 
         obtenerCategoriasDesdeRepositorio();
         obtenerMarcasDesdeRepositorio();
+
+
+        btnCargarImagen = view.findViewById(R.id.btnCargarImagen);
+
+        btnCargarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //METODO PARA CARGAR LA IMAGEN
+            }
+        });
 
         btnAgregarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +139,7 @@ public class AgregarArticulo extends Fragment {
 
         return view;
     }
+
 
     private void obtenerCategoriasDesdeRepositorio() {
         CategoriaRepository categoriaRepository = new CategoriaRepository();

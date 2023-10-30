@@ -6,103 +6,110 @@
     android:layout_height="match_parent"
     tools:context=".ui.commerce.AgregarArticulo">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/txtIDArticulo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:ems="10"
+            android:inputType="number"
+            android:padding="10dp"
+            android:text="ID Articulo"
+            android:textColor="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/txtIDArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:ems="10"
-                android:inputType="number"
-                android:padding="10dp"
-                android:text="ID Articulo"
-                android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/txtDescripcionArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="10dp"
+            android:text="Descripción"
+            android:textColor="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/txtDescripcionArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:ems="10"
-                android:inputType="text"
-                android:padding="10dp"
-                android:text="Descripción"
-                android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/txtPrecioArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:text="Precio"
+            android:textColor="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/txtPrecioArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:padding="10dp"
-                android:text="Precio"
-                android:textColor="#FFFFFF" />
+        <EditText
+            android:id="@+id/txtURLImagenArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:ems="10"
+            android:inputType="text"
+            android:padding="10dp"
+            android:text="URL de Imágen"
+            android:textColor="#FFFFFF" />
 
-            <EditText
-                android:id="@+id/txtURLImagenArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:ems="10"
-                android:inputType="text"
-                android:padding="10dp"
-                android:text="URL de Imágen"
-                android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/btnCargarImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cargar Imagen"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp" />
 
-            <Spinner
-                android:id="@+id/spinnerIDCategoriaArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:padding="10dp"
-                android:text="Categoria (DropDownList)"
-                android:textColor="#FFFFFF" />
+        <Spinner
+            android:id="@+id/spinnerIDCategoriaArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:padding="10dp"
+            android:text="Categoria (DropDownList)"
+            android:textColor="#FFFFFF" />
 
-            <Spinner
-                android:id="@+id/spinnerIDMarcaArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border"
-                android:backgroundTint="#68dd6b"
-                android:padding="10dp"
-                android:text="Marca (DropDownList)"
-                android:textColor="#FFFFFF" />
+        <Spinner
+            android:id="@+id/spinnerIDMarcaArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#68dd6b"
+            android:padding="10dp"
+            android:text="Marca (DropDownList)"
+            android:textColor="#FFFFFF" />
 
-            <Button
-                android:id="@+id/btnAgregarArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:backgroundTint="#2400FF"
-                android:text="Agregar Articulo" />
+        <Button
+            android:id="@+id/btnAgregarArticulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#2400FF"
+            android:text="Agregar Articulo" />
 
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#B6B6B6"
+            android:text="@string/btn_volver"
+            android:textColor="#FFFFFF" />
 
-            <Button
-                android:id="@+id/btnVolver"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="#B6B6B6"
-                android:text="@string/btn_volver"
-                android:textColor="#FFFFFF" />
-
-        </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
+</FrameLayout>
