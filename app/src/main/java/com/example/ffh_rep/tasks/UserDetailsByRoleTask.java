@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Rango;
+import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
@@ -41,32 +42,38 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
             Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
             String query = "";
 
-                if(IdRol == 1){
-                    query = "Select c.id_comercio, c.cuit, c.razon_social, c.rubro, c.correo_electronico, c.telefono, c.direccion from Comercios c where c.aprobado like 'aprobado' and c.id_usuario = ?";
-                }
-                if(IdRol == 2){
-                    query = "Select h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
-                }
+            if(IdRol == 1){
+                query = "Select c.id_comercio, c.cuit, c.razon_social, c.rubro, c.correo_electronico, c.telefono, c.direccion from Comercios c where c.aprobado like 'aprobado' and c.id_usuario = ?";
+            }
+            if(IdRol == 2){
+                query = "Select h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
+            }
+            if(IdRol == 3){
+                query = "Select id_usuario, id_rol, username, password, estado from Usuarios where id_usuario = ?";
+            }
 
-                PreparedStatement preparedStatement = con.prepareStatement(query);
-                preparedStatement.setInt(1, this.IdUser);
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, this.IdUser);
 
-                try (ResultSet rs = preparedStatement.executeQuery()) {
-                    if (rs.next()) {
-                        if (IdRol == 1) {
-                            obj = extractCommerceFromResult(rs);
-                        }
-                        if (IdRol == 2) {
-                            obj = extractHunterFromResult(rs);
-                        }
-                    } else {
-                        Log.d("Error en RS", "Hubo un error al obtener resultados");
-                        return null;
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    if (IdRol == 1) {
+                        obj = extractCommerceFromResult(rs);
                     }
-                rs.close();
+                    if (IdRol == 2) {
+                        obj = extractHunterFromResult(rs);
+                    }
+                    if (IdRol == 3) {
+                        obj = extractAdminFromResult(rs);
+                    }
+                } else {
+                    Log.d("Error en RS", "Hubo un error al obtener resultados");
+                    return null;
                 }
-                preparedStatement.close();
-                con.close();
+                rs.close();
+            }
+            preparedStatement.close();
+            con.close();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -110,7 +117,12 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
 
         return c;
     }
-
+    public Usuario extractAdminFromResult(ResultSet rs) throws SQLException {
+        //c.setUser(this.user);
+        Rol rol = new Rol(3,"administrador");
+        Usuario usuario = new Usuario(rol,"administrador","administrador",true);
+        return usuario;
+    }
 
     @Override
     protected void onPostExecute(Object o) {
@@ -123,5 +135,11 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
                 Hunter hunter = (Hunter)o;
                 luCallback.onSuccessLoginHunter(hunter);
             }
+
+            if(this.IdRol == 3){
+                Usuario usuario = (Usuario)o;
+                luCallback.onSuccessLoginAdmin(usuario);
+            }
+
     }
 }

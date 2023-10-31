@@ -139,6 +139,15 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
     }
 
     @Override
+    public void onSuccessLoginAdmin(Usuario user) {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("¡Bienvenido!");
+        Intent intent = new Intent(MainActivity.this, NavigationController.class);
+        intent.putExtra("usuario", user);
+        startActivity(intent);
+    }
+
+    @Override
     public void onErrorLogin() {
         pgBarInit.setVisibility(View.GONE);
         initSessionText.setText("Iniciar Sesión");

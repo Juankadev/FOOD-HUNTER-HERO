@@ -9,6 +9,7 @@ public interface LoginUsuarioCallback {
 
     void onSuccessLoginHunter(Hunter hunter);
     void onSuccessLoginCommerce(Comercio commerce);
+    void onSuccessLoginAdmin(Usuario user);
 
     void onErrorLogin();
     void onErrorLoginHunter();
