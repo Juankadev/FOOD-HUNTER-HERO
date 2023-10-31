@@ -70,7 +70,11 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("com.cloudinary:cloudinary-android:1.26.0")
+
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+    implementation("com.squareup.picasso:picasso:2.8")
+
+
     implementation("com.android.volley:volley:1.2.1")
 
 

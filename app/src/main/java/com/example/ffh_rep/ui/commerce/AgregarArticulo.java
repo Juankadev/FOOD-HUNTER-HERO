@@ -1,7 +1,10 @@
 package com.example.ffh_rep.ui.commerce;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,15 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.cloudinary.android.MediaManager;
-import com.cloudinary.utils.ObjectUtils;
+
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
@@ -32,11 +36,9 @@ import com.example.ffh_rep.utils.SessionManager;
 
 import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.cloudinary.*;
+import com.squareup.picasso.Picasso;
 
 public class AgregarArticulo extends Fragment {
 
@@ -51,8 +53,11 @@ public class AgregarArticulo extends Fragment {
     private List<String> categorias;
     private List<String> marcas;
 
+    /*VARIABLES PARA IMAGEN*/
+    private static int IMAGE_REQ = 1;
+    private ImageView imageViewArticulo;
     private Button btnCargarImagen;
-    private Uri selectedImageUri;
+    private Uri imagePath;
 
     public static AgregarArticulo newInstance() {
         return new AgregarArticulo();
@@ -69,23 +74,29 @@ public class AgregarArticulo extends Fragment {
         txtIDArticulo = view.findViewById(R.id.txtIDArticulo);
         txtDescripcionArticulo = view.findViewById(R.id.txtDescripcionArticulo);
         txtPrecioArticulo = view.findViewById(R.id.txtPrecioArticulo);
-        txtURLImagenArticulo = view.findViewById(R.id.txtURLImagenArticulo);
         spinnerIDCategoriaArticulo = view.findViewById(R.id.spinnerIDCategoriaArticulo);
         spinnerIDMarcaArticulo = view.findViewById(R.id.spinnerIDMarcaArticulo);
         btnAgregarArticulo = view.findViewById(R.id.btnAgregarArticulo);
 
-        obtenerCategoriasDesdeRepositorio();
-        obtenerMarcasDesdeRepositorio();
-
-
+        imageViewArticulo = view.findViewById(R.id.imageViewArticulo);
         btnCargarImagen = view.findViewById(R.id.btnCargarImagen);
 
-        btnCargarImagen.setOnClickListener(new View.OnClickListener() {
+        /*1.USUARIO QUIERE HACER CLICK EN IMAGEVIEW*/
+        /*2.USUARIO QUIERE SELECCIONAR LA IMAGEN*/
+        /*3.USUARIO QUIERE LA PREVIEW DE LA IMAGEN*/
+        /*3.USUARIO QUIERE PRESIONAR EL BOTON DE CARGA DE LA IMAGEN PARA GUARDARLA*/
+
+        imageViewArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-             //METODO PARA CARGAR LA IMAGEN
+            public void onClick(View view) {
+                /*1.PREGUNTARLE AL USUARIO SI LE DA PERMISO PARA EL MEDIA GALLERY*/
+                requestPermission();
+                /*2.IR A LA GALERIA*/
             }
         });
+
+        obtenerCategoriasDesdeRepositorio();
+        obtenerMarcasDesdeRepositorio();
 
         btnAgregarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +151,31 @@ public class AgregarArticulo extends Fragment {
         return view;
     }
 
+    private void requestPermission() {
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+            selectImage();
+        }else{
+            ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE}, 1 );
+        }
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*"); //SE PUEDE USAR PDF O VIDEO
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, IMAGE_REQ);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==IMAGE_REQ && resultCode== Activity.RESULT_OK && data != null && data.getData()!=null){
+           imagePath = data.getData();
+           Picasso.get().load(imagePath).into(imageViewArticulo);
+
+        }
+    }
 
     private void obtenerCategoriasDesdeRepositorio() {
         CategoriaRepository categoriaRepository = new CategoriaRepository();

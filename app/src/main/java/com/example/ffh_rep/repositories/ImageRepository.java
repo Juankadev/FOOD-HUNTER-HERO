@@ -26,8 +26,8 @@ public class ImageRepository {
     }
 
 
-    public void uploadImage(Uri imageUri, ImageUploadCallback callback) {
-        MediaManager.get().upload(imageUri)
+    public void uploadImage(Uri imagePath, ImageUploadCallback callback) {
+        MediaManager.get().upload(imagePath)
                 .callback(new UploadCallback() {
                     @Override
                     public void onStart(String requestId) {
@@ -44,7 +44,6 @@ public class ImageRepository {
 
                     @Override
                     public void onError(String requestId, ErrorInfo error) {
-                        callback.onError(error.getDescription());
                     }
 
                     @Override
