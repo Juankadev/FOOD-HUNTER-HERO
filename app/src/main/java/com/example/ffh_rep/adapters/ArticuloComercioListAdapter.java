@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
 
@@ -58,6 +60,7 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
             vh.fecha = convertView.findViewById(R.id.tv_item_articulo_fecha_vencimiento);
             vh.marca = convertView.findViewById(R.id.tv_item_articulo_marca);
             vh.categoria = convertView.findViewById(R.id.tv_item_articulo_categoria);
+            vh.imageArticle = convertView.findViewById(R.id.image_article_contain);
             convertView.setTag(vh);
         }
         else{
@@ -67,6 +70,9 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
         vh.nombre.setText(a.getDescripcion());
         vh.marca.setText(a.getMarca().getDescripcion());
         vh.categoria.setText(a.getCategoria().getDescripcion());
+        if(a.getImagen() != null && a.getImagen() != ""){
+            Glide.with(convertView).load(a.getImagen()).into(vh.imageArticle);
+        }
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,5 +87,6 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
 
     static class ViewHolder{
         TextView nombre, fecha, marca, categoria;
+        ImageView imageArticle;
     }
 }

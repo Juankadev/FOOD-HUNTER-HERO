@@ -22,6 +22,13 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <ImageView
+                android:id="@+id/image_article_contain"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/baseline_image_notload"
+                />
+
             <TextView
                 android:id="@+id/tv_item_articulo_nombre"
                 android:layout_width="wrap_content"
