@@ -2,60 +2,96 @@ package com.example.ffh_rep.repositories;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
-import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
-import com.cloudinary.android.callback.UploadResult;
-import com.cloudinary.android.callback.UploadStatus;
-import com.cloudinary.utils.ObjectUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ImageRepository {
 
-    private Cloudinary cloudinary;
-    public ImageRepository(Context context) {
-        MediaManager.init(context);
+    private String imageUrl;
+ public ImageRepository(Context context){
+     Map config = new HashMap();
+     config.put("cloud_name", "dmtsek7j7");
+     config.put("api_key", "264587117157862");
+     config.put("api_secret", "sIfXmNyf87WSxkgIiWk3uhjLJNg");
+     //config.put("secure", true);
+     MediaManager.init(context, config);
+ }
 
-        cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dmtsek7j7",
-                "api_key", "264587117157862",
-                "api_secret", "sIfXmNyf87WSxkgIiWk3uhjLJNg"));
-    }
+ public void uploadImage(Uri imagePath, ImageUploadCallback callback){
 
 
-    public void uploadImage(Uri imagePath, ImageUploadCallback callback) {
-        MediaManager.get().upload(imagePath)
-                .callback(new UploadCallback() {
-                    @Override
-                    public void onStart(String requestId) {
-                    }
 
-                    @Override
-                    public void onProgress(String requestId, long bytes, long totalBytes) {
-                    }
+     MediaManager.get().upload(imagePath).callback(new UploadCallback() {
 
-                    @Override
-                    public void onSuccess(String requestId, Map resultData) {
+         @Override
+         public void onStart(String requestId) {
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "1 - COMENZÓ A CARGAR LA IMAGEN");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+         }
 
-                    }
+         @Override
+         public void onProgress(String requestId, long bytes, long totalBytes) {
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "2 - CARGANDO LA IMAGEN");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+         }
 
-                    @Override
-                    public void onError(String requestId, ErrorInfo error) {
-                    }
+         @Override
+         public void onSuccess(String requestId, Map resultData) {
+             imageUrl = (String) resultData.get("url");
+             callback.onSuccess(imageUrl);
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "3 - CARGA DE IMAGEN EXITOSA - URL: " + imageUrl);
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+         }
 
-                    @Override
-                    public void onReschedule(String requestId, ErrorInfo error) {
+         @Override
+         public void onError(String requestId, ErrorInfo error) {
 
-                    }
-                })
-                .dispatch();
-    }
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "ERROR AL CARGAR LA IMAGEN");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+         }
+
+         @Override
+         public void onReschedule(String requestId, ErrorInfo error) {
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "ON RESCHEDULE");
+             Log.d("LOG", "---------------------------");
+             Log.d("LOG", "---------------------------");
+         }
+     }).dispatch();
+
+
+ }
 
     public interface ImageUploadCallback {
         void onSuccess(String imageUrl);
-        void onError(String errorMessage);
+
     }
+
+
+
+
+
+
+
+
+
 }

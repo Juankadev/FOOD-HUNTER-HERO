@@ -60,6 +60,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- CLOUDINARY PARA IMAGENES -->
+        <meta-data android:name="CLOUDINARY_URL" android:value="CLOUDINARY_URL=cloudinary://264587117157862:sIfXmNyf87WSxkgIiWk3uhjLJNg@dmtsek7j7" />
     </application>
 
 </manifest>

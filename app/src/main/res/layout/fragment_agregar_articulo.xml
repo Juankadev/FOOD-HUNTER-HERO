@@ -15,17 +15,9 @@
 
         <ImageView
             android:id="@+id/imageViewArticulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:src="@mipmap/ic_launcher" />
-
-        <Button
-            android:id="@+id/btnCargarImagen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:text="Cargar Imagen" />
 
         <EditText
             android:id="@+id/txtIDArticulo"
@@ -33,11 +25,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="#75FFFFFF"
             android:ems="10"
             android:inputType="number"
             android:padding="10dp"
-            android:text="ID Articulo"
+            android:hint="ID Articulo"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -46,11 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="#75FFFFFF"
             android:ems="10"
             android:inputType="text"
             android:padding="10dp"
-            android:text="Descripción"
+            android:hint="Descripción"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -59,11 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="#75FFFFFF"
             android:ems="10"
             android:inputType="numberDecimal"
             android:padding="10dp"
-            android:text="Precio"
+            android:hint="Precio"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -72,9 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
-            android:text="Categoria (DropDownList)"
+            android:hint="Categoria (DropDownList)"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -83,9 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/border"
-            android:backgroundTint="#68dd6b"
+            android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
-            android:text="Marca (DropDownList)"
+            android:hint="Marca (DropDownList)"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -93,7 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:backgroundTint="#2400FF"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
             android:text="Agregar Articulo" />
 
         <Button

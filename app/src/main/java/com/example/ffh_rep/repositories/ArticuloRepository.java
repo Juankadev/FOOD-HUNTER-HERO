@@ -106,6 +106,7 @@ public class ArticuloRepository {
      * @param articulo  Artículo a ser insertado en la base de datos.
      */
     public void insertArticulo(Context context, Articulo articulo) {
+
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement ps = con.prepareStatement("INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, id_articulo, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
@@ -118,6 +119,7 @@ public class ArticuloRepository {
                 ps.setInt(6, articulo.getIdArticulo());
                 ps.setString(7, articulo.getImagen());
                 ps.setString(8, articulo.getEstado());
+
 
                 int rowsAffected = ps.executeUpdate();
 
