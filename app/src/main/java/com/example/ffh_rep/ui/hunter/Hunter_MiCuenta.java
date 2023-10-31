@@ -46,9 +46,8 @@ public class Hunter_MiCuenta extends Fragment {
     private ProgressBar pgBarEditar;
     private Hunter userSession;
     private String originalNombre, originalApellido, originalDNI, originalSexo, originalCorreo, originalDireccion;
-
-
     private SessionManager sessionManager;
+
 
     public static Hunter_MiCuenta newInstance() {
         return new Hunter_MiCuenta();
@@ -82,11 +81,13 @@ public class Hunter_MiCuenta extends Fragment {
         spinnerSexo = view.findViewById(R.id.spinner_sexo);
         et_correo = view.findViewById(R.id.et_correo);
         et_direccion = view.findViewById(R.id.et_direccion);
+
         btnEditarInformacion = view.findViewById(R.id.btn_editInformacion);
         btnEliminarCuenta = view.findViewById(R.id.btn_deleteaccount);
         btnEditAction = view.findViewById(R.id.btn_edit_actioner);
         btnCancel = view.findViewById(R.id.btn_Cancel_Edit);
         btnEditarActionerWithProgress = view.findViewById(R.id.cv_actioner_edit);
+
         txtEditarActioner = view.findViewById(R.id.txtEditarActioner);
         pgBarEditar = view.findViewById(R.id.progressbarEditar);
         setupSpinner();
@@ -135,7 +136,7 @@ public class Hunter_MiCuenta extends Fragment {
     }
     /**
      * Configura los observadores de la interfaz.
-     * Implementa las unciones correspondientes.
+     * Implementa las funciones correspondientes.
      */
     private void settingObservers(){
         mViewModel.getHunterData().observe(getViewLifecycleOwner(), new Observer<Hunter>() {

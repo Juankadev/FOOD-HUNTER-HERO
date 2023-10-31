@@ -14,12 +14,14 @@ public class ComercioMiCuentaViewModel extends ViewModel {
     private MutableLiveData<Comercio> comercioData;
     private ComercioRepository commerceRepo;
     private MutableLiveData<Boolean> deleteAccount;
+    private MutableLiveData<Boolean> updatingInfo;
     public ComercioMiCuentaViewModel(){}
 
     public ComercioMiCuentaViewModel(Context ctx) {
         this.ctx = ctx;
         this.comercioData = new MutableLiveData<>();
         this.deleteAccount = new MutableLiveData<>(false);
+        this.updatingInfo = new MutableLiveData<>(false);
         this.commerceRepo = new ComercioRepository();
     }
 
@@ -37,10 +39,10 @@ public class ComercioMiCuentaViewModel extends ViewModel {
         Comercio aux = this.comercioData.getValue();
         commerceRepo.eliminarCuenta(aux, deleteAccount, ctx);
     }
-    public void setCommerceData(MutableLiveData<Comercio> commerceData) {
-        this.comercioData = commerceData;
+    public void setCommerceData(MutableLiveData<Comercio> commerceData) {this.comercioData = commerceData;}
+    public MutableLiveData<Boolean> getUpdatingInfo() {
+        return updatingInfo;
     }
-
     public MutableLiveData<Boolean> getDeleteAccount() {
         return deleteAccount;
     }

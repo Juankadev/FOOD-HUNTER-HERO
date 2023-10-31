@@ -17,7 +17,7 @@
         <item
             android:id="@+id/nav_hunter_AniadirDescuentos"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Añadir descuentos"
+            android:title="Mis descuentos"
             />
         <item
             android:id="@+id/nav_hunter_ValidarCompras"

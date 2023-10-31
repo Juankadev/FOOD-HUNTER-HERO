@@ -8,31 +8,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioMiCuentaBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.factory.ComercioMiCuentaViewModelFactory;
+import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.utils.SessionManager;
 
-public class Comercio_MiCuenta  extends Fragment {
+public class Comercio_MiCuenta extends Fragment {
 
     private ComercioMiCuentaViewModel mViewModel;
     private FragmentComercioMiCuentaBinding binding;
-    private TextView et_rubro_mc, et_correo_mc, et_telefono_mc, et_direccion_mc;
+    private TextView et_cuit_mc, et_razonsocial_mc, et_rubro_mc, et_correo_mc, et_telefono_mc, et_direccion_mc, txtEditarActioner;
     private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel, btnVolver;
+    private CardView btnEditarActionerWithProgress;
+    private ProgressBar pgBarEditar;
     private Comercio userSession;
     private String originalRubro, originalCorreo, originalTelefono, originalDireccion;
     private SessionManager sessionManager;
+
 
     public static Comercio_MiCuenta newInstance() {
         return new Comercio_MiCuenta();
@@ -61,6 +68,8 @@ public class Comercio_MiCuenta  extends Fragment {
      * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
      */
     private void initializeViews(View view) {
+        et_cuit_mc = view.findViewById(R.id.et_cuit_mc);
+        et_razonsocial_mc = view.findViewById(R.id.et_razonsocial_mc);
         et_rubro_mc = view.findViewById(R.id.et_rubro_mc);
         et_correo_mc = view.findViewById(R.id.et_correo_mc);
         et_telefono_mc = view.findViewById(R.id.et_telefono_mc);
@@ -71,6 +80,10 @@ public class Comercio_MiCuenta  extends Fragment {
         btnEditAction = view.findViewById(R.id.btn_edit_actioner2);
         btnCancel = view.findViewById(R.id.btn_Cancel_Edit2);
         btnVolver = view.findViewById(R.id.btn_back_menu3);
+        btnEditarActionerWithProgress = view.findViewById(R.id.cv_actioner_edit);
+
+        txtEditarActioner = view.findViewById(R.id.txtEditarActioner);
+        pgBarEditar = view.findViewById(R.id.progressbarEditar);
 
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioMiCuentaViewModelFactory(getActivity())).get(ComercioMiCuentaViewModel.class);
     }
@@ -80,6 +93,8 @@ public class Comercio_MiCuenta  extends Fragment {
      * @param user Objeto Comercio que contiene la información del usuario.
      */
     private void settingInputs(Comercio user){
+        et_cuit_mc.setText(user.getCuit());
+        et_razonsocial_mc.setText(user.getRazonSocial());
         et_rubro_mc.setText(user.getRubro());
         et_correo_mc.setText(user.getEmail());
         et_telefono_mc.setText(user.getTelefono());
@@ -90,15 +105,15 @@ public class Comercio_MiCuenta  extends Fragment {
      * Asigna los métodos correspondientes a los eventos.
      */
     private void setupListeners() {
-        btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
         btnEliminarCuenta.setOnClickListener(v -> deleteMyAccount());
-        btnEditAction.setOnClickListener(v -> updateInformation());
+        btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
+        btnEditarActionerWithProgress.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
-        ///btnVolver.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.pantalla));
+        btnVolver.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
     }
     /**
      * Configura los observadores de la interfaz.
-     * Implementa las unciones correspondientes.
+     * Implementa las funciones correspondientes.
      */
     private void settingObservers(){
         mViewModel.getCommerceData().observe(getViewLifecycleOwner(), new Observer<Comercio>() {
@@ -117,21 +132,41 @@ public class Comercio_MiCuenta  extends Fragment {
                 }
             }
         });
+
+        mViewModel.getUpdatingInfo().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    pgBarEditar.setVisibility(View.VISIBLE);
+                    txtEditarActioner.setText("Actualizando...");
+                }
+                else{
+                    pgBarEditar.setVisibility(View.GONE);
+                    txtEditarActioner.setText("Editar");
+                }
+            }
+        });
     }
     /**
      * Actualiza la información del usuario con los valores ingresados en los campos de edición.
      * Crea un objeto Comercio con los datos actualizados y lo envía al ViewModel para su procesamiento.
      */
     private void updateInformation(){
-        Comercio updateCommerce = new Comercio();
+        if(validateInput()){
 
-        updateCommerce.setId(this.userSession.getId());
-        updateCommerce.setRubro(et_rubro_mc.getText().toString());
-        updateCommerce.setEmail(et_correo_mc.getText().toString());
-        updateCommerce.setDireccion(et_direccion_mc.getText().toString());
-        updateCommerce.setTelefono(et_telefono_mc.toString());
+            Comercio updateCommerce = new Comercio();
 
-        mViewModel.updateInformation(updateCommerce);
+            updateCommerce.setId(this.userSession.getId());
+            updateCommerce.setRubro(et_rubro_mc.getText().toString());
+            updateCommerce.setEmail(et_correo_mc.getText().toString());
+            updateCommerce.setDireccion(et_direccion_mc.getText().toString());
+            updateCommerce.setTelefono(et_telefono_mc.toString());
+
+            mViewModel.updateInformation(updateCommerce);
+        }
+        else{
+            Toast.makeText(requireContext(), "Por favor, complete bien los campos", Toast.LENGTH_LONG);
+        }
     }
 
     /**
@@ -150,16 +185,18 @@ public class Comercio_MiCuenta  extends Fragment {
             saveOriginals();
             btnEditarInformacion.setVisibility(View.GONE);
             btnEliminarCuenta.setVisibility(View.GONE);
+            btnEditarActionerWithProgress.setVisibility(View.VISIBLE);
 
-            btnEditAction.setVisibility(View.VISIBLE);
+            //btnEditAction.setVisibility(View.VISIBLE);
             btnCancel.setVisibility(View.VISIBLE);
         }
         else{
             rollbackEdit();
             btnEditarInformacion.setVisibility(View.VISIBLE);
+            btnEditarActionerWithProgress.setVisibility(View.GONE);
             btnEliminarCuenta.setVisibility(View.VISIBLE);
 
-            btnEditAction.setVisibility(View.GONE);
+            //btnEditAction.setVisibility(View.GONE);
             btnCancel.setVisibility(View.GONE);
         }
     }
@@ -211,6 +248,42 @@ public class Comercio_MiCuenta  extends Fragment {
         Intent intent = new Intent(requireContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+        // Validar rubro
+        String rubro = et_rubro_mc.getText().toString();
+        if (rubro.isEmpty()) {
+            et_rubro_mc.setError("Este campo es requerido");
+            isValid = false;
+        }
+        // Validar telefono
+        String telefono = et_telefono_mc.getText().toString();
+        if (telefono.isEmpty()) {
+            et_telefono_mc.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isNumeric(telefono)) {
+            et_telefono_mc.setError("El telefono debe ser numérico");
+            isValid = false;
+        }
+        // Validar correo
+        String correo = et_correo_mc.getText().toString();
+        if (correo.isEmpty()) {
+            et_correo_mc.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isValidEmailAddress(correo)) {
+            et_correo_mc.setError("Correo electrónico inválido");
+            isValid = false;
+        }
+        // Validar direccion
+        String direccion = et_direccion_mc.getText().toString();
+        if(direccion.isEmpty()){
+            et_direccion_mc.setError("Este campo es requerido");
+            isValid= false;
+        }
+
+        return isValid;
     }
 
 }
