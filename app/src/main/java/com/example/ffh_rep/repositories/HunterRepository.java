@@ -24,9 +24,9 @@ public class HunterRepository {
 
     private ModificarHunterTask modificarTask;
 
-    public void updateUserInfo(MutableLiveData<Hunter> mlHunter, Hunter hunter, Context ctx){
+    public void updateUserInfo(MutableLiveData<Hunter> mlHunter, Hunter hunter, MutableLiveData<Boolean> updatingInfo){
         CompletableFuture.runAsync(() -> {
-
+            updatingInfo.postValue(true);
             try {
                 Connection con = DBUtil.getConnection();
                 String query = "Update Hunters set nombre = ?, apellido = ?, dni = ?, sexo = ?, correo_electronico = ?, direccion = ? where id_hunter = ?";
@@ -44,16 +44,15 @@ public class HunterRepository {
                 ps.close();
                 DBUtil.closeConnection(con);
                 if(rowsAffected > 0){
-                    Toast.makeText(ctx, "Información actualizada con exito", Toast.LENGTH_LONG);
+
                     mlHunter.postValue(hunter);
-                }
-                else{
-                    Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
                 }
             }
             catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
+            }
+            finally {
+                updatingInfo.postValue(false);
             }
         });
     }

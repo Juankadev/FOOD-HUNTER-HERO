@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -69,7 +70,7 @@
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
-            android:inputType="text"
+            android:inputType="number"
             android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_dni_rh"
@@ -103,7 +104,7 @@
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_email_r"
@@ -142,6 +143,36 @@
             android:backgroundTint="#2400FF"
             android:text="Editar"
             android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="167dp"
+            android:layout_height="35dp"
+            app:cardBackgroundColor="#2400FF"
+            app:cardCornerRadius="35dp"
+            android:id="@+id/cv_actioner_edit"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progressbarEditar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_toLeftOf="@+id/txtEditarActioner"/>
+
+                <TextView
+                    android:id="@+id/txtEditarActioner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Editar"/>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/btn_deleteaccount"

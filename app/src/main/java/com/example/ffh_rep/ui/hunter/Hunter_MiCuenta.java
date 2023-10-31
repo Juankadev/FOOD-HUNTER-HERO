@@ -1,5 +1,6 @@
 package com.example.ffh_rep.ui.hunter;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +32,18 @@ import com.example.ffh_rep.databinding.FragmentHunterMiCuentaBinding;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.factory.HunterMiCuentaViewModelFactory;
+import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.utils.SessionManager;
 
 public class Hunter_MiCuenta extends Fragment {
 
     private HunterMiCuentaViewModel mViewModel;
     private FragmentHunterMiCuentaBinding binding;
-    private TextView et_nombre, et_apellido, et_dni, et_correo, et_direccion;
+    private TextView et_nombre, et_apellido, et_dni, et_correo, et_direccion, txtEditarActioner;
     private Spinner spinnerSexo;
     private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel;
+    private CardView btnEditarActionerWithProgress;
+    private ProgressBar pgBarEditar;
     private Hunter userSession;
     private String originalNombre, originalApellido, originalDNI, originalSexo, originalCorreo, originalDireccion;
 
@@ -81,6 +86,9 @@ public class Hunter_MiCuenta extends Fragment {
         btnEliminarCuenta = view.findViewById(R.id.btn_deleteaccount);
         btnEditAction = view.findViewById(R.id.btn_edit_actioner);
         btnCancel = view.findViewById(R.id.btn_Cancel_Edit);
+        btnEditarActionerWithProgress = view.findViewById(R.id.cv_actioner_edit);
+        txtEditarActioner = view.findViewById(R.id.txtEditarActioner);
+        pgBarEditar = view.findViewById(R.id.progressbarEditar);
         setupSpinner();
         mViewModel = new ViewModelProvider(requireActivity(), new HunterMiCuentaViewModelFactory(getActivity())).get(HunterMiCuentaViewModel.class);
     }
@@ -122,7 +130,7 @@ public class Hunter_MiCuenta extends Fragment {
     private void setupListeners() {
         btnEliminarCuenta.setOnClickListener(v -> deleteMyAccount());
         btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
-        btnEditAction.setOnClickListener(v -> updateInformation());
+        btnEditarActionerWithProgress.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
     }
     /**
@@ -146,23 +154,44 @@ public class Hunter_MiCuenta extends Fragment {
                 }
             }
         });
+
+        mViewModel.getUpdatingInfo().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    pgBarEditar.setVisibility(View.VISIBLE);
+                    txtEditarActioner.setText("Actualizando...");
+                }
+                else{
+                    pgBarEditar.setVisibility(View.GONE);
+                    txtEditarActioner.setText("Editar");
+                }
+            }
+        });
     }
     /**
      * Actualiza la información del usuario con los valores ingresados en los campos de edición.
      * Crea un objeto Hunter con los datos actualizados y lo envía al ViewModel para su procesamiento.
      */
     private void updateInformation(){
-        Hunter updateHunter = new Hunter();
 
-        updateHunter.setIdHunter(this.userSession.getIdHunter());
-        updateHunter.setApellido(et_apellido.getText().toString());
-        updateHunter.setNombre(et_nombre.getText().toString());
-        updateHunter.setDni(et_dni.getText().toString());
-        updateHunter.setSexo(spinnerSexo.getSelectedItem().toString());
-        updateHunter.setCorreo_electronico(et_correo.getText().toString());
-        updateHunter.setDireccion(et_direccion.getText().toString());
+        if(validateInput()){
 
-        mViewModel.updateInformation(updateHunter);
+            Hunter updateHunter = new Hunter();
+
+            updateHunter.setIdHunter(this.userSession.getIdHunter());
+            updateHunter.setApellido(et_apellido.getText().toString());
+            updateHunter.setNombre(et_nombre.getText().toString());
+            updateHunter.setDni(et_dni.getText().toString());
+            updateHunter.setSexo(spinnerSexo.getSelectedItem().toString());
+            updateHunter.setCorreo_electronico(et_correo.getText().toString());
+            updateHunter.setDireccion(et_direccion.getText().toString());
+
+            mViewModel.updateInformation(updateHunter);
+        }
+        else{
+            Toast.makeText(requireContext(), "Por favor, completa bien los campos", Toast.LENGTH_LONG);
+        }
     }
     /**
      * Habilita o deshabilita la edición de los campos de información del usuario y ajusta la visibilidad
@@ -182,16 +211,18 @@ public class Hunter_MiCuenta extends Fragment {
             saveOriginals();
             btnEditarInformacion.setVisibility(View.GONE);
             btnEliminarCuenta.setVisibility(View.GONE);
+            btnEditarActionerWithProgress.setVisibility(View.VISIBLE);
 
-            btnEditAction.setVisibility(View.VISIBLE);
+            //btnEditAction.setVisibility(View.VISIBLE);
             btnCancel.setVisibility(View.VISIBLE);
         }
         else{
             rollbackEdit();
             btnEditarInformacion.setVisibility(View.VISIBLE);
+            btnEditarActionerWithProgress.setVisibility(View.GONE);
             btnEliminarCuenta.setVisibility(View.VISIBLE);
 
-            btnEditAction.setVisibility(View.GONE);
+            //btnEditAction.setVisibility(View.GONE);
             btnCancel.setVisibility(View.GONE);
         }
     }
@@ -254,4 +285,49 @@ public class Hunter_MiCuenta extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+        // Validar el nombre
+        String nombre = et_nombre.getText().toString();
+        if (nombre.isEmpty()) {
+            et_nombre.setError("Este campo es requerido");
+            isValid = false;
+        }
+
+        // Validar el apellido
+        String apellido = et_apellido.getText().toString();
+        if (apellido.isEmpty()) {
+            et_apellido.setError("Este campo es requerido");
+            isValid = false;
+        }
+
+        String dni = et_dni.getText().toString();
+        if (dni.isEmpty()) {
+            et_dni.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isNumeric(dni)) {
+            et_dni.setError("DNI debe ser numérico");
+            isValid = false;
+        }
+        String correo = et_correo.getText().toString();
+        if (correo.isEmpty()) {
+            et_correo.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isValidEmailAddress(correo)) {
+            et_correo.setError("Correo electrónico inválido");
+            isValid = false;
+        }
+
+        String direccion = et_direccion.getText().toString();
+        if(direccion.isEmpty()){
+            et_direccion.setError("Este campo es requerido");
+            isValid= false;
+        }
+
+        return isValid;
+    }
+
+
+
 }

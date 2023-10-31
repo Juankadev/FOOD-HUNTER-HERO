@@ -1,10 +1,12 @@
 package com.example.ffh_rep.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
@@ -55,24 +57,26 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
         ViewHolder vh;
 
         if(convertView == null){
-            convertView = inflater.inflate(R.layout.item_producto_home, null);
+            convertView = inflater.inflate(R.layout.item_articulos_carrito, null);
             vh = new ViewHolder();
-            vh.descripcion = convertView.findViewById(R.id.txt_descripcion_producto);
-            vh.precio = convertView.findViewById(R.id.txt_precio_producto);
+            vh.nombre = convertView.findViewById(R.id.tv_nombre_articulo_carrito);
+            vh.cantidad = convertView.findViewById(R.id.tv_cantidad_articulo_carrito);
+            vh.trashBtn = convertView.findViewById(R.id.imageview_trash);
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
 
         ItemCarrito a = lArticulos.get(position);
-        vh.precio.setText(String.valueOf(a.getArtc().getPrecio()));
-        vh.descripcion.setText(a.getArtc().getDescripcion());
+        vh.nombre.setText(a.getArtc().getDescripcion());
+        vh.cantidad.setText("x"+ a.getCantidad());
 
         return convertView;
     }
 
 
     static class ViewHolder{
-        TextView descripcion, precio;
+        TextView nombre, cantidad;
+        ImageView trashBtn;
     }
 }

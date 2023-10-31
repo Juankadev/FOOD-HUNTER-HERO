@@ -15,12 +15,14 @@ public class HunterMiCuentaViewModel extends ViewModel {
     private MutableLiveData<Hunter> hunterData;
     private HunterRepository hunterRepo;
     private MutableLiveData<Boolean> deleteAccount;
+    private MutableLiveData<Boolean> updatingInfo;
     public HunterMiCuentaViewModel(){}
 
     public HunterMiCuentaViewModel(Context ctx) {
         this.ctx = ctx;
         this.hunterData = new MutableLiveData<>();
         this.deleteAccount = new MutableLiveData<>(false);
+        this.updatingInfo = new MutableLiveData<>(false);
         this.hunterRepo = new HunterRepository();
     }
 
@@ -35,7 +37,7 @@ public class HunterMiCuentaViewModel extends ViewModel {
     }
 
     public void updateInformation(Hunter hunter){
-        hunterRepo.updateUserInfo(this.hunterData, hunter, this.ctx);
+        hunterRepo.updateUserInfo(this.hunterData, hunter, this.updatingInfo);
     }
 
     public void eliminarMiCuenta(){
@@ -44,6 +46,10 @@ public class HunterMiCuentaViewModel extends ViewModel {
     }
     public void setHunterData(MutableLiveData<Hunter> hunterData) {
         this.hunterData = hunterData;
+    }
+
+    public MutableLiveData<Boolean> getUpdatingInfo() {
+        return updatingInfo;
     }
 
     public MutableLiveData<Boolean> getDeleteAccount() {

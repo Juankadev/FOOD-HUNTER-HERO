@@ -2,6 +2,7 @@ package com.example.ffh_rep.ui.hunter;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -92,8 +93,16 @@ public class Hunter_VerArticulo extends Fragment {
     public void addArticle(Articulo article){
         if(this._cantidadArticulo > 0){
             item = new ItemCarrito(article, this._cantidadArticulo);
-            carrito.addArticleToCart(item);
-            Toast.makeText(getContext(), "Articulo Agregado", Toast.LENGTH_LONG).show();
+            if(!carrito.isArticleInCart(item)){
+                carrito.addArticleToCart(item);
+                cantidadArticulo.setText(String.valueOf(0));
+                Toast.makeText(getContext(), "Articulo Agregado", Toast.LENGTH_LONG).show();
+                this._cantidadArticulo=0;
+            }
+            else{
+                showDuplicateItemDialog();
+            }
+
         }
     }
 
@@ -110,11 +119,26 @@ public class Hunter_VerArticulo extends Fragment {
         }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(HunterVerArticuloViewModel.class);
-        // TODO: Use the ViewModel
+    public void showDuplicateItemDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Artículo duplicado");
+        builder.setMessage("Este artículo ya está en el carrito. ¿Deseas agregar más unidades?");
+        builder.setPositiveButton("Sí", (dialog, which) -> {
+            addQuantityToChart();
+            dialog.dismiss();
+        });
+        builder.setNegativeButton("No", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.create().show();
     }
+
+    public void addQuantityToChart(){
+        carrito.addMoreUnitsToCart(this.item);
+        this._cantidadArticulo=0;
+        cantidadArticulo.setText(String.valueOf(0));
+        Toast.makeText(getContext(), "Se han añadido mas unidades al carrito", Toast.LENGTH_LONG).show();
+    }
+
 
 }
