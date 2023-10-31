@@ -64,4 +64,10 @@ public class SessionManager {
         }
         return null;
     }
+
+    public void clearSession() {
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.remove("user_session_data");
+        editor.apply();
+    }
 }

@@ -1,12 +1,15 @@
 package com.example.ffh_rep;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ffh_rep.activitys.NavigationController;
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
 
     private EditText etUsername, etPassword;
     private Button btnIniciarSesion, btnRegistro;
+    private CardView  initSession;
+    private ProgressBar pgBarInit;
+    private TextView initSessionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +48,16 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
         etPassword = findViewById(R.id.et_password);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         btnRegistro = findViewById(R.id.btnRegistro);
+        initSession = findViewById(R.id.initDispatcher);
+        pgBarInit = findViewById(R.id.progressBar);
+        initSessionText = findViewById(R.id.tv_initcontent);
     }
     /**
      * Configura los listeners de clic para los botones de la interfaz.
      * Asigna los métodos correspondientes a los eventos de clic en los botones.
      */
     private void setupButtonClickListeners() {
+        initSession.setOnClickListener(v -> iniciarSesion());
         btnIniciarSesion.setOnClickListener(v -> iniciarSesion());
         btnRegistro.setOnClickListener(v -> irARegistro());
     }
@@ -59,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
     private void iniciarSesion() {
         if(validateFields())
         {
+            pgBarInit.setVisibility(View.VISIBLE);
+            initSessionText.setText("Iniciando...");
             IniciarSesionTask task = new IniciarSesionTask(
                     this,
                     etUsername.getText().toString(),
@@ -106,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
      */
     @Override
     public void onSuccessLoginHunter(Hunter hunter) {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("¡Bienvenido!");
         Intent intent = new Intent(MainActivity.this, NavigationController.class);
         intent.putExtra("hunter", hunter);
         startActivity(intent);
@@ -117,10 +131,31 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
      */
     @Override
     public void onSuccessLoginCommerce(Comercio commerce) {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("¡Bienvenido!");
         Intent intent = new Intent(MainActivity.this, NavigationController.class);
         intent.putExtra("comercio", commerce);
         startActivity(intent);
     }
+
+    @Override
+    public void onErrorLogin() {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("Iniciar Sesión");
+    }
+
+    @Override
+    public void onErrorLoginHunter() {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("Iniciar Sesión");
+    }
+
+    @Override
+    public void onErrorLoginCommerce() {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("Iniciar Sesión");
+    }
+
     /**
      * Obtiene y maneja la descripción del usuario según su rol, iniciando una tarea asíncrona.
      *
@@ -128,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
      */
     @Override
     public void doGetUserDescriptionByRole(Usuario user) {
+        pgBarInit.setVisibility(View.GONE);
+        initSessionText.setText("¡Bienvenido!");
         UserDetailsByRoleTask  userDetailsTask = new UserDetailsByRoleTask(user.getRol().getIdRol(), user, user.getId_usuario(), this, this);
         userDetailsTask.execute();
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.ui.hunter.Hunter_VerComercio;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
@@ -36,11 +37,11 @@ public class ComercioRepository {
                 ps.close();
                 DBUtil.closeConnection(con);
                 if(rowsAffected > 0){
-                    Toast.makeText(ctx, "Información actualizada con exito", Toast.LENGTH_LONG);
+                    Toast.makeText(ctx, "Información actualizada con exito", Toast.LENGTH_LONG).show();
                     mlCommerce.postValue(comercio);
                 }
                 else{
-                    Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
+                    Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e){
@@ -66,12 +67,12 @@ public class ComercioRepository {
                     isDelete.postValue(true);
                 }
                 else{
-                    Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG);
+                    Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG);
+                Toast.makeText(ctx, "Ocurrio un error al eliminar tu cuenta", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -142,5 +143,36 @@ public class ComercioRepository {
             }
             return lComercios;
         }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
+    }
+
+
+    public void markAsFavorite(Comercio comercio, Hunter hunter, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+            isLoading.postValue(true);
+            try {
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement("Insert Into Comercios_Favoritos (id_comercio, id_usuario) values (?, ?)");
+                ps.setInt(1, comercio.getId());
+                ps.setInt(2, hunter.getUser().getId_usuario());
+
+                int rowsAffected  = ps.executeUpdate();
+                if( rowsAffected > 0){
+                    success.postValue(true);
+                }
+                else{
+                    error.postValue(false);
+                }
+
+                ps.close();
+                DBUtil.closeConnection(con);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                error.postValue(true);
+            }
+            finally {
+                isLoading.postValue(false);
+            }
+        });
     }
 }

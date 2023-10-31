@@ -76,6 +76,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
         if (user != null) {
             luCallback.doGetUserDescriptionByRole(user);
         } else {
+            luCallback.onErrorLogin();
             Toast.makeText(ctx, "Usuario o contraseña inválida", Toast.LENGTH_SHORT).show();
         }
     }

@@ -10,6 +10,10 @@ public interface LoginUsuarioCallback {
     void onSuccessLoginHunter(Hunter hunter);
     void onSuccessLoginCommerce(Comercio commerce);
 
+    void onErrorLogin();
+    void onErrorLoginHunter();
+    void onErrorLoginCommerce();
+
     void doGetUserDescriptionByRole(Usuario user);
 }
 

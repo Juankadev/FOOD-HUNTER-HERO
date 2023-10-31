@@ -17,21 +17,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ArticuloComercioListAdapter;
 import com.example.ffh_rep.databinding.FragmentHunterVerComercioBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.factory.CarritoViewModelFactory;
 import com.example.ffh_rep.factory.HunterVerComercioViewModelFactory;
 import com.example.ffh_rep.repositories.ArticuloRepository;
+import com.example.ffh_rep.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +47,17 @@ public class Hunter_VerComercio extends Fragment {
     private Comercio commerce;
     private LinearLayout bottomBar;
     private TextView descripcion, cantArticulos;
+    private ImageView favDispatch, favDispatch_filled;
     private GridView gv_articulos;
     private Button btnAbrirCarrito;
+    private ProgressBar pBarMarkingAsFav;
+
 
     private FragmentHunterVerComercioBinding binding;
     private ArticuloComercioListAdapter aclAdapter;
+
+    private SessionManager sessionManager;
+    private Hunter userSession;
 
     public static Hunter_VerComercio newInstance() {
         return new Hunter_VerComercio();
@@ -68,6 +78,9 @@ public class Hunter_VerComercio extends Fragment {
             }
         }
 
+        sessionManager = new SessionManager(requireActivity());
+        userSession = sessionManager.getHunterSession();
+
         mViewModel.cargarArticulos(commerce.getId());
 
         setUpListeners();
@@ -84,6 +97,9 @@ public class Hunter_VerComercio extends Fragment {
         btnAbrirCarrito = view.findViewById(R.id.btnAbrirCarrito);
         cantArticulos = view.findViewById(R.id.tv_cantArticulos);
         bottomBar = view.findViewById(R.id.bottomNavCart);
+        favDispatch = view.findViewById(R.id.favDispatcher);
+        favDispatch_filled = view.findViewById(R.id.favDispatcher_filled);
+        pBarMarkingAsFav  = view.findViewById(R.id.progressBarMarkingFav);
 
     }
 
@@ -96,6 +112,7 @@ public class Hunter_VerComercio extends Fragment {
 
     public void setUpListeners(){
         btnAbrirCarrito.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito));
+        favDispatch.setOnClickListener(v -> markAsFav());
     }
 
     public void pressBackValidation(){
@@ -144,7 +161,44 @@ public class Hunter_VerComercio extends Fragment {
             }
         });
 
+        mViewModel.getIsMarkingAsFav().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    favDispatch.setVisibility(View.GONE);
+                    pBarMarkingAsFav.setVisibility(View.VISIBLE);
+                }
+                else{
+                    pBarMarkingAsFav.setVisibility(View.GONE);
+                }
+            }
+        });
 
+        mViewModel.getErrorMarking().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(getActivity(), "Ha ocurrido un error al marcar como favorito al comercio.. Intentelo mas tarde", Toast.LENGTH_LONG).show();
+                    favDispatch.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mViewModel.getMarkSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    favDispatch_filled.setVisibility(View.VISIBLE);
+                    favDispatch.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Se ha marcado el comercio como favorito!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
+    public void markAsFav(){
+        mViewModel.markAsFav(this.commerce, this.userSession);
     }
 
 

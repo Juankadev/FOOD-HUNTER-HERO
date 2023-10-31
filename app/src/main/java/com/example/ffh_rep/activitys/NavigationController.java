@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,30 +130,33 @@ public class NavigationController extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(this.intent.hasExtra("hunter")){
-            hunterLogged = (Hunter) intent.getSerializableExtra("hunter");
-            this.IdRole = userRol(hunterLogged.getUser());
-            initializeViews(hunterLogged.getUser());
-        }
-        else if(this.intent.hasExtra("comercio")){
-            commerceLogged = (Comercio) intent.getSerializableExtra("comercio");
-            this.IdRole = userRol(commerceLogged.getUser());
-            initializeViews(commerceLogged.getUser());
-        }
-        else{
-            userLogged = (Usuario) getIntent().getSerializableExtra("usuario");
-            this.IdRole = userRol(userLogged);
-            initializeViews(userLogged);
-        }
-        int menuResId = getMenuResId(this.IdRole);
-        getMenuInflater().inflate(menuResId, menu);
+        getMenuInflater().inflate(R.menu.menu_logout, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_logout){
+            sessionManager.clearSession();
+            redirectToLoginScreen();
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+
+    public void redirectToLoginScreen(){
+        Toast.makeText(this, "Nos vemos luego!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(NavigationController.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
