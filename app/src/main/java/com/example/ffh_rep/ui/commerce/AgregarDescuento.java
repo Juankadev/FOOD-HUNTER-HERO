@@ -5,25 +5,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.databinding.FragmentComercioAgregardescuentoBinding;
-import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.Marca;
-import com.example.ffh_rep.factory.DescuentosViewModelFactory;
+import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.utils.SessionManager;
 
 public class AgregarDescuento extends Fragment {
@@ -51,12 +45,11 @@ public class AgregarDescuento extends Fragment {
         txtPuntos = view.findViewById(R.id.edtPuntos);
         btnAgregarDescuento = view.findViewById(R.id.btnAgregarDescuento);
         btnVolverMisDescuentos = view.findViewById(R.id.btnVolver);
-        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
 
     public void setUpListeners() {
         btnAgregarDescuento.setOnClickListener(v-> addBeneficio());
-        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
+        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.fragmentAgregarDescuentoComercio));
     }
 
     private void addBeneficio(){
@@ -65,22 +58,50 @@ public class AgregarDescuento extends Fragment {
         int puntos = Integer.parseInt(txtPuntos.getText().toString());
 
         /// OBTENGO EL COMERCIO PARA POSTERIORMENTE SACAR SU ID
-        Comercio comercio;
         SessionManager session = new SessionManager(getContext());
-        comercio = session.getCommerceSession();
+        Comercio comercio = session.getCommerceSession();
 
         /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
         Beneficio beneficio = new Beneficio();
+        beneficio.setId_comercio(comercio);
         beneficio.setDescripcion(descripcion);
         beneficio.setPuntos_requeridos(puntos);
-        beneficio.setId_comercio(comercio);
+        beneficio.setEstado(true);
 
-        /// USO EL METODO PARA INSERTAR EL BENEFICIO
-        mViewModel.insertarBeneficio(beneficio);
+        /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
+        if(validateInput()){
+            mViewModel.insertarBeneficio(beneficio);
+            /// VACIO LOS TXT
+            txtDescripcion.setText("");
+            txtPuntos.setText("");
+        }
+        else {
+            Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        /// VACIO LOS TXT
-        txtDescripcion.setText("");
-        txtPuntos.setText("");
+    private boolean validateInput() {
+        boolean isValid = true;
+        // Validar descripcion
+        String desc = txtDescripcion.getText().toString();
+        if (desc.isEmpty()) {
+            txtDescripcion.setError("Este campo es requerido");
+            isValid = false;
+        }
+        // Validar puntos
+        String puntos = txtPuntos.getText().toString();
+        if (puntos.isEmpty()) {
+            txtPuntos.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isNumeric(puntos)) {
+            txtPuntos.setError("El telefono debe ser numérico");
+            isValid = false;
+        } else if (Integer.parseInt(puntos) <= 0){
+            txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
+            isValid = false;
+        }
+
+        return isValid;
     }
 
 }

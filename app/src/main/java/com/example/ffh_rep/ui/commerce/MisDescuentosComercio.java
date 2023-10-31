@@ -52,7 +52,6 @@ public class MisDescuentosComercio extends Fragment {
         View view = binding.getRoot();
         initializeViews(view);
         setUpListeners();
-        setupViewModel();
         setupBeneficiosGridView();
         //setUpObserver();
         return view;
@@ -74,6 +73,7 @@ public class MisDescuentosComercio extends Fragment {
 
         this.gv_descuentos_container = view.findViewById(R.id.gv_descuentos_container);
 
+        this.mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
     /**
      * Configura los listeners de la interfaz.
@@ -85,13 +85,6 @@ public class MisDescuentosComercio extends Fragment {
         btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
         // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
         btnModificarDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.modificarDescuento));
-    }
-    /**
-     * Configura y obtiene la instancia del ViewModel asociado a la pantalla de mis beneficios (Comercio).
-     * Utiliza el DescuentosViewModelFactory para proporcionar el contexto de la actividad.
-     */
-    private void setupViewModel() {
-        this.mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
     /**
      * Configura el GridView de beneficios con un adaptador y observa los cambios en la lista de beneficios desde el ViewModel.

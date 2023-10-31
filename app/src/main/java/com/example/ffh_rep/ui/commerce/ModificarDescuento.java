@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioAgregardescuentoBinding;
@@ -24,6 +25,7 @@ import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.factory.DescuentosViewModelFactory;
 import com.example.ffh_rep.repositories.DescuentoRepository;
 import com.example.ffh_rep.ui.hunter.Hunter_Home;
+import com.example.ffh_rep.utils.GeneralHelper;
 
 public class ModificarDescuento extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
@@ -50,12 +52,11 @@ public class ModificarDescuento extends Fragment {
         txtPuntos = view.findViewById(R.id.edtModificarPrecioDescuento);
         btnModificarDescuento = view.findViewById(R.id.btnModificarDescuentoOK);
         btnVolverMisDescuentos = view.findViewById(R.id.btnVolverMisDescuentosDesdeModificar);
-        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
     }
 
     private void setupListeners() {
         btnModificarDescuento.setOnClickListener((v-> modBeneficio()));
-        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
+        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.fragmentAgregarDescuentoComercio));
     }
 
     private void modBeneficio(){
@@ -64,17 +65,45 @@ public class ModificarDescuento extends Fragment {
         int puntos = Integer.parseInt(txtPuntos.getText().toString());
 
         /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
-        ///Falta enviarle el ID del descuento a modificar
         Beneficio beneficio = new Beneficio();
         beneficio.setDescripcion(descripcion);
         beneficio.setPuntos_requeridos(puntos);
+        ///Falta enviarle el ID del descuento a modificar
 
-        /// USO EL METODO PARA INSERTAR EL BENEFICIO
-        mViewModel.editarBeneficio(beneficio);
+        /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
+        if(validateInput()){
+            mViewModel.editarBeneficio(beneficio);
+            /// VACIO LOS TXT
+            txtDescripcion.setText("");
+            txtPuntos.setText("");
+        }
+        else {
+            Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        /// VACIO LOS TXT
-        txtDescripcion.setText("");
-        txtPuntos.setText("");
+    private boolean validateInput() {
+        boolean isValid = true;
+        // Validar descripcion
+        String desc = txtDescripcion.getText().toString();
+        if (desc.isEmpty()) {
+            txtDescripcion.setError("Este campo es requerido");
+            isValid = false;
+        }
+        // Validar puntos
+        String puntos = txtPuntos.getText().toString();
+        if (puntos.isEmpty()) {
+            txtPuntos.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isNumeric(puntos)) {
+            txtPuntos.setError("El telefono debe ser numérico");
+            isValid = false;
+        } else if (Integer.parseInt(puntos) <= 0){
+            txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
+            isValid = false;
+        }
+
+        return isValid;
     }
 
 }

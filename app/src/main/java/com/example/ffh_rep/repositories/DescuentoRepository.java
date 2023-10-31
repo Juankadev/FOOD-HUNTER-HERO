@@ -33,23 +33,26 @@ public class DescuentoRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Beneficio> lBeneficios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.estado = 1");
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.estado = '1'");
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Beneficio aData = new Beneficio();
+
                     int id = rs.getInt("id_beneficio");
                     String descripcion = rs.getString("descripcion");
                     int puntos_requeridos = rs.getInt("puntos_requeridos");
+
                     aData.setId_beneficio(id);
                     aData.setDescripcion(descripcion);
                     aData.setPuntos_requeridos(puntos_requeridos);
+
                     lBeneficios.add(aData);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return lBeneficios;
-        }).thenAcceptAsync(articulos -> mlDataBeneficios.postValue(articulos));
+        }).thenAcceptAsync(beneficios -> mlDataBeneficios.postValue(beneficios));
         return mlDataBeneficios;
     }
 
@@ -62,11 +65,12 @@ public class DescuentoRepository {
     public void agregarDescuento(Context context, Beneficio beneficio) {
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("INSERT INTO Beneficios (id_comercio, descripcion, puntos_requeridos) VALUES (?, ?, ?)")) {
+                 PreparedStatement ps = con.prepareStatement("INSERT INTO Beneficios (id_comercio, descripcion, puntos_requeridos, estado) VALUES (?, ?, ?, ?)")) {
 
                 ps.setInt(1, beneficio.getId_comercio().getId());
                 ps.setString(2, beneficio.getDescripcion());
                 ps.setInt(3, beneficio.getPuntos_requeridos());
+                ps.setBoolean(4, beneficio.getEstado());
 
                 int rowsAffected = ps.executeUpdate();
 
@@ -124,7 +128,7 @@ public class DescuentoRepository {
     public void eliminarDescuento(Context context, Beneficio beneficio) {
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("UPDATE Beneficios set estado = 0 where id_beneficio = ?")) {
+                 PreparedStatement ps = con.prepareStatement("UPDATE Beneficios set estado = '0' where id_beneficio = ?")) {
 
                 ps.setInt(1, beneficio.getId_beneficio());
 
