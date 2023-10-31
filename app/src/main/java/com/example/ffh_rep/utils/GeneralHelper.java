@@ -43,4 +43,8 @@ public  class GeneralHelper {
         }
         return result;
     }
+
+    public static boolean isNumeric(String str) {
+        return str.matches("\\d+");
+    }
 }

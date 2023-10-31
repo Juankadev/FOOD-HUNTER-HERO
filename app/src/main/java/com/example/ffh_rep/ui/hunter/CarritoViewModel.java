@@ -66,4 +66,34 @@ public class CarritoViewModel extends ViewModel{
         carrito.postValue(curr);
         this.totArticulos.postValue(0);
     }
+
+    public boolean isArticleInCart(ItemCarrito article) {
+        List<ItemCarrito> _currCart = this.carrito.getValue();
+        if (_currCart != null) {
+            for (ItemCarrito item : _currCart) {
+                if (item.getArtc().equals(article.getArtc())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void addMoreUnitsToCart(ItemCarrito itemToModify) {
+        List<ItemCarrito> _currCart = this.carrito.getValue();
+        Integer _currTot = this.totArticulos.getValue();
+
+        if (_currCart != null) {
+            for (ItemCarrito item : _currCart) {
+                if (item.equals(itemToModify)) {
+                    int newQuantity = item.getCantidad() + itemToModify.getCantidad();
+                    item.setCantidad(newQuantity);
+                    _currTot += itemToModify.getCantidad();
+                    break;
+                }
+            }
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
+        }
+    }
 }
