@@ -6,22 +6,28 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.repositories.ComercioRepository;
 import com.example.ffh_rep.repositories.DescuentoRepository;
 
 import java.util.List;
 
 public class MisDescuentosComercioViewModel extends ViewModel {
    private Context ctx;
-   private MutableLiveData<Beneficio> mldBeneficio;
    private MutableLiveData<List<Beneficio>> mldListaBeneficios;
    private DescuentoRepository dRepo;
+   private ComercioRepository cRepo;
+
    public MisDescuentosComercioViewModel(){}
 
    public MisDescuentosComercioViewModel(Context ctx){
       this.ctx = ctx;
-      this.mldBeneficio = new MutableLiveData<>();
       this.mldListaBeneficios = new MutableLiveData<>();
       this.dRepo = new DescuentoRepository();
+      this.cRepo = new ComercioRepository();
+   }
+
+   public MutableLiveData<List<Beneficio>> getMldListaBeneficios() {
+      return mldListaBeneficios;
    }
 
    public void insertarBeneficio(Beneficio bene){
@@ -29,14 +35,7 @@ public class MisDescuentosComercioViewModel extends ViewModel {
    }
    public void eliminarBeneficio(Beneficio bene){dRepo.eliminarDescuento(ctx, bene);}
    public void editarBeneficio(Beneficio bene){dRepo.modificarDescuento(ctx, bene);}
-   public void listarDescuentos(){
-      dRepo.listarDescuentos(mldListaBeneficios);
-   }
-
-   public MutableLiveData<Beneficio> getMldBeneficio() {
-      return mldBeneficio;
-   }
-   public MutableLiveData<List<Beneficio>> getMldListaBeneficios() {
-      return mldListaBeneficios;
+   public void listarDescuentos(int id){
+      dRepo.listarDescuentosByComercio(mldListaBeneficios,id);
    }
 }

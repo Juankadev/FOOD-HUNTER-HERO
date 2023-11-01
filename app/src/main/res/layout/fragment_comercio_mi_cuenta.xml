@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#68dd6b"
+    tools:context=".ui.commerce.Comercio_MiCuenta">>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +16,7 @@
 
         <TextView
             android:id="@+id/indicaciones2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
@@ -26,78 +28,102 @@
 
         <EditText
             android:id="@+id/et_cuit_mc"
-            android:layout_width="354dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:hint="@string/input_cuit_rc"
             android:inputType="text"
+            android:minHeight="48dp"
+            android:enabled="false"
             android:padding="10dp"
-            android:text="@string/input_cuit_rc"
             android:textColor="#FFFFFF" />
 
         <EditText
-            android:id="@+id/et_razonsocial_mc"
-            android:layout_width="349dp"
+            android:id="@+id/et_razonsocial"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_razonsocial_rc"
             android:textColor="#FFFFFF" />
 
         <EditText
-            android:id="@+id/et_rubro_mc"
-            android:layout_width="350dp"
+            android:id="@+id/et_rubro"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_rubro_rc"
             android:textColor="#FFFFFF" />
 
         <EditText
-            android:id="@+id/et_correo_mc"
-            android:layout_width="345dp"
+            android:id="@+id/et_email_c"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_email_r"
             android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_telefono_mc"
-            android:layout_width="348dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_telefono_r"
             android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_direccion_mc"
-            android:layout_width="348dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:inputType="text"
+            android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_direccion_r"
             android:textColor="#FFFFFF" />
@@ -112,7 +138,7 @@
 
         <Button
             android:id="@+id/btn_edit_actioner2"
-            android:layout_width="match_parent"
+            android:layout_width="166dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:backgroundTint="#2400FF"
@@ -120,12 +146,13 @@
             android:visibility="gone" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_actioner_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
+            android:layout_width="160dp"
+            android:layout_height="36dp"
             app:cardBackgroundColor="#2400FF"
-            app:cardCornerRadius="35dp">
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="18dp"
+            android:id="@+id/cv_actioner_edit"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -144,6 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:textColor="@color/white"
                     android:text="@string/hunter_micuenta_btn_editar" />
 
             </RelativeLayout>
@@ -151,7 +179,7 @@
 
         <Button
             android:id="@+id/btn_eliminarInfoComercio"
-            android:layout_width="169dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="#FF0000"
@@ -160,7 +188,7 @@
 
         <Button
             android:id="@+id/btn_Cancel_Edit2"
-            android:layout_width="match_parent"
+            android:layout_width="169dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:backgroundTint="#B6B6B6"

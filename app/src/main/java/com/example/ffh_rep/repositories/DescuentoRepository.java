@@ -7,9 +7,11 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Categoria;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.utils.DBUtil;
 import com.example.ffh_rep.utils.DB_Env;
 
@@ -24,35 +26,37 @@ import java.util.concurrent.CompletableFuture;
 public class DescuentoRepository {
 
     /**
-     * Obtiene la lista de beneficios activos desde la base de datos.
+     * Obtiene la lista de beneficios activos por comercio desde la base de datos.
      *
      * @param mlDataBeneficios MutableLiveData que se actualizará con la lista de beneficios obtenida.
      * @return MutableLiveData actualizado con la lista de beneficios activos o una lista vacía en caso de error o ausencia de datos.
      */
-    public MutableLiveData<List<Beneficio>> listarDescuentos(MutableLiveData<List<Beneficio>> mlDataBeneficios) {
+    public MutableLiveData<List<Beneficio>> listarDescuentosByComercio(MutableLiveData<List<Beneficio>> mlDataBeneficios, int id) {
         CompletableFuture.supplyAsync(() -> {
             List<Beneficio> lBeneficios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.estado = '1'");
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.estado = '1' and b.id_comercio ="+id);
                  ResultSet rs = ps.executeQuery()) {
+
                 while (rs.next()) {
-                    Beneficio aData = new Beneficio();
+                    Beneficio beneficio = new Beneficio();
+                    beneficio.setId_beneficio(rs.getInt("id_beneficio"));
+                    beneficio.setDescripcion(rs.getString("descripcion"));
+                    beneficio.setPuntos_requeridos(rs.getInt("puntos_requeridos"));
 
-                    int id = rs.getInt("id_beneficio");
-                    String descripcion = rs.getString("descripcion");
-                    int puntos_requeridos = rs.getInt("puntos_requeridos");
-
-                    aData.setId_beneficio(id);
-                    aData.setDescripcion(descripcion);
-                    aData.setPuntos_requeridos(puntos_requeridos);
-
-                    lBeneficios.add(aData);
+                    lBeneficios.add(beneficio);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return lBeneficios;
-        }).thenAcceptAsync(beneficios -> mlDataBeneficios.postValue(beneficios));
+        }).thenAcceptAsync(beneficios -> {
+            if (beneficios != null) {
+                mlDataBeneficios.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
+            } else {
+                mlDataBeneficios.postValue(new ArrayList<>());
+            }
+        });
         return mlDataBeneficios;
     }
 
