@@ -2,6 +2,7 @@ package com.example.ffh_rep.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,10 @@ public class ArticuloUsuarioComercioListAdapter extends BaseAdapter {
         vh.nombre.setText(a.getDescripcion());
         vh.marca.setText(a.getMarca().getDescripcion());
         vh.categoria.setText(a.getCategoria().getDescripcion());
+        Log.d("IMAGEN ARTICULO", "--------");
+        Log.d("IMAGEN ARTICULO", a.getImagen());
+        Log.d("IMAGEN ARTICULO", "--------");
+
         if(a.getImagen() != null && a.getImagen() != ""){
             Glide.with(convertView).load(a.getImagen()).into(vh.imageArticle);
         }
