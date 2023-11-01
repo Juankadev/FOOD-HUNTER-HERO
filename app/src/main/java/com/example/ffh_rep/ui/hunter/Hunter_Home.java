@@ -40,7 +40,7 @@ public class Hunter_Home extends Fragment {
     private GridView gvComerciosList, gvProductosHunterHome;
     private ComercioListAdapter comercioListAdapter;
     private ArticulosListAdapter articulosListAdapter;
-    private Button btnMasComercios;
+    private Button btnMasComercios, btnMasArticulos;
     private HunterHomeViewModel viewModel;
     private EditText etBrowse;
 
@@ -68,6 +68,7 @@ public class Hunter_Home extends Fragment {
         gvComerciosList = view.findViewById(R.id.gv_comercios_hunter_home);
         gvProductosHunterHome = view.findViewById(R.id.gv_productos_hunter_home);
         btnMasComercios = view.findViewById(R.id.btn_mas_comercios_hunter);
+        btnMasArticulos = view.findViewById(R.id.btn_mas_articulos_hunter);
         etBrowse = view.findViewById(R.id.et_browser);
     }
     /**
@@ -76,6 +77,7 @@ public class Hunter_Home extends Fragment {
      */
     private void setupListeners() {
         btnMasComercios.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.comercios));
+        btnMasArticulos.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.articulos));
         etBrowse.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

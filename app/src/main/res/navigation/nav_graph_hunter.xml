@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_hunter_Home_to_comercios"
             app:destination="@id/comercios" />
+        <action
+            android:id="@+id/action_nav_hunter_Home_to_articulos"
+            app:destination="@id/articulos" />
     </fragment>
     <fragment
         android:id="@+id/nav_hunter_MiCuenta"
@@ -30,6 +33,12 @@
         <action
             android:id="@+id/action_comercios_to_hunter_VerComercio"
             app:destination="@id/hunter_VerComercio" />
+    </fragment>
+    <fragment
+        android:id="@+id/articulos"
+        android:name="com.example.ffh_rep.ui.hunter.Articulos"
+        android:label="fragment_articulos_list"
+        tools:layout="@layout/fragment_articulos_list" >
     </fragment>
     <fragment
         android:id="@+id/hunter_VerComercio"

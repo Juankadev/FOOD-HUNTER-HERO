@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
@@ -67,13 +68,13 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView shopName;
         public Comercio mItem;
+        public Button itemView;
 
         public ViewHolder(FragmentComerciosItemBinding binding) {
             super(binding.getRoot());
             shopName = binding.etShopName;
+            itemView = binding.btnVerComercioDetalle;
         }
-
-
         @Override
         public String toString() {
             return super.toString() + " '" + shopName.getText() + "'";

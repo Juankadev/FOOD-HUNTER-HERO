@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
@@ -33,8 +34,8 @@ public class ArticulosViewAdapter extends RecyclerView.Adapter<ArticulosViewAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        /*holder.mIdView.setText(mValues.get(position).id);
+        holder.mContentView.setText(mValues.get(position).content);*/
     }
 
     @Override
@@ -43,19 +44,14 @@ public class ArticulosViewAdapter extends RecyclerView.Adapter<ArticulosViewAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView name;
+        public final ImageView imgView;
         public PlaceholderItem mItem;
 
         public ViewHolder(FragmentArticulosItemBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.idArticulo;
-            mContentView = binding.tvDescripcionArt;
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            name = binding.etItemDescription;
+            imgView = binding.imgItem;
         }
     }
 }
