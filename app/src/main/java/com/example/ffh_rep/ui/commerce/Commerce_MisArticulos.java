@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.adapters.ArticuloComercioListAdapter;
+import com.example.ffh_rep.adapters.ArticuloUsuarioComercioListAdapter;
 import com.example.ffh_rep.databinding.FragmentCommerceMisArticulosBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
@@ -42,7 +42,7 @@ public class Commerce_MisArticulos extends Fragment {
     private SessionManager sessionManager;
     private Comercio userSession;
 
-    private ArticuloComercioListAdapter aclAdapter;
+    private ArticuloUsuarioComercioListAdapter aclAdapter;
 
 
     public static Commerce_MisArticulos newInstance() {
@@ -81,7 +81,7 @@ public class Commerce_MisArticulos extends Fragment {
 
     public void initModelsAndAdapters(){
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioMisArticulosViewModelFactory(getActivity())).get(CommerceMisArticulosViewModel.class);
-        aclAdapter = new ArticuloComercioListAdapter(new ArrayList<>(), getContext());
+        aclAdapter = new ArticuloUsuarioComercioListAdapter(new ArrayList<>(), getContext());
     }
 
     public void setUpObservers() {
