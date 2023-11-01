@@ -5,8 +5,10 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ffh_rep.adapters.ReseniasAdapter;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Resenia;
 import com.example.ffh_rep.ui.hunter.Hunter_VerComercio;
 import com.example.ffh_rep.utils.DBUtil;
 
@@ -174,5 +176,30 @@ public class ComercioRepository {
                 isLoading.postValue(false);
             }
         });
+    }
+
+    public void cargarResenias(MutableLiveData<List<Resenia>> listaResenias, Comercio commerce){
+        CompletableFuture.supplyAsync(() -> {
+            List<Resenia> lResenias = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Resenas r WHERE r.id_comercio = ?")) {
+                ps.setInt(1, commerce.getId());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id_resena");
+                        int id_comercio = rs.getInt("id_comercio");
+                        int id_usuario = rs.getInt("id_usuario");
+                        int calificacion = rs.getInt("calificacion");
+                        String comentario = rs.getString("comentario");
+                        Resenia res = new Resenia(id, calificacion, comentario);
+                        lResenias.add(res);
+                    }
+                }
+            } catch (Exception e) {
+                // Manejar la excepción
+                e.printStackTrace();
+            }
+            return lResenias;
+        }).thenAcceptAsync(resenias -> listaResenias.postValue(resenias));
     }
 }

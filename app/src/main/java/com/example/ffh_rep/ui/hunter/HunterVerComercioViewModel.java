@@ -44,7 +44,7 @@ public class HunterVerComercioViewModel extends ViewModel {
     }
 
     public void cargarArticulos(int id){
-        aRepo.getArticulosByIdComercio(mldArticulos, id);
+        aRepo.getArticulosByIdComercioWithStock(mldArticulos, id);
     }
 
     public void markAsFav(Comercio commerce, Hunter ht){

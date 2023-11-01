@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ArticulosCarritoListAdapter;
@@ -39,6 +40,7 @@ public class Hunter_MiCarrito extends Fragment {
     private FragmentHunterMiCarritoBinding binding;
     private ArticulosCarritoListAdapter alAdapter;
     private ListView lvArticulos;
+    private TextView tvPuntos;
     private Button btnEndHunting;
     private List<ItemCarrito> _currChart;
 
@@ -68,6 +70,13 @@ public class Hunter_MiCarrito extends Fragment {
                 _currChart = articulos;
             }
         });
+
+        carrito.getPuntos().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                tvPuntos.setText(String.valueOf(integer));
+            }
+        });
     }
 
     public void setUpListeners(){
@@ -95,18 +104,12 @@ public class Hunter_MiCarrito extends Fragment {
 
     public void initComponents(View view){
         lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
+        tvPuntos = view.findViewById(R.id.tv_puntos_reemplazar);
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
 
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
 
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        carrito = new ViewModelProvider(this).get(CarritoViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }

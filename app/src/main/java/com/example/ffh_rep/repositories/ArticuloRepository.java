@@ -11,6 +11,7 @@ import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
+import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
@@ -67,6 +68,54 @@ public class ArticuloRepository {
         });
         return mlDataArticulos;
     }
+
+    public MutableLiveData<List<Articulo>> getArticulosByIdComercioWithStock(MutableLiveData<List<Articulo>> mlDataArticulos, int id) {
+        CompletableFuture.supplyAsync(() -> {
+            List<Articulo> lArticulos = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT a.id_articulo, a.id_comercio, a.descripcion, a.precio, a.id_categoria, a.id_marca, a.imagen, a.estado, s.id_stock, s.cantidad, s.fecha_vencimiento, c.descripcion as categoria, m.descripcion as marca" +
+                         " FROM Articulos a inner join Stocks s on s.id_articulo = a.id_articulo" +
+                         " inner join Categorias c on c.id_categoria = a.id_categoria" +
+                         " inner join Marcas m on m.id_marca = a.id_marca " +
+                         "WHERE a.estado = '1' and s.cantidad > 0 and a.id_comercio ="+id);
+                 ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    Articulo articulo = new Articulo();
+                    articulo.setIdArticulo(rs.getInt("id_articulo"));
+                    articulo.setDescripcion(rs.getString("descripcion"));
+                    articulo.setComercio(new Comercio());
+                    articulo.getComercio().setId(rs.getInt("id_comercio"));
+                    articulo.setPrecio(rs.getDouble("precio"));
+                    articulo.setCategoria(new Categoria());
+                    articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                    articulo.getCategoria().setDescripcion(rs.getString("categoria"));
+                    articulo.setMarca(new Marca());
+                    articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
+                    articulo.getMarca().setDescripcion(rs.getString("marca"));
+                    articulo.setStockArticulo(new Stock());
+                    articulo.getStockArticulo().setId_stock(rs.getInt("id_stock"));
+                    articulo.getStockArticulo().setCantidad(rs.getInt("cantidad"));
+                    articulo.setImagen(rs.getString("imagen"));
+                    articulo.setEstado(rs.getString("estado"));
+
+                    lArticulos.add(articulo);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return lArticulos;
+        }).thenAcceptAsync(articulos -> {
+            if (articulos != null) {
+                mlDataArticulos.postValue(articulos.isEmpty() ? new ArrayList<>() : articulos);
+            } else {
+                mlDataArticulos.postValue(new ArrayList<>());
+            }
+        });
+        return mlDataArticulos;
+    }
+
+
     /**
      * Obtiene la lista de artículos activos desde la base de datos.
      *

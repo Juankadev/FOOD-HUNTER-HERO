@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.ItemCarrito;
 
@@ -62,6 +63,7 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
             vh.nombre = convertView.findViewById(R.id.tv_nombre_articulo_carrito);
             vh.cantidad = convertView.findViewById(R.id.tv_cantidad_articulo_carrito);
             vh.trashBtn = convertView.findViewById(R.id.imageview_trash);
+            vh.ivItem = convertView.findViewById(R.id.iv_item_list);
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
@@ -70,13 +72,17 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
         ItemCarrito a = lArticulos.get(position);
         vh.nombre.setText(a.getArtc().getDescripcion());
         vh.cantidad.setText("x"+ a.getCantidad());
-
+        Glide.with(convertView).load(a.getArtc().getImagen()).into(vh.ivItem);
         return convertView;
+    }
+
+    public void listenerActions(){
+
     }
 
 
     static class ViewHolder{
         TextView nombre, cantidad;
-        ImageView trashBtn;
+        ImageView trashBtn, ivItem;
     }
 }

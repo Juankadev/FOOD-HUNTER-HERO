@@ -69,9 +69,9 @@ public class Comercio_MiCuenta extends Fragment {
      */
     private void initializeViews(View view) {
         et_cuit_mc = view.findViewById(R.id.et_cuit_mc);
-        et_razonsocial_mc = view.findViewById(R.id.et_razonsocial_mc);
-        et_rubro_mc = view.findViewById(R.id.et_rubro_mc);
-        et_correo_mc = view.findViewById(R.id.et_correo_mc);
+        et_razonsocial_mc = view.findViewById(R.id.et_razonsocial);
+        et_rubro_mc = view.findViewById(R.id.et_rubro);
+        et_correo_mc = view.findViewById(R.id.et_email_c);
         et_telefono_mc = view.findViewById(R.id.et_telefono_mc);
         et_direccion_mc = view.findViewById(R.id.et_direccion_mc);
 
