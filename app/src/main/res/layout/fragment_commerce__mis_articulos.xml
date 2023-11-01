@@ -89,52 +89,7 @@
         android:layout_below="@+id/et_Articulos"
         android:columnCount="3"
         android:layout_marginTop="16dp"
-        android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:id="@+id/img_Art1"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_menu_gallery" />
-
-            <TextView
-                android:id="@+id/etDescDescuento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Articulo 1" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FF0000"
-                    android:text="x" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFD500"
-                    android:text="✎" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Agregar nuevas celdas -->
-
-    </GridLayout>
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/btn_commerce_addArticle"
@@ -150,5 +105,19 @@
         android:text="+"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
+
+    <GridView
+        android:id="@+id/gv_articulos_comerciodetail2"
+        android:layout_width="match_parent"
+        android:layout_height="405dp"
+        android:layout_below="@+id/shopLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="93dp"
+        android:horizontalSpacing="16dp"
+        android:numColumns="2"
+        android:verticalSpacing="16dp">
+
+    </GridView>
 
 </RelativeLayout>
