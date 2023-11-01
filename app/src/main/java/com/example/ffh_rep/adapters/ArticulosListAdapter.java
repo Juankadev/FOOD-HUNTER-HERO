@@ -5,15 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
-import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.ItemCarrito;
-import com.example.ffh_rep.repositories.ArticuloRepository;
-
-import org.w3c.dom.Text;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -65,7 +62,7 @@ public class ArticulosListAdapter extends BaseAdapter {
             // Inicializar el ViewHolder
             holder = new ArticulosListAdapter.ViewHolder();
             // TODO: Asignar vistas a los elementos del ViewHolder
-            // holder.imageView = convertView.findViewById(R.id.imageView);
+            holder.imageArticle = convertView.findViewById(R.id.imageView);
             holder.descripcion = convertView.findViewById(R.id.textView);
 
             convertView.setTag(holder);
@@ -78,7 +75,9 @@ public class ArticulosListAdapter extends BaseAdapter {
 
         // Configurar las vistas con datos del modelo
         // TODO: Asignar datos a las vistas del ViewHolder
-        // holder.imageView.setImageResource(comercio.getImageResource());
+        if(articulo.getImagen() != null && articulo.getImagen() != ""){
+            Glide.with(convertView).load(articulo.getImagen()).into(holder.imageArticle);
+        }
         holder.descripcion.setText(articulo.getDescripcion());
 
         return convertView;
@@ -87,5 +86,6 @@ public class ArticulosListAdapter extends BaseAdapter {
 
     static class ViewHolder{
         TextView descripcion, precio;
+        ImageView imageArticle;
     }
 }

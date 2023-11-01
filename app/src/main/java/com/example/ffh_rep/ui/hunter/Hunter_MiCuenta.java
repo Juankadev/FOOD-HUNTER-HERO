@@ -99,7 +99,16 @@ public class Hunter_MiCuenta extends Fragment {
      */
     private void setupSpinner() {
         String[] opcionesSexo = {"Masculino", "Femenino", "Otro"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, opcionesSexo);
+        // Define un ArrayAdapter y especifica el estilo de apariencia de texto
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, opcionesSexo) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                // Establece el color del texto aquí
+                ((TextView) view).setTextColor(getResources().getColor(R.color.white));
+                return view;
+            }
+        };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSexo.setAdapter(adapter);
         spinnerSexo.setEnabled(false);
@@ -203,7 +212,6 @@ public class Hunter_MiCuenta extends Fragment {
     private void enabledInputs(boolean _var){
         et_apellido.setEnabled(_var);
         et_nombre.setEnabled(_var);
-        et_dni.setEnabled(_var);
         spinnerSexo.setEnabled(_var);
         et_correo.setEnabled(_var);
         et_direccion.setEnabled(_var);
@@ -328,7 +336,4 @@ public class Hunter_MiCuenta extends Fragment {
 
         return isValid;
     }
-
-
-
 }

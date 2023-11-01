@@ -28,7 +28,7 @@
 
         <EditText
             android:id="@+id/et_nombre"
-            android:layout_width="366dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
@@ -39,8 +39,9 @@
             android:hint="@string/input_nombre_rh"
             android:inputType="text"
             android:minHeight="48dp"
+            android:enabled="false"
             android:padding="10dp"
-            android:textColorHint="#F8F6F6" />
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/et_apellido"
@@ -145,10 +146,11 @@
             android:visibility="gone" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="167dp"
-            android:layout_height="35dp"
+            android:layout_width="160dp"
+            android:layout_height="36dp"
             app:cardBackgroundColor="#2400FF"
-            app:cardCornerRadius="35dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="18dp"
             android:id="@+id/cv_actioner_edit"
             android:visibility="gone">
 
@@ -169,6 +171,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:textColor="@color/white"
                     android:text="Editar"/>
 
             </RelativeLayout>

@@ -89,6 +89,7 @@ public class ArticuloRepository {
                     aData.setDescripcion(descripcion);
                     aData.setPrecio(precio);
                     aData.setCategoria(new Categoria());
+                    aData.setImagen(rs.getString("imagen"));
                     aData.getCategoria().setIdCategoria(id_categoria);
                     lArticulos.add(aData);
                 }
