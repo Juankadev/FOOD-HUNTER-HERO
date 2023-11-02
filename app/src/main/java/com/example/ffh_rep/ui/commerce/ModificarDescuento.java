@@ -56,7 +56,7 @@ public class ModificarDescuento extends Fragment {
 
     private void setupListeners() {
         btnModificarDescuento.setOnClickListener((v-> modBeneficio()));
-        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.fragmentAgregarDescuentoComercio));
+        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_modificarDescuento_to_fragmentAgregarDescuentoComercio));
     }
 
     private void modBeneficio(){

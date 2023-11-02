@@ -1,26 +1,18 @@
 package com.example.ffh_rep.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.navigation.Navigation;
-
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.entidades.Comercio;
 
 import java.util.List;
 
 public class MisDescuentosComercioListAdapter extends BaseAdapter {
-
     private List<Beneficio> lBeneficios;
     private LayoutInflater  inflater;
 
@@ -50,18 +42,19 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        MisDescuentosComercioListAdapter.ViewHolder vh;
         if(convertView == null){
             convertView = inflater.inflate(R.layout.item_comercio_beneficio, null);
-            vh = new ViewHolder();
+            vh = new MisDescuentosComercioListAdapter.ViewHolder();
             vh.id = convertView.findViewById(R.id.tv_item_descuento_id);
             vh.descripcion = convertView.findViewById(R.id.tv_item_descuento_descripcion);
             vh.puntos = convertView.findViewById(R.id.tv_item_descuento_puntos);
             convertView.setTag(vh);
         }
         else{
-            vh = (ViewHolder) convertView.getTag();
+            vh = (MisDescuentosComercioListAdapter.ViewHolder) convertView.getTag();
         }
+
         Beneficio a = this.lBeneficios.get(position);
         vh.id.setText(a.getId_beneficio());
         vh.descripcion.setText(a.getDescripcion());

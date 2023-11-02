@@ -105,10 +105,10 @@ public class MisDescuentosComercio extends Fragment {
      */
     public void setUpListeners() {
         btnEliminarDescuento.setOnClickListener(v-> eliminarBeneficio());
-        btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.agregarDescuento));
-        btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
+        btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
+        btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
         // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
-        btnModificarDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.modificarDescuento));
+        btnModificarDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_modificarDescuento));
     }
 
     @Override
