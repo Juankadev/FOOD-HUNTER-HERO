@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarSize="4dp"
-    tools:context=".ui.hunter.Hunter_VerComercio">
+    tools:context=".ui.hunter.Hunter_VerBeneficios">
 
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="127dp"
         android:background="@color/bck_green"
         android:gravity="center"
         android:orientation="horizontal"
@@ -41,19 +41,19 @@
             <Button
                 android:id="@+id/btn_HunterVerReseñasComercio"
                 android:layout_width="137dp"
-                android:layout_height="41dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/bck_gray"
-                android:text="@string/btn_VerResenias"
+                android:text="Ver Articulos"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgShop" />
 
             <Button
                 android:id="@+id/btn_hunterVerBeneficios"
                 android:layout_width="165dp"
-                android:layout_height="41dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="216dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
@@ -107,66 +107,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/articulos"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <GridView
-        android:id="@+id/gv_articulos_comerciodetail"
-        android:layout_width="416dp"
-        android:layout_height="554dp"
-        android:horizontalSpacing="16dp"
-        android:numColumns="2"
-        android:verticalSpacing="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </GridView>
-
-    <LinearLayout
-        android:id="@+id/bottomNavCart"
+        android:id="@+id/gv_beneficios"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/bck_green"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/gv_articulos_comerciodetail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <TextView
-            android:id="@+id/tv_cantArticulos"
-            android:layout_width="200dp"
-            android:layout_height="41dp"
-            android:gravity="center"
-            android:shadowColor="#000000"
-            android:text="TextView"
-            android:textColor="#FFFFFF" />
-
-        <Button
-            android:id="@+id/btnAbrirCarrito"
-            android:layout_width="183dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:drawableLeft="@drawable/baseline_shopcart_24"
-            android:text="Ver Carrito"
-            android:textColor="#000000" />
-
-    </LinearLayout>
+        android:layout_height="608dp"
+        android:numColumns="3"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="3dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

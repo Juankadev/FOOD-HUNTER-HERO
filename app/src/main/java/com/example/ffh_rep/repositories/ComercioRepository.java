@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.adapters.ReseniasAdapter;
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Resenia;
@@ -234,5 +235,29 @@ public class ComercioRepository {
                 isLoading.postValue(false);
             }
         });
+    }
+
+    public void cargarBeneficios(MutableLiveData<List<Beneficio>> listBeneficios, Comercio commerce){
+        CompletableFuture.supplyAsync(() -> {
+            List<Beneficio> lBeneficios = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.id_comercio = ?")) {
+                ps.setInt(1, commerce.getId());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Beneficio bene = new Beneficio();
+                        bene.setId_beneficio(rs.getInt("id_beneficio"));
+                        bene.setId_comercio(commerce);
+                        bene.setDescripcion(rs.getString("descripcion"));
+                        bene.setPuntos_requeridos(rs.getInt("puntos_requeridos"));
+                        lBeneficios.add(bene);
+                    }
+                }
+            } catch (Exception e) {
+                // Manejar la excepción
+                e.printStackTrace();
+            }
+            return lBeneficios;
+        }).thenAcceptAsync(resenias -> listBeneficios.postValue(resenias));
     }
 }

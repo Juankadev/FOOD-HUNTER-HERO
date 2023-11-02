@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_hunter_VerComercio_to_hunter_VerArticulo"
             app:destination="@id/hunter_VerArticulo" />
+        <action
+            android:id="@+id/action_hunter_VerComercio_to_hunter_VerBeneficios"
+            app:destination="@id/hunter_VerBeneficios" />
     </fragment>
     <fragment
         android:id="@+id/hunter_MiCarrito"
@@ -95,4 +98,9 @@
             android:id="@+id/action_hunter_ReseniarComercio_to_hunter_ReseniasComercio"
             app:destination="@id/hunter_ReseniasComercio" />
     </fragment>
+    <fragment
+        android:id="@+id/hunter_VerBeneficios"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerBeneficios"
+        android:label="fragment_hunter__ver_beneficios"
+        tools:layout="@layout/fragment_hunter__ver_beneficios" />
 </navigation>

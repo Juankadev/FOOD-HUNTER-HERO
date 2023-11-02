@@ -190,7 +190,7 @@ public class Hunter_ReseniarComercio extends Fragment {
         builder.setPositiveButton("Volver", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_ReseniarComercio_to_hunter_ReseniasComercio);
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
