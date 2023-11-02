@@ -1,12 +1,15 @@
 package com.example.ffh_rep.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.navigation.Navigation;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
@@ -79,6 +82,15 @@ public class ArticulosListAdapter extends BaseAdapter {
             Glide.with(convertView).load(articulo.getImagen()).into(holder.imageArticle);
         }
         holder.descripcion.setText(articulo.getDescripcion());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle args = new Bundle();
+                args.putSerializable("comercioSelect", articulo.getComercio());
+                Navigation.findNavController(v).navigate(R.id.action_hunter_Home_to_hunter_VerComercio, args);
+            }
+        });
 
         return convertView;
     }

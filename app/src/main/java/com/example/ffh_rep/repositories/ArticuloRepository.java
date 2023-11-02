@@ -126,7 +126,7 @@ public class ArticuloRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Articulos a WHERE a.estado = 1");
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Articulos a INNER JOIN Stocks s ON a.id_articulo = s.id_articulo WHERE a.estado = 1 AND s.cantidad > 0");
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Articulo aData = new Articulo();
@@ -134,6 +134,8 @@ public class ArticuloRepository {
                     String descripcion = rs.getString("descripcion");
                     Double precio = rs.getDouble("precio");
                     int id_categoria = rs.getInt("id_categoria");
+                    aData.setComercio(new Comercio());
+                    aData.getComercio().setId(rs.getInt("id_comercio"));
                     aData.setIdArticulo(id);
                     aData.setDescripcion(descripcion);
                     aData.setPrecio(precio);
