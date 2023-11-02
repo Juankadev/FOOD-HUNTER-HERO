@@ -56,9 +56,9 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
         }
 
         Beneficio a = this.lBeneficios.get(position);
-        vh.id.setText(a.getId_beneficio());
+        vh.id.setText(String.valueOf(a.getId_beneficio()));
         vh.descripcion.setText(a.getDescripcion());
-        vh.puntos.setText(a.getPuntos_requeridos());
+        vh.puntos.setText(String.valueOf(a.getPuntos_requeridos()));
 
         return convertView;
     }

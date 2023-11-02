@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class MisDescuentosComercio extends Fragment {
         userSession = sessionManager.getCommerceSession();
         mViewModel.listarDescuentos(userSession.getId());
 
-        setUpListeners();
+        //setUpListeners();
         setUpObserver();
 
         gv_descuentos.setAdapter(mdcListAdapter);
@@ -88,6 +89,7 @@ public class MisDescuentosComercio extends Fragment {
         mViewModel.getMldListaBeneficios().observe(getViewLifecycleOwner(), new Observer<List<Beneficio>>() {
             @Override
             public void onChanged(List<Beneficio> beneficios) {
+                Log.d("DEBUG beneficios", beneficios.toString());
                 mdcListAdapter.setData(beneficios);
             }
         });
@@ -104,7 +106,7 @@ public class MisDescuentosComercio extends Fragment {
      * Asigna los métodos correspondientes a los eventos.
      */
     public void setUpListeners() {
-        btnEliminarDescuento.setOnClickListener(v-> eliminarBeneficio());
+        //btnEliminarDescuento.setOnClickListener(v-> eliminarBeneficio());
         btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
         btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
         // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
