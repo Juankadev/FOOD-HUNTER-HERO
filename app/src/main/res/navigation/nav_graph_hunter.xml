@@ -71,7 +71,11 @@
         android:id="@+id/hunter_ReseniasComercio"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
         android:label="fragment_hunter__resenias_comercio"
-        tools:layout="@layout/fragment_hunter__resenias_comercio" />
+        tools:layout="@layout/fragment_hunter__resenias_comercio" >
+        <action
+            android:id="@+id/action_hunter_ReseniasComercio_to_hunter_ReseniarComercio"
+            app:destination="@id/hunter_ReseniarComercio" />
+    </fragment>
     <fragment
         android:id="@+id/hunter_VerArticulo"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_VerArticulo"
@@ -82,4 +86,13 @@
         android:name="com.example.ffh_rep.ui.hunter.Hunter_GenerarQr"
         android:label="fragment_hunter__generar_qr"
         tools:layout="@layout/fragment_hunter__generar_qr" />
+    <fragment
+        android:id="@+id/hunter_ReseniarComercio"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniarComercio"
+        android:label="fragment_hunter__reseniar_comercio"
+        tools:layout="@layout/fragment_hunter__reseniar_comercio" >
+        <action
+            android:id="@+id/action_hunter_ReseniarComercio_to_hunter_ReseniasComercio"
+            app:destination="@id/hunter_ReseniasComercio" />
+    </fragment>
 </navigation>

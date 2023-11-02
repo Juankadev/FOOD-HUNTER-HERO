@@ -21,19 +21,21 @@ public class Resenia {
 
     public Resenia(Integer id_resenia, Integer calificacion, String comentario){
         this.id_resena = id_resenia;
+        this.comercio = new Comercio();
+        this.usuario = new Usuario();
         this.calificacion = calificacion;
         this.comentario = comentario;
     }
 
     public void setId_resena(Integer id_resena) {
-        id_resena = id_resena;
+        this.id_resena = id_resena;
     }
-    public void setComercio(Comercio comercio) {comercio = comercio;}
+    public void setComercio(Comercio comercio) {this.comercio = comercio;}
     public void setId_usuario(Usuario id_usuario) {
-        id_usuario = id_usuario;
+        this.usuario = id_usuario;
     }
     public void setCalificacion(Integer calificacion) {
-        calificacion = calificacion;
+        this.calificacion = calificacion;
     }
 
     public Integer getId_resena() {return this.id_resena;}

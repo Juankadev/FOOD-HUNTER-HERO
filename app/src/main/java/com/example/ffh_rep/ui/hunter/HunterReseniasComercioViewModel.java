@@ -13,6 +13,9 @@ import java.util.List;
 
 public class HunterReseniasComercioViewModel extends ViewModel {
    private MutableLiveData<List<Resenia>> reseniasList;
+   private MutableLiveData<Boolean> loadingSendResenia;
+   private MutableLiveData<Boolean> successSendResenia;
+   private MutableLiveData<Boolean> errorSendResenia;
    private Context ctx;
 
    private ComercioRepository cRepo;
@@ -20,6 +23,9 @@ public class HunterReseniasComercioViewModel extends ViewModel {
    public HunterReseniasComercioViewModel(){}
     public HunterReseniasComercioViewModel(Context ctx) {
         this.reseniasList = new MutableLiveData<>();
+        this.loadingSendResenia = new MutableLiveData<>(false);
+        this.successSendResenia = new MutableLiveData<>(false);
+        this.errorSendResenia = new MutableLiveData<>(false);
         this.ctx = ctx;
         this.cRepo = new ComercioRepository();
     }
@@ -32,7 +38,35 @@ public class HunterReseniasComercioViewModel extends ViewModel {
         this.reseniasList = reseniasList;
     }
 
+    public MutableLiveData<Boolean> getLoadingSendResenia() {
+        return loadingSendResenia;
+    }
+
+    public void setLoadingSendResenia(boolean value) {
+        this.loadingSendResenia.postValue(value);
+    }
+
+    public MutableLiveData<Boolean> getSuccessSendResenia() {
+        return successSendResenia;
+    }
+
+    public void setSuccessSendResenia(boolean value) {
+        this.successSendResenia.postValue(value);
+    }
+
+    public MutableLiveData<Boolean> getErrorSendResenia() {
+        return errorSendResenia;
+    }
+
+    public void setErrorSendResenia(boolean value) {
+        this.errorSendResenia.postValue(value);
+    }
+
     public void cargarResenias(Comercio commerce){
        cRepo.cargarResenias(this.reseniasList, commerce);
+    }
+
+    public void generarResenia(Resenia res){
+       cRepo.generarResenia(res, this.loadingSendResenia, this.successSendResenia, this.errorSendResenia);
     }
 }

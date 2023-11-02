@@ -40,6 +40,7 @@
                 android:layout_marginTop="16dp"
                 android:numStars="5"
                 android:stepSize="1"
+                android:progressTint="#F0F23A"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.49"
                 app:layout_constraintStart_toEndOf="@+id/imageView4"

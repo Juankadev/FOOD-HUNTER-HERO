@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,8 +59,8 @@ public class Hunter_ReseniasComercio extends Fragment {
 
         mViewModel.cargarResenias(commerce);
 
+        setUpListeners();
         setUpObservers();
-
 
         gvResenias.setAdapter(rAdapter);
         return view;
@@ -67,9 +68,12 @@ public class Hunter_ReseniasComercio extends Fragment {
 
     public void initComponents(View view){
         gvResenias = view.findViewById(R.id.gv_resenias);
+        btnReseniar = view.findViewById(R.id.fabAddResenia);
 
         mViewModel = new ViewModelProvider(requireActivity(),new HunterReseniasComercioViewModelFactory(getActivity())).get(HunterReseniasComercioViewModel.class);
         rAdapter = new ReseniasAdapter(new ArrayList<>(), getContext());
+
+
     }
 
     public void setUpObservers(){
@@ -80,6 +84,16 @@ public class Hunter_ReseniasComercio extends Fragment {
                     rAdapter.setReseniasList(resenias);
                 }
             });
+    }
+
+    public void setUpListeners(){
+        btnReseniar.setOnClickListener(v -> openResenia());
+    }
+
+    public void openResenia(){
+        Bundle args = new Bundle();
+        args.putSerializable("comercioareseniar", commerce);
+        Navigation.findNavController(requireView()).navigate(R.id.action_hunter_ReseniasComercio_to_hunter_ReseniarComercio, args);
     }
 
 }

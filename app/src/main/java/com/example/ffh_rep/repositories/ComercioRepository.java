@@ -202,4 +202,37 @@ public class ComercioRepository {
             return lResenias;
         }).thenAcceptAsync(resenias -> listaResenias.postValue(resenias));
     }
+
+    public void generarResenia(Resenia res, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+            isLoading.postValue(true);
+            try {
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement("Insert Into Resenas (id_comercio, id_usuario, calificacion, comentario) values (?, ?, ?, ?)");
+                ps.setInt(1, res.getComercio().getId());
+                ps.setInt(2, res.getUsuario().getId_usuario());
+                ps.setInt(3, res.getCalificacion());
+                ps.setString(4, res.getComentario());
+
+
+                int rowsAffected  = ps.executeUpdate();
+                if( rowsAffected > 0){
+                    success.postValue(true);
+                }
+                else{
+                    error.postValue(false);
+                }
+
+                ps.close();
+                DBUtil.closeConnection(con);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                error.postValue(true);
+            }
+            finally {
+                isLoading.postValue(false);
+            }
+        });
+    }
 }
