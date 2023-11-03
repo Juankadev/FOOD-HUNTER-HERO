@@ -20,9 +20,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class ComercioRepository {
 
-    public void updateUserInfo(MutableLiveData<Comercio> mlCommerce, Comercio comercio, Context ctx){
+    public void updateUserInfo(MutableLiveData<Comercio> mlCommerce, Comercio comercio, MutableLiveData<Boolean> updatingInfo, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
-
+            updatingInfo.postValue(true);
             try {
                 Connection con = DBUtil.getConnection();
                 String query = "UPDATE Comercios set rubro = ?, correo_electronico = ?, telefono = ?, direccion = ? where Id = ?";
@@ -38,16 +38,15 @@ public class ComercioRepository {
                 ps.close();
                 DBUtil.closeConnection(con);
                 if(rowsAffected > 0){
-                    Toast.makeText(ctx, "Información actualizada con exito", Toast.LENGTH_LONG).show();
+                    updatingInfo.postValue(false);
+                    success.postValue(true);
                     mlCommerce.postValue(comercio);
-                }
-                else{
-                    Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG).show();
                 }
             }
             catch (Exception e){
                 e.printStackTrace();
-                Toast.makeText(ctx, "Ocurrio un error al actualizar la información", Toast.LENGTH_LONG);
+                error.postValue(false);
+                updatingInfo.postValue(false);
             }
         });
     }

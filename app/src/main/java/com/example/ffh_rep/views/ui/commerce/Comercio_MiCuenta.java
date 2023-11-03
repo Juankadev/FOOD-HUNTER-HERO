@@ -37,7 +37,7 @@ public class Comercio_MiCuenta extends Fragment {
     private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel, btnVolver;
     private CardView btnEditarActionerWithProgress;
     private ProgressBar pgBarEditar;
-    private Comercio userSession;
+    private Comercio userSession, updateCommerce;
     private String originalRubro, originalCorreo, originalTelefono, originalDireccion;
     private SessionManager sessionManager;
 
@@ -147,6 +147,24 @@ public class Comercio_MiCuenta extends Fragment {
                 }
             }
         });
+
+        mViewModel.getSuccessUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    updateMessage(true);
+                }
+            }
+        });
+
+        mViewModel.getErrorUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    updateMessage(false);
+                }
+            }
+        });
     }
     /**
      * Actualiza la información del usuario con los valores ingresados en los campos de edición.
@@ -155,7 +173,7 @@ public class Comercio_MiCuenta extends Fragment {
     private void updateInformation(){
         if(validateInput()){
 
-            Comercio updateCommerce = new Comercio();
+            updateCommerce = new Comercio();
 
             updateCommerce.setId(this.userSession.getId());
             updateCommerce.setRubro(et_rubro_mc.getText().toString());
@@ -285,6 +303,41 @@ public class Comercio_MiCuenta extends Fragment {
         }
 
         return isValid;
+    }
+
+    private void updateMessage(boolean value){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Actualizar información");
+        if(value) {
+            builder.setMessage("Se ha actualizado la informacion con exito!");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mViewModel.setErrorUpdate(false);
+                    mViewModel.setSuccessUpdate(false);
+                    mViewModel.setUpdatingInfo(false);
+                    enabledInputs(false);
+                    mViewModel.setCommerceDataWithCommerce(updateCommerce);
+                    sessionManager.saveCommerceSession(updateCommerce);
+                    dialog.dismiss();
+                }
+            });
+        }
+        else {
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mViewModel.setErrorUpdate(false);
+                    mViewModel.setSuccessUpdate(false);
+                    mViewModel.setUpdatingInfo(false);
+                    enabledInputs(false);
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
