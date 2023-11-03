@@ -25,27 +25,18 @@ import java.util.List;
  * A fragment representing a list of Items.
  */
 public class AprobarComercios extends Fragment {
-
-    // TODO: Customize parameter argument names
     private AdminAprobarComerciosViewModel mViewModel;
-    private Comercio commerce;
     private GridView gv_comercios;
-
     private FragmentAprobarComerciosListBinding binding;
     private AprobarComerciosViewAdapter listAdapter;
-
 
     public static AprobarComercios newInstance() {
         return new AprobarComercios();
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentAprobarComerciosListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         initComponents(view);
@@ -54,15 +45,11 @@ public class AprobarComercios extends Fragment {
         gv_comercios.setAdapter(listAdapter);
         return view;
     }
-
-
     public void initComponents(View view){
         gv_comercios = view.findViewById(R.id.gv_comercios);
         mViewModel = new ViewModelProvider(requireActivity(), new AprobarComerciosViewModelFactory(getActivity())).get(AdminAprobarComerciosViewModel.class);
         listAdapter = new AprobarComerciosViewAdapter(new ArrayList<>(), getContext());
     }
-
-
     public void setUpObservers(){
         mViewModel.getListComerciosNoAprobados().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
             @Override
