@@ -12,5 +12,13 @@
     <GridView
         android:id="@+id/gv_comercios"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="30dp"
+        android:paddingEnd="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

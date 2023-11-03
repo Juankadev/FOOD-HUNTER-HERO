@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="Razon social"
+        android:textAlignment="textStart"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <LinearLayout
