@@ -212,6 +212,36 @@ public class ComercioRepository {
         });
     }
 
+    public void dismarkAsFavorite(Comercio comercio, Hunter hunter, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+            isLoading.postValue(true);
+            try {
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement("Delete from Comercios_Favoritos  where id_comercio = ? and id_usuario = ?");
+                ps.setInt(1, comercio.getId());
+                ps.setInt(2, hunter.getUser().getId_usuario());
+
+                int rowsAffected  = ps.executeUpdate();
+                if( rowsAffected > 0){
+                    success.postValue(true);
+                }
+                else{
+                    error.postValue(false);
+                }
+
+                ps.close();
+                DBUtil.closeConnection(con);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                error.postValue(true);
+            }
+            finally {
+                isLoading.postValue(false);
+            }
+        });
+    }
+
     public void cargarResenias(MutableLiveData<List<Resenia>> listaResenias, Comercio commerce){
         CompletableFuture.supplyAsync(() -> {
             List<Resenia> lResenias = new ArrayList<>();
