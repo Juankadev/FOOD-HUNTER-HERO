@@ -54,7 +54,7 @@ public class Comercios extends Fragment {
     private void initializeViews(View view) {
         RecyclerView rview = (RecyclerView) view;
         nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation_controller);
-        cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav);
+        cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav, 1);
         rview.setAdapter(cAdapter);
     }
 

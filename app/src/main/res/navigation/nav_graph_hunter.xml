@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_hunter_Home_to_hunter_VerComercio"
             app:destination="@id/hunter_VerComercio" />
+        <action
+            android:id="@+id/action_nav_hunter_Home_to_nav_hunter_MisComerciosFavoritos"
+            app:destination="@id/nav_hunter_MisComerciosFavoritos" />
     </fragment>
     <fragment
         android:id="@+id/nav_hunter_MiCuenta"
@@ -103,4 +106,13 @@
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerBeneficios"
         android:label="fragment_hunter__ver_beneficios"
         tools:layout="@layout/fragment_hunter__ver_beneficios" />
+    <fragment
+        android:id="@+id/nav_hunter_MisComerciosFavoritos"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_MisComerciosFavoritos"
+        android:label="fragment_hunter__mis_comercios_favoritos"
+        tools:layout="@layout/fragment_hunter__mis_comercios_favoritos" >
+        <action
+            android:id="@+id/action_nav_hunter_MisComerciosFavoritos_to_hunter_VerComercio"
+            app:destination="@id/hunter_VerComercio" />
+    </fragment>
 </navigation>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
                     etPassword.getText().toString(),
                     this
             );
+            btnIniciarSesion.setEnabled(false);
+            btnIniciarSesion.setBackgroundColor(Color.parseColor("#E2E2E2"));
             task.execute();
         }
         else
@@ -151,18 +154,24 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
     public void onErrorLogin() {
         pgBarInit.setVisibility(View.GONE);
         initSessionText.setText("Iniciar Sesión");
+        btnIniciarSesion.setEnabled(true);
+        btnIniciarSesion.setBackgroundColor(Color.parseColor("#FFFFFF"));
     }
 
     @Override
     public void onErrorLoginHunter() {
         pgBarInit.setVisibility(View.GONE);
         initSessionText.setText("Iniciar Sesión");
+        btnIniciarSesion.setEnabled(true);
+        btnIniciarSesion.setBackgroundColor(Color.parseColor("#FFFFFF"));
     }
 
     @Override
     public void onErrorLoginCommerce() {
         pgBarInit.setVisibility(View.GONE);
         initSessionText.setText("Iniciar Sesión");
+        btnIniciarSesion.setEnabled(true);
+        btnIniciarSesion.setBackgroundColor(Color.parseColor("#FFFFFF"));
     }
 
     /**
