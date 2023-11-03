@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#68dd6b"
-    tools:context=".ui.hunter.Hunter_MiCuenta">
+    tools:context=".views.ui.hunter.Hunter_MiCuenta">
 
     <LinearLayout
         android:layout_width="match_parent"

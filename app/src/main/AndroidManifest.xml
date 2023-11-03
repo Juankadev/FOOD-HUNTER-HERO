@@ -24,7 +24,7 @@
             android:label="@string/title_activity_reseniar_comercio"
             android:theme="@style/Theme.FFHREP" />
         <activity
-            android:name=".ui.hunter.Comercios"
+            android:name=".views.ui.hunter.Comercios"
             android:exported="false"
             android:label="@string/title_activity_comercio"
             android:theme="@style/Theme.FFHREP" />
@@ -39,18 +39,18 @@
             android:label="@string/title_activity_admin_principal"
             android:theme="@style/Theme.FFHREP" />
         <activity
-            android:name=".activitys.RegistroBasic"
+            android:name=".views.activitys.RegistroBasic"
             android:exported="false" />
         <activity
-            android:name=".activitys.NavigationController"
+            android:name=".views.activitys.NavigationController"
             android:exported="false"
             android:label="@string/title_activity_navigation_controller"
             android:theme="@style/Theme.FFHREP.NoActionBar" />
         <activity
-            android:name=".activitys.RegistroHunter"
+            android:name=".views.activitys.RegistroHunter"
             android:exported="false" />
         <activity
-            android:name=".activitys.RegistroComercio"
+            android:name=".views.activitys.RegistroComercio"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

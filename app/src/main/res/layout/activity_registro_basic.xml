@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:backgroundTint="@color/bck_green"
     android:background="@color/bck_green"
-    tools:context=".activitys.RegistroBasic">
+    tools:context=".views.activitys.RegistroBasic">
 
     <!-- Logo y título -->
     <ImageView

@@ -8,7 +8,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:textAlignment="center"
-    tools:context=".ui.admin.AprobarComercios">
+    tools:context=".views.ui.admin.AprobarComercios">
 
     <GridView
         android:id="@+id/gv_comercios"

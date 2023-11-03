@@ -12,14 +12,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ffh_rep.activitys.NavigationController;
-import com.example.ffh_rep.activitys.RegistroBasic;
+import com.example.ffh_rep.views.activitys.NavigationController;
+import com.example.ffh_rep.views.activitys.RegistroBasic;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
-import com.example.ffh_rep.tasks.IniciarSesionTask;
-import com.example.ffh_rep.tasks.UserDetailsByRoleTask;
+import com.example.ffh_rep.models.tasks.IniciarSesionTask;
+import com.example.ffh_rep.models.tasks.UserDetailsByRoleTask;
 
 
 public class MainActivity extends AppCompatActivity implements LoginUsuarioCallback {

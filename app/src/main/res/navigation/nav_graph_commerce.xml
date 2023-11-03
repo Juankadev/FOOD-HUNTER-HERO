@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentAgregarDescuentoComercio"
-        android:name="com.example.ffh_rep.ui.commerce.MisDescuentosComercio"
+        android:name="com.example.ffh_rep.views.ui.commerce.MisDescuentosComercio"
         android:label="fragment_fragment_agregar_descuento_comercio"
         tools:layout="@layout/fragment_comercio_mis_descuentos" >
         <action
@@ -22,12 +22,12 @@
     </fragment>
     <fragment
         android:id="@+id/agregarArticulo"
-        android:name="com.example.ffh_rep.ui.commerce.AgregarArticulo"
+        android:name="com.example.ffh_rep.views.ui.commerce.AgregarArticulo"
         android:label="fragment_agregar_articulo"
         tools:layout="@layout/fragment_agregar_articulo" />
     <fragment
         android:id="@+id/agregarDescuento"
-        android:name="com.example.ffh_rep.ui.commerce.AgregarDescuento"
+        android:name="com.example.ffh_rep.views.ui.commerce.AgregarDescuento"
         android:label="fragment_comercio_agregardescuento"
         tools:layout="@layout/fragment_comercio_agregardescuento" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/modificarDescuento"
-        android:name="com.example.ffh_rep.ui.commerce.ModificarDescuento"
+        android:name="com.example.ffh_rep.views.ui.commerce.ModificarDescuento"
         android:label="fragment_modificar_descuento"
         tools:layout="@layout/fragment_modificar_descuento" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/commerce_MisArticulos"
-        android:name="com.example.ffh_rep.ui.commerce.Comercio_Home"
+        android:name="com.example.ffh_rep.views.ui.commerce.Comercio_Home"
         android:label="fragment_commerce__mis_articulos"
         tools:layout="@layout/fragment_comercio__home" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/comercio_Ver_Articulo"
-        android:name="com.example.ffh_rep.ui.commerce.Comercio_Ver_Articulo"
+        android:name="com.example.ffh_rep.views.ui.commerce.Comercio_Ver_Articulo"
         android:label="fragment_comercio__ver__articulo"
         tools:layout="@layout/fragment_comercio__ver__articulo" />
 </navigation>

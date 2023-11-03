@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.commerce.Comercio_Ver_Articulo">
+    tools:context=".views.ui.commerce.Comercio_Ver_Articulo">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"

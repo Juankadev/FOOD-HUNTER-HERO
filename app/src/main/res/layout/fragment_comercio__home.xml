@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.commerce.Comercio_Home">
+    tools:context=".views.ui.commerce.Comercio_Home">
 
     <LinearLayout
         android:id="@+id/shopLayout"

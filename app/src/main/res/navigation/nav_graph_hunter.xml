@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_hunter_Home"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_Home"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_Home"
         android:label="fragment_hunter__home"
         tools:layout="@layout/fragment_hunter__home" >
         <action
@@ -25,12 +25,12 @@
     </fragment>
     <fragment
         android:id="@+id/nav_hunter_MiCuenta"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCuenta"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_MiCuenta"
         android:label="fragment_hunter__mi_cuenta"
         tools:layout="@layout/fragment_hunter__mi_cuenta" />
     <fragment
         android:id="@+id/comercios"
-        android:name="com.example.ffh_rep.ui.hunter.Comercios"
+        android:name="com.example.ffh_rep.views.ui.hunter.Comercios"
         android:label="fragment_comercios_list"
         tools:layout="@layout/fragment_comercios_list" >
         <action
@@ -39,13 +39,13 @@
     </fragment>
     <fragment
         android:id="@+id/articulos"
-        android:name="com.example.ffh_rep.ui.hunter.Articulos"
+        android:name="com.example.ffh_rep.views.ui.hunter.Articulos"
         android:label="fragment_articulos_list"
         tools:layout="@layout/fragment_articulos_list" >
     </fragment>
     <fragment
         android:id="@+id/hunter_VerComercio"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerComercio"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerComercio"
         android:label="fragment_hunter__ver_comercio"
         tools:layout="@layout/fragment_hunter__ver_comercio" >
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/hunter_MiCarrito"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_MiCarrito"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_MiCarrito"
         android:label="fragment_hunter__mi_carrito"
         tools:layout="@layout/fragment_hunter__mi_carrito" >
         <action
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/hunter_ReseniasComercio"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_ReseniasComercio"
         android:label="fragment_hunter__resenias_comercio"
         tools:layout="@layout/fragment_hunter__resenias_comercio" >
         <action
@@ -81,17 +81,17 @@
     </fragment>
     <fragment
         android:id="@+id/hunter_VerArticulo"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerArticulo"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerArticulo"
         android:label="fragment_hunter__ver_articulo"
         tools:layout="@layout/fragment_hunter__ver_articulo" />
     <fragment
         android:id="@+id/hunter_GenerarQr"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_GenerarQr"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_GenerarQr"
         android:label="fragment_hunter__generar_qr"
         tools:layout="@layout/fragment_hunter__generar_qr" />
     <fragment
         android:id="@+id/hunter_ReseniarComercio"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniarComercio"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_ReseniarComercio"
         android:label="fragment_hunter__reseniar_comercio"
         tools:layout="@layout/fragment_hunter__reseniar_comercio" >
         <action
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/hunter_VerBeneficios"
-        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerBeneficios"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerBeneficios"
         android:label="fragment_hunter__ver_beneficios"
         tools:layout="@layout/fragment_hunter__ver_beneficios" />
 </navigation>
