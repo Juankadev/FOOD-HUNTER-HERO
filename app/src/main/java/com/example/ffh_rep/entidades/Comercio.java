@@ -14,6 +14,8 @@ public class Comercio implements Serializable {
     private String direccion;
     private String aprobado;
 
+    private boolean isFavorite;
+
     public Comercio(){
 
     }
@@ -38,6 +40,14 @@ public class Comercio implements Serializable {
         this.Telefono = telefono;
         this.direccion = direccion;
         this.aprobado = aprobado;
+    }
+
+    public boolean isFavorite() {
+        return this.isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.isFavorite = favorite;
     }
 
     public int getId() {
@@ -76,26 +86,26 @@ public class Comercio implements Serializable {
         return aprobado;
     }
 
-    public void setId(int id) {Id = id;}
+    public void setId(int id) {this.Id = id;}
 
     public void setRazonSocial(String razonSocial) {
-        RazonSocial = razonSocial;
+        this.RazonSocial = razonSocial;
     }
 
     public void setCuit(String cuit) {
-        Cuit = cuit;
+        this.Cuit = cuit;
     }
 
     public void setRubro(String rubro) {
-        Rubro = rubro;
+        this.Rubro = rubro;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.Email = email;
     }
 
     public void setTelefono(String telefono) {
-        Telefono = telefono;
+        this.Telefono = telefono;
     }
 
     public void setDireccion(String direccion) {
