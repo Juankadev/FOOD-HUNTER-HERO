@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.interfaces.CanjearBeneficiosCallback;
 
 import java.util.List;
 
@@ -17,15 +18,18 @@ public class BeneficiosAdapterHunter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private List<Beneficio> lBeneficios;
+    private CanjearBeneficiosCallback cbCallback;
 
-    public BeneficiosAdapterHunter(Context ctx, List<Beneficio> lista){
+    public BeneficiosAdapterHunter(Context ctx, List<Beneficio> lista, CanjearBeneficiosCallback callback){
         this.lBeneficios = lista;
         this.inflater = LayoutInflater.from(ctx);
+        this.cbCallback = callback;
     }
 
 
     public void setlBeneficios(List<Beneficio> lBeneficios) {
         this.lBeneficios = lBeneficios;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,6 +63,7 @@ public class BeneficiosAdapterHunter extends BaseAdapter {
 
         Beneficio bene = this.lBeneficios.get(position);
         vh.nombre.setText(bene.getDescripcion());
+        vh.btn.setOnClickListener(v-> cbCallback.onCanjearBeneficio(bene));
 
         return convertView;
     }

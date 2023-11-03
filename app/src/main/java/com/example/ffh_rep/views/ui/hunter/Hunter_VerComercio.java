@@ -84,6 +84,8 @@ public class Hunter_VerComercio extends Fragment {
 
         mViewModel.cargarArticulos(commerce.getId());
 
+        isThisFavorite(commerce.isFavorite());
+
         setUpListeners();
         setUpObservers();
         descripcion.setText(commerce.getRazonSocial());
@@ -115,6 +117,7 @@ public class Hunter_VerComercio extends Fragment {
     public void setUpListeners(){
         btnAbrirCarrito.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito));
         favDispatch.setOnClickListener(v -> markAsFav());
+        favDispatch_filled.setOnClickListener(v -> dismarkAsFav());
         btnVerResenias.setOnClickListener(v -> redirectToResenias());
         btnVerBeneficios.setOnClickListener(v-> redirectToBeneficios());
     }
@@ -172,9 +175,6 @@ public class Hunter_VerComercio extends Fragment {
                     favDispatch.setVisibility(View.GONE);
                     pBarMarkingAsFav.setVisibility(View.VISIBLE);
                 }
-                else{
-                    pBarMarkingAsFav.setVisibility(View.GONE);
-                }
             }
         });
 
@@ -182,6 +182,7 @@ public class Hunter_VerComercio extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean){
+                    pBarMarkingAsFav.setVisibility(View.GONE);
                     Toast.makeText(getActivity(), "Ha ocurrido un error al marcar como favorito al comercio.. Intentelo mas tarde", Toast.LENGTH_LONG).show();
                     favDispatch.setVisibility(View.VISIBLE);
                 }
@@ -194,7 +195,41 @@ public class Hunter_VerComercio extends Fragment {
                 if(aBoolean){
                     favDispatch_filled.setVisibility(View.VISIBLE);
                     favDispatch.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Se ha marcado el comercio como favorito!", Toast.LENGTH_LONG).show();
+                    pBarMarkingAsFav.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Se ha marcado el comercio como favorito!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mViewModel.getDismarkSuccess().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    favDispatch_filled.setVisibility(View.GONE);
+                    favDispatch.setVisibility(View.VISIBLE);
+                    pBarMarkingAsFav.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Se ha desmarcado el comercio como favorito!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mViewModel.getIsDismarkingAsFav().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    favDispatch_filled.setVisibility(View.GONE);
+                    pBarMarkingAsFav.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mViewModel.getErrorDismarking().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    pBarMarkingAsFav.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Ha ocurrido un error al desmarcar como favorito al comercio.. Intentelo mas tarde", Toast.LENGTH_LONG).show();
+                    favDispatch_filled.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -204,6 +239,8 @@ public class Hunter_VerComercio extends Fragment {
     public void markAsFav(){
         mViewModel.markAsFav(this.commerce, this.userSession);
     }
+
+    public void dismarkAsFav(){mViewModel.dismarkAsFav(this.commerce, this.userSession);}
 
 
     public void mensajeSalir() {
@@ -236,18 +273,6 @@ public class Hunter_VerComercio extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("FragmentVisible", "Fragment is now visible");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("FragmentNotVisible", "Fragment is no longer visible");
-    }
-
 
     public void redirectToResenias(){
         Bundle bundle = new Bundle();
@@ -260,6 +285,17 @@ public class Hunter_VerComercio extends Fragment {
         bundle.putSerializable("comerciobeneficios", commerce);
         Navigation.findNavController(requireView()).navigate(R.id.action_hunter_VerComercio_to_hunter_VerBeneficios, bundle);
 
+    }
+
+    public void isThisFavorite(boolean value){
+        if(value){
+            favDispatch.setVisibility(View.GONE);
+            favDispatch_filled.setVisibility(View.VISIBLE);
+        }
+        else{
+            favDispatch.setVisibility(View.VISIBLE);
+            favDispatch_filled.setVisibility(View.GONE);
+        }
     }
 
 }

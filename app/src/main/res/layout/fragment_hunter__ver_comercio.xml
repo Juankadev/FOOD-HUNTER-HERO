@@ -124,8 +124,8 @@
 
     <GridView
         android:id="@+id/gv_articulos_comerciodetail"
-        android:layout_width="416dp"
-        android:layout_height="554dp"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
         android:horizontalSpacing="16dp"
         android:numColumns="2"
         android:verticalSpacing="16dp"

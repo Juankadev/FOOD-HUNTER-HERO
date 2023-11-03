@@ -31,4 +31,8 @@ public class HunterVerBeneficiosViewModel extends ViewModel {
     public MutableLiveData<List<Beneficio>> getListBeneficios() {
         return listBeneficios;
     }
+
+    public void canjearBeneficio(){
+
+    }
 }

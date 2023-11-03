@@ -20,7 +20,11 @@ public class HunterVerComercioViewModel extends ViewModel {
     private MutableLiveData<Boolean> isMarkingAsFav;
     private MutableLiveData<Boolean>  markSuccess;
     private MutableLiveData<Boolean>  errorMarking;
-    private MediatorLiveData<Boolean> markingStack;
+
+    private MutableLiveData<Boolean> isDismarkingAsFav;
+    private MutableLiveData<Boolean>  dismarkSuccess;
+    private MutableLiveData<Boolean>  errorDismarking;
+
 
     private ArticuloRepository aRepo;
     private ComercioRepository cRepo;
@@ -32,14 +36,14 @@ public class HunterVerComercioViewModel extends ViewModel {
         this.isMarkingAsFav = new MutableLiveData<>(false);
         this.markSuccess = new MutableLiveData<>(false);
         this.errorMarking = new MutableLiveData<>(false);
-        this.markingStack = new MediatorLiveData<>();
+
+        this.isDismarkingAsFav = new MutableLiveData<>(false);
+        this.dismarkSuccess = new MutableLiveData<>(false);
+        this.errorDismarking = new MutableLiveData<>(false);
+
         this.aRepo = new ArticuloRepository();
         this.cRepo = new ComercioRepository();
 
-
-        this.markingStack.addSource(isMarkingAsFav, value -> this.markingStack.setValue(value));
-        this.markingStack.addSource(markSuccess, value -> this.markingStack.setValue(value));
-        this.markingStack.addSource(errorMarking, value -> this.markingStack.setValue(value));
 
     }
 
@@ -49,6 +53,10 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     public void markAsFav(Comercio commerce, Hunter ht){
         cRepo.markAsFavorite(commerce, ht, this.isMarkingAsFav, this.markSuccess, this.errorMarking);
+    }
+
+    public void dismarkAsFav(Comercio commerce, Hunter ht){
+        cRepo.dismarkAsFavorite(commerce, ht, this.isDismarkingAsFav, this.dismarkSuccess, this.errorDismarking);
     }
 
     public void setIsMarkingAsFav(boolean value) {
@@ -77,5 +85,29 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     public MutableLiveData<List<Articulo>> getMldArticulos() {
         return mldArticulos;
+    }
+
+    public MutableLiveData<Boolean> getIsDismarkingAsFav() {
+        return isDismarkingAsFav;
+    }
+
+    public void setIsDismarkingAsFav(MutableLiveData<Boolean> isDismarkingAsFav) {
+        this.isDismarkingAsFav = isDismarkingAsFav;
+    }
+
+    public MutableLiveData<Boolean> getDismarkSuccess() {
+        return dismarkSuccess;
+    }
+
+    public void setDismarkSuccess(MutableLiveData<Boolean> dismarkSuccess) {
+        this.dismarkSuccess = dismarkSuccess;
+    }
+
+    public MutableLiveData<Boolean> getErrorDismarking() {
+        return errorDismarking;
+    }
+
+    public void setErrorDismarking(MutableLiveData<Boolean> errorDismarking) {
+        this.errorDismarking = errorDismarking;
     }
 }

@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.hunter.ComerciosViewModel;
 import com.example.ffh_rep.views.adapters.ComerciosAdapter;
 import com.example.ffh_rep.viewmodels.factory.ComercioViewModelFactory;
@@ -26,7 +28,8 @@ public class Comercios extends Fragment {
     private ComerciosViewModel viewModel;
     private ComerciosAdapter cAdapter;
     private NavController nav;
-    private int mColumnCount = 2;
+    private Hunter userSession;
+    private SessionManager sessionManager;
 
     public Comercios() {
     }
@@ -36,6 +39,9 @@ public class Comercios extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercios_list, container, false);
         initializeViews(view);
+
+        sessionManager = new SessionManager(requireActivity());
+        userSession = sessionManager.getHunterSession();
         setupRecyclerView();
         observeViewModel();
 
@@ -95,7 +101,7 @@ public class Comercios extends Fragment {
         }
         else
         {
-            viewModel.cargarComercios();
+            viewModel.cargarComercios(userSession.getUser().getId_usuario());
         }
     }
 }

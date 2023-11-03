@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.se.omapi.Session;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterHomeBinding;
+import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.hunter.HunterHomeViewModel;
 import com.example.ffh_rep.views.adapters.ArticulosListAdapter;
 import com.example.ffh_rep.views.adapters.ComercioListAdapter;
@@ -37,6 +40,9 @@ public class Hunter_Home extends Fragment {
     private HunterHomeViewModel viewModel;
     private EditText etBrowse;
 
+    private Hunter userSession;
+    private SessionManager sessionManager;
+
     public static Hunter_Home newInstance() {
         return new Hunter_Home();
     }
@@ -47,6 +53,9 @@ public class Hunter_Home extends Fragment {
         binding = FragmentHunterHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         initializeViews(view);
+        sessionManager = new SessionManager(requireActivity());
+        userSession = sessionManager.getHunterSession();
+
         setupListeners();
         setupViewModel();
         setupComerciosGridView();
@@ -107,7 +116,7 @@ public class Hunter_Home extends Fragment {
         comercioListAdapter = new ComercioListAdapter(getContext(), new ArrayList<>());
         gvComerciosList.setAdapter(comercioListAdapter);
 
-        viewModel.cargarComercios();
+        viewModel.cargarComercios(userSession.getUser().getId_usuario());
         viewModel.getMlDataComercio().observe(getViewLifecycleOwner(), comercios -> comercioListAdapter.setComercioList(comercios));
     }
     /**

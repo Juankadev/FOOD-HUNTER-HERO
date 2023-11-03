@@ -31,8 +31,8 @@ public class HunterHomeViewModel extends ViewModel {
       this.aRepo = new ArticuloRepository();
    }
 
-   public void cargarComercios(){
-      cRepo.getComercios(mlDataComercio);
+   public void cargarComercios(int id){
+      cRepo.getComercios(mlDataComercio, id);
    }
 
    public void cargarListArticulo(){

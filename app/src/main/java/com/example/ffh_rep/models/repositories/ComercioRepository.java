@@ -84,16 +84,20 @@ public class ComercioRepository {
      * @param mlDataComercio MutableLiveData que se actualizará con la lista de comercios obtenida.
      * @return MutableLiveData que contiene la lista de comercios, actualizado de forma asíncrona.
      */
-    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> mlDataComercio) {
+    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> mlDataComercio, int id_user) {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT c.*, CASE" +
-                         "           WHEN CF.id_comercio_favorito IS NOT NULL THEN 1" +
-                         "           ELSE 0" +
-                         "       END AS es_favorito" +
-                         " FROM Comercios c" +
-                         " WHERE c.aprobado LIKE 'Aprobado'");
+                 PreparedStatement ps = con.prepareStatement("SELECT C.*," +
+                         "       (SELECT MAX(CASE" +
+                         "                      WHEN CF.id_comercio_favorito IS NOT NULL THEN 1" +
+                         "                      ELSE 0" +
+                         "                    END)" +
+                         "        FROM Comercios_Favoritos CF" +
+                         "        WHERE CF.id_comercio = C.id_comercio" +
+                         "          AND CF.id_usuario =" + id_user+
+                         "        ) AS es_favorito" +
+                         " FROM Comercios C WHERE C.aprobado like 'Aprobado'");
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id_comercio");
@@ -235,9 +239,6 @@ public class ComercioRepository {
             catch (Exception e){
                 e.printStackTrace();
                 error.postValue(true);
-            }
-            finally {
-                isLoading.postValue(false);
             }
         });
     }

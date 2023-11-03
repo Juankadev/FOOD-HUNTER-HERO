@@ -24,8 +24,8 @@ public class ComerciosViewModel extends ViewModel {
     /**
      * Carga todos los comercios disponibles utilizando el repositorio de comercios.
      */
-    public void cargarComercios(){
-        cRepo.getComercios(mldComercios);
+    public void cargarComercios(int id){
+        cRepo.getComercios(mldComercios, id);
     }
     /**
      * Carga los comercios disponibles filtrando por razon social utilizando el repositorio de comercios.
