@@ -20,60 +20,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="100dp">
+
+            <TextView
+                android:id="@+id/tv_item_descuento_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID"
+                android:textColor="#131313" />
+
+            <TextView
+                android:id="@+id/tv_item_descuento_descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/descripcion"
+                android:textColor="#131313" />
+
+            <TextView
+                android:id="@+id/tv_item_descuento_puntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/puntos"
+                android:textColor="#131313" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:padding="20dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/btnEliminarDescuento"
+                android:layout_width="172dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:backgroundTint="#FF0000"
+                android:text="x" />
 
-                <TextView
-                    android:id="@+id/tv_item_descuento_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#131313" />
+            <Button
+                android:id="@+id/btnModificarDescuento"
+                android:layout_width="172dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFD500"
+                android:text="✎" />
 
-                <TextView
-                    android:id="@+id/tv_item_descuento_descripcion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/descripcion"
-                    android:textColor="#131313" />
-
-                <TextView
-                    android:id="@+id/tv_item_descuento_puntos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/puntos"
-                    android:textColor="#131313" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnEliminarDescuento"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#FF0000"
-                        android:text="x" />
-
-                    <Button
-                        android:id="@+id/btnModificarDescuento"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="#FFD500"
-                        android:text="✎" />
-
-                </LinearLayout>
-
-            </LinearLayout>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
