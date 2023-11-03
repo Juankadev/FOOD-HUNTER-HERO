@@ -36,7 +36,11 @@ public class ArticuloRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT id_articulo, id_comercio, descripcion, precio, id_categoria, id_marca, imagen, estado FROM Articulos WHERE estado = '1' and id_comercio ="+id);
+                 PreparedStatement ps = con.prepareStatement("SELECT a.id_articulo, a.id_comercio, a.descripcion, a.precio, a.id_categoria, a.id_marca, a.imagen, a.estado, s.id_stock, s.cantidad, s.fecha_vencimiento, c.descripcion as categoria, m.descripcion as marca" +
+                         " FROM Articulos a inner join Stocks s on s.id_articulo = a.id_articulo" +
+                         " inner join Categorias c on c.id_categoria = a.id_categoria" +
+                         " inner join Marcas m on m.id_marca = a.id_marca " +
+                         "WHERE a.estado = '1' and a.id_comercio ="+id);
                  ResultSet rs = ps.executeQuery()) {
 
                 while (rs.next()) {
@@ -48,8 +52,13 @@ public class ArticuloRepository {
                     articulo.setPrecio(rs.getDouble("precio"));
                     articulo.setCategoria(new Categoria());
                     articulo.getCategoria().setIdCategoria(rs.getInt("id_categoria"));
+                    articulo.getCategoria().setDescripcion(rs.getString("categoria"));
                     articulo.setMarca(new Marca());
                     articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
+                    articulo.getMarca().setDescripcion(rs.getString("marca"));
+                    articulo.setStockArticulo(new Stock());
+                    articulo.getStockArticulo().setId_stock(rs.getInt("id_stock"));
+                    articulo.getStockArticulo().setCantidad(rs.getInt("cantidad"));
                     articulo.setImagen(rs.getString("imagen"));
                     articulo.setEstado(rs.getString("estado"));
 

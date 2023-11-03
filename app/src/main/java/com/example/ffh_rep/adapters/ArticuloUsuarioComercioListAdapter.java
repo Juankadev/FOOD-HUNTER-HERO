@@ -79,7 +79,8 @@ public class ArticuloUsuarioComercioListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Bundle args = new Bundle();
                 args.putSerializable("articuloSelected", a);
-                Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_VerArticulo, args);
+                //ME DIRIJO A LA VISTA
+                Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_comercio_Ver_Articulo, args);
             }
         });
         return convertView;

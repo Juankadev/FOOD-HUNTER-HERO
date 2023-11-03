@@ -6,21 +6,21 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ffh_rep.ui.commerce.CommerceMisArticulosViewModel;
+import com.example.ffh_rep.ui.commerce.ComercioHomeViewModel;
 
-public class ComercioMisArticulosViewModelFactory implements ViewModelProvider.Factory {
+public class ComercioHomeViewModelFactory implements ViewModelProvider.Factory {
 
     private final Context context;
 
-    public ComercioMisArticulosViewModelFactory(Context ctx){
+    public ComercioHomeViewModelFactory(Context ctx){
         this.context = ctx;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(CommerceMisArticulosViewModel.class)){
-            return (T) new CommerceMisArticulosViewModel(context);
+        if(modelClass.isAssignableFrom(ComercioHomeViewModel.class)){
+            return (T) new ComercioHomeViewModel(context);
         }
 
         throw new IllegalArgumentException("ViewModel Class Desconocido");

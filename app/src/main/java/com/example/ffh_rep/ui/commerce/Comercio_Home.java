@@ -19,24 +19,19 @@ import android.widget.GridView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.ArticuloUsuarioComercioListAdapter;
-import com.example.ffh_rep.databinding.FragmentCommerceMisArticulosBinding;
+import com.example.ffh_rep.databinding.FragmentComercioHomeBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.Hunter;
-import com.example.ffh_rep.factory.CarritoViewModelFactory;
-import com.example.ffh_rep.factory.ComercioMisArticulosViewModelFactory;
-import com.example.ffh_rep.factory.HunterVerComercioViewModelFactory;
-import com.example.ffh_rep.ui.hunter.CarritoViewModel;
-import com.example.ffh_rep.ui.hunter.HunterVerComercioViewModel;
+import com.example.ffh_rep.factory.ComercioHomeViewModelFactory;
 import com.example.ffh_rep.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Commerce_MisArticulos extends Fragment {
+public class Comercio_Home extends Fragment {
 
-    private CommerceMisArticulosViewModel mViewModel;
-    private FragmentCommerceMisArticulosBinding binding;
+    private ComercioHomeViewModel mViewModel;
+    private FragmentComercioHomeBinding binding;
     private Button btnAniadirArticulo, btnIrBeneficios;
     private GridView gv_articulos;
     private SessionManager sessionManager;
@@ -45,14 +40,14 @@ public class Commerce_MisArticulos extends Fragment {
     private ArticuloUsuarioComercioListAdapter aclAdapter;
 
 
-    public static Commerce_MisArticulos newInstance() {
-        return new Commerce_MisArticulos();
+    public static Comercio_Home newInstance() {
+        return new Comercio_Home();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentCommerceMisArticulosBinding.inflate(inflater, container, false);
+        binding = FragmentComercioHomeBinding.inflate(inflater, container, false);
 
         View view = binding.getRoot();
         initViews(view);
@@ -80,7 +75,7 @@ public class Commerce_MisArticulos extends Fragment {
     }
 
     public void initModelsAndAdapters(){
-        mViewModel = new ViewModelProvider(requireActivity(), new ComercioMisArticulosViewModelFactory(getActivity())).get(CommerceMisArticulosViewModel.class);
+        mViewModel = new ViewModelProvider(requireActivity(), new ComercioHomeViewModelFactory(getActivity())).get(ComercioHomeViewModel.class);
         aclAdapter = new ArticuloUsuarioComercioListAdapter(new ArrayList<>(), getContext());
     }
 
@@ -107,7 +102,7 @@ public class Commerce_MisArticulos extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(CommerceMisArticulosViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ComercioHomeViewModel.class);
         // TODO: Use the ViewModel
     }
 
