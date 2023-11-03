@@ -1,6 +1,8 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -161,7 +163,7 @@ public class ComercioRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Comercios c WHERE c.aprobado LIKE 'Desaprobado'");
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Comercios c WHERE c.aprobado LIKE 'Pendiente'");
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id_comercio");
@@ -182,6 +184,46 @@ public class ComercioRepository {
             return lComercios;
         }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
         return mlDataComercio;
+    }
+
+
+
+    public void rechazarComercio(Comercio comercio, Context ctx){
+        CompletableFuture.runAsync(() -> {
+            try {
+                Connection con = DBUtil.getConnection();
+                String query = "Update Comercios set aprobado = 'Rechazado' where id_comercio = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+
+                ps.setInt(1, comercio.getId());
+
+                int rowsAffected = ps.executeUpdate();
+                ps.close();
+                DBUtil.closeConnection(con);
+                if(rowsAffected > 0){
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, "Rechazo exitoso", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, "Ocurrio un error al rechazar el comercio", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(ctx, "Ocurrio un error al rechazar el comercio", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
@@ -325,3 +367,4 @@ public class ComercioRepository {
         }).thenAcceptAsync(resenias -> listBeneficios.postValue(resenias));
     }
 }
+

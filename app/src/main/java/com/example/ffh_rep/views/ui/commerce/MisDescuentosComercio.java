@@ -78,10 +78,7 @@ public class MisDescuentosComercio extends Fragment {
     public void setUpObserver() {
         mViewModel.getMldListaBeneficios().observe(getViewLifecycleOwner(), new Observer<List<Beneficio>>() {
             @Override
-            public void onChanged(List<Beneficio> beneficios) {
-                Log.d("DEBUG beneficios", beneficios.toString());
-                mdcListAdapter.setData(beneficios);
-            }
+            public void onChanged(List<Beneficio> beneficios) {mdcListAdapter.setData(beneficios);}
         });
     }
 

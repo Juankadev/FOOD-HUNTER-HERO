@@ -48,7 +48,7 @@ public class AprobarComercios extends Fragment {
     public void initComponents(View view){
         gv_comercios = view.findViewById(R.id.gv_comercios);
         mViewModel = new ViewModelProvider(requireActivity(), new AprobarComerciosViewModelFactory(getActivity())).get(AdminAprobarComerciosViewModel.class);
-        listAdapter = new AprobarComerciosViewAdapter(new ArrayList<>(), getContext());
+        listAdapter = new AprobarComerciosViewAdapter(new ArrayList<>(), mViewModel, getContext());
     }
     public void setUpObservers(){
         mViewModel.getListComerciosNoAprobados().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {

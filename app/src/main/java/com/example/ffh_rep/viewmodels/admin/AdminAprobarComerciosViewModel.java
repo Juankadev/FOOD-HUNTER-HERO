@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.models.repositories.ComercioRepository;
 
@@ -31,5 +32,9 @@ public class AdminAprobarComerciosViewModel extends ViewModel {
 
     public MutableLiveData<List<Comercio>> getListComerciosNoAprobados() {
         return listComercios;
+    }
+
+    public void rechazarComercio(Comercio c){
+        cRepo.rechazarComercio(c, ctx);
     }
 }

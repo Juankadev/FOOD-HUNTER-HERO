@@ -1,9 +1,6 @@
 package com.example.ffh_rep.views.adapters;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +10,18 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.views.placeholder.PlaceholderContent.PlaceholderItem;
+import com.example.ffh_rep.viewmodels.admin.AdminAprobarComerciosViewModel;
 
 import java.util.List;
 
 public class AprobarComerciosViewAdapter extends BaseAdapter {
     private List<Comercio> lComercios;
+    private AdminAprobarComerciosViewModel viewModel;
     private LayoutInflater  inflater;
-    public AprobarComerciosViewAdapter(List<Comercio> items, Context ctx) {
+    public AprobarComerciosViewAdapter(List<Comercio> items, AdminAprobarComerciosViewModel viewModel, Context ctx) {
         this.lComercios = items;
         this.inflater = LayoutInflater.from(ctx);
-    }
-    private int selectedPosition = -1; // Inicialmente no hay elementos seleccionados
-    public void setSelectedPosition(int position) {
-        selectedPosition = position;
-        notifyDataSetChanged();
-    }
-    public int getSelectedPosition() {
-        return selectedPosition;
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -73,7 +64,7 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
         vh.btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteComercio(position);
+                rechazarComercio(position);
             }
         });
 
@@ -84,14 +75,12 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
             }
         });
 
-        if (position == selectedPosition) {
-            convertView.setBackgroundColor(Color.BLUE);
-        }
         return convertView;
     }
 
-    public void deleteComercio(int position) {
+    public void rechazarComercio(int position) {
         if (position >= 0 && position < lComercios.size()) {
+            viewModel.rechazarComercio(lComercios.get(position));
             lComercios.remove(position);
             notifyDataSetChanged();
         }
