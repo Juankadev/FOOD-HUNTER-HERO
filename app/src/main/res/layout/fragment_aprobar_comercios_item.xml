@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:layout_marginBottom="30dp"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:src="@drawable/shop" />
 
     <TextView
         android:id="@+id/id_comercio"
@@ -10,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="ID"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/razonSocial"
@@ -18,20 +28,36 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="Razon social"
+        android:textAlignment="textStart"
         android:textAppearance="?attr/textAppearanceListItem" />
 
-    <Button
-        android:id="@+id/btnRechazar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Rechazar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnAprobar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Aprobar" />
+        <ImageButton
+            android:id="@+id/btnRechazar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:contentDescription="No aprobado"
+            android:scaleType="fitCenter"
+            android:src="@drawable/cancel"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <ImageButton
+            android:id="@+id/btnAprobar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:contentDescription="Aprobado"
+            android:scaleType="fitCenter"
+            android:src="@drawable/check"
+            tools:ignore="TouchTargetSizeCheck"
+            tools:src="@drawable/check" />
+    </LinearLayout>
 
 </LinearLayout>

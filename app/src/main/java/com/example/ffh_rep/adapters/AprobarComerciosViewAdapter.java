@@ -1,13 +1,23 @@
 package com.example.ffh_rep.adapters;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentAprobarComerciosItemBinding;
 import com.example.ffh_rep.databinding.FragmentAprobarComerciosListBinding;
+import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.placeholder.PlaceholderContent.PlaceholderItem;
 
 import java.util.List;
@@ -16,47 +26,72 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class AprobarComerciosViewAdapter extends RecyclerView.Adapter<AprobarComerciosViewAdapter.ViewHolder> {
+public class AprobarComerciosViewAdapter extends BaseAdapter {
 
-    private final List<PlaceholderItem> mValues;
+    private List<Comercio> lComercios;
+    private LayoutInflater  inflater;
 
-    public AprobarComerciosViewAdapter(List<PlaceholderItem> items) {
-        mValues = items;
+    public AprobarComerciosViewAdapter(List<Comercio> items, Context ctx) {
+        this.lComercios = items;
+        this.inflater = LayoutInflater.from(ctx);
     }
 
+    @Override
+    public int getCount() {
+        return this.lComercios.size();
+    }
+
+    public void setData(List<Comercio> ldata){
+        this.lComercios = ldata;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.lComercios.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return this.lComercios.get(position).getId();
+    }
+
+/*
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         return new ViewHolder(FragmentAprobarComerciosItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
-    }
-
+    }*/
+/*
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-    }
+    }*/
 
     @Override
-    public int getItemCount() {
-        return mValues.size();
+    public View getView(int position, View convertView, ViewGroup parent) {
+        AprobarComerciosViewAdapter.ViewHolder vh;
+        if(convertView == null){
+            convertView = inflater.inflate(R.layout.fragment_aprobar_comercios_item, null);
+            vh = new AprobarComerciosViewAdapter.ViewHolder();
+            vh.nombre = convertView.findViewById(R.id.razonSocial);
+            convertView.setTag(vh);
+        }
+        else{
+            vh = (AprobarComerciosViewAdapter.ViewHolder) convertView.getTag();
+        }
+
+        Comercio c = this.lComercios.get(position);
+        vh.nombre.setText(c.getRazonSocial());
+
+        return convertView;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public PlaceholderItem mItem;
+    static class ViewHolder{
+        TextView nombre;
 
-        public ViewHolder(FragmentAprobarComerciosItemBinding binding) {
-            super(binding.getRoot());
-            mIdView = binding.idComercio;
-            mContentView = binding.razonSocial;
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 }

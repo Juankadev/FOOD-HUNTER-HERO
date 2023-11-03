@@ -149,6 +149,35 @@ public class ComercioRepository {
     }
 
 
+    public MutableLiveData<List<Comercio>> cargarComerciosNoAprobados(MutableLiveData<List<Comercio>> mlDataComercio) {
+        CompletableFuture.supplyAsync(() -> {
+            List<Comercio> lComercios = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Comercios c WHERE c.aprobado LIKE 'Desaprobado'");
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id_comercio");
+                    String razonsocial = rs.getString("razon_social");
+                    String cuit = rs.getString("cuit");
+                    String rubro = rs.getString("rubro");
+                    String email = rs.getString("correo_electronico");
+                    String telefono = rs.getString("telefono");
+                    String direccion = rs.getString("direccion");
+                    String aprobado = rs.getString("aprobado");
+                    Comercio cData = new Comercio(id, razonsocial, cuit, rubro, email, telefono, direccion, aprobado);
+                    lComercios.add(cData);
+                }
+            } catch (Exception e) {
+                // Manejar la excepción adecuadamente, por ejemplo, registrándola o lanzándola de nuevo
+                e.printStackTrace();
+            }
+            return lComercios;
+        }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
+        return mlDataComercio;
+    }
+
+
+
     public void markAsFavorite(Comercio comercio, Hunter hunter, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
             isLoading.postValue(true);
