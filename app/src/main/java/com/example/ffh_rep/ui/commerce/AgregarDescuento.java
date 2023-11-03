@@ -53,10 +53,6 @@ public class AgregarDescuento extends Fragment {
     }
 
     private void addBeneficio(){
-        // OBTENGO DESCRIPCION Y PUNTOS DE LOS TXT
-        String descripcion = txtDescripcion.getText().toString();
-        int puntos = Integer.parseInt(txtPuntos.getText().toString());
-
         /// OBTENGO EL COMERCIO PARA POSTERIORMENTE SACAR SU ID
         SessionManager session = new SessionManager(getContext());
         Comercio comercio = session.getCommerceSession();
@@ -64,14 +60,13 @@ public class AgregarDescuento extends Fragment {
         /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
         Beneficio beneficio = new Beneficio();
         beneficio.setId_comercio(comercio);
-        beneficio.setDescripcion(descripcion);
-        beneficio.setPuntos_requeridos(puntos);
+        beneficio.setDescripcion(txtDescripcion.getText().toString());
+        beneficio.setPuntos_requeridos(Integer.parseInt(txtPuntos.getText().toString()));
         beneficio.setEstado(true);
 
         /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
         if(validateInput()){
             mViewModel.insertarBeneficio(beneficio);
-            /// VACIO LOS TXT
             txtDescripcion.setText("");
             txtPuntos.setText("");
         }
@@ -82,21 +77,20 @@ public class AgregarDescuento extends Fragment {
 
     private boolean validateInput() {
         boolean isValid = true;
-        // Validar descripcion
-        String desc = txtDescripcion.getText().toString();
-        if (desc.isEmpty()) {
+
+        // Validar descripcion;
+        if (txtDescripcion.getText().toString().isEmpty()) {
             txtDescripcion.setError("Este campo es requerido");
             isValid = false;
         }
         // Validar puntos
-        String puntos = txtPuntos.getText().toString();
-        if (puntos.isEmpty()) {
+        if (txtPuntos.getText().toString().isEmpty()) {
             txtPuntos.setError("Este campo es requerido");
             isValid = false;
-        } else if (!GeneralHelper.isNumeric(puntos)) {
+        } else if (!GeneralHelper.isNumeric(txtPuntos.getText().toString())) {
             txtPuntos.setError("El telefono debe ser numérico");
             isValid = false;
-        } else if (Integer.parseInt(puntos) <= 0){
+        } else if (Integer.parseInt(txtPuntos.getText().toString()) <= 0){
             txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
             isValid = false;
         }

@@ -17,16 +17,9 @@ public class Beneficio {
         this.estado = estado;
     }
 
-    public void setId_beneficio(Integer id_beneficio) {
-        this.id_beneficio = id_beneficio;
-    }
-    public void setId_comercio(Comercio id_comercio) {
-        this.id_comercio = id_comercio;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public void setId_beneficio(Integer id_beneficio) {this.id_beneficio = id_beneficio;}
+    public void setId_comercio(Comercio id_comercio) {this.id_comercio = id_comercio;}
+    public void setDescripcion(String descripcion) {this.descripcion = descripcion;}
     public void setPuntos_requeridos(Integer puntos_requeridos) {this.puntos_requeridos = puntos_requeridos;}
     public void setEstado(boolean estado) {this.estado = estado;}
 

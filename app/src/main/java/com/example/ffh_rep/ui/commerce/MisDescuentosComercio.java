@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.adapters.MisDescuentosComercioListAdapter;
@@ -32,17 +31,13 @@ import java.util.List;
 public class MisDescuentosComercio extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
     private FragmentComercioMisDescuentosBinding binding;
-    private Button btnEliminarDescuento, btnModificarDescuento, btnAddDescuento, btnMisArticulos;
+    private Button btnAddDescuento, btnMisArticulos;
     private GridView gv_descuentos;
-    private TextView  idDescuento, descDescuento, puntosDescuento;
     private SessionManager sessionManager;
     private Comercio userSession;
     private MisDescuentosComercioListAdapter mdcListAdapter;
 
-
-    public static MisDescuentosComercio newInstance() {
-        return new MisDescuentosComercio();
-    }
+    public static MisDescuentosComercio newInstance() {return new MisDescuentosComercio();}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,27 +51,21 @@ public class MisDescuentosComercio extends Fragment {
         userSession = sessionManager.getCommerceSession();
         mViewModel.listarDescuentos(userSession.getId());
 
-        //setUpListeners();
+        setUpListeners();
         setUpObserver();
 
         gv_descuentos.setAdapter(mdcListAdapter);
 
         return view;
     }
+
     /**
      * Inicializa las vistas necesarias para la interfaz de usuario.
      * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
      */
     public void initializeViews(View view){
-        this.idDescuento = view.findViewById(R.id.tv_item_descuento_id);
-        this.descDescuento = view.findViewById(R.id.tv_item_descuento_descripcion);
-        this.puntosDescuento = view.findViewById(R.id.tv_item_descuento_puntos);
-
         this.btnMisArticulos = view.findViewById(R.id.btnMisArticulos);
-        this.btnEliminarDescuento = view.findViewById(R.id.btnEliminarDescuento);
-        this.btnModificarDescuento = view.findViewById(R.id.btnModificarDescuento);
         this.btnAddDescuento = view.findViewById(R.id.btnAddDescuento);
-
         this.gv_descuentos = view.findViewById(R.id.gv_descuentos_comerciodetail);
     }
 
@@ -106,33 +95,13 @@ public class MisDescuentosComercio extends Fragment {
      * Asigna los métodos correspondientes a los eventos.
      */
     public void setUpListeners() {
-        //btnEliminarDescuento.setOnClickListener(v-> eliminarBeneficio());
         btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
         btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
-        // ENVIARLE EL ID DEL DESCUENTO A MODIFICAR
-        btnModificarDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_modificarDescuento));
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MisDescuentosComercioViewModel.class);
         // TODO: Use the ViewModel
     }
-
-    /**
-     * Metodo utilizado para eliminar beneficios
-     */
-    private void eliminarBeneficio(){
-        // OBTENGO EL ID DEL TXT
-        Integer id = Integer.parseInt(idDescuento.getText().toString());
-
-        /// INSTANCIO UN OBJETO BENEFICIO Y SETEO EL VALOR
-        Beneficio beneficio = new Beneficio();
-        beneficio.setId_beneficio(id);
-
-        /// USO EL METODO PARA ELIMINAR EL BENEFICIO
-        mViewModel.eliminarBeneficio(beneficio);
-    }
-
 }

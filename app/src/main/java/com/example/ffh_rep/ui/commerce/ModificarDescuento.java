@@ -1,15 +1,11 @@
 package com.example.ffh_rep.ui.commerce;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.databinding.FragmentComercioAgregardescuentoBinding;
-import com.example.ffh_rep.databinding.FragmentModificarDescuentoBinding;
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.factory.DescuentosViewModelFactory;
-import com.example.ffh_rep.repositories.DescuentoRepository;
-import com.example.ffh_rep.ui.hunter.Hunter_Home;
 import com.example.ffh_rep.utils.GeneralHelper;
 
 public class ModificarDescuento extends Fragment {
@@ -60,20 +51,15 @@ public class ModificarDescuento extends Fragment {
     }
 
     private void modBeneficio(){
-        // OBTENGO DESCRIPCION Y PUNTOS DE LOS TXT
-        String descripcion = txtDescripcion.getText().toString();
-        int puntos = Integer.parseInt(txtPuntos.getText().toString());
-
         /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
         Beneficio beneficio = new Beneficio();
-        beneficio.setDescripcion(descripcion);
-        beneficio.setPuntos_requeridos(puntos);
-        ///Falta enviarle el ID del descuento a modificar
+        beneficio.setDescripcion(txtDescripcion.getText().toString());
+        beneficio.setPuntos_requeridos(Integer.parseInt(txtPuntos.getText().toString()));
+        //beneficio.setId_beneficio(ARGS);
 
         /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
         if(validateInput()){
             mViewModel.editarBeneficio(beneficio);
-            /// VACIO LOS TXT
             txtDescripcion.setText("");
             txtPuntos.setText("");
         }
@@ -84,21 +70,20 @@ public class ModificarDescuento extends Fragment {
 
     private boolean validateInput() {
         boolean isValid = true;
+
         // Validar descripcion
-        String desc = txtDescripcion.getText().toString();
-        if (desc.isEmpty()) {
+        if (txtDescripcion.getText().toString().isEmpty()) {
             txtDescripcion.setError("Este campo es requerido");
             isValid = false;
         }
         // Validar puntos
-        String puntos = txtPuntos.getText().toString();
-        if (puntos.isEmpty()) {
+        if (txtPuntos.getText().toString().isEmpty()) {
             txtPuntos.setError("Este campo es requerido");
             isValid = false;
-        } else if (!GeneralHelper.isNumeric(puntos)) {
+        } else if (!GeneralHelper.isNumeric(txtPuntos.getText().toString())) {
             txtPuntos.setError("El telefono debe ser numérico");
             isValid = false;
-        } else if (Integer.parseInt(puntos) <= 0){
+        } else if (Integer.parseInt(txtPuntos.getText().toString()) <= 0){
             txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
             isValid = false;
         }
