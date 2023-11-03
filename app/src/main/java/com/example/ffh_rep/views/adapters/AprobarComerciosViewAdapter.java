@@ -71,7 +71,7 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
         vh.btnAprobar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //update comercio en columna aprobado
+                aprobarComercio(position);
             }
         });
 
@@ -81,6 +81,14 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
     public void rechazarComercio(int position) {
         if (position >= 0 && position < lComercios.size()) {
             viewModel.rechazarComercio(lComercios.get(position));
+            lComercios.remove(position);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void aprobarComercio(int position) {
+        if (position >= 0 && position < lComercios.size()) {
+            viewModel.aprobarComercio(lComercios.get(position));
             lComercios.remove(position);
             notifyDataSetChanged();
         }

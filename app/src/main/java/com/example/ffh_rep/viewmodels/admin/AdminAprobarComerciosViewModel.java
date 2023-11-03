@@ -37,4 +37,7 @@ public class AdminAprobarComerciosViewModel extends ViewModel {
     public void rechazarComercio(Comercio c){
         cRepo.rechazarComercio(c, ctx);
     }
+    public void aprobarComercio(Comercio c){
+        cRepo.aprobarComercio(c, ctx);
+    }
 }
