@@ -88,7 +88,12 @@ public class ComercioRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Comercios c WHERE c.aprobado LIKE 'Aprobado'");
+                 PreparedStatement ps = con.prepareStatement("SELECT c.*, CASE" +
+                         "           WHEN CF.id_comercio_favorito IS NOT NULL THEN 1" +
+                         "           ELSE 0" +
+                         "       END AS es_favorito" +
+                         " FROM Comercios c" +
+                         " WHERE c.aprobado LIKE 'Aprobado'");
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id_comercio");
@@ -97,9 +102,11 @@ public class ComercioRepository {
                     String rubro = rs.getString("rubro");
                     String email = rs.getString("correo_electronico");
                     String telefono = rs.getString("telefono");
+                    boolean isFavorite = rs.getBoolean("es_favorito");
                     String direccion = rs.getString("direccion");
                     String aprobado = rs.getString("aprobado");
                     Comercio cData = new Comercio(id, razonsocial, cuit, rubro, email, telefono, direccion, aprobado);
+                    cData.setFavorite(isFavorite);
                     lComercios.add(cData);
                 }
             } catch (Exception e) {
