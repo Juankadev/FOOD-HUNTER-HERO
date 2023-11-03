@@ -12,6 +12,8 @@ public class Articulo implements Serializable {
     private Categoria categoria; // Composición de Categoria
     private String estado;
 
+    private Stock stockArticulo;
+
     public Articulo() {
     }
 
@@ -24,6 +26,18 @@ public class Articulo implements Serializable {
         this.marca = marca;
         this.categoria = categoria;
         this.estado = estado;
+    }
+
+    public Articulo(int idArticulo, Comercio comercio, String descripcion, double precio, String imagen, Marca marca, Categoria categoria, String estado, Stock stockArticulo) {
+        this.idArticulo = idArticulo;
+        this.comercio = comercio;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.imagen = imagen;
+        this.marca = marca;
+        this.categoria = categoria;
+        this.estado = estado;
+        this.stockArticulo = stockArticulo;
     }
 
     public int getIdArticulo() {
@@ -89,6 +103,14 @@ public class Articulo implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Stock getStockArticulo() {
+        return stockArticulo;
+    }
+
+    public void setStockArticulo(Stock stockArticulo) {
+        this.stockArticulo = stockArticulo;
     }
 
     @Override

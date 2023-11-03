@@ -49,7 +49,7 @@ public class Hunter_VerComercio extends Fragment {
     private TextView descripcion, cantArticulos;
     private ImageView favDispatch, favDispatch_filled;
     private GridView gv_articulos;
-    private Button btnAbrirCarrito;
+    private Button btnAbrirCarrito, btnVerResenias, btnVerBeneficios;
     private ProgressBar pBarMarkingAsFav;
 
 
@@ -100,7 +100,8 @@ public class Hunter_VerComercio extends Fragment {
         favDispatch = view.findViewById(R.id.favDispatcher);
         favDispatch_filled = view.findViewById(R.id.favDispatcher_filled);
         pBarMarkingAsFav  = view.findViewById(R.id.progressBarMarkingFav);
-
+        btnVerResenias = view.findViewById(R.id.btn_HunterVerReseñasComercio);
+        btnVerBeneficios = view.findViewById(R.id.btn_hunterVerBeneficios);
     }
 
     public void initModelsAndAdapters(){
@@ -113,6 +114,8 @@ public class Hunter_VerComercio extends Fragment {
     public void setUpListeners(){
         btnAbrirCarrito.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_MiCarrito));
         favDispatch.setOnClickListener(v -> markAsFav());
+        btnVerResenias.setOnClickListener(v -> redirectToResenias());
+        btnVerBeneficios.setOnClickListener(v-> redirectToBeneficios());
     }
 
     public void pressBackValidation(){
@@ -244,5 +247,18 @@ public class Hunter_VerComercio extends Fragment {
         Log.d("FragmentNotVisible", "Fragment is no longer visible");
     }
 
+
+    public void redirectToResenias(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("comercioxresenia", commerce);
+        Navigation.findNavController(requireView()).navigate(R.id.action_hunter_VerComercio_to_hunter_ReseniasComercio, bundle);
+    }
+
+    public void redirectToBeneficios(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("comerciobeneficios", commerce);
+        Navigation.findNavController(requireView()).navigate(R.id.action_hunter_VerComercio_to_hunter_VerBeneficios, bundle);
+
+    }
 
 }

@@ -19,17 +19,6 @@
             android:layout_width="342dp"
             android:layout_height="655dp">
 
-
-            <ImageView
-                android:id="@+id/ivCorazon"
-                android:layout_width="53dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="25dp"
-                android:src="@drawable/baseline_favborder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/tv_cantidadItem"
                 android:layout_width="28dp"
@@ -45,9 +34,9 @@
 
             <ImageView
                 android:id="@+id/ivArticulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="144dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/descripcion"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/tvPrecioArt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/precio"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/btnAgregarCarrito"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
@@ -94,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Marca"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/btnAgregarCarrito"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -106,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Categoria"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/btnAgregarCarrito"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -25,4 +25,12 @@ public class ItemCarrito implements Serializable {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    @Override
+    public String toString() {
+        return "ItemCarrito{" +
+                "artc=" + artc.toString() +
+                ", cantidad=" + cantidad +
+                '}';
+    }
 }

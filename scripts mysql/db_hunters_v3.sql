@@ -119,6 +119,7 @@ CREATE TABLE Resenas (
     id_comercio INT,
     id_usuario INT,
     calificacion INT,
+    comentario TEXT,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
     FOREIGN KEY (id_comercio) REFERENCES Comercios(id_comercio)
 );

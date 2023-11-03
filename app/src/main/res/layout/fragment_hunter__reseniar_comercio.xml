@@ -7,98 +7,174 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.hunter.Hunter_ReseniarComercio" >
 
-    <CheckBox
-        android:id="@+id/cbRegular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/regular"
-        app:layout_constraintBottom_toTopOf="@+id/etComentario"
-        app:layout_constraintEnd_toStartOf="@+id/cbBuena"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintStart_toEndOf="@+id/cbMala"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
-
-    <CheckBox
-        android:id="@+id/cbBuena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:text="@string/buena"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/bck_green"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
-
-    <CheckBox
-        android:id="@+id/cbMala"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:text="@string/mala"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imgShop"
+                android:layout_width="102dp"
+                android:layout_height="64dp"
+                android:layout_marginVertical="16dp"
+                android:layout_marginEnd="120dp"
+                android:src="@drawable/shop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.312"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.615" />
+
+            <Button
+                android:id="@+id/btn_Ver_Articulos"
+                android:layout_width="137dp"
+                android:layout_height="41dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/bck_gray"
+                android:text="Ver Articulos"
+                app:layout_constraintStart_toEndOf="@+id/imgShop"
+                app:layout_constraintTop_toBottomOf="@+id/txt_shop_name_description" />
+
+            <TextView
+                android:id="@+id/txt_shop_name_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/shop"
+                android:textColor="#FDFDFD"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/imgShop"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBarMarkingFav"
+                android:layout_width="44dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/favDispatcher_filled"
+                android:layout_width="41dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:src="@drawable/baseline_favfilled_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="@string/titulo_resenia"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="272dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
         android:text="@string/sub_titulo_resenia"
-        app:layout_constraintBottom_toTopOf="@+id/cbRegular"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
         android:id="@+id/etComentario"
         android:layout_width="314dp"
         android:layout_height="164dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/comentario"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/btnEnviar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.783" />
+        app:layout_constraintTop_toBottomOf="@+id/rb_estrellas"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_enviarreseniaactioner"
+        android:layout_width="160dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="40dp"
+        app:cardBackgroundColor="#2400FF"
+        app:cardCornerRadius="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etComentario">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/pbEnviarResenia"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txtEditarActioner"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtEnviandoResenias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Enviar"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/btnEnviar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:id="@+id/btnEnviar_resenia"
+        android:layout_width="149dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:text="@string/enviar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        app:layout_constraintTop_toBottomOf="@+id/etComentario" />
 
-    <Button
-        android:id="@+id/brnVolver"
+    <RatingBar
+        android:id="@+id/rb_estrellas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        android:text="@string/btn_volver"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etComentario"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 </androidx.constraintlayout.widget.ConstraintLayout>

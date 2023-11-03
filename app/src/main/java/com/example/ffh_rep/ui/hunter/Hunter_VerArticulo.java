@@ -1,5 +1,6 @@
 package com.example.ffh_rep.ui.hunter;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -14,23 +15,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterVerArticuloBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.ItemCarrito;
+import com.example.ffh_rep.factory.ArticuloViewModelFactory;
 import com.example.ffh_rep.factory.CarritoViewModelFactory;
+import com.example.ffh_rep.factory.HunterVerComercioViewModelFactory;
+
+import java.util.List;
 
 public class Hunter_VerArticulo extends Fragment {
 
-    private HunterVerArticuloViewModel mViewModel;
+    private ArticulosViewModel controller_articulos;
     private CarritoViewModel carrito;
     private Articulo article;
     private FragmentHunterVerArticuloBinding binding;
     private TextView descripcion, precio, categoria, marca, cantidadArticulo;
+    private ImageView ivArticulo;
     private Button btnAniadirCarrito, btnSumar, btnRestar;
     private ItemCarrito item;
 
@@ -56,34 +64,44 @@ public class Hunter_VerArticulo extends Fragment {
             }
         }
 
-        settingComponents(article);
+        settingComponents(article, view);
         setUpListeners(article);
 
+
+        carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
+            @Override
+            public void onChanged(List<ItemCarrito> itemCarritos) {
+                Log.d("CARRITO EN DEATLLE ARTICULO", itemCarritos.toString());
+            }
+        });
 
        return view;
     }
 
     public void initComponentes(View view){
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
+        controller_articulos = new ViewModelProvider(this, new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
+
         descripcion = view.findViewById(R.id.tvDescripcionArt);
         precio = view.findViewById(R.id.tvPrecioArt);
         marca = view.findViewById(R.id.tvMarcaArt);
         categoria = view.findViewById(R.id.tvCategoriaArt);
         cantidadArticulo = view.findViewById(R.id.tv_cantidadItem);
         btnAniadirCarrito = view.findViewById(R.id.btnAgregarCarrito);
+        ivArticulo = view.findViewById(R.id.ivArticulo);
         btnSumar = view.findViewById(R.id.btnSumarItem);
         btnRestar = view.findViewById(R.id.btnRestarItem);
     }
 
-    public void settingComponents(Articulo article){
+    public void settingComponents(Articulo article, View view){
         precio.setText(String.valueOf(article.getPrecio()));
         descripcion.setText(article.getDescripcion());
         marca.setText(article.getMarca().getDescripcion());
         categoria.setText(article.getCategoria().getDescripcion());
+        Glide.with(view).load(article.getImagen()).into(ivArticulo);
     }
 
     public void setUpListeners(Articulo article){
-
         btnAniadirCarrito.setOnClickListener(v -> addArticle(article));
         btnSumar.setOnClickListener(v -> sumarItem());
         btnRestar.setOnClickListener(v -> restarItem());
@@ -109,7 +127,6 @@ public class Hunter_VerArticulo extends Fragment {
     public void sumarItem(){
         this._cantidadArticulo+=1;
         cantidadArticulo.setText(String.valueOf(this._cantidadArticulo));
-
     }
 
     public void restarItem(){
@@ -139,6 +156,5 @@ public class Hunter_VerArticulo extends Fragment {
         cantidadArticulo.setText(String.valueOf(0));
         Toast.makeText(getContext(), "Se han añadido mas unidades al carrito", Toast.LENGTH_LONG).show();
     }
-
 
 }

@@ -1,22 +1,14 @@
 package com.example.ffh_rep.repositories;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.entidades.Categoria;
-import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.utils.DBUtil;
-import com.example.ffh_rep.utils.DB_Env;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;

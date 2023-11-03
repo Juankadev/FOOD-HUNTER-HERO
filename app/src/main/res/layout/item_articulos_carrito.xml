@@ -20,32 +20,43 @@
                 android:id="@+id/tv_nombre_articulo_carrito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="108dp"
                 android:text="Nombre Articulo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.508" />
 
             <TextView
                 android:id="@+id/tv_cantidad_articulo_carrito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="60dp"
                 android:text="Cantidad"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_nombre_articulo_carrito"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.491" />
 
             <ImageView
                 android:id="@+id/imageview_trash"
-                android:layout_width="39dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="50dp"
+                android:layout_width="25dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="35dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tv_cantidad_articulo_carrito"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_delete_ic" />
+
+            <ImageView
+                android:id="@+id/iv_item_list"
+                android:layout_width="77dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

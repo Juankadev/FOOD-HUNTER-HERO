@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_hunter_Home_to_articulos"
             app:destination="@id/articulos" />
+        <action
+            android:id="@+id/action_hunter_Home_to_hunter_VerComercio"
+            app:destination="@id/hunter_VerComercio" />
     </fragment>
     <fragment
         android:id="@+id/nav_hunter_MiCuenta"
@@ -54,6 +57,9 @@
         <action
             android:id="@+id/action_hunter_VerComercio_to_hunter_VerArticulo"
             app:destination="@id/hunter_VerArticulo" />
+        <action
+            android:id="@+id/action_hunter_VerComercio_to_hunter_VerBeneficios"
+            app:destination="@id/hunter_VerBeneficios" />
     </fragment>
     <fragment
         android:id="@+id/hunter_MiCarrito"
@@ -68,7 +74,11 @@
         android:id="@+id/hunter_ReseniasComercio"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniasComercio"
         android:label="fragment_hunter__resenias_comercio"
-        tools:layout="@layout/fragment_hunter__resenias_comercio" />
+        tools:layout="@layout/fragment_hunter__resenias_comercio" >
+        <action
+            android:id="@+id/action_hunter_ReseniasComercio_to_hunter_ReseniarComercio"
+            app:destination="@id/hunter_ReseniarComercio" />
+    </fragment>
     <fragment
         android:id="@+id/hunter_VerArticulo"
         android:name="com.example.ffh_rep.ui.hunter.Hunter_VerArticulo"
@@ -79,4 +89,18 @@
         android:name="com.example.ffh_rep.ui.hunter.Hunter_GenerarQr"
         android:label="fragment_hunter__generar_qr"
         tools:layout="@layout/fragment_hunter__generar_qr" />
+    <fragment
+        android:id="@+id/hunter_ReseniarComercio"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_ReseniarComercio"
+        android:label="fragment_hunter__reseniar_comercio"
+        tools:layout="@layout/fragment_hunter__reseniar_comercio" >
+        <action
+            android:id="@+id/action_hunter_ReseniarComercio_to_hunter_ReseniasComercio"
+            app:destination="@id/hunter_ReseniasComercio" />
+    </fragment>
+    <fragment
+        android:id="@+id/hunter_VerBeneficios"
+        android:name="com.example.ffh_rep.ui.hunter.Hunter_VerBeneficios"
+        android:label="fragment_hunter__ver_beneficios"
+        tools:layout="@layout/fragment_hunter__ver_beneficios" />
 </navigation>

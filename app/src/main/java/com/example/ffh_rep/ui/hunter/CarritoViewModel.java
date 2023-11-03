@@ -16,6 +16,7 @@ public class CarritoViewModel extends ViewModel{
 
     private MutableLiveData<List<ItemCarrito>> carrito;
     private MutableLiveData<Integer> totArticulos;
+    private MutableLiveData<Integer> puntos;
     private Context ctx;
 
     public CarritoViewModel(){
@@ -24,6 +25,7 @@ public class CarritoViewModel extends ViewModel{
         this.ctx = ctx;
         this.carrito = new MutableLiveData<>();
         this.totArticulos = new MutableLiveData<>(0);
+        this.puntos = new MutableLiveData<>(0);
     }
 
 
@@ -38,9 +40,10 @@ public class CarritoViewModel extends ViewModel{
             _currCart = new ArrayList<>();
         }
         _currCart.add(article);
-        _currTot++;
+        _currTot += article.getCantidad();
         this.carrito.setValue(_currCart);
         this.totArticulos.setValue(_currTot);
+        recountPoints();
     }
     public void setCarrito(MutableLiveData<List<ItemCarrito>> carrito) {
         this.carrito = carrito;
@@ -58,6 +61,14 @@ public class CarritoViewModel extends ViewModel{
         this.totArticulos = totArticulos;
     }
 
+    public MutableLiveData<Integer> getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos.postValue(puntos);
+    }
+
     public void clearChart(){
         List<ItemCarrito> curr = carrito.getValue();
         if(curr != null){
@@ -65,13 +76,14 @@ public class CarritoViewModel extends ViewModel{
         }
         carrito.postValue(curr);
         this.totArticulos.postValue(0);
+        this.puntos.postValue(0);
     }
 
     public boolean isArticleInCart(ItemCarrito article) {
         List<ItemCarrito> _currCart = this.carrito.getValue();
         if (_currCart != null) {
             for (ItemCarrito item : _currCart) {
-                if (item.getArtc().equals(article.getArtc())) {
+                if (item.getArtc().getIdArticulo() == article.getArtc().getIdArticulo()) {
                     return true;
                 }
             }
@@ -85,7 +97,7 @@ public class CarritoViewModel extends ViewModel{
 
         if (_currCart != null) {
             for (ItemCarrito item : _currCart) {
-                if (item.equals(itemToModify)) {
+                if (item.getArtc().getIdArticulo() == itemToModify.getArtc().getIdArticulo()) {
                     int newQuantity = item.getCantidad() + itemToModify.getCantidad();
                     item.setCantidad(newQuantity);
                     _currTot += itemToModify.getCantidad();
@@ -94,6 +106,26 @@ public class CarritoViewModel extends ViewModel{
             }
             this.carrito.setValue(_currCart);
             this.totArticulos.setValue(_currTot);
+            recountPoints();
+        }
+    }
+
+    public void recountPoints(){
+        int quantity = this.totArticulos.getValue();
+        if(quantity >= 1 && quantity < 5){
+            setPuntos(5);
+        }
+        else if(quantity >= 5 && quantity < 10){
+            setPuntos(10);
+        }
+        else if(quantity >= 10 && quantity < 20){
+            setPuntos(15);
+        }
+        else if(quantity >=20){
+            setPuntos(15);
+        }
+        else{
+            setPuntos(0);
         }
     }
 }

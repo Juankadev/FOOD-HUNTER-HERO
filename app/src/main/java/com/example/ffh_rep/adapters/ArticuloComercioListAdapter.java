@@ -1,6 +1,7 @@
 package com.example.ffh_rep.adapters;
 
 import android.content.Context;
+import android.media.Rating;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.navigation.NavDirections;
@@ -88,5 +90,6 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
     static class ViewHolder{
         TextView nombre, fecha, marca, categoria;
         ImageView imageArticle;
+
     }
 }

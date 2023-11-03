@@ -5,8 +5,11 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ffh_rep.adapters.ReseniasAdapter;
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Resenia;
 import com.example.ffh_rep.ui.hunter.Hunter_VerComercio;
 import com.example.ffh_rep.utils.DBUtil;
 
@@ -203,5 +206,87 @@ public class ComercioRepository {
                 isLoading.postValue(false);
             }
         });
+    }
+
+    public void cargarResenias(MutableLiveData<List<Resenia>> listaResenias, Comercio commerce){
+        CompletableFuture.supplyAsync(() -> {
+            List<Resenia> lResenias = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Resenas r WHERE r.id_comercio = ?")) {
+                ps.setInt(1, commerce.getId());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id_resena");
+                        int id_comercio = rs.getInt("id_comercio");
+                        int id_usuario = rs.getInt("id_usuario");
+                        int calificacion = rs.getInt("calificacion");
+                        String comentario = rs.getString("comentario");
+                        Resenia res = new Resenia(id, calificacion, comentario);
+                        lResenias.add(res);
+                    }
+                }
+            } catch (Exception e) {
+                // Manejar la excepción
+                e.printStackTrace();
+            }
+            return lResenias;
+        }).thenAcceptAsync(resenias -> listaResenias.postValue(resenias));
+    }
+
+    public void generarResenia(Resenia res, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+            isLoading.postValue(true);
+            try {
+                Connection con = DBUtil.getConnection();
+                PreparedStatement ps = con.prepareStatement("Insert Into Resenas (id_comercio, id_usuario, calificacion, comentario) values (?, ?, ?, ?)");
+                ps.setInt(1, res.getComercio().getId());
+                ps.setInt(2, res.getUsuario().getId_usuario());
+                ps.setInt(3, res.getCalificacion());
+                ps.setString(4, res.getComentario());
+
+
+                int rowsAffected  = ps.executeUpdate();
+                if( rowsAffected > 0){
+                    success.postValue(true);
+                }
+                else{
+                    error.postValue(false);
+                }
+
+                ps.close();
+                DBUtil.closeConnection(con);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                error.postValue(true);
+            }
+            finally {
+                isLoading.postValue(false);
+            }
+        });
+    }
+
+    public void cargarBeneficios(MutableLiveData<List<Beneficio>> listBeneficios, Comercio commerce){
+        CompletableFuture.supplyAsync(() -> {
+            List<Beneficio> lBeneficios = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.id_comercio = ?")) {
+                ps.setInt(1, commerce.getId());
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Beneficio bene = new Beneficio();
+                        bene.setId_beneficio(rs.getInt("id_beneficio"));
+                        bene.setId_comercio(commerce);
+                        bene.setDescripcion(rs.getString("descripcion"));
+                        bene.setPuntos_requeridos(rs.getInt("puntos_requeridos"));
+                        lBeneficios.add(bene);
+                    }
+                }
+            } catch (Exception e) {
+                // Manejar la excepción
+                e.printStackTrace();
+            }
+            return lBeneficios;
+        }).thenAcceptAsync(resenias -> listBeneficios.postValue(resenias));
     }
 }
