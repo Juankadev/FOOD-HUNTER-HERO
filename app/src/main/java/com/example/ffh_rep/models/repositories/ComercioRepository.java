@@ -226,6 +226,43 @@ public class ComercioRepository {
 
     }
 
+    public void aprobarComercio(Comercio comercio, Context ctx){
+        CompletableFuture.runAsync(() -> {
+            try {
+                Connection con = DBUtil.getConnection();
+                String query = "Update Comercios set aprobado = 'Aprobado' where id_comercio = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+
+                ps.setInt(1, comercio.getId());
+
+                int rowsAffected = ps.executeUpdate();
+                ps.close();
+                DBUtil.closeConnection(con);
+                if(rowsAffected > 0){
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, "Aprobación exitosa", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ctx, "Ocurrió un error al aprobar el comercio", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(ctx, "Ocurrió un error al aprobar el comercio", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
 
     public void markAsFavorite(Comercio comercio, Hunter hunter, MutableLiveData<Boolean> isLoading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
