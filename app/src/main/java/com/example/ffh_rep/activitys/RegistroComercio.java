@@ -135,7 +135,7 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         comercio.setEmail(etEmailC.getText().toString());
         comercio.setTelefono(etTelefonoC.getText().toString());
         comercio.setDireccion(etDireccionC.getText().toString());
-        comercio.setAprobado("Aprobado");
+        comercio.setAprobado("Desaprobado");
         return comercio;
     }
     /**

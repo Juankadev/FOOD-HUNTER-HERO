@@ -149,7 +149,7 @@ public class ComercioRepository {
     }
 
 
-    public MutableLiveData<List<Comercio>> getComerciosNoAprobados(MutableLiveData<List<Comercio>> mlDataComercio) {
+    public MutableLiveData<List<Comercio>> cargarComerciosNoAprobados(MutableLiveData<List<Comercio>> mlDataComercio) {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
