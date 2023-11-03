@@ -46,7 +46,7 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
                 query = "Select c.id_comercio, c.cuit, c.razon_social, c.rubro, c.correo_electronico, c.telefono, c.direccion from Comercios c where c.aprobado like 'aprobado' and c.id_usuario = ?";
             }
             if(IdRol == 2){
-                query = "Select h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
+                query = "Select h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.fecha_nacimiento, h.id_rango, h.puntaje, r.descripcion as rangodesc from Hunters h inner join Rangos r on r.id_rango = h.id_rango where h.id_usuario = ?";
             }
             if(IdRol == 3){
                 query = "Select id_usuario, id_rol, username, password, estado from Usuarios where id_usuario = ?";
@@ -95,6 +95,7 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
         hunter.setApellido(rs.getString("apellido"));
         hunter.setDni(rs.getString("dni"));
         hunter.setSexo(rs.getString("sexo"));
+        hunter.setPuntaje(rs.getInt("puntaje"));
         hunter.setCorreo_electronico(rs.getString("correo_electronico"));
         hunter.setTelefono(rs.getString("telefono"));
         hunter.setDireccion(rs.getString("telefono"));

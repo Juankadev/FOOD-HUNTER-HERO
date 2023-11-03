@@ -16,7 +16,7 @@ public  class GeneralHelper {
     public static java.sql.Date returnSQLDate(String dateArg){
         java.sql.Date _date = null;
         try {
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
             Date uDate = dateformat.parse(dateArg);
             _date = new java.sql.Date(uDate.getTime());
             return _date;

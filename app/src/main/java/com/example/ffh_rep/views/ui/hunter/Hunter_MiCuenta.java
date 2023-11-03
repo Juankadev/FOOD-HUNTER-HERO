@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,13 +39,13 @@ public class Hunter_MiCuenta extends Fragment {
 
     private HunterMiCuentaViewModel mViewModel;
     private FragmentHunterMiCuentaBinding binding;
-    private TextView et_nombre, et_apellido, et_dni, et_correo, et_direccion, txtEditarActioner;
+    private TextView et_nombre, et_apellido, et_fechanacimiento, et_telefono, et_correo, et_direccion, txtEditarActioner, txtPuntos, txtRango;
     private Spinner spinnerSexo;
     private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel;
     private CardView btnEditarActionerWithProgress;
     private ProgressBar pgBarEditar;
-    private Hunter userSession;
-    private String originalNombre, originalApellido, originalDNI, originalSexo, originalCorreo, originalDireccion;
+    private Hunter userSession, updateHunter;
+    private String originalNombre, originalApellido, originalFechaNacimiento, originalTelefono, originalSexo, originalCorreo, originalDireccion;
     private SessionManager sessionManager;
 
 
@@ -74,11 +77,13 @@ public class Hunter_MiCuenta extends Fragment {
     private void initializeViews(View view) {
         et_apellido = view.findViewById(R.id.et_apellido);
         et_nombre = view.findViewById(R.id.et_nombre);
-        et_dni = view.findViewById(R.id.et_dni);
+        et_fechanacimiento = view.findViewById(R.id.et_fechanacimiento);
         spinnerSexo = view.findViewById(R.id.spinner_sexo);
         et_correo = view.findViewById(R.id.et_correo);
         et_direccion = view.findViewById(R.id.et_direccion);
-
+        et_telefono = view.findViewById(R.id.et_telefono);
+        txtPuntos = view.findViewById(R.id.txtMisPuntos);
+        txtRango = view.findViewById(R.id.txtRango);
         btnEditarInformacion = view.findViewById(R.id.btn_editInformacion);
         btnEliminarCuenta = view.findViewById(R.id.btn_deleteaccount);
         btnEditAction = view.findViewById(R.id.btn_edit_actioner);
@@ -118,9 +123,12 @@ public class Hunter_MiCuenta extends Fragment {
     private void settingInputs(Hunter user){
         et_apellido.setText(user.getApellido());
         et_nombre.setText(user.getNombre());
-        et_dni.setText(user.getDni());
+        et_fechanacimiento.setText(user.getFecha_nacimiento().toString());
         et_correo.setText(user.getCorreo_electronico());
+        et_telefono.setText(user.getTelefono());
         et_direccion.setText(user.getDireccion());
+        txtPuntos.setText(String.valueOf(user.getPuntaje()));
+        txtRango.setText(user.getId_rango().getDescripcion());
         String sexo = user.getSexo();
         if ("Masculino".equals(sexo)) {
             spinnerSexo.setSelection(0);
@@ -139,6 +147,13 @@ public class Hunter_MiCuenta extends Fragment {
         btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
         btnEditarActionerWithProgress.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
+        et_fechanacimiento.setOnClickListener(v-> showDatePicker());
+        et_fechanacimiento.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                // El campo de entrada de fecha ha obtenido el foco, muestra el selector de fechas.
+                showDatePicker();
+            }
+        });
     }
     /**
      * Configura los observadores de la interfaz.
@@ -175,6 +190,24 @@ public class Hunter_MiCuenta extends Fragment {
                 }
             }
         });
+
+        mViewModel.getSuccessUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean){
+                    updateMessage(true);
+                }
+            }
+        });
+
+        mViewModel.getErrorUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    updateMessage(false);
+                }
+            }
+        });
     }
     /**
      * Actualiza la información del usuario con los valores ingresados en los campos de edición.
@@ -184,15 +217,19 @@ public class Hunter_MiCuenta extends Fragment {
 
         if(validateInput()){
 
-            Hunter updateHunter = new Hunter();
+            updateHunter = new Hunter();
 
             updateHunter.setIdHunter(this.userSession.getIdHunter());
             updateHunter.setApellido(et_apellido.getText().toString());
             updateHunter.setNombre(et_nombre.getText().toString());
-            updateHunter.setDni(et_dni.getText().toString());
+
+            updateHunter.setFecha_nacimiento(GeneralHelper.returnSQLDate(et_fechanacimiento.getText().toString()));
+
             updateHunter.setSexo(spinnerSexo.getSelectedItem().toString());
+            updateHunter.setTelefono(et_telefono.getText().toString());
             updateHunter.setCorreo_electronico(et_correo.getText().toString());
             updateHunter.setDireccion(et_direccion.getText().toString());
+            Log.d("fecha antes de mandar", updateHunter.getFecha_nacimiento().toString());
 
             mViewModel.updateInformation(updateHunter);
         }
@@ -212,6 +249,8 @@ public class Hunter_MiCuenta extends Fragment {
         spinnerSexo.setEnabled(_var);
         et_correo.setEnabled(_var);
         et_direccion.setEnabled(_var);
+        et_fechanacimiento.setEnabled(_var);
+        et_telefono.setEnabled(_var);
 
         if(_var){
             saveOriginals();
@@ -239,7 +278,8 @@ public class Hunter_MiCuenta extends Fragment {
     private void saveOriginals(){
         originalNombre = et_nombre.getText().toString();
         originalApellido = et_apellido.getText().toString();
-        originalDNI = et_dni.getText().toString();
+        originalFechaNacimiento = et_fechanacimiento.getText().toString();
+        originalTelefono = et_telefono.getText().toString();
         originalSexo = spinnerSexo.getSelectedItem().toString();
         originalCorreo = et_correo.getText().toString();
         originalDireccion = et_direccion.getText().toString();
@@ -250,7 +290,8 @@ public class Hunter_MiCuenta extends Fragment {
     private void rollbackEdit(){
         et_nombre.setText(originalNombre);
         et_apellido.setText(originalApellido);
-        et_dni.setText(originalDNI);
+        et_fechanacimiento.setText(originalFechaNacimiento);
+        et_telefono.setError(originalTelefono);
         et_correo.setText(originalCorreo);
         et_direccion.setText(originalDireccion);
         if ("Masculino".equals(originalSexo)) {
@@ -261,6 +302,74 @@ public class Hunter_MiCuenta extends Fragment {
             spinnerSexo.setSelection(2);
         }
     }
+
+    private void closeSession() {
+        Intent intent = new Intent(requireContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+        // Validar el nombre
+        String nombre = et_nombre.getText().toString();
+        if (nombre.isEmpty()) {
+            et_nombre.setError("Este campo es requerido");
+            isValid = false;
+        }
+
+        // Validar el apellido
+        String apellido = et_apellido.getText().toString();
+        if (apellido.isEmpty()) {
+            et_apellido.setError("Este campo es requerido");
+            isValid = false;
+        }
+
+        String dni = et_fechanacimiento.getText().toString();
+        if (dni.isEmpty()) {
+            et_fechanacimiento.setError("Este campo es requerido");
+            isValid = false;
+        }
+        String telefono = et_telefono.getText().toString();
+        if(telefono.isEmpty()){
+            et_telefono.setError("Este campo es requerido");
+            isValid = false;
+        }
+        else if(!GeneralHelper.isNumeric(telefono)){
+            et_telefono.setError("Por favor, solo ingrese números");
+            isValid = false;
+        }
+        String correo = et_correo.getText().toString();
+        if (correo.isEmpty()) {
+            et_correo.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isValidEmailAddress(correo)) {
+            et_correo.setError("Correo electrónico inválido");
+            isValid = false;
+        }
+
+        String direccion = et_direccion.getText().toString();
+        if(direccion.isEmpty()){
+            et_direccion.setError("Este campo es requerido");
+            isValid= false;
+        }
+
+        return isValid;
+    }
+
+
+    public void showDatePicker(){
+        DatePickerDialog dpdialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                et_fechanacimiento.setText(date);
+            }
+        }, 2023, 11, 3);
+
+        dpdialog.show();
+    }
+
     /**
      * Muestra un cuadro de diálogo de confirmación para eliminar la cuenta del usuario.
      * Si el usuario confirma, se invoca el método para eliminar la cuenta a través del ViewModel.
@@ -286,51 +395,39 @@ public class Hunter_MiCuenta extends Fragment {
         dialog.show();
     }
 
-    private void closeSession() {
-        Intent intent = new Intent(requireContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
 
-    private boolean validateInput() {
-        boolean isValid = true;
-        // Validar el nombre
-        String nombre = et_nombre.getText().toString();
-        if (nombre.isEmpty()) {
-            et_nombre.setError("Este campo es requerido");
-            isValid = false;
+    private void updateMessage(boolean value){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Actualizar información");
+        if(value) {
+            builder.setMessage("Se ha actualizado la informacion con exito!");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mViewModel.setErrorUpdate(false);
+                    mViewModel.setSuccessUpdate(false);
+                    mViewModel.setUpdatingInfo(false);
+                    enabledInputs(false);
+                    mViewModel.setHunterDataWithHunte(updateHunter);
+                    sessionManager.saveHunterSession(updateHunter);
+                    dialog.dismiss();
+                }
+            });
+        }
+        else {
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    mViewModel.setErrorUpdate(false);
+                    mViewModel.setSuccessUpdate(false);
+                    mViewModel.setUpdatingInfo(false);
+                    enabledInputs(false);
+                    dialog.dismiss();
+                }
+            });
         }
 
-        // Validar el apellido
-        String apellido = et_apellido.getText().toString();
-        if (apellido.isEmpty()) {
-            et_apellido.setError("Este campo es requerido");
-            isValid = false;
-        }
-
-        String dni = et_dni.getText().toString();
-        if (dni.isEmpty()) {
-            et_dni.setError("Este campo es requerido");
-            isValid = false;
-        } else if (!GeneralHelper.isNumeric(dni)) {
-            et_dni.setError("DNI debe ser numérico");
-            isValid = false;
-        }
-        String correo = et_correo.getText().toString();
-        if (correo.isEmpty()) {
-            et_correo.setError("Este campo es requerido");
-            isValid = false;
-        } else if (!GeneralHelper.isValidEmailAddress(correo)) {
-            et_correo.setError("Correo electrónico inválido");
-            isValid = false;
-        }
-
-        String direccion = et_direccion.getText().toString();
-        if(direccion.isEmpty()){
-            et_direccion.setError("Este campo es requerido");
-            isValid= false;
-        }
-
-        return isValid;
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

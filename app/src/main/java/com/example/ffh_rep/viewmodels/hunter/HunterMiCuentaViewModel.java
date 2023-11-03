@@ -15,6 +15,8 @@ public class HunterMiCuentaViewModel extends ViewModel {
     private HunterRepository hunterRepo;
     private MutableLiveData<Boolean> deleteAccount;
     private MutableLiveData<Boolean> updatingInfo;
+    private MutableLiveData<Boolean> successUpdate;
+    private MutableLiveData<Boolean> errorUpdate;
     public HunterMiCuentaViewModel(){}
 
     public HunterMiCuentaViewModel(Context ctx) {
@@ -22,6 +24,8 @@ public class HunterMiCuentaViewModel extends ViewModel {
         this.hunterData = new MutableLiveData<>();
         this.deleteAccount = new MutableLiveData<>(false);
         this.updatingInfo = new MutableLiveData<>(false);
+        this.successUpdate = new MutableLiveData<>(false);
+        this.errorUpdate = new MutableLiveData<>(false);
         this.hunterRepo = new HunterRepository();
     }
 
@@ -36,7 +40,7 @@ public class HunterMiCuentaViewModel extends ViewModel {
     }
 
     public void updateInformation(Hunter hunter){
-        hunterRepo.updateUserInfo(this.hunterData, hunter, this.updatingInfo);
+        hunterRepo.updateUserInfo(this.hunterData, hunter, this.updatingInfo, this.successUpdate, this.errorUpdate);
     }
 
     public void eliminarMiCuenta(){
@@ -53,5 +57,25 @@ public class HunterMiCuentaViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getDeleteAccount() {
         return deleteAccount;
+    }
+
+    public MutableLiveData<Boolean> getSuccessUpdate() {
+        return successUpdate;
+    }
+
+    public void setUpdatingInfo(boolean updatingInfo) {
+        this.updatingInfo.postValue(updatingInfo);
+    }
+
+    public void setSuccessUpdate(boolean value) {
+        this.successUpdate.postValue(value);
+    }
+
+    public MutableLiveData<Boolean> getErrorUpdate() {
+        return errorUpdate;
+    }
+
+    public void setErrorUpdate(boolean value) {
+        this.errorUpdate.postValue(value);
     }
 }

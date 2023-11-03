@@ -20,10 +20,10 @@ public class Rango implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
-        descripcion = descripcion;
+        this.descripcion = descripcion;
     }
     public void setPuntaje(Integer puntaje) {
-        puntaje = puntaje;
+        this.puntaje = puntaje;
     }
 
     public Integer getId_rango() {return this.id_rango;}
