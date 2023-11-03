@@ -21,7 +21,7 @@
         <LinearLayout
             android:id="@+id/btnEliminar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="20dp">
 
@@ -60,39 +60,10 @@
                     android:text="Categoria"
                     android:textColor="#131313" />
 
-                <TextView
-                    android:id="@+id/tv_item_articulo_fecha_vencimiento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fecha Vencimiento" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnAgregarStock"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Agregar Stock" />
-
-                    <Button
-                        android:id="@+id/btnModificar"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Editar Articulo" />
-
-                    <Button
-                        android:id="@+id/button3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Eliminar Articulo" />
-
-                </LinearLayout>
+                    android:orientation="horizontal" />
 
             </LinearLayout>
         </LinearLayout>
