@@ -56,7 +56,11 @@ public class ModificarDescuento extends Fragment {
         Beneficio beneficio = new Beneficio();
         beneficio.setDescripcion(txtDescripcion.getText().toString());
         beneficio.setPuntos_requeridos(Integer.parseInt(txtPuntos.getText().toString()));
-        //beneficio.setId_beneficio(ARGS);
+
+        Bundle bundle = getArguments();
+        int id = (int) bundle.getSerializable("idBeneficioSelect");
+
+        beneficio.setId_beneficio(id);
 
         /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
         if(validateInput()){
