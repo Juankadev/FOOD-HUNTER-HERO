@@ -32,8 +32,8 @@ public class Comercio_Ver_Articulo extends Fragment {
     private TextView descripcion, precio, categoria, marca;
     private ImageView ivArticulo;
 
-    public static Hunter_VerArticulo newInstance() {
-        return new Hunter_VerArticulo();
+    public static Comercio_Ver_Articulo newInstance() {
+        return new Comercio_Ver_Articulo();
     }
 
     @Override
