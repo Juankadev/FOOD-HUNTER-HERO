@@ -20,11 +20,12 @@ import java.util.List;
 public class MisDescuentosComercioListAdapter extends BaseAdapter {
     private List<Beneficio> lBeneficios;
     private LayoutInflater  inflater;
-    MisDescuentosComercioViewModel mViewModel;
+    private MisDescuentosComercioViewModel mViewModel;
 
-    public MisDescuentosComercioListAdapter(List<Beneficio> lista, Context ctx){
+    public MisDescuentosComercioListAdapter(List<Beneficio> lista, Context ctx, MisDescuentosComercioViewModel viewModel){
         this.lBeneficios = lista;
         this.inflater = LayoutInflater.from(ctx);
+        this.mViewModel = viewModel;
     }
     @Override
     public int getCount() {
@@ -73,7 +74,7 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
         vh.btnEliminarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.eliminarBeneficio(a);
+                deleteBeneficio(position);
             }
         });
 
@@ -87,6 +88,14 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    public void deleteBeneficio(int position) {
+        if (position >= 0 && position < lBeneficios.size()) {
+            mViewModel.eliminarBeneficio(lBeneficios.get(position));
+            lBeneficios.remove(position);
+            notifyDataSetChanged();
+        }
     }
 
     static class ViewHolder{
