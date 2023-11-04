@@ -1,6 +1,8 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -71,9 +73,21 @@ public class DescuentoRepository {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    Toast.makeText(context, "Beneficio agregado exitosamente", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Error al insertar el Beneficio", Toast.LENGTH_SHORT).show();
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Beneficio agregado exitosamente", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Ocurrio un error al agregar el Beneficio", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
 
             } catch (Exception e) {
@@ -102,9 +116,21 @@ public class DescuentoRepository {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    Toast.makeText(context, "Beneficio actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Error al actualizar el beneficio", Toast.LENGTH_SHORT).show();
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Beneficio modificado exitosamente", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Ocurrio un error al modificar el Beneficio", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
 
             } catch (Exception e) {
@@ -124,16 +150,28 @@ public class DescuentoRepository {
     public void eliminarDescuento(Context context, Beneficio beneficio) {
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("UPDATE Beneficios set estado = '0' where id_beneficio = ?")) {
+                 PreparedStatement ps = con.prepareStatement("UPDATE Beneficios set estado = 0 where id_beneficio = ?")) {
 
                 ps.setInt(1, beneficio.getId_beneficio());
 
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    Toast.makeText(context, "Beneficio eliminado exitosamente", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Error al eliminado el beneficio", Toast.LENGTH_SHORT).show();
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Beneficio eliminado exitosamente", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Ocurrio un error al eliminar el Beneficio", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
 
             } catch (Exception e) {

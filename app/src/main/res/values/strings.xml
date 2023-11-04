@@ -181,6 +181,7 @@
     <string name="titulo_modificar_descuento">Modificar descuento\nDebe ingresar una descripcion y/o cantidad de puntos requeridos nuevo</string>
     <string name="modificar_descuento">Modificar descuento\n</string>
     <string name="micuenta">Informacion Personal</string>
+    <string name="id_general">ID</string>
 
 
 </resources>

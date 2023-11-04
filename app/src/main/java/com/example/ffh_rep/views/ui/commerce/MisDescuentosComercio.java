@@ -72,7 +72,7 @@ public class MisDescuentosComercio extends Fragment {
 
     public void initModelsAndAdapters(){
         mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
-        mdcListAdapter = new MisDescuentosComercioListAdapter(new ArrayList<>(), getContext());
+        mdcListAdapter = new MisDescuentosComercioListAdapter(new ArrayList<>(), getContext(), mViewModel);
     }
 
     public void setUpObserver() {
