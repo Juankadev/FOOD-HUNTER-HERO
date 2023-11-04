@@ -38,4 +38,5 @@ public class MisDescuentosComercioViewModel extends ViewModel {
    public void listarDescuentos(int id){
       dRepo.listarDescuentosByComercio(mldListaBeneficios,id);
    }
+
 }

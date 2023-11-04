@@ -27,22 +27,5 @@ public class ComercioVerArticuloViewModel extends ViewModel {
         this.nuevoRegistroStock = new MutableLiveData<>();
         this.stockRepository = new StockRepository();
     }
-    public MutableLiveData<Stock> getObtenerStock() {
-        return obtenerStock;
-    }
-    public void setObtenerStock(Comercio comercio, Articulo articulo){
-        stockRepository.getStock(obtenerStock, articulo, comercio);
-    }
-    public MutableLiveData<Boolean> getNuevoRegistroStock() {
-        return nuevoRegistroStock;
-    }
-    public void setNuevoRegistroStock(Comercio comercio, Articulo articulo, int cantidad, Date fechaVencimiento){
-        stockRepository.insertarNuevoStock(nuevoRegistroStock, articulo, comercio, cantidad, fechaVencimiento);
-    }
-    public MutableLiveData<Boolean> getRestarStock() {
-        return restarStock;
-    }
-    public void setRestarStock(Comercio comercio, Articulo articulo, int cantidad){
-        stockRepository.restarStock(restarStock, articulo, comercio, cantidad);
-    }
+
 }

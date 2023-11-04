@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.commerce.MisDescuentosComercioViewModel;
+import com.example.ffh_rep.viewmodels.factory.DescuentosViewModelFactory;
 
 public class AgregarDescuento extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
@@ -37,6 +39,7 @@ public class AgregarDescuento extends Fragment {
 
         initComponentes(view);
         setUpListeners();
+        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
 
         return view;
     }

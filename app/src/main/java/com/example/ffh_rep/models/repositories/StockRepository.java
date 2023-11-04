@@ -1,8 +1,12 @@
 package com.example.ffh_rep.models.repositories;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.utils.DBUtil;
@@ -11,38 +15,39 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class StockRepository {
 
-    public MutableLiveData<Boolean> insertarNuevoStock(MutableLiveData<Boolean> mlDataSuccess, Articulo articulo, Comercio comercio, int cantidad, Date fechaVencimiento) {
+    public void insertarNuevoStock(Context context, Stock stock) {
         CompletableFuture.runAsync(() -> {
-            boolean success = false;
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement insertPs = con.prepareStatement("INSERT INTO Stocks (id_articulo, id_comercio, fecha_vencimiento, cantidad) VALUES (?, ?, ?, ?)");
             ) {
-                insertPs.setInt(1, articulo.getIdArticulo());
-                insertPs.setInt(2, comercio.getId());
-                insertPs.setDate(3, fechaVencimiento);
-                insertPs.setInt(4, cantidad);
+                insertPs.setInt(1, stock.getId_articulo().getIdArticulo());
+                insertPs.setInt(2, stock.getId_comercio().getId());
+                insertPs.setDate(3, (Date) stock.getFecha_vencimiento());
+                insertPs.setInt(4, stock.getCantidad());
 
                 int rowCount = insertPs.executeUpdate();
 
                 if (rowCount > 0) {
-                    success = true;
+                    Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
+
             }
-
-            mlDataSuccess.postValue(success);
         });
-
-        return mlDataSuccess;
     }
-    public MutableLiveData<Stock> getStock(MutableLiveData<Stock> mlDataStock, Articulo articulo, Comercio comercio) {
+    public MutableLiveData<List<Stock>> getStock(MutableLiveData<List<Stock>> mlDataStocks, Articulo articulo, Comercio comercio) {
         CompletableFuture.supplyAsync(() -> {
-            Stock stock = new Stock();
+            List<Stock> lStocks = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement ps = con.prepareStatement("SELECT id_stock, id_articulo, id_comercio, fecha_vencimiento, cantidad FROM Stocks WHERE id_articulo = ? AND id_comercio = ?");
             ) {
@@ -50,7 +55,8 @@ public class StockRepository {
                 ps.setInt(2, comercio.getId());
                 ResultSet rs = ps.executeQuery();
 
-                if (rs.next()) {
+                while (rs.next()) {
+                    Stock stock = new Stock();
                     stock.setId_stock(rs.getInt("id_stock"));
                     Articulo art = new Articulo();
                     art.setIdArticulo(rs.getInt("id_articulo"));
@@ -60,32 +66,35 @@ public class StockRepository {
                     stock.setId_comercio(comer);
                     stock.setFecha_vencimiento(rs.getDate("fecha_vencimiento"));
                     stock.setCantidad(rs.getInt("cantidad"));
+
+                    lStocks.add(stock);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return stock;
-        }).thenAcceptAsync(stock -> {
-            if (stock != null) {
-                mlDataStock.postValue(stock);
+            return lStocks;
+
+        }).thenAcceptAsync(stocks -> {
+            if (stocks != null) {
+                mlDataStocks.postValue(stocks.isEmpty() ? new ArrayList<>() : stocks);
             } else {
-                mlDataStock.postValue(new Stock());
+                mlDataStocks.postValue(new ArrayList<>());
             }
         });
 
-        return mlDataStock;
+        return mlDataStocks;
     }
-    public MutableLiveData<Boolean> restarStock(MutableLiveData<Boolean> mlDataSuccess, Articulo articulo, Comercio comercio, int cantidad) {
+    public void restarStock(Context context, Stock stock, int cantidad) {
         CompletableFuture.runAsync(() -> {
-            boolean success = false;
+
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement selectPs = con.prepareStatement("SELECT id_stock, cantidad FROM Stocks WHERE id_articulo = ? AND id_comercio = ? FOR UPDATE");
                  PreparedStatement updatePs = con.prepareStatement("UPDATE Stocks SET cantidad = ? WHERE id_stock = ?");
             ) {
                 con.setAutoCommit(false);
 
-                selectPs.setInt(1, articulo.getIdArticulo());
-                selectPs.setInt(2, comercio.getId());
+                selectPs.setInt(1, stock.getId_articulo().getIdArticulo());
+                selectPs.setInt(2, stock.getId_comercio().getId());
                 ResultSet rs = selectPs.executeQuery();
 
                 if (rs.next()) {
@@ -101,9 +110,10 @@ public class StockRepository {
 
                         if (rowCount > 0) {
                             con.commit();
-                            success = true;
+                            Toast.makeText(context, "Stock restado exitosamente", Toast.LENGTH_SHORT).show();
                         } else {
                             con.rollback();
+                            Toast.makeText(context, "No se pudo restar el stock", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         con.rollback();
@@ -114,11 +124,7 @@ public class StockRepository {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            mlDataSuccess.postValue(success);
         });
-
-        return mlDataSuccess;
     }
 
 }

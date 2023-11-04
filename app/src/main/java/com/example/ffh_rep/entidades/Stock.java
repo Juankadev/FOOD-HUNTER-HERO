@@ -1,8 +1,9 @@
 package com.example.ffh_rep.entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Stock {
+public class Stock implements Serializable {
 
     private Integer id_stock;
     private Articulo id_articulo;
