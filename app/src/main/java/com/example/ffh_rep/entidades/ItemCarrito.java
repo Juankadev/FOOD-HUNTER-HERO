@@ -6,6 +6,8 @@ public class ItemCarrito implements Serializable {
     private Articulo artc;
     private int cantidad;
 
+    public ItemCarrito(){}
+
     public ItemCarrito(Articulo artc, int cant){
         this.artc = artc;
         this.cantidad = cant;

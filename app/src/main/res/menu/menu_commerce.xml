@@ -24,5 +24,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Validar Compras"
             />
+        <item
+            android:id="@+id/comercio_EscanearQr"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Escanear QR"
+            />
     </group>
 </menu>

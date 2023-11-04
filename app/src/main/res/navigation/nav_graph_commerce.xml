@@ -63,4 +63,9 @@
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_Ver_Articulo"
         android:label="fragment_comercio__ver__articulo"
         tools:layout="@layout/fragment_comercio__ver__articulo" />
+    <fragment
+        android:id="@+id/comercio_EscanearQr"
+        android:name="com.example.ffh_rep.views.ui.commerce.Comercio_EscanearQr"
+        android:label="fragment_comercio__escanear_qr"
+        tools:layout="@layout/fragment_comercio__escanear_qr" />
 </navigation>
