@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ffh_rep.R;
@@ -33,6 +35,7 @@ public class AdminEstadisticas extends Fragment {
     private AdminEstadisticasViewModel mViewModel;
     private EditText et_desde, et_hasta;
     private Button btn_filtrar;
+    private TextView result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
     private FragmentAdminEstadisticasBinding binding;
 
     public static AdminEstadisticas newInstance() {
@@ -54,7 +57,12 @@ public class AdminEstadisticas extends Fragment {
         et_desde = view.findViewById(R.id.et_desde);
         et_hasta = view.findViewById(R.id.et_hasta);
         btn_filtrar = view.findViewById(R.id.filtrar);
-        //mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
+        result_cazadores_rango_maximo = view.findViewById(R.id.result_cazadores_rango_maximo);
+        result_cazadores_rango_minimo = view.findViewById(R.id.result_cazadores_rango_minimo);
+        result_productos_cazados = view.findViewById(R.id.result_productos_cazados);
+        result_comercios_aprobados = view.findViewById(R.id.result_comercios_aprobados);
+
+        mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
     }
 
     private void setupListeners() {
@@ -63,39 +71,61 @@ public class AdminEstadisticas extends Fragment {
         btn_filtrar.setOnClickListener(v -> filtrar());
     }
 
-    private void filtrar() {
-        String desde_string = et_desde.getText().toString();
-        String hasta_string = et_hasta.getText().toString();
-
-        if (!desde_string.isEmpty() && !hasta_string.isEmpty())
+    private boolean validarFechas(String desde, String hasta){
+        if (!desde.isEmpty() && !hasta.isEmpty())
         {
             // Define un formato para las fechas
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd//MM/yyyy");
 
+            //COMPARAR FECHAS
             try {
                 // Convierte las cadenas de texto a objetos Date
-                Date desde_date = dateFormat.parse(desde_string);
-                Date hasta_date = dateFormat.parse(hasta_string);
+                Date desde_date = dateFormat.parse(desde);
+                Date hasta_date = dateFormat.parse(hasta);
 
                 // Realiza la comparación de fechas
                 if (desde_date.before(hasta_date) || desde_date.equals(hasta_date)) {
-                    Toast.makeText(getActivity(), "Filtro exitoso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Procesando...", Toast.LENGTH_LONG).show();
+                    return true;
                 }
                 else{
                     Toast.makeText(getActivity(), "Verifique el rango de fechas ingresado", Toast.LENGTH_SHORT).show();
+                    return false;
                 }
             } catch (ParseException e) {
+                Toast.makeText(getActivity(), "Ha ocurrido un error interno", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
+                return false;
             }
-
-            //RegistrarUsuario registrarUsuarioTask = new RegistrarUsuario(this, usuario, this);
-            //registrarUsuarioTask.execute();
         }
         else
         {
             Toast.makeText(getActivity(), "Las fechas no pueden estar vacias", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    private void filtrar() {
+        String desde_string = et_desde.getText().toString();
+        String hasta_string = et_hasta.getText().toString();
+
+        try {
+            if(validarFechas(desde_string, hasta_string)){
+                setEstadisticas();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
+    }
+
+    //Obtener estadisticas de la db y setear textviews
+    private void setEstadisticas(){
+        Integer[] results = mViewModel.getEstadisticas();
+        result_cazadores_rango_maximo.setText(results[0].toString());
+        result_cazadores_rango_minimo.setText(results[1].toString());
+        result_productos_cazados.setText(results[2].toString());
+        result_comercios_aprobados.setText(results[3].toString());
     }
 
     public void showDatePickerDesde(){
@@ -112,6 +142,7 @@ public class AdminEstadisticas extends Fragment {
         }, initialYear, 0, 1);
 
         // Configura el rango máximo y minimo de años disponibles
+        //los set piden una fecha en milisegundos
         dpdialog.getDatePicker().setMinDate(getDateInMillis(minYear, 0, 1));
         dpdialog.getDatePicker().setMaxDate(getDateInMillis(maxYear, 11, 11));
 
@@ -148,7 +179,6 @@ public class AdminEstadisticas extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AdminEstadisticasViewModel.class);
         // TODO: Use the ViewModel
     }
 

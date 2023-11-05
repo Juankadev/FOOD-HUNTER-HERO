@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.models.repositories.ComercioRepository;
 

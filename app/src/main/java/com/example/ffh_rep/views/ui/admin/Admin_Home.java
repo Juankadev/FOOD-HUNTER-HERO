@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,8 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentAdminHomeBinding;
-import com.example.ffh_rep.databinding.FragmentComercioHomeBinding;
 import com.example.ffh_rep.viewmodels.admin.AdminHomeViewModel;
-import com.example.ffh_rep.viewmodels.commerce.ComercioHomeViewModel;
 import com.example.ffh_rep.viewmodels.factory.AdminHomeViewModelFactory;
-import com.example.ffh_rep.viewmodels.factory.ComercioHomeViewModelFactory;
-import com.example.ffh_rep.views.adapters.ArticuloUsuarioComercioListAdapter;
-
-import java.util.ArrayList;
-import java.util.concurrent.CompletableFuture;
 
 public class Admin_Home extends Fragment {
 
@@ -43,19 +35,8 @@ public class Admin_Home extends Fragment {
         View view = binding.getRoot();
         initViews(view);
 
-        CompletableFuture<Integer> futureCantidadComercios = mViewModel.getCantidadComercios();
-        futureCantidadComercios.thenAccept(cantidadComercios -> {
-            requireActivity().runOnUiThread(() -> {
-                resComercios.setText(String.valueOf(cantidadComercios));
-            });
-        });
-
-        CompletableFuture<Integer> futureCantidadHunters = mViewModel.getCantidadHunters();
-        futureCantidadHunters.thenAccept(cantidadHunters -> {
-            requireActivity().runOnUiThread(() -> {
-                resHunters.setText(String.valueOf(cantidadHunters));
-            });
-        });
+        resComercios.setText(String.valueOf(mViewModel.getCantidadComercios()));
+        resHunters.setText(String.valueOf(mViewModel.getCantidadHunters()));
 
         return view;
     }
@@ -63,7 +44,7 @@ public class Admin_Home extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AdminHomeViewModel.class);
+        //mViewModel = new ViewModelProvider(this).get(AdminHomeViewModel.class);
         // TODO: Use the ViewModel
     }
 
