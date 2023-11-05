@@ -2,37 +2,183 @@ package com.example.ffh_rep.views.ui.admin;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.databinding.FragmentAdminEstadisticasBinding;
 import com.example.ffh_rep.viewmodels.admin.AdminEstadisticasViewModel;
+import com.example.ffh_rep.viewmodels.factory.AdminEstadisticasViewModelFactory;
+
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AdminEstadisticas extends Fragment {
 
     private AdminEstadisticasViewModel mViewModel;
+    private EditText et_desde, et_hasta;
+    private Button btn_filtrar;
+    private TextView result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
+    private FragmentAdminEstadisticasBinding binding;
 
     public static AdminEstadisticas newInstance() {
         return new AdminEstadisticas();
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_admin_estadisticas, container, false);
+        binding = FragmentAdminEstadisticasBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+        initComponents(view);
+        setupListeners();
+        return view;
+    }
+
+    public void initComponents(View view){
+        et_desde = view.findViewById(R.id.et_desde);
+        et_hasta = view.findViewById(R.id.et_hasta);
+        btn_filtrar = view.findViewById(R.id.filtrar);
+        result_cazadores_rango_maximo = view.findViewById(R.id.result_cazadores_rango_maximo);
+        result_cazadores_rango_minimo = view.findViewById(R.id.result_cazadores_rango_minimo);
+        result_productos_cazados = view.findViewById(R.id.result_productos_cazados);
+        result_comercios_aprobados = view.findViewById(R.id.result_comercios_aprobados);
+
+        mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
+    }
+
+    private void setupListeners() {
+        et_desde.setOnClickListener(v -> showDatePickerDesde());
+        et_hasta.setOnClickListener(v -> showDatePickerHasta());
+        btn_filtrar.setOnClickListener(v -> filtrar());
+    }
+
+    private boolean validarFechas(String desde, String hasta){
+        if (!desde.isEmpty() && !hasta.isEmpty())
+        {
+            // Define un formato para las fechas
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd//MM/yyyy");
+
+            //COMPARAR FECHAS
+            try {
+                // Convierte las cadenas de texto a objetos Date
+                Date desde_date = dateFormat.parse(desde);
+                Date hasta_date = dateFormat.parse(hasta);
+
+                // Realiza la comparación de fechas
+                if (desde_date.before(hasta_date) || desde_date.equals(hasta_date)) {
+                    Toast.makeText(getActivity(), "Procesando...", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+                else{
+                    Toast.makeText(getActivity(), "Verifique el rango de fechas ingresado", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            } catch (ParseException e) {
+                Toast.makeText(getActivity(), "Ha ocurrido un error interno", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "Las fechas no pueden estar vacias", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    private void filtrar() {
+        String desde_string = et_desde.getText().toString();
+        String hasta_string = et_hasta.getText().toString();
+
+        try {
+            if(validarFechas(desde_string, hasta_string)){
+                setEstadisticas();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    //Obtener estadisticas de la db y setear textviews
+    private void setEstadisticas(){
+        Integer[] results = mViewModel.getEstadisticas();
+        result_cazadores_rango_maximo.setText(results[0].toString());
+        result_cazadores_rango_minimo.setText(results[1].toString());
+        result_productos_cazados.setText(results[2].toString());
+        result_comercios_aprobados.setText(results[3].toString());
+    }
+
+    public void showDatePickerDesde(){
+        int minYear = 2000;
+        int maxYear = 2023;
+        int initialYear = 2023; // El año inicial seleccionado
+
+        DatePickerDialog dpdialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                et_desde.setText(date);
+            }
+        }, initialYear, 0, 1);
+
+        // Configura el rango máximo y minimo de años disponibles
+        //los set piden una fecha en milisegundos
+        dpdialog.getDatePicker().setMinDate(getDateInMillis(minYear, 0, 1));
+        dpdialog.getDatePicker().setMaxDate(getDateInMillis(maxYear, 11, 11));
+
+        dpdialog.show();
+    }
+
+    private long getDateInMillis(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return calendar.getTimeInMillis();
+    }
+
+
+    public void showDatePickerHasta(){
+        int minYear = 2000;
+        int maxYear = 2023;
+        int initialYear = 2023; // El año inicial seleccionado
+
+        DatePickerDialog dpdialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                et_hasta.setText(date);
+            }
+        }, initialYear, 11, 11);
+
+        // Configura el rango máximo y minimo de años disponibles
+        dpdialog.getDatePicker().setMinDate(getDateInMillis(minYear, 0, 1));
+        dpdialog.getDatePicker().setMaxDate(getDateInMillis(maxYear, 10, 11));
+
+        dpdialog.show();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(AdminEstadisticasViewModel.class);
         // TODO: Use the ViewModel
     }
 
