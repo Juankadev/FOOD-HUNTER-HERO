@@ -52,8 +52,6 @@ public class Hunter_VerComercio extends Fragment {
     private GridView gv_articulos;
     private Button btnAbrirCarrito, btnVerResenias, btnVerBeneficios;
     private ProgressBar pBarMarkingAsFav;
-
-
     private FragmentHunterVerComercioBinding binding;
     private ArticuloComercioListAdapter aclAdapter;
 
@@ -63,7 +61,6 @@ public class Hunter_VerComercio extends Fragment {
     public static Hunter_VerComercio newInstance() {
         return new Hunter_VerComercio();
     }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

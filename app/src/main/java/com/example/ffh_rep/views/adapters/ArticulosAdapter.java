@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentArticulosItemBinding;
 import com.example.ffh_rep.entidades.Articulo;
 
@@ -45,8 +46,8 @@ public class ArticulosAdapter extends RecyclerView.Adapter<ArticulosAdapter.View
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                //args.putSerializable("comercioSelect", mValues.get(position));
-                //navCon.navigate(R.id.action_comercios_to_hunter_VerComercio, args);
+                args.putSerializable("comercioSelect", mValues.get(position).getComercio());
+                navCon.navigate(R.id.action_articulos_to_hunter_VerComercio, args);
             }
         });
     }
@@ -71,7 +72,6 @@ public class ArticulosAdapter extends RecyclerView.Adapter<ArticulosAdapter.View
             itemDescription = binding.etItemDescription;
             imgItem = binding.imgItem;
         }
-
 
         @Override
         public String toString() {

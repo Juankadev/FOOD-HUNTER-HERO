@@ -37,9 +37,7 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         return new ViewHolder(FragmentComerciosItemBinding.inflate(LayoutInflater.from(this.ctx), parent, false));
-
     }
 
     public void setData(List<Comercio> newData) {
@@ -73,18 +71,14 @@ public class ComerciosAdapter extends RecyclerView.Adapter<ComerciosAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView shopName;
         public Comercio mItem;
-        public Button itemView;
 
         public ViewHolder(FragmentComerciosItemBinding binding) {
             super(binding.getRoot());
             shopName = binding.etShopName;
-            itemView = binding.btnVerComercioDetalle;
         }
         @Override
         public String toString() {
             return super.toString() + " '" + shopName.getText() + "'";
         }
     }
-
-
 }

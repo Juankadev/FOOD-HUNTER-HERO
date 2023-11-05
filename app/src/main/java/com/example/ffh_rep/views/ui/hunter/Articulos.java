@@ -75,7 +75,6 @@ public class Articulos extends Fragment {
         });
 
         cargarArticulos();
-
     }
     /**
      * Carga los articulos.

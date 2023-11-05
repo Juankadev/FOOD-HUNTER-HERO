@@ -48,7 +48,7 @@
                 android:id="@+id/btnAgregarCarrito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="316dp"
+                android:layout_marginTop="350dp"
                 android:backgroundTint="@color/bck_green"
                 android:drawableLeft="@drawable/baseline_add_shopping_cart_24"
                 android:text="@string/agregar_carrito"
