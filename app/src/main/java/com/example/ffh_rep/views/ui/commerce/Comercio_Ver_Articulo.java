@@ -90,13 +90,4 @@ public class Comercio_Ver_Articulo extends Fragment {
     }
 
 
-
-
-
-
-
-
-
-
-
 }

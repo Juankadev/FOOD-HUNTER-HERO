@@ -36,7 +36,6 @@ public class ArticuloRepository {
                          " FROM Articulos a " +
                          " inner join Categorias c on c.id_categoria = a.id_categoria" +
                          " inner join Marcas m on m.id_marca = a.id_marca " +
-                         " Left join Stocks s on s.id_articulo = a.id_articulo "+
                          "WHERE a.estado = '1' and a.id_comercio ="+id);
                  ResultSet rs = ps.executeQuery()) {
 
@@ -53,9 +52,6 @@ public class ArticuloRepository {
                     articulo.setMarca(new Marca());
                     articulo.getMarca().setIdMarca(rs.getInt("id_marca"));
                     articulo.getMarca().setDescripcion(rs.getString("marca"));
-                    articulo.setStockArticulo(new Stock());
-                    articulo.getStockArticulo().setId_stock(rs.getInt("id_stock"));
-                    articulo.getStockArticulo().setCantidad(rs.getInt("cantidad"));
                     articulo.setImagen(rs.getString("imagen"));
                     articulo.setEstado(rs.getString("estado"));
 
