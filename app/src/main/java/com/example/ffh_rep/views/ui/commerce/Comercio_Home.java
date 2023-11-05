@@ -69,9 +69,7 @@ public class Comercio_Home extends Fragment {
         btnAniadirArticulo = view.findViewById(R.id.btn_commerce_addArticle);
         btnIrBeneficios = view.findViewById(R.id.btn_MisDescuentos);
         gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail2);
-        Log.d("Debug Pablo", "-----------");
         Log.d("Debug Pablo", gv_articulos.toString());
-        Log.d("Debug Pablo", "-----------");
 
     }
 
@@ -97,14 +95,8 @@ public class Comercio_Home extends Fragment {
 
     private void setUpListeners(){
         btnAniadirArticulo.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_agregarArticulo));
-        btnIrBeneficios.setOnClickListener(v->Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_fragmentAgregarDescuentoComercio));
+        //btnIrBeneficios.setOnClickListener(v->Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_fragmentAgregarDescuentoComercio));
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ComercioHomeViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 }

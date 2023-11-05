@@ -94,12 +94,6 @@ public class MisDescuentosComercio extends Fragment {
      */
     public void setUpListeners() {
         btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
-        btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
-    }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MisDescuentosComercioViewModel.class);
-        // TODO: Use the ViewModel
+        //btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
     }
 }

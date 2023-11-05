@@ -53,7 +53,6 @@ public class AgregarDescuento extends Fragment {
 
     public void setUpListeners() {
         btnAgregarDescuento.setOnClickListener(v-> addBeneficio());
-        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_agregarDescuento_to_fragmentAgregarDescuentoComercio));
     }
 
     private void addBeneficio(){

@@ -4,30 +4,26 @@
     tools:showIn="navigation_view"
     >
     <group android:checkableBehavior="single">
+
         <item
-            android:id="@+id/nav_hunter_MiCuenta"
-            android:icon="@drawable/shop"
-            android:title="Mi Cuenta"
-            />
-        <item
-            android:id="@+id/nav_hunter_MisArticulos"
+            android:id="@+id/commerce_MisArticulos"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Mis Articulos"
             />
         <item
-            android:id="@+id/nav_hunter_AniadirDescuentos"
+            android:id="@+id/fragmentAgregarDescuentoComercio"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Mis descuentos"
-            />
-        <item
-            android:id="@+id/nav_hunter_ValidarCompras"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Validar Compras"
             />
         <item
             android:id="@+id/comercio_EscanearQr"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Escanear QR"
+            />
+        <item
+            android:id="@+id/comercio_MiCuenta"
+            android:icon="@drawable/shop"
+            android:title="Mi Cuenta"
             />
     </group>
 </menu>
