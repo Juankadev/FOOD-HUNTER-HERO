@@ -13,17 +13,19 @@ import java.util.List;
 public class ArticulosViewModel extends ViewModel {
     private Context ctx;
     private MutableLiveData<List<Articulo>> mldArticulos;
+    private MutableLiveData<Boolean> success;
     private ArticuloRepository aRepo;
     public ArticulosViewModel(Context ctx){
         this.ctx = ctx;
         this.aRepo = new ArticuloRepository();
         this.mldArticulos = new MutableLiveData<>();
+        this.success = new MutableLiveData<>(false);
     }
     /**
      * Carga todos los comercios disponibles utilizando el repositorio de comercios.
      */
     public void cargarArticulos(){
-        aRepo.getArticulos(mldArticulos);
+        aRepo.getArticulos(mldArticulos, success);
     }
     public MutableLiveData<List<Articulo>> getMldArticulos() {
         return mldArticulos;

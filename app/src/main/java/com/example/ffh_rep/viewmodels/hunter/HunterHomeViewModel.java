@@ -18,6 +18,9 @@ public class HunterHomeViewModel extends ViewModel {
    private Context context;
    private MutableLiveData<List<Comercio>> mlDataComercio;
    private MutableLiveData<List<Articulo>> mlDataArticulo;
+
+   private MutableLiveData<Boolean> successComercios;
+   private MutableLiveData<Boolean> sucessArticulos;
    private ComercioRepository cRepo;
    private ArticuloRepository aRepo;
    public HunterHomeViewModel() {
@@ -27,16 +30,18 @@ public class HunterHomeViewModel extends ViewModel {
       this.context = ctx;
       this.mlDataComercio = new MutableLiveData<>();
       this.mlDataArticulo = new MutableLiveData<>();
+      this.successComercios = new MutableLiveData<>(false);
+      this.sucessArticulos = new MutableLiveData<>(false);
       this.cRepo = new ComercioRepository();
       this.aRepo = new ArticuloRepository();
    }
 
    public void cargarComercios(int id){
-      cRepo.getComercios(mlDataComercio, id);
+      cRepo.getComercios(mlDataComercio, id, successComercios);
    }
 
    public void cargarListArticulo(){
-      aRepo.getArticulos(mlDataArticulo);
+      aRepo.getArticulos(mlDataArticulo, sucessArticulos);
    }
 
 
@@ -46,5 +51,13 @@ public class HunterHomeViewModel extends ViewModel {
 
    public MutableLiveData<List<Comercio>> getMlDataComercio() {
       return mlDataComercio;
+   }
+
+   public MutableLiveData<Boolean> getSuccessComercios() {
+      return successComercios;
+   }
+
+   public MutableLiveData<Boolean> getSucessArticulos() {
+      return sucessArticulos;
    }
 }

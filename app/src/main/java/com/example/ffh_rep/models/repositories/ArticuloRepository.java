@@ -128,7 +128,7 @@ public class ArticuloRepository {
      * @param mlDataArticulos MutableLiveData que se actualizará con la lista de artículos obtenida.
      * @return MutableLiveData actualizado con la lista de artículos activos o una lista vacía en caso de error o ausencia de datos.
      */
-    public MutableLiveData<List<Articulo>> getArticulos(MutableLiveData<List<Articulo>> mlDataArticulos) {
+    public MutableLiveData<List<Articulo>> getArticulos(MutableLiveData<List<Articulo>> mlDataArticulos, MutableLiveData<Boolean> success) {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -155,6 +155,7 @@ public class ArticuloRepository {
             }
             return lArticulos;
         }).thenAcceptAsync(articulos -> mlDataArticulos.postValue(articulos));
+        success.postValue(true);
         return mlDataArticulos;
     }
     /**

@@ -86,7 +86,7 @@ public class ComercioRepository {
      * @param mlDataComercio MutableLiveData que se actualizará con la lista de comercios obtenida.
      * @return MutableLiveData que contiene la lista de comercios, actualizado de forma asíncrona.
      */
-    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> mlDataComercio, int id_user) {
+    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> mlDataComercio, int id_user, MutableLiveData<Boolean> success) {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -121,6 +121,7 @@ public class ComercioRepository {
             }
             return lComercios;
         }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
+        success.postValue(true);
         return mlDataComercio;
     }
     /**

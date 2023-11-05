@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <!-- Barra de búsqueda -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="115dp"
@@ -56,6 +57,12 @@
         </LinearLayout>
 
         <!-- GridView de comercios -->
+        <ProgressBar
+            android:id="@+id/pbComercios"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="104dp" />
+
         <GridView
             android:id="@+id/gv_comercios_hunter_home"
             android:layout_width="match_parent"
@@ -64,6 +71,7 @@
             android:backgroundTint="#FFFFFF"
             android:numColumns="3"
             android:horizontalSpacing="8dp"
+            android:visibility="gone"
             android:verticalSpacing="8dp" />
 
         <!-- Botón Ver -->
@@ -78,6 +86,7 @@
             android:textSize="16sp" />
 
         <!-- Título de productos -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -92,9 +101,16 @@
                 android:text="@string/productos"
                 android:textSize="20sp"
                 android:textStyle="bold"  />
+
         </LinearLayout>
 
         <!-- GridView de productos -->
+        <ProgressBar
+            android:id="@+id/pbArticulos"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="104dp" />
+
         <GridView
             android:id="@+id/gv_productos_hunter_home"
             android:layout_width="match_parent"
@@ -103,7 +119,10 @@
             android:backgroundTint="#FFFFFF"
             android:numColumns="3"
             android:horizontalSpacing="8dp"
-            android:verticalSpacing="8dp" />
+            android:visibility="gone"
+            android:verticalSpacing="8dp" >
+
+        </GridView>
 
         <!-- Botón Ver -->
         <Button

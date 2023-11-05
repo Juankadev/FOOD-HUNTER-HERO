@@ -18,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ffh_rep.R;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public class Hunter_Home extends Fragment {
     private FragmentHunterHomeBinding binding;
     private GridView gvComerciosList, gvProductosHunterHome;
+    private ProgressBar pbComercios, pbArticulos;
     private ComercioListAdapter comercioListAdapter;
     private ArticulosListAdapter articulosListAdapter;
     private Button btnMasComercios, btnMasArticulos;
@@ -72,6 +74,8 @@ public class Hunter_Home extends Fragment {
         btnMasComercios = view.findViewById(R.id.btn_mas_comercios_hunter);
         btnMasArticulos = view.findViewById(R.id.btn_mas_articulos_hunter);
         etBrowse = view.findViewById(R.id.et_browser);
+        pbArticulos = view.findViewById(R.id.pbComercios);
+        pbComercios = view.findViewById(R.id.pbArticulos);
     }
     /**
      * Configura los listeners de la interfaz.
@@ -118,6 +122,12 @@ public class Hunter_Home extends Fragment {
 
         viewModel.cargarComercios(userSession.getUser().getId_usuario());
         viewModel.getMlDataComercio().observe(getViewLifecycleOwner(), comercios -> comercioListAdapter.setComercioList(comercios));
+        viewModel.getSuccessComercios().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                gvComerciosList.setVisibility(View.VISIBLE);
+                pbComercios.setVisibility(View.GONE);
+            }
+        });
     }
     /**
      * Configura el GridView de articulos con un adaptador y observa los cambios en la lista de articulos desde el ViewModel.
@@ -129,6 +139,12 @@ public class Hunter_Home extends Fragment {
 
         viewModel.cargarListArticulo();
         viewModel.getMlDataArticulo().observe(getViewLifecycleOwner(), articulos -> articulosListAdapter.setlArticulos(articulos));
+        viewModel.getSucessArticulos().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean) {
+                gvProductosHunterHome.setVisibility(View.VISIBLE);
+                pbArticulos.setVisibility(View.GONE);
+            }
+        });
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
