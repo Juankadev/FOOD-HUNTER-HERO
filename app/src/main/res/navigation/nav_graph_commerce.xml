@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo2"
             app:destination="@id/comercio_Ver_Stock_x_Articulo" />
+        <action
+            android:id="@+id/action_comercio_Ver_Articulo_to_comercio_ModificarArticulo"
+            app:destination="@id/comercio_ModificarArticulo" />
     </fragment>
     <fragment
         android:id="@+id/comercio_EscanearQr"
@@ -80,4 +83,9 @@
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_MiCuenta"
         android:label="fragment_comercio_mi_cuenta"
         tools:layout="@layout/fragment_comercio_mi_cuenta" />
+    <fragment
+        android:id="@+id/comercio_ModificarArticulo"
+        android:name="com.example.ffh_rep.views.ui.commerce.Comercio_ModificarArticulo"
+        android:label="fragment_comercio__modificar_articulo"
+        tools:layout="@layout/fragment_comercio__modificar_articulo" />
 </navigation>
