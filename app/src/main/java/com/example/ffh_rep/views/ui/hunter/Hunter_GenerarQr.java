@@ -31,7 +31,7 @@ public class Hunter_GenerarQr extends Fragment {
         Bundle args = getArguments();
 
         qrContain = view.findViewById(R.id.hunter__qr_container);
-        String data = args.getString("articulos");
+        String data = args.getString("json_request");
 
         generateQr(data, qrContain);
         return view;

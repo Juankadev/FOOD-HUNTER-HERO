@@ -19,6 +19,10 @@ import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterMiCarritoBinding;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.hunter.CarritoViewModel;
 import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
 import com.example.ffh_rep.entidades.ItemCarrito;
@@ -41,6 +45,9 @@ public class Hunter_MiCarrito extends Fragment {
     private TextView tvPuntos;
     private Button btnEndHunting;
     private List<ItemCarrito> _currChart;
+    private Comercio comercio;
+    private Hunter userSession;
+    private SessionManager sessionManager;
 
     public static Hunter_MiCarrito newInstance() {
         return new Hunter_MiCarrito();
@@ -53,6 +60,11 @@ public class Hunter_MiCarrito extends Fragment {
         View view = binding.getRoot();
 
         initComponents(view);
+
+        sessionManager = new SessionManager(requireActivity());
+        userSession = sessionManager.getHunterSession();
+        comercio = carrito.getComercio();
+
         setUpObservers();
         setUpListeners();
 
@@ -81,20 +93,12 @@ public class Hunter_MiCarrito extends Fragment {
         btnEndHunting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Bundle args = new Bundle();
-                    Gson gson = new Gson();
-                    String jsonDataArr = gson.toJson(_currChart);
-                    JSONObject jsonData = new JSONObject();
-                    jsonData.put("articulos", jsonDataArr);
-
-                    String data = jsonData.toString();
-                    args.putString("articulos", data);
-
-                    Navigation.findNavController(v).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                Bundle args = new Bundle();
+                Gson gson = new Gson();
+                JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId());
+                String json = gson.toJson(req);
+                args.putString("json_request", json);
+                Navigation.findNavController(v).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
             }
         });
     }

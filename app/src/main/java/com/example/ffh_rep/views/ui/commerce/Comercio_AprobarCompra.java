@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.ffh_rep.R;
+import com.example.ffh_rep.entidades.JSONQRRequest;
 import com.example.ffh_rep.viewmodels.commerce.ComercioAprobarCompraViewModel;
 import com.example.ffh_rep.viewmodels.factory.ComercioAprobarCompraViewModelFactory;
 import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
@@ -27,6 +28,8 @@ public class Comercio_AprobarCompra extends Fragment {
 
     private ListView listaProductos;
 
+    private JSONQRRequest response;
+
     public static Comercio_AprobarCompra newInstance() {
         return new Comercio_AprobarCompra();
     }
@@ -39,8 +42,15 @@ public class Comercio_AprobarCompra extends Fragment {
         initComponents(view);
         Bundle args = getArguments();
         if(args != null){
-
+            response = (JSONQRRequest) args.getSerializable("responseQr");
         }
+        mViewModel.setIdComercio(response.getIdComercio());
+        mViewModel.setIdHunter(response.getIdHunter());
+        mViewModel.setMlArticulos(response.getlCarrito());
+
+        setUpObservers();
+
+        listaProductos.setAdapter(alAdapter);
 
         return view;
     }
@@ -51,5 +61,9 @@ public class Comercio_AprobarCompra extends Fragment {
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioAprobarCompraViewModelFactory(getActivity())).get(ComercioAprobarCompraViewModel.class);
         listaProductos = view.findViewById(R.id.comercio_lista_productos);
+    }
+
+    public void setUpObservers(){
+        mViewModel.getMlArticulos().observe(getViewLifecycleOwner(), articulos -> alAdapter.setlArticulos(articulos));
     }
 }

@@ -80,6 +80,7 @@ public class Hunter_VerComercio extends Fragment {
         userSession = sessionManager.getHunterSession();
 
         mViewModel.cargarArticulos(commerce.getId());
+        carrito.setComercio(commerce);
 
         isThisFavorite(commerce.isFavorite());
 

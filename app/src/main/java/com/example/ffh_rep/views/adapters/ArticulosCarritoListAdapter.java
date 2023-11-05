@@ -35,7 +35,7 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
 
     public void setlArticulos(List<ItemCarrito> lArticulos) {
         this.lArticulos = lArticulos;
-
+        notifyDataSetChanged();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.ItemCarrito;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class CarritoViewModel extends ViewModel{
     private MutableLiveData<List<ItemCarrito>> carrito;
     private MutableLiveData<Integer> totArticulos;
     private MutableLiveData<Integer> puntos;
+    private Comercio comercio;
     private Context ctx;
 
     public CarritoViewModel(){
@@ -26,6 +28,14 @@ public class CarritoViewModel extends ViewModel{
         this.puntos = new MutableLiveData<>(0);
     }
 
+
+    public void setComercio(Comercio comercio){
+        this.comercio = comercio;
+    }
+
+    public Comercio getComercio() {
+        return comercio;
+    }
 
     public MutableLiveData<List<ItemCarrito>> getCarrito() {
         return carrito;

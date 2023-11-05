@@ -10,13 +10,18 @@ import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
+import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioEscanearQrBinding;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.ItemCarrito;
+import com.example.ffh_rep.entidades.JSONQRRequest;
 import com.example.ffh_rep.viewmodels.commerce.ComercioEscanearQrViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,39 +55,11 @@ public class Comercio_EscanearQr extends Fragment {
                     if (data != null) {
                         String contenido = data.getStringExtra("SCAN_RESULT");
                         if (contenido != null) {
-                           /* JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(contenido);
-                                JSONArray articulosJSON = jsonObject.getJSONArray("articulos");
-                                List<ItemCarrito> listaDeItems = new ArrayList<>();
-
-                                for (int i = 0; i < articulosJSON.length(); i++) {
-
-                                    ItemCarrito item = new ItemCarrito();
-                                    item.setArtc(new Articulo());
-
-                                    JSONObject articuloJSON = articulosJSON.getJSONObject(i);
-
-                                    //Se deconstruye el objeto obtenido del array
-                                    JSONObject artcJSON = articuloJSON.getJSONObject("artc");
-                                    String descripcion = artcJSON.getString("descripcion");
-                                    boolean estado = artcJSON.getBoolean("estado");
-                                    int idarticulo = artcJSON.getInt("idArticulo");
-                                    String img = artcJSON.getString("imagen");
-                                    int precio = artcJSON.getInt("precio");
-                                    int cantidad = articuloJSON.getInt("cantidad");
-
-                                    // Configura los atributos de la clase Artc según la desestructuración
-                                    listaDeItems.add(item);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }*/
-
-                            /*Gson gson = new Gson();
-                            Type listType = new TypeToken<List<ItemCarrito>>(){}.getType();
-                            List<ItemCarrito> itemsCarrito = gson.fromJson(contenido, listType);*/
-                            Log.d("DATA", contenido);
+                            Gson gson = new Gson();
+                            JSONQRRequest res = gson.fromJson(contenido, JSONQRRequest.class);
+                            Bundle args = new Bundle();
+                            args.putSerializable("responseQr", res);
+                            Navigation.findNavController(requireView()).navigate(R.id.action_comercio_EscanearQr_to_comercio_AprobarCompra, args);
                         }
                     }
                 }

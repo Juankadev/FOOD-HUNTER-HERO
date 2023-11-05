@@ -67,7 +67,11 @@
         android:id="@+id/comercio_EscanearQr"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_EscanearQr"
         android:label="fragment_comercio__escanear_qr"
-        tools:layout="@layout/fragment_comercio__escanear_qr" />
+        tools:layout="@layout/fragment_comercio__escanear_qr" >
+        <action
+            android:id="@+id/action_comercio_EscanearQr_to_comercio_AprobarCompra"
+            app:destination="@id/comercio_AprobarCompra" />
+    </fragment>
         <action
             android:id="@+id/action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo"
             app:destination="@id/comercio_Ver_Stock_x_Articulo" />
@@ -76,4 +80,9 @@
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_Ver_Stock_x_Articulo"
         android:label="fragment_comercio__ver__stock_x__articulo"
         tools:layout="@layout/fragment_comercio__ver__stock_x__articulo" />
-    </navigation>
+    <fragment
+        android:id="@+id/comercio_AprobarCompra"
+        android:name="com.example.ffh_rep.views.ui.commerce.Comercio_AprobarCompra"
+        android:label="fragment_comercio__aprobar_compra"
+        tools:layout="@layout/fragment_comercio__aprobar_compra" />
+</navigation>
