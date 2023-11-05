@@ -52,7 +52,7 @@ public class Comercio_Ver_Articulo extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null){
             if(bundle.containsKey("articuloSelected")){
-                article = (Articulo) bundle.getSerializable("articuloSelected");
+                this.article = (Articulo) bundle.getSerializable("articuloSelected");
             }
         }
 
@@ -82,11 +82,16 @@ public class Comercio_Ver_Articulo extends Fragment {
         marca.setText(article.getMarca().getDescripcion());
         categoria.setText(article.getCategoria().getDescripcion());
         Glide.with(view).load(article.getImagen()).into(ivArticulo);
-        tvCantidadArticulo.setText(String.valueOf(article.getStockArticulo().getCantidad()));
     }
 
     public void setUpListeners(){
-        btnStock.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo));
+        btnStock.setOnClickListener(v-> redirectToStockxArticulos());
+    }
+
+    public void redirectToStockxArticulos(){
+        Bundle args = new Bundle();
+        args.putSerializable("articuloAseleccionar", this.article);
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo, args);
     }
 
 

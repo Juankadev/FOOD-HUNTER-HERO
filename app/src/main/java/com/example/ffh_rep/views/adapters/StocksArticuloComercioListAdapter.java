@@ -64,8 +64,8 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         Stock s = this.lStocks.get(position);
-        vh.fecha_vencimiento.setText((CharSequence) s.getFecha_vencimiento());
-        vh.cantidad.setText(s.getCantidad());
+        vh.fecha_vencimiento.setText(s.getFecha_vencimiento().toString());
+        vh.cantidad.setText(String.valueOf(s.getCantidad()));
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

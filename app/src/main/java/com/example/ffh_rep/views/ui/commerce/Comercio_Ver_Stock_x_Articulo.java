@@ -63,7 +63,7 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
         View view = binding.getRoot();
 
         initViews(view);
-
+        initModelsAndAdapters();
 
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -73,8 +73,8 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
         }
 
         if(bundle != null){
-            if(bundle.containsKey("articuloSelected")){
-                article = (Articulo) bundle.getSerializable("articuloSelected");
+            if(bundle.containsKey("articuloAseleccionar")){
+                article = (Articulo) bundle.getSerializable("articuloAseleccionar");
             }
         }
 
@@ -89,8 +89,6 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
         setUpListeners();
         setUpObservers();
         gv_stocks.setAdapter(sacAdapter);
-
-
         return view;
     }
 
@@ -108,14 +106,8 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     private void initViews(View view){
         btnAniadirStock = view.findViewById(R.id.btn_commerce_addStockArticulo);
         gv_stocks = view.findViewById(R.id.gv_stocks_detail_articulo);
-
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initModelsAndAdapters();
-    }
 
     public void initModelsAndAdapters(){
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioVerStocksArticuloViewModelFactory(getActivity())).get(ComercioVerStockXArticuloViewModel.class);
@@ -127,11 +119,8 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     }
 
     public void setUpObservers() {
-        mViewModel.getMldListaStocks().observe(getViewLifecycleOwner(), new Observer<List<Stock>>() {
-            @Override
-            public void onChanged(List<Stock> stocks) {
-                sacAdapter.setData(stocks);
-            }
+        mViewModel.getMldListaStocks().observe(getViewLifecycleOwner(), stocks -> {
+            sacAdapter.setData(stocks);
         });
     }
 

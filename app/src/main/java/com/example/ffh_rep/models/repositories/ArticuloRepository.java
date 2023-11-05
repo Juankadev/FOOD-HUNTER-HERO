@@ -32,7 +32,7 @@ public class ArticuloRepository {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT a.id_articulo, a.id_comercio, a.descripcion, a.precio, a.id_categoria, a.id_marca, a.imagen, a.estado, s.id_stock, s.cantidad, s.fecha_vencimiento, c.descripcion as categoria, m.descripcion as marca" +
+                 PreparedStatement ps = con.prepareStatement("SELECT a.id_articulo, a.id_comercio, a.descripcion, a.precio, a.id_categoria, a.id_marca, a.imagen, a.estado, c.descripcion as categoria, m.descripcion as marca" +
                          " FROM Articulos a " +
                          " inner join Categorias c on c.id_categoria = a.id_categoria" +
                          " inner join Marcas m on m.id_marca = a.id_marca " +
