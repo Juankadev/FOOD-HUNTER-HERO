@@ -19,6 +19,7 @@ import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.viewmodels.commerce.ComercioEscanearQrViewModel;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.json.JSONArray;
@@ -49,7 +50,7 @@ public class Comercio_EscanearQr extends Fragment {
                     if (data != null) {
                         String contenido = data.getStringExtra("SCAN_RESULT");
                         if (contenido != null) {
-                            JSONObject jsonObject = null;
+                           /* JSONObject jsonObject = null;
                             try {
                                 jsonObject = new JSONObject(contenido);
                                 JSONArray articulosJSON = jsonObject.getJSONArray("articulos");
@@ -75,12 +76,12 @@ public class Comercio_EscanearQr extends Fragment {
                                     listaDeItems.add(item);
                                 }
                             } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+                                e.printStackTrace();
+                            }*/
 
-                            //Gson gson = new Gson();
-                            //ItemCarrito[] miObjetos = gson.fromJson(contenido, ItemCarrito[].class);
-                            //List<ItemCarrito> listaDeObjetos = Arrays.asList(miObjetos);
+                            /*Gson gson = new Gson();
+                            Type listType = new TypeToken<List<ItemCarrito>>(){}.getType();
+                            List<ItemCarrito> itemsCarrito = gson.fromJson(contenido, listType);*/
                             Log.d("DATA", contenido);
                         }
                     }

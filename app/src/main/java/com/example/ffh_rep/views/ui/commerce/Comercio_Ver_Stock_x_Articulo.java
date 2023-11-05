@@ -95,13 +95,13 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     }
 
     public void initComponentes(View view){
-        fecha= new ViewModelProvider(this, new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
+       /* fecha= new ViewModelProvider(this, new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
         btnStock = view.findViewById(R.id.btnStock);
         descripcion = view.findViewById(R.id.tvDescripcionArt);
         precio = view.findViewById(R.id.tvPrecioArt);
         marca = view.findViewById(R.id.tvMarcaArt);
         categoria = view.findViewById(R.id.tvCategoriaArt);
-        ivArticulo = view.findViewById(R.id.ivArticulo);
+        ivArticulo = view.findViewById(R.id.ivArticulo);*/
 
     }
 
@@ -136,11 +136,5 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ComercioVerStockXArticuloViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
 }

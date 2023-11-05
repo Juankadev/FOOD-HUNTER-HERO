@@ -86,8 +86,7 @@ public class Hunter_MiCarrito extends Fragment {
                     Gson gson = new Gson();
                     String jsonDataArr = gson.toJson(_currChart);
                     JSONObject jsonData = new JSONObject();
-                    JSONArray jArray = new JSONArray(jsonDataArr);
-                    jsonData.put("articulos", jArray);
+                    jsonData.put("articulos", jsonDataArr);
 
                     String data = jsonData.toString();
                     args.putString("articulos", data);

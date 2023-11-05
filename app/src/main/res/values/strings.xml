@@ -176,17 +176,14 @@
     <string name="aprobar">Aprobar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="titulo_agregar_desc">Agregar descuento\nDebe agregar una descripcion para el descuento y una cantidad de puntos para que el hunter pueda obtenerlo</string>
+    <string name="titulo_agregar_desc">Agregar descuento Debe agregar una descripcion para el descuento y una cantidad de puntos para que el hunter pueda obtenerlo</string>
     <string name="agregar_desc">Agregar descuento</string>
-    <string name="titulo_modificar_descuento">Modificar descuento\nDebe ingresar una descripcion y/o cantidad de puntos requeridos nuevo</string>
-    <string name="modificar_descuento">Modificar descuento\n</string>
+    <string name="titulo_modificar_descuento">Modificar descuento Debe ingresar una descripcion y/o cantidad de puntos requeridos nuevo</string>
+    <string name="modificar_descuento">Modificar descuento </string>
     <string name="micuenta">Informacion Personal</string>
-<<<<<<< HEAD
     <string name="productos_aprobar">Productos a llevar</string>
     <string name="aprobar_caza">Aprobar Caza</string>
-=======
     <string name="id_general">ID</string>
->>>>>>> 76c5462c906e3bb9929e38241f733c774243c52e
 
 
 </resources>
