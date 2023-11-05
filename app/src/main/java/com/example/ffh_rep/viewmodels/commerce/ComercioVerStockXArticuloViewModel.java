@@ -28,7 +28,7 @@ public class ComercioVerStockXArticuloViewModel extends ViewModel {
         this.sRepo = new StockRepository();
     }
     public MutableLiveData<List<Stock>> getMldListaStocks() {
-        return getMldListaStocks();
+        return mldListaStocks;
     }
     public void insertarStock(Stock stock){
         sRepo.insertarNuevoStock(ctx, stock);

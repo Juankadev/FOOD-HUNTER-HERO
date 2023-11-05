@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ffh_rep.viewmodels.commerce.ComercioVerArticuloViewModel;
+import com.example.ffh_rep.viewmodels.commerce.ComercioVerStockXArticuloViewModel;
 import com.example.ffh_rep.viewmodels.hunter.HunterVerBeneficiosViewModel;
 
 public class ComercioVerStocksArticuloViewModelFactory implements ViewModelProvider.Factory{
@@ -19,8 +20,8 @@ public class ComercioVerStocksArticuloViewModelFactory implements ViewModelProvi
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if(modelClass.isAssignableFrom(ComercioVerArticuloViewModel.class)){
-            return (T) new ComercioVerArticuloViewModel(context);
+        if(modelClass.isAssignableFrom(ComercioVerStockXArticuloViewModel.class)){
+            return (T) new ComercioVerStockXArticuloViewModel(context);
         }
 
         throw new IllegalArgumentException("ViewModel Class Desconocido");

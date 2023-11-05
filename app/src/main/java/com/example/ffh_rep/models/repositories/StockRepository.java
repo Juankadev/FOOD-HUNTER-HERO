@@ -1,6 +1,7 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -51,6 +52,13 @@ public class StockRepository {
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement ps = con.prepareStatement("SELECT id_stock, id_articulo, id_comercio, fecha_vencimiento, cantidad FROM Stocks WHERE id_articulo = ? AND id_comercio = ?");
             ) {
+                Log.d("DEBUG", "-----------");
+                Log.d("DEBUG", articulo.toString());
+                Log.d("DEBUG", "-----------");
+                Log.d("DEBUG", "-----------");
+                Log.d("DEBUG", comercio.toString());
+                Log.d("DEBUG", "-----------");
+
                 ps.setInt(1, articulo.getIdArticulo());
                 ps.setInt(2, comercio.getId());
                 ResultSet rs = ps.executeQuery();
