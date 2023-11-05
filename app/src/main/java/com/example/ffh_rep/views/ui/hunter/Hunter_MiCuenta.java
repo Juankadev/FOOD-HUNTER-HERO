@@ -150,7 +150,6 @@ public class Hunter_MiCuenta extends Fragment {
         et_fechanacimiento.setOnClickListener(v-> showDatePicker());
         et_fechanacimiento.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                // El campo de entrada de fecha ha obtenido el foco, muestra el selector de fechas.
                 showDatePicker();
             }
         });

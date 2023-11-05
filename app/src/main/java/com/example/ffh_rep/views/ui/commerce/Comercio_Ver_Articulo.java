@@ -31,7 +31,7 @@ public class Comercio_Ver_Articulo extends Fragment {
     private CarritoViewModel carrito;
     private Articulo article;
     private FragmentComercioVerArticuloBinding binding;
-    private TextView descripcion, precio, categoria, marca;
+    private TextView descripcion, precio, categoria, marca, tvCantidadArticulo;
     private ImageView ivArticulo;
     private Button btnStock;
 
@@ -72,6 +72,7 @@ public class Comercio_Ver_Articulo extends Fragment {
         marca = view.findViewById(R.id.tvMarcaArt);
         categoria = view.findViewById(R.id.tvCategoriaArt);
         ivArticulo = view.findViewById(R.id.ivArticulo);
+        tvCantidadArticulo = view.findViewById(R.id.tvCantidadArticulo);
 
     }
 
@@ -81,7 +82,7 @@ public class Comercio_Ver_Articulo extends Fragment {
         marca.setText(article.getMarca().getDescripcion());
         categoria.setText(article.getCategoria().getDescripcion());
         Glide.with(view).load(article.getImagen()).into(ivArticulo);
-
+        tvCantidadArticulo.setText(String.valueOf(article.getStockArticulo().getCantidad()));
     }
 
     public void setUpListeners(){

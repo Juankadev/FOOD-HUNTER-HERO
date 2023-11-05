@@ -33,9 +33,10 @@ public class ArticuloRepository {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement ps = con.prepareStatement("SELECT a.id_articulo, a.id_comercio, a.descripcion, a.precio, a.id_categoria, a.id_marca, a.imagen, a.estado, s.id_stock, s.cantidad, s.fecha_vencimiento, c.descripcion as categoria, m.descripcion as marca" +
-                         " FROM Articulos a inner join Stocks s on s.id_articulo = a.id_articulo" +
+                         " FROM Articulos a " +
                          " inner join Categorias c on c.id_categoria = a.id_categoria" +
                          " inner join Marcas m on m.id_marca = a.id_marca " +
+                         " Left join Stocks s on s.id_articulo = a.id_articulo "+
                          "WHERE a.estado = '1' and a.id_comercio ="+id);
                  ResultSet rs = ps.executeQuery()) {
 
@@ -181,6 +182,12 @@ public class ArticuloRepository {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
+
+                    ResultSet keysGenerated = ps.getGeneratedKeys();
+                    int idArt = -1;
+                    if(keysGenerated.next()){
+                        idArt = keysGenerated.getInt(1);
+                    }
                     Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
