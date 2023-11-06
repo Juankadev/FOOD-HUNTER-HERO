@@ -31,16 +31,11 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
 
-
-import org.eazegraph.lib.models.PieModel;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class AdminEstadisticas extends Fragment {
 
