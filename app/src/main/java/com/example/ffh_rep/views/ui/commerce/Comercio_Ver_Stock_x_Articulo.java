@@ -46,7 +46,6 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     private SessionManager sessionManager;
     private Comercio userSession;
     private StocksArticuloComercioListAdapter sacAdapter;
-    private TextView fecha_vencimiento, cantidad;
     private Stock stock;
     private Articulo article;
 
@@ -92,16 +91,6 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
         return view;
     }
 
-    public void initComponentes(View view){
-       /* fecha= new ViewModelProvider(this, new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
-        btnStock = view.findViewById(R.id.btnStock);
-        descripcion = view.findViewById(R.id.tvDescripcionArt);
-        precio = view.findViewById(R.id.tvPrecioArt);
-        marca = view.findViewById(R.id.tvMarcaArt);
-        categoria = view.findViewById(R.id.tvCategoriaArt);
-        ivArticulo = view.findViewById(R.id.ivArticulo);*/
-
-    }
 
     private void initViews(View view){
         btnAniadirStock = view.findViewById(R.id.btn_commerce_addStockArticulo);
@@ -112,10 +101,12 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
     public void initModelsAndAdapters(){
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioVerStocksArticuloViewModelFactory(getActivity())).get(ComercioVerStockXArticuloViewModel.class);
         sacAdapter = new StocksArticuloComercioListAdapter(new ArrayList<>(), getContext());
+
+
     }
 
     private void setUpListeners(){
-        btnAniadirStock.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_agregarArticulo));
+        btnAniadirStock.setOnClickListener(v-> redirectToAgregarStockArticulo());
     }
 
     public void setUpObservers() {
@@ -123,6 +114,14 @@ public class Comercio_Ver_Stock_x_Articulo extends Fragment {
             sacAdapter.setData(stocks);
         });
     }
+
+    //PASO EL ARTICULO POR BUNDLE
+    public void redirectToAgregarStockArticulo(){
+        Bundle args = new Bundle();
+        args.putSerializable("articuloSeleccionadoStock", this.article);
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Stock_x_Articulo_to_comercio_AgregarStockArticulo, args);
+    }
+
 
 
 

@@ -20,19 +20,6 @@
             android:src="@mipmap/ic_launcher" />
 
         <EditText
-            android:id="@+id/txtIDArticulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/border"
-            android:backgroundTint="#75FFFFFF"
-            android:ems="10"
-            android:inputType="number"
-            android:padding="10dp"
-            android:hint="ID Articulo"
-            android:textColor="#FFFFFF" />
-
-        <EditText
             android:id="@+id/txtDescripcionArticulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,9 +27,9 @@
             android:background="@drawable/border"
             android:backgroundTint="#75FFFFFF"
             android:ems="10"
+            android:hint="Descripción"
             android:inputType="text"
             android:padding="10dp"
-            android:hint="Descripción"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -53,9 +40,35 @@
             android:background="@drawable/border"
             android:backgroundTint="#75FFFFFF"
             android:ems="10"
+            android:hint="Precio"
             android:inputType="numberDecimal"
             android:padding="10dp"
-            android:hint="Precio"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/txtFechaVencimientoStockInicial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#75FFFFFF"
+            android:ems="10"
+            android:inputType="date"
+            android:padding="10dp"
+            android:hint="Fecha de Vencimiento"
+            android:textColor="#FFFFFF" />
+
+        <EditText
+            android:id="@+id/txtCantidadStockInicial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border"
+            android:backgroundTint="#75FFFFFF"
+            android:ems="10"
+            android:hint="Cantidad"
+            android:inputType="number"
+            android:padding="10dp"
             android:textColor="#FFFFFF" />
 
         <Spinner

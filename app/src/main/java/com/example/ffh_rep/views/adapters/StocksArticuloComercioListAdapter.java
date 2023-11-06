@@ -58,6 +58,8 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
             vh = new ViewHolder();
             vh.fecha_vencimiento = convertView.findViewById(R.id.tv_item_articulo_stock_fecha_vencimiento);
             vh.cantidad = convertView.findViewById(R.id.tv_item_articulo_stock_cantidad);
+            vh.idlote = convertView.findViewById(R.id.tv_item_articulo_stock_id_lote);
+
             convertView.setTag(vh);
         }
         else{
@@ -66,6 +68,7 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
         Stock s = this.lStocks.get(position);
         vh.fecha_vencimiento.setText(s.getFecha_vencimiento().toString());
         vh.cantidad.setText(String.valueOf(s.getCantidad()));
+        vh.idlote.setText(String.valueOf(s.getId_stock()));
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +83,7 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
 
 
     static class ViewHolder{
-        TextView fecha_vencimiento, cantidad;
+        TextView fecha_vencimiento, cantidad, idlote;
 
     }
 }

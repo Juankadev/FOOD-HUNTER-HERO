@@ -29,10 +29,15 @@ public class StockRepository {
             ) {
                 insertPs.setInt(1, stock.getId_articulo().getIdArticulo());
                 insertPs.setInt(2, stock.getId_comercio().getId());
-                insertPs.setDate(3, (Date) stock.getFecha_vencimiento());
+                insertPs.setDate(3, stock.getFecha_vencimiento());
                 insertPs.setInt(4, stock.getCantidad());
 
                 int rowCount = insertPs.executeUpdate();
+
+                Log.d("STOCK", "-----------");
+                Log.d("DEBUG", stock.toString());
+                Log.d("STOCK", "-----------");
+
 
                 if (rowCount > 0) {
                     Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();

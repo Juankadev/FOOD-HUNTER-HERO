@@ -164,16 +164,15 @@ public class ArticuloRepository {
 
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, id_articulo, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                 PreparedStatement ps = con.prepareStatement("INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
 
                 ps.setString(1, articulo.getDescripcion());
                 ps.setInt(2, articulo.getComercio().getId());
                 ps.setDouble(3, articulo.getPrecio());
                 ps.setInt(4, articulo.getCategoria().getIdCategoria());
                 ps.setInt(5, articulo.getMarca().getIdMarca());
-                ps.setInt(6, articulo.getIdArticulo());
-                ps.setString(7, articulo.getImagen());
-                ps.setString(8, articulo.getEstado());
+                ps.setString(6, articulo.getImagen());
+                ps.setString(7, articulo.getEstado());
 
 
                 int rowsAffected = ps.executeUpdate();

@@ -2,6 +2,7 @@ package com.example.ffh_rep.views.ui.commerce;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -43,8 +45,8 @@ import com.squareup.picasso.Picasso;
 
 public class AgregarArticulo extends Fragment {
 
-    private EditText txtIDArticulo;
-    private EditText txtDescripcionArticulo;
+
+    private EditText txtDescripcionArticulo, txtCantidadStockInicial, txtFechaVencimientoStockInicial;
     private EditText txtPrecioArticulo;
     private Spinner spinnerIDCategoriaArticulo;
     private Spinner spinnerIDMarcaArticulo;
@@ -72,12 +74,16 @@ public class AgregarArticulo extends Fragment {
         View view = inflater.inflate(R.layout.fragment_agregar_articulo, container, false);
 
 
-        txtIDArticulo = view.findViewById(R.id.txtIDArticulo);
+
         txtDescripcionArticulo = view.findViewById(R.id.txtDescripcionArticulo);
         txtPrecioArticulo = view.findViewById(R.id.txtPrecioArticulo);
+        txtCantidadStockInicial = view.findViewById(R.id.txtCantidadStockInicial);
+        txtFechaVencimientoStockInicial = view.findViewById(R.id.txtFechaVencimientoStockInicial);
         spinnerIDCategoriaArticulo = view.findViewById(R.id.spinnerIDCategoriaArticulo);
         spinnerIDMarcaArticulo = view.findViewById(R.id.spinnerIDMarcaArticulo);
         btnAgregarArticulo = view.findViewById(R.id.btnAgregarArticulo);
+
+        setupListeners();
 
         imageViewArticulo = view.findViewById(R.id.imageViewArticulo);
 
@@ -112,18 +118,16 @@ public class AgregarArticulo extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String idArticuloText = txtIDArticulo.getText().toString().trim();
                 String descripcionText = txtDescripcionArticulo.getText().toString().trim();
                 String precioText = txtPrecioArticulo.getText().toString().trim();
 
-                if (idArticuloText.isEmpty() || descripcionText.isEmpty() || precioText.isEmpty() || imageUrlArticulo=="") {
+                if (descripcionText.isEmpty() || precioText.isEmpty() || imageUrlArticulo=="") {
                     Toast.makeText(getContext(), "Por favor, complete todos los campos e inserte imagen del producto", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 Articulo articulo = new Articulo();
 
-                int idArticulo = Integer.parseInt(txtIDArticulo.getText().toString());
                 String descripcion = txtDescripcionArticulo.getText().toString();
                 double precio = Double.parseDouble(txtPrecioArticulo.getText().toString());
                 //SE AGREGA +1 PORQUE EL LISTADO SPINNER ARRANCA EN 0
@@ -131,7 +135,6 @@ public class AgregarArticulo extends Fragment {
                 int idMarca = spinnerIDMarcaArticulo.getSelectedItemPosition()+1;
 
 
-                articulo.setIdArticulo(idArticulo);
                 articulo.setDescripcion(descripcion);
                 Comercio comercio;
                 SessionManager session = new SessionManager(getContext());
@@ -154,6 +157,17 @@ public class AgregarArticulo extends Fragment {
 
         return view;
     }
+
+    private void setupListeners() {
+
+        txtFechaVencimientoStockInicial.setOnClickListener(v-> showDatePicker());
+        txtFechaVencimientoStockInicial.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                showDatePicker();
+            }
+        });
+    }
+
 
     private void requestPermission() {
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
@@ -239,7 +253,6 @@ public class AgregarArticulo extends Fragment {
     }
 
     private void clearFields() {
-        txtIDArticulo.setText("");
         txtDescripcionArticulo.setText("");
         txtPrecioArticulo.setText("");
         spinnerIDCategoriaArticulo.setSelection(0);
@@ -247,6 +260,18 @@ public class AgregarArticulo extends Fragment {
         imageViewArticulo.setImageResource(R.mipmap.ic_launcher); 
         imagePath = null;
         imageUrlArticulo = "";
+    }
+
+    public void showDatePicker(){
+        DatePickerDialog dpdialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                txtFechaVencimientoStockInicial.setText(date);
+            }
+        }, 2023, 11, 3);
+
+        dpdialog.show();
     }
 
 }
