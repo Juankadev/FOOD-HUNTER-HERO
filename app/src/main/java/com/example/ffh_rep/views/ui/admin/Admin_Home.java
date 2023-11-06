@@ -35,8 +35,8 @@ public class Admin_Home extends Fragment {
         View view = binding.getRoot();
         initViews(view);
 
-        resComercios.setText(String.valueOf(mViewModel.getCantidadComercios()));
-        resHunters.setText(String.valueOf(mViewModel.getCantidadHunters()));
+        resComercios.setText(mViewModel.getCantidadComercios());
+        resHunters.setText(mViewModel.getCantidadHunters());
 
         return view;
     }

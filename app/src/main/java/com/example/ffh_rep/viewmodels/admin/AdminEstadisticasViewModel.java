@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.models.repositories.AdminRepository;
 
+import java.util.Map;
+
 public class AdminEstadisticasViewModel extends ViewModel {
     private Context ctx;
     private  AdminRepository adminRepo;
@@ -16,5 +18,6 @@ public class AdminEstadisticasViewModel extends ViewModel {
         this.adminRepo = new AdminRepository();
     }
 
-    public Integer[] getEstadisticas(){ return adminRepo.getEstadisticas(); }
+    public String[] getEstadisticas(String desde, String hasta){ return adminRepo.getEstadisticas(desde,hasta); }
+    public Map<String,Integer> getCategoriasMasCazadas(String desde, String hasta){ return adminRepo.getCategoriasMasCazadas(desde,hasta); }
 }
