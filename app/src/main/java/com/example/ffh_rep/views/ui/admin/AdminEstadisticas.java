@@ -35,7 +35,7 @@ public class AdminEstadisticas extends Fragment {
     private AdminEstadisticasViewModel mViewModel;
     private EditText et_desde, et_hasta;
     private Button btn_filtrar;
-    private TextView result_cantidad_compras, result_articulo_mayor_cazas, result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
+    private TextView result_categorias, result_cantidad_compras, result_articulo_mayor_cazas, result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
     private FragmentAdminEstadisticasBinding binding;
 
     public static AdminEstadisticas newInstance() {
@@ -63,6 +63,7 @@ public class AdminEstadisticas extends Fragment {
         result_comercios_aprobados = view.findViewById(R.id.result_comercios_aprobados);
         result_articulo_mayor_cazas = view.findViewById(R.id.result_articulo_mayor_cazas);
         result_cantidad_compras = view.findViewById(R.id.result_cantidad_compras);
+        result_categorias = view.findViewById(R.id.result_categorias);
         mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
     }
 
@@ -108,9 +109,16 @@ public class AdminEstadisticas extends Fragment {
     private void filtrar() {
         String desde = et_desde.getText().toString();
         String hasta = et_hasta.getText().toString();
-
         try {
             if(validarFechas(desde, hasta)){
+                //formatear fechas a formato phpmyadmin
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date_desde = inputFormat.parse(desde);
+                Date date_hasta = inputFormat.parse(hasta);
+                desde = outputFormat.format(date_desde);
+                hasta = outputFormat.format(date_hasta);
+
                 setEstadisticas(desde,hasta);
             }
         }
@@ -129,6 +137,7 @@ public class AdminEstadisticas extends Fragment {
         result_comercios_aprobados.setText(results[3]);
         result_articulo_mayor_cazas.setText(results[4]);
         result_cantidad_compras.setText(results[5]);
+        result_categorias.setText(results[6]);
     }
 
     public void showDatePickerDesde(){

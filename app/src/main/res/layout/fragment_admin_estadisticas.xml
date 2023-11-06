@@ -99,7 +99,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:text="@string/productos_cazados"
         android:textAlignment="center"
         android:textSize="16sp"
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
-        android:text="@string/productos_cazados"
+        android:text="Cantidad de Compras"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/productos_cazados"
+        android:text="Producto mas cazado"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -139,7 +139,7 @@
         android:id="@+id/tv_comercios_aprobados"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:text="@string/comercios_aprobados"
         android:textAlignment="center"
@@ -166,7 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_cazadores_rango_maximo" />
@@ -188,7 +188,7 @@
         android:id="@+id/result_cazadores_rango_minimo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="92dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -218,12 +218,12 @@
         android:id="@+id/result_articulo_mayor_cazas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="92dp"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_producto_mayor_caza"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintVertical_bias="0.171" />
 
     <TextView
         android:id="@+id/result_cantidad_compras"
@@ -235,5 +235,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_compras"
         app:layout_constraintVertical_bias="0.161" />
+
+    <TextView
+        android:id="@+id/result_categorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_compras"
+        app:layout_constraintVertical_bias="0.576" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
