@@ -192,4 +192,28 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_comercios_aprobados"
         app:layout_constraintVertical_bias="0.189" />
 
+    <TextView
+        android:id="@+id/result_articulo_mayor_cazas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="216dp"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_comercios_aprobados"
+        app:layout_constraintVertical_bias="0.628" />
+
+    <TextView
+        android:id="@+id/result_cantidad_compras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="316dp"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_comercios_aprobados"
+        app:layout_constraintVertical_bias="0.737" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

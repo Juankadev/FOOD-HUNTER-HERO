@@ -15,6 +15,6 @@ public class AdminHomeViewModel extends ViewModel {
         this.ctx = ctx;
         this.adminRepo = new AdminRepository();
     }
-    public Integer getCantidadComercios(){ return adminRepo.getCantidadComercios(); }
-    public Integer getCantidadHunters(){ return adminRepo.getCantidadHunters(); }
+    public String getCantidadComercios(){ return adminRepo.getCantidadComercios(); }
+    public String getCantidadHunters(){ return adminRepo.getCantidadHunters(); }
 }

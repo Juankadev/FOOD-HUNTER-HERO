@@ -16,5 +16,5 @@ public class AdminEstadisticasViewModel extends ViewModel {
         this.adminRepo = new AdminRepository();
     }
 
-    public Integer[] getEstadisticas(){ return adminRepo.getEstadisticas(); }
+    public String[] getEstadisticas(String desde, String hasta){ return adminRepo.getEstadisticas(desde,hasta); }
 }

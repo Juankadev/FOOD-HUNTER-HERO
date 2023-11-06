@@ -35,7 +35,7 @@ public class AdminEstadisticas extends Fragment {
     private AdminEstadisticasViewModel mViewModel;
     private EditText et_desde, et_hasta;
     private Button btn_filtrar;
-    private TextView result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
+    private TextView result_cantidad_compras, result_articulo_mayor_cazas, result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
     private FragmentAdminEstadisticasBinding binding;
 
     public static AdminEstadisticas newInstance() {
@@ -61,7 +61,8 @@ public class AdminEstadisticas extends Fragment {
         result_cazadores_rango_minimo = view.findViewById(R.id.result_cazadores_rango_minimo);
         result_productos_cazados = view.findViewById(R.id.result_productos_cazados);
         result_comercios_aprobados = view.findViewById(R.id.result_comercios_aprobados);
-
+        result_articulo_mayor_cazas = view.findViewById(R.id.result_articulo_mayor_cazas);
+        result_cantidad_compras = view.findViewById(R.id.result_cantidad_compras);
         mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
     }
 
@@ -75,7 +76,7 @@ public class AdminEstadisticas extends Fragment {
         if (!desde.isEmpty() && !hasta.isEmpty())
         {
             // Define un formato para las fechas
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd//MM/yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
             //COMPARAR FECHAS
             try {
@@ -105,12 +106,12 @@ public class AdminEstadisticas extends Fragment {
         }
     }
     private void filtrar() {
-        String desde_string = et_desde.getText().toString();
-        String hasta_string = et_hasta.getText().toString();
+        String desde = et_desde.getText().toString();
+        String hasta = et_hasta.getText().toString();
 
         try {
-            if(validarFechas(desde_string, hasta_string)){
-                setEstadisticas();
+            if(validarFechas(desde, hasta)){
+                setEstadisticas(desde,hasta);
             }
         }
         catch (Exception e) {
@@ -120,12 +121,14 @@ public class AdminEstadisticas extends Fragment {
     }
 
     //Obtener estadisticas de la db y setear textviews
-    private void setEstadisticas(){
-        Integer[] results = mViewModel.getEstadisticas();
-        result_cazadores_rango_maximo.setText(results[0].toString());
-        result_cazadores_rango_minimo.setText(results[1].toString());
-        result_productos_cazados.setText(results[2].toString());
-        result_comercios_aprobados.setText(results[3].toString());
+    private void setEstadisticas(String desde, String hasta){
+        String[] results = mViewModel.getEstadisticas(desde,hasta);
+        result_cazadores_rango_maximo.setText(results[0]);
+        result_cazadores_rango_minimo.setText(results[1]);
+        result_productos_cazados.setText(results[2]);
+        result_comercios_aprobados.setText(results[3]);
+        result_articulo_mayor_cazas.setText(results[4]);
+        result_cantidad_compras.setText(results[5]);
     }
 
     public void showDatePickerDesde(){
