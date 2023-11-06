@@ -171,7 +171,8 @@ public class Comercio_MiCuenta extends Fragment {
         if(validateInput()){
 
             updateCommerce = new Comercio();
-
+            updateCommerce.setRazonSocial(this.et_razonsocial_mc.getText().toString());
+            updateCommerce.setCuit(this.et_cuit_mc.getText().toString());
             updateCommerce.setId(this.userSession.getId());
             updateCommerce.setRubro(et_rubro_mc.getText().toString());
             updateCommerce.setEmail(et_correo_mc.getText().toString());
