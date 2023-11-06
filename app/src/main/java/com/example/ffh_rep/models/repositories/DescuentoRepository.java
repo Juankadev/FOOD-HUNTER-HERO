@@ -220,4 +220,47 @@ public class DescuentoRepository {
             }
         });
     }
+
+    public void listarDescuentos_byIdHunter(MutableLiveData<List<Beneficio>> list, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter){
+        CompletableFuture.supplyAsync(() -> {
+            List<Beneficio> lBeneficios = new ArrayList<>();
+            loading.postValue(true);
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT B.*, C.*" +
+                         " FROM Beneficios B" +
+                         " INNER JOIN Beneficios_Hunters BH ON B.id_beneficio = BH.id_beneficio" +
+                         " INNER JOIN Comercios C ON B.id_comercio = C.id_comercio" +
+                         " WHERE BH.id_hunter = ?;");
+                ) {
+                ps.setInt(1, hunter.getIdHunter());
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    Beneficio beneficio = new Beneficio();
+                    beneficio.setId_beneficio(rs.getInt("id_beneficio"));
+                    beneficio.setDescripcion(rs.getString("descripcion"));
+                    beneficio.setPuntos_requeridos(rs.getInt("puntos_requeridos"));
+                    beneficio.setId_comercio(new Comercio());
+                    beneficio.getId_comercio().setId(rs.getInt("id_comercio"));
+                    beneficio.getId_comercio().setRazonSocial(rs.getString("razon_social"));
+                    lBeneficios.add(beneficio);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                loading.postValue(false);
+                error.postValue(true);
+            }
+            return lBeneficios;
+        }).thenAcceptAsync(beneficios -> {
+            if (beneficios != null) {
+                loading.postValue(false);
+                success.postValue(true);
+                list.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
+            } else {
+                list.postValue(new ArrayList<>());
+                loading.postValue(false);
+                success.postValue(true);
+            }
+        });
+    }
 }

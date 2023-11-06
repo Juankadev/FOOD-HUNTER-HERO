@@ -118,4 +118,9 @@
             android:id="@+id/action_nav_hunter_MisComerciosFavoritos_to_hunter_VerComercio"
             app:destination="@id/hunter_VerComercio" />
     </fragment>
+    <fragment
+        android:id="@+id/hunter_MisBeneficios"
+        android:name="com.example.ffh_rep.views.ui.hunter.Hunter_MisBeneficios"
+        android:label="fragment_hunter__mis_beneficios"
+        tools:layout="@layout/fragment_hunter__mis_beneficios" />
 </navigation>

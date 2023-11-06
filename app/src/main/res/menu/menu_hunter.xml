@@ -20,9 +20,8 @@
             android:title="Mis Comercios Favoritos"
             />
         <item
-            android:id="@+id/nav_hunter_MisDescuentos"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Mis Descuentos"
+            android:id="@+id/hunter_MisBeneficios"
+            android:title="Mis Beneficios"
             />
     </group>
 </menu>
