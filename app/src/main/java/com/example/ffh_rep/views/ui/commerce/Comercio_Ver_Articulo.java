@@ -9,21 +9,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioVerArticuloBinding;
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Categoria;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Marca;
+import com.example.ffh_rep.entidades.Stock;
+import com.example.ffh_rep.models.repositories.ArticuloRepository;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.factory.ArticuloViewModelFactory;
 import com.example.ffh_rep.views.ui.hunter.Hunter_VerArticulo;
 import com.example.ffh_rep.viewmodels.hunter.ArticulosViewModel;
 import com.example.ffh_rep.viewmodels.hunter.CarritoViewModel;
+
+import java.sql.Date;
 
 public class Comercio_Ver_Articulo extends Fragment {
 
@@ -33,7 +43,7 @@ public class Comercio_Ver_Articulo extends Fragment {
     private FragmentComercioVerArticuloBinding binding;
     private TextView descripcion, precio, categoria, marca, tvCantidadArticulo;
     private ImageView ivArticulo;
-    private Button btnStock;
+    private Button btnStock, btnEliminar, btnModificar;
 
     public static Comercio_Ver_Articulo newInstance() {
         return new Comercio_Ver_Articulo();
@@ -67,6 +77,8 @@ public class Comercio_Ver_Articulo extends Fragment {
     public void initComponentes(View view){
         controller_articulos = new ViewModelProvider(this, new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
         btnStock = view.findViewById(R.id.btnStock);
+        btnEliminar = view.findViewById(R.id.btnEliminar);
+        btnModificar = view.findViewById(R.id.btnModificar);
         descripcion = view.findViewById(R.id.tvDescripcionArt);
         precio = view.findViewById(R.id.tvPrecioArt);
         marca = view.findViewById(R.id.tvMarcaArt);
@@ -86,12 +98,27 @@ public class Comercio_Ver_Articulo extends Fragment {
 
     public void setUpListeners(){
         btnStock.setOnClickListener(v-> redirectToStockxArticulos());
+
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eliminarArticulo(article);
+            }
+        });
+
     }
 
     public void redirectToStockxArticulos(){
         Bundle args = new Bundle();
         args.putSerializable("articuloAseleccionar", this.article);
         Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo, args);
+    }
+
+    public void eliminarArticulo(Articulo articulo){
+        ArticuloRepository articuloRepository = new ArticuloRepository();
+        articuloRepository.eliminarArticulo(getContext(), articulo);
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Articulo_to_commerce_MisArticulos2);
+
     }
 
 

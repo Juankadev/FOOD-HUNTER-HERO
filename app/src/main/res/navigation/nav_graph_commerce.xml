@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_comercio_Ver_Articulo_to_comercio_ModificarArticulo"
             app:destination="@id/comercio_ModificarArticulo" />
+        <action
+            android:id="@+id/action_comercio_Ver_Articulo_to_commerce_MisArticulos2"
+            app:destination="@id/commerce_MisArticulos" />
     </fragment>
     <fragment
         android:id="@+id/comercio_EscanearQr"
