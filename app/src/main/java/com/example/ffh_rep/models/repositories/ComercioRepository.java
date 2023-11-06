@@ -16,6 +16,8 @@ import com.example.ffh_rep.utils.DBUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -227,20 +229,48 @@ public class ComercioRepository {
 
     }
 
+
     public void aprobarComercio(Comercio comercio, Context ctx){
         CompletableFuture.runAsync(() -> {
+            Connection con = DBUtil.getConnection();
+
             try {
-                Connection con = DBUtil.getConnection();
-                String query = "Update Comercios set aprobado = 'Aprobado' where id_comercio = ?";
-                PreparedStatement ps = con.prepareStatement(query);
+                //GET ID_USUARIO
+                PreparedStatement ps_idusuario = con.prepareStatement("Select id_usuario from Comercios where id_comercio = ?");
+                ps_idusuario.setInt(1, comercio.getId());
+                ResultSet rs = ps_idusuario.executeQuery();
 
-                ps.setInt(1, comercio.getId());
+                Integer id_usuario=-1;
+                while (rs.next()) {
+                    id_usuario = rs.getInt("id_usuario");
+                }
 
-                int rowsAffected = ps.executeUpdate();
-                ps.close();
-                DBUtil.closeConnection(con);
-                if(rowsAffected > 0){
 
+                // Iniciar una transacción
+                con.setAutoCommit(false);
+                // Realizar operaciones de base de datos dentro de la transacción
+
+                //UPDATE USUARIO
+                String query_usuario = "Update Usuarios set estado = 1 where id_usuario = ?";
+                PreparedStatement ps_usuario = con.prepareStatement(query_usuario);
+                ps_usuario.setInt(1, id_usuario);
+                int rowsAffectedUsuario = ps_usuario.executeUpdate();
+
+
+                //UPDATE COMERCIO
+                String query_comercio = "Update Comercios set aprobado = 'Aprobado' where id_comercio = ?";
+                PreparedStatement ps_comercio = con.prepareStatement(query_comercio);
+                ps_comercio.setInt(1, comercio.getId());
+                int rowsAffectedComercio = ps_comercio.executeUpdate();
+
+
+                // Confirmar la transacción
+                con.commit();
+                ps_usuario.close();
+                ps_comercio.close();
+
+
+                if(rowsAffectedUsuario > 0 && rowsAffectedComercio > 0){
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
@@ -256,11 +286,32 @@ public class ComercioRepository {
                         }
                     });
                 }
+
+
             }
-            catch (Exception e){
+            catch (SQLException e){
+                try {
+                    // Deshacer la transacción en caso de error
+                    con.rollback();
+                } catch (SQLException rollbackException) {
+                    rollbackException.printStackTrace();
+                }
                 e.printStackTrace();
                 Toast.makeText(ctx, "Ocurrió un error al aprobar el comercio", Toast.LENGTH_LONG).show();
             }
+            finally {
+                if (con != null) {
+                    try {
+                        // Restaurar el modo de autocommit
+                        con.setAutoCommit(true);
+                        con.close();
+                        DBUtil.closeConnection(con);
+                    } catch (SQLException closeException) {
+                        closeException.printStackTrace();
+                    }
+                }
+            }
+
         });
 
     }
