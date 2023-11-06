@@ -37,6 +37,7 @@ import com.example.ffh_rep.models.repositories.ArticuloRepository;
 import com.example.ffh_rep.models.repositories.CategoriaRepository;
 import com.example.ffh_rep.models.repositories.ImageRepository;
 import com.example.ffh_rep.models.repositories.MarcaRepository;
+import com.example.ffh_rep.models.repositories.StockRepository;
 import com.example.ffh_rep.utils.SessionManager;
 
 import androidx.lifecycle.MutableLiveData;
@@ -44,6 +45,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.squareup.picasso.Picasso;
 
@@ -157,7 +159,7 @@ public class AgregarArticulo extends Fragment {
                 Stock stock = new Stock();
                 stock.setCantidad(Integer.valueOf(txtCantidadStockInicial.getText().toString()));
                 stock.setFecha_vencimiento(Date.valueOf(txtFechaVencimientoStockInicial.getText().toString()));
-                Log.d("fecha antes de mandar", stock.getFecha_vencimiento().toString());
+                Log.d("Fecha antes de mandar", stock.getFecha_vencimiento().toString());
 
                 insertarArticulo(articulo, stock);
 
@@ -255,9 +257,31 @@ public class AgregarArticulo extends Fragment {
     private void insertarArticulo(Articulo articulo, Stock stock) {
         ArticuloRepository articuloRepository = new ArticuloRepository();
         Context context = requireContext();
-        articuloRepository.insertArticulo(context, articulo);
+
+        CompletableFuture<Void> insertArticuloFuture = CompletableFuture.runAsync(() -> {
+            articuloRepository.insertArticulo(context, articulo);
+        });
+
+        insertArticuloFuture.thenRun(() -> {
+            CompletableFuture<Articulo> obtenerUltimoArticuloFuture = articuloRepository.obtenerUltimoArticuloInsertadoAsync();
+
+            obtenerUltimoArticuloFuture.thenAccept(articuloInsertado -> {
+                Log.d("ULTIMO ARTICULO INSERTADO", "------------------------");
+                Log.d("Fecha antes de mandar", articuloInsertado.toString());
+                Log.d("ULTIMO ARTICULO INSERTADO", "------------------------");
+
+                stock.setId_articulo(articuloInsertado);
+                stock.setId_comercio(articuloInsertado.getComercio());
+
+                StockRepository stockRepository = new StockRepository();
+                stockRepository.insertarNuevoStock(context, stock);
+
+
+            });
+        });
         clearFields();
     }
+
 
     public void goBack() {
         requireActivity().onBackPressed();

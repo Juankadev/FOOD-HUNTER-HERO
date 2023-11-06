@@ -1,6 +1,7 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -179,11 +180,6 @@ public class ArticuloRepository {
 
                 if (rowsAffected > 0) {
 
-                    ResultSet keysGenerated = ps.getGeneratedKeys();
-                    int idArt = -1;
-                    if(keysGenerated.next()){
-                        idArt = keysGenerated.getInt(1);
-                    }
                     Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
@@ -201,6 +197,38 @@ public class ArticuloRepository {
      * @param context  Contexto de la aplicación.
      * @param articulo Objeto Articulo con la información actualizada.
      */
+
+    public CompletableFuture<Articulo> obtenerUltimoArticuloInsertadoAsync() {
+        return CompletableFuture.supplyAsync(() -> {
+            Articulo articulo = null;
+
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Articulos ORDER BY id_articulo DESC LIMIT 1");
+                 ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id_articulo");
+                    String descripcion = rs.getString("descripcion");
+                    Double precio = rs.getDouble("precio");
+                    int id_categoria = rs.getInt("id_categoria");
+
+                    articulo = new Articulo();
+                    articulo.setIdArticulo(id);
+                    articulo.setDescripcion(descripcion);
+                    articulo.setPrecio(precio);
+                    articulo.setCategoria(new Categoria());
+                    articulo.getCategoria().setIdCategoria(id_categoria);
+                    articulo.setComercio(new Comercio());
+                    articulo.getComercio().setId(rs.getInt("id_comercio"));
+                    articulo.setImagen(rs.getString("imagen"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return articulo;
+        });
+    }
+
     public void updateArticulo(Context context, Articulo articulo) {
         CompletableFuture.runAsync(() -> {
             try (Connection con = DBUtil.getConnection();
@@ -232,7 +260,7 @@ public class ArticuloRepository {
     /**
      * Busca un artículo en la base de datos por su ID de artículo.
      * Ejemplo de como utilizar esta funcion
-     * 
+     *
      * buscarArticuloPorID(ID)
      *  .thenAcceptAsync(articulos -> {
      *      if (articulos != null) {
@@ -245,7 +273,7 @@ public class ArticuloRepository {
      *          // Manejar el caso de error
      *      }
      *  });
-     * 
+     *
      * @param idArticulo ID del artículo a buscar.
      * @return CompletableFuture que contiene el artículo si se encuentra, o null si no existe.
      */
@@ -294,7 +322,7 @@ public class ArticuloRepository {
      *          // Manejar el caso de error
      *      }
      *  });
-     * 
+     *
      * @param descripcion Término de búsqueda para la descripción de los artículos.
      * @return CompletableFuture que contiene una lista de artículos que coinciden con la descripción.
      */
