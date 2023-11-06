@@ -1,6 +1,8 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,15 +44,33 @@ public class StockRepository {
 
 
                 if (rowCount > 0) {
-                    Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
 
                 } else {
-                    Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
             }
         });
