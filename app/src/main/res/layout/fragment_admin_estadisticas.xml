@@ -8,11 +8,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout_busqueda"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="293dp"
+        android:layout_width="414dp"
+        android:layout_height="206dp"
         android:background="#00BE15"
-        app:layout_constraintBottom_toTopOf="@+id/pie_chart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
             android:text="@string/estadisticas_titulo"
@@ -31,6 +29,7 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
@@ -40,6 +39,7 @@
             android:layout_width="155dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:background="#929497"
             android:ems="10"
             android:focusable="false"
@@ -49,17 +49,15 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_nota"
-            app:layout_constraintVertical_bias="0.659"
             tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/et_hasta"
             android:layout_width="155dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="#929497"
             android:ems="10"
@@ -70,10 +68,8 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_nota"
-            app:layout_constraintVertical_bias="0.407"
             tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
 
         <TextView
@@ -87,25 +83,25 @@
             app:layout_constraintStart_toEndOf="@+id/et_desde"
             app:layout_constraintTop_toBottomOf="@+id/et_desde" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/filtrar"
+            android:layout_width="225dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/filtrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_hasta" />
 
-    <Button
-        android:id="@+id/filtrar"
-        android:layout_width="225dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/filtrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tv_productos_cazados"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/productos_cazados"
+        android:layout_marginTop="16dp"
+        android:text="Cantidad de productos cazados"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -116,8 +112,8 @@
         android:id="@+id/tv_cantidad_compras"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:text="Cantidad de Compras"
         android:textAlignment="center"
         android:textSize="16sp"
@@ -130,7 +126,7 @@
         android:id="@+id/tv_producto_mayor_caza"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Producto mas cazado"
         android:textAlignment="center"
@@ -144,7 +140,7 @@
         android:id="@+id/tv_comercios_aprobados"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/comercios_aprobados"
         android:textAlignment="center"
@@ -158,13 +154,13 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:text="@string/cazadores_rango"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filtrar" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
 
     <TextView
         android:id="@+id/result_cazadores_rango_maximo"
@@ -181,14 +177,27 @@
         android:id="@+id/tv_cazadores_rango_minimo"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/cazadores_rango_m"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filtrar" />
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+
+    <TextView
+        android:id="@+id/tv_pie_chart"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="128dp"
+        android:text="Top 3 Categorias"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
 
     <TextView
         android:id="@+id/result_cazadores_rango_minimo"
@@ -214,8 +223,8 @@
         android:id="@+id/result_productos_cazados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -228,10 +237,10 @@
         android:layout_marginEnd="92dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_pie_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_producto_mayor_caza"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_producto_mayor_caza" />
+
 
     <TextView
         android:id="@+id/result_cantidad_compras"
@@ -239,20 +248,19 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_pie_chart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_compras"
-        app:layout_constraintVertical_bias="0.161" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_compras" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pie_chart"
-        android:layout_width="311dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="313dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.02"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

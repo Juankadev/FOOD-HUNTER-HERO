@@ -165,15 +165,18 @@ public class AdminEstadisticas extends Fragment {
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
 
         for(String categoria: categorias.keySet()){
-            pieEntries.add(new PieEntry(categorias.get(categoria).floatValue(), categoria));
+            pieEntries.add(new PieEntry(categorias.get(categoria).intValue(), categoria));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Categorias");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries,"- CATEGORIAS");
         pieDataSet.setValueTextSize(12f);
         pieDataSet.setColors(colores);
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(true);
 
+        pie_chart.getDescription().setEnabled(false);
+        pie_chart.setNoDataText("No hay datos disponibles");
+        pie_chart.setNoDataTextColor(Color.BLACK);
         pie_chart.setData(pieData);
         pie_chart.invalidate();
     }
