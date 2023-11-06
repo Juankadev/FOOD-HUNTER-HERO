@@ -44,8 +44,16 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
 
             int rowsAffected = preparedStatement.executeUpdate();
             preparedStatement.close();
-            con.close();
 
+
+            //Dar de baja usuario, hasta que sea aprobado por el admin
+            query = "UPDATE Usuarios set estado = 0 where id_usuario = ?";
+            preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, this.comercio.getUser().getId_usuario());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            con.close();
            
             return rowsAffected > 0;
 
