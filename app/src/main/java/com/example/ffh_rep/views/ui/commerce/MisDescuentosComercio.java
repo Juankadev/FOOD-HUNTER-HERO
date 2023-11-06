@@ -32,7 +32,7 @@ import java.util.List;
 public class MisDescuentosComercio extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
     private FragmentComercioMisDescuentosBinding binding;
-    private Button btnAddDescuento, btnMisArticulos;
+    private Button btnAddDescuento;
     private GridView gv_descuentos;
     private SessionManager sessionManager;
     private Comercio userSession;
@@ -65,9 +65,12 @@ public class MisDescuentosComercio extends Fragment {
      * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
      */
     public void initializeViews(View view){
-        this.btnMisArticulos = view.findViewById(R.id.btnMisArticulos);
         this.btnAddDescuento = view.findViewById(R.id.btnAddDescuento);
         this.gv_descuentos = view.findViewById(R.id.gv_descuentos_comerciodetail);
+    }
+
+    public void setUpListeners() {
+        btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
     }
 
     public void initModelsAndAdapters(){
@@ -88,12 +91,4 @@ public class MisDescuentosComercio extends Fragment {
         initModelsAndAdapters();
     }
 
-    /**
-     * Configura los listeners de la interfaz.
-     * Asigna los métodos correspondientes a los eventos.
-     */
-    public void setUpListeners() {
-        btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
-        //btnMisArticulos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_commerce_MisArticulos));
-    }
 }

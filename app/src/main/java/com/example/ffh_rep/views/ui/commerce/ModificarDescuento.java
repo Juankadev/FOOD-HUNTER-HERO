@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -16,8 +17,8 @@ import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Beneficio;
-import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.viewmodels.commerce.MisDescuentosComercioViewModel;
+import com.example.ffh_rep.viewmodels.factory.DescuentosViewModelFactory;
 
 public class ModificarDescuento extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
@@ -31,10 +32,11 @@ public class ModificarDescuento extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_modificar_descuento, container, false);
+        View view = inflater.inflate(R.layout.fragment_comercio_modificar_descuento, container, false);
 
         initComponentes(view);
         setupListeners();
+        mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
 
         return view;
     }
@@ -48,52 +50,36 @@ public class ModificarDescuento extends Fragment {
 
     private void setupListeners() {
         btnModificarDescuento.setOnClickListener((v-> modBeneficio()));
-        //btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_modificarDescuento_to_fragmentAgregarDescuentoComercio));
+        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_modificarDescuento_to_fragmentAgregarDescuentoComercio));
     }
 
     private void modBeneficio(){
-        /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
-        Beneficio beneficio = new Beneficio();
-        beneficio.setDescripcion(txtDescripcion.getText().toString());
-        beneficio.setPuntos_requeridos(Integer.parseInt(txtPuntos.getText().toString()));
-
+        /// OBTENGO EL ID DEL ARTICULO A MODIFICAR
         Bundle bundle = getArguments();
         int id = (int) bundle.getSerializable("idBeneficioSelect");
 
-        beneficio.setId_beneficio(id);
+        if (!txtPuntos.getText().toString().isEmpty() && !txtDescripcion.getText().toString().isEmpty()) {
+            // Verificar que txtPuntos contenga un número mayor a 0
+            int puntos = Integer.parseInt(txtPuntos.getText().toString());
+            if (puntos > 0) {
+                // INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
+                Beneficio beneficio = new Beneficio();
 
-        /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
-        if(validateInput()){
-            mViewModel.editarBeneficio(beneficio);
-            txtDescripcion.setText("");
-            txtPuntos.setText("");
-        }
-        else {
+                beneficio.setDescripcion(txtDescripcion.getText().toString());
+                beneficio.setPuntos_requeridos(puntos);
+                beneficio.setId_beneficio(id);
+
+                mViewModel.editarBeneficio(beneficio);
+
+                txtDescripcion.setText("");
+                txtPuntos.setText("");
+            } else {
+                Toast.makeText(getContext(), "Por favor, ingrese un número mayor a 0 en el campo de puntos requeridos", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         }
-    }
 
-    private boolean validateInput() {
-        boolean isValid = true;
-
-        // Validar descripcion
-        if (txtDescripcion.getText().toString().isEmpty()) {
-            txtDescripcion.setError("Este campo es requerido");
-            isValid = false;
-        }
-        // Validar puntos
-        if (txtPuntos.getText().toString().isEmpty()) {
-            txtPuntos.setError("Este campo es requerido");
-            isValid = false;
-        } else if (!GeneralHelper.isNumeric(txtPuntos.getText().toString())) {
-            txtPuntos.setError("El telefono debe ser numérico");
-            isValid = false;
-        } else if (Integer.parseInt(txtPuntos.getText().toString()) <= 0){
-            txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
-            isValid = false;
-        }
-
-        return isValid;
     }
 
 }

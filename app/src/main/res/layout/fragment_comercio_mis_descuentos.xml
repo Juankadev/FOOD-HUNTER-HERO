@@ -22,9 +22,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Mis Descuentos"
+            android:text="@string/mis_descuentos"
             android:textColor="#FDFDFD"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -54,7 +55,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="67dp"
         android:horizontalSpacing="16dp"
-        android:numColumns="1"
+        android:numColumns="2"
         android:verticalSpacing="16dp">
 
     </GridView>

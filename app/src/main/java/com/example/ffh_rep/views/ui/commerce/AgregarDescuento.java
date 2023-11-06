@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
-import com.example.ffh_rep.utils.GeneralHelper;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.commerce.MisDescuentosComercioViewModel;
 import com.example.ffh_rep.viewmodels.factory.DescuentosViewModelFactory;
@@ -35,7 +34,7 @@ public class AgregarDescuento extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_comercio_agregardescuento, container, false);
+        View view = inflater.inflate(R.layout.fragment_comercio_agregar_descuento, container, false);
 
         initComponentes(view);
         setUpListeners();
@@ -52,53 +51,34 @@ public class AgregarDescuento extends Fragment {
     }
 
     public void setUpListeners() {
+        btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_agregarDescuento_to_fragmentAgregarDescuentoComercio));
         btnAgregarDescuento.setOnClickListener(v-> addBeneficio());
     }
 
-    private void addBeneficio(){
+    private void addBeneficio() {
         /// OBTENGO EL COMERCIO PARA POSTERIORMENTE SACAR SU ID
         SessionManager session = new SessionManager(getContext());
         Comercio comercio = session.getCommerceSession();
 
-        /// INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
-        Beneficio beneficio = new Beneficio();
-        beneficio.setId_comercio(comercio);
-        beneficio.setDescripcion(txtDescripcion.getText().toString());
-        beneficio.setPuntos_requeridos(Integer.parseInt(txtPuntos.getText().toString()));
-        beneficio.setEstado(true);
+        if (!txtPuntos.getText().toString().isEmpty() && !txtDescripcion.getText().toString().isEmpty()) {
+            // Verificar que txtPuntos contenga un número mayor a 0
+            int puntos = Integer.parseInt(txtPuntos.getText().toString());
+            if (puntos > 0) {
+                // INSTANCIO UN OBJETO BENEFICIO Y SETEO LOS VALORES
+                Beneficio beneficio = new Beneficio();
+                beneficio.setId_comercio(comercio);
+                beneficio.setDescripcion(txtDescripcion.getText().toString());
+                beneficio.setPuntos_requeridos(puntos);
+                beneficio.setEstado(true);
 
-        /// VERIFICO LOS INPUTS Y USO EL METODO PARA INSERTAR EL BENEFICIO
-        if(validateInput()){
-            mViewModel.insertarBeneficio(beneficio);
-            txtDescripcion.setText("");
-            txtPuntos.setText("");
-        }
-        else {
+                mViewModel.insertarBeneficio(beneficio);
+                txtDescripcion.setText("");
+                txtPuntos.setText("");
+            } else {
+                Toast.makeText(getContext(), "Por favor, ingrese un número mayor a 0 en el campo de puntos requeridos", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private boolean validateInput() {
-        boolean isValid = true;
-
-        // Validar descripcion;
-        if (txtDescripcion.getText().toString().isEmpty()) {
-            txtDescripcion.setError("Este campo es requerido");
-            isValid = false;
-        }
-        // Validar puntos
-        if (txtPuntos.getText().toString().isEmpty()) {
-            txtPuntos.setError("Este campo es requerido");
-            isValid = false;
-        } else if (!GeneralHelper.isNumeric(txtPuntos.getText().toString())) {
-            txtPuntos.setError("El telefono debe ser numérico");
-            isValid = false;
-        } else if (Integer.parseInt(txtPuntos.getText().toString()) <= 0){
-            txtPuntos.setError("Los puntos requeridos deben ser mayores a 0");
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
 }

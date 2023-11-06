@@ -26,12 +26,20 @@
         android:id="@+id/agregarDescuento"
         android:name="com.example.ffh_rep.views.ui.commerce.AgregarDescuento"
         android:label="fragment_comercio_agregardescuento"
-        tools:layout="@layout/fragment_comercio_agregardescuento" />
+        tools:layout="@layout/fragment_comercio_agregar_descuento" >
+        <action
+            android:id="@+id/action_agregarDescuento_to_fragmentAgregarDescuentoComercio"
+            app:destination="@id/fragmentAgregarDescuentoComercio" />
+    </fragment>
     <fragment
         android:id="@+id/modificarDescuento"
         android:name="com.example.ffh_rep.views.ui.commerce.ModificarDescuento"
         android:label="fragment_modificar_descuento"
-        tools:layout="@layout/fragment_modificar_descuento" />
+        tools:layout="@layout/fragment_comercio_modificar_descuento" >
+        <action
+            android:id="@+id/action_modificarDescuento_to_fragmentAgregarDescuentoComercio"
+            app:destination="@id/fragmentAgregarDescuentoComercio" />
+    </fragment>
     <fragment
         android:id="@+id/commerce_MisArticulos"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_Home"

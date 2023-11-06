@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ui.commerce.ModificarDescuento">
+    tools:context=".views.ui.commerce.AgregarDescuento">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,13 +11,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/edtTituloModificarDescuento"
+            android:id="@+id/edtTitulo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/titulo_modificar_descuento" />
+            android:layout_height="92dp"
+            android:text="@string/titulo_agregar_desc"
+            android:textStyle="italic" />
 
         <EditText
-            android:id="@+id/edtModificarDescripcionDescuento"
+            android:id="@+id/edtDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -25,7 +26,7 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/edtModificarPrecioDescuento"
+            android:id="@+id/edtPuntos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -33,13 +34,13 @@
             android:inputType="number" />
 
         <Button
-            android:id="@+id/btnModificarDescuentoOK"
+            android:id="@+id/btnAgregarDescuento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/modificar_descuento" />
+            android:text="@string/agregar_desc" />
 
         <Button
-            android:id="@+id/btnVolverMisDescuentosDesdeModificar"
+            android:id="@+id/btnVolver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_volver" />
