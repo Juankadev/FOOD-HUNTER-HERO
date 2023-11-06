@@ -146,9 +146,4 @@ public class Hunter_Home extends Fragment {
             }
         });
     }
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(HunterHomeViewModel.class);
-    }
 }

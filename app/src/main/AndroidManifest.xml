@@ -27,6 +27,10 @@
             android:exported="false"
             android:label="@string/title_activity_comercio"
             android:theme="@style/Theme.FFHREP" />
+        <activity android:name=".views.ui.hunter.Hunter_VerComercio"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"
+        />
         <activity
             android:name=".views.activitys.RegistroBasic"
             android:exported="false" />

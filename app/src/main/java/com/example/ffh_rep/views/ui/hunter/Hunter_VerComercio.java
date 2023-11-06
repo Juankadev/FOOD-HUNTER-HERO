@@ -13,11 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +53,7 @@ public class Hunter_VerComercio extends Fragment {
     private TextView descripcion, cantArticulos;
     private ImageView favDispatch, favDispatch_filled;
     private GridView gv_articulos;
+    private EditText etBuscador;
     private Button btnAbrirCarrito, btnVerResenias, btnVerBeneficios;
     private ProgressBar pBarMarkingAsFav;
     private FragmentHunterVerComercioBinding binding;
@@ -83,7 +87,7 @@ public class Hunter_VerComercio extends Fragment {
         carrito.setComercio(commerce);
 
         isThisFavorite(commerce.isFavorite());
-
+        searcher();
         setUpListeners();
         setUpObservers();
         descripcion.setText(commerce.getRazonSocial());
@@ -103,6 +107,7 @@ public class Hunter_VerComercio extends Fragment {
         pBarMarkingAsFav  = view.findViewById(R.id.progressBarMarkingFav);
         btnVerResenias = view.findViewById(R.id.btn_HunterVerReseñasComercio);
         btnVerBeneficios = view.findViewById(R.id.btn_hunterVerBeneficios);
+        etBuscador = view.findViewById(R.id.et_browser_articulos);
     }
 
     public void initModelsAndAdapters(){
@@ -289,6 +294,26 @@ public class Hunter_VerComercio extends Fragment {
             favDispatch.setVisibility(View.VISIBLE);
             favDispatch_filled.setVisibility(View.GONE);
         }
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                mViewModel.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 }

@@ -14,6 +14,7 @@ import com.example.ffh_rep.models.repositories.ArticuloRepository;
 import com.example.ffh_rep.models.repositories.ComercioRepository;
 import com.example.ffh_rep.models.repositories.StockRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HunterVerComercioViewModel extends ViewModel {
@@ -147,5 +148,17 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getErrorStocks() {
         return errorStocks;
+    }
+
+    public void applyFilter(String _secuence){
+        List<Stock> lista = this.mldStockArticulos.getValue();
+        List<Stock> filtered = new ArrayList<>();
+        for (Stock item : lista) {
+            if (item.getId_articulo().getDescripcion().toLowerCase().contains(_secuence.toLowerCase())) {
+                filtered.add(item);
+            }
+        }
+
+        this.mldStockArticulos.postValue(filtered);
     }
 }
