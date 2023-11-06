@@ -57,7 +57,7 @@ public class ComercioRepository {
         CompletableFuture.runAsync(() -> {
             try {
                 Connection con = DBUtil.getConnection();
-                String query = "Update Usuarios set estado = '0' where id_usuario = ?";
+                String query = "Update Usuarios set estado = 0 where id_usuario = ?";
                 PreparedStatement ps = con.prepareStatement(query);
 
                 ps.setInt(1, comercio.getUser().getId_usuario());
