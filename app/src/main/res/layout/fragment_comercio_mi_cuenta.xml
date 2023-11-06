@@ -36,12 +36,14 @@
             android:background="@drawable/border"
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
+            android:enabled="false"
             android:hint="@string/input_cuit_rc"
             android:inputType="text"
             android:minHeight="48dp"
-            android:enabled="false"
             android:padding="10dp"
-            android:textColor="#FFFFFF" />
+            android:text="@string/input_cuit_rc"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_razonsocial"
@@ -58,7 +60,8 @@
             android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_razonsocial_rc"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_rubro"
@@ -105,7 +108,7 @@
             android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:enabled="false"
-            android:inputType="text"
+            android:inputType="number"
             android:minHeight="48dp"
             android:padding="10dp"
             android:text="@string/input_telefono_r"
@@ -195,14 +198,6 @@
             android:text="Cancelar"
             android:textColor="#FFFFFF"
             android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btn_back_menu3"
-            android:layout_width="169dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#B6B6B6"
-            android:text="@string/btn_volver"
-            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </FrameLayout>

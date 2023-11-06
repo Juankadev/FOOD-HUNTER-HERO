@@ -27,7 +27,7 @@ public class ComercioRepository {
             updatingInfo.postValue(true);
             try {
                 Connection con = DBUtil.getConnection();
-                String query = "UPDATE Comercios set rubro = ?, correo_electronico = ?, telefono = ?, direccion = ? where Id = ?";
+                String query = "Update Comercios set rubro = ?, correo_electronico = ?, telefono = ?, direccion = ? where id_comercio = ?";
                 PreparedStatement ps = con.prepareStatement(query);
 
                 ps.setString(1, comercio.getRubro());
