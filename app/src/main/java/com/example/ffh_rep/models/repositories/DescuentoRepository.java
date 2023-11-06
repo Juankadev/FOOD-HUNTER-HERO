@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
@@ -181,39 +183,40 @@ public class DescuentoRepository {
         });
     }
 
-    public void insert_Beneficios_hunter(Context context, Beneficio beneficio) {
+    public void insert_Beneficios_hunter(MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter, Beneficio bene) {
         CompletableFuture.runAsync(() -> {
-            try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("INSERT INTO Beneficios (id_comercio, descripcion, puntos_requeridos, estado) VALUES (?, ?, ?, ?)")) {
+            loading.postValue(true);
+            try (Connection con = DBUtil.getConnection()) {
+                con.setAutoCommit(false);
+                try (PreparedStatement insertBeneficio = con.prepareStatement("INSERT INTO Beneficios_Hunters (id_beneficio, id_hunter, estado) VALUES (?, ?, 1)")) {
+                    insertBeneficio.setInt(1, bene.getId_beneficio());
+                    insertBeneficio.setInt(2, hunter.getIdHunter());
 
-                ps.setInt(1, beneficio.getId_comercio().getId());
-                ps.setString(2, beneficio.getDescripcion());
-                ps.setInt(3, beneficio.getPuntos_requeridos());
-                ps.setBoolean(4, beneficio.getEstado());
+                    int rowsAffected = insertBeneficio.executeUpdate();
 
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected > 0) {
-
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "Beneficio agregado exitosamente", Toast.LENGTH_LONG).show();
+                    if (rowsAffected > 0) {
+                        int puntosDescontar = bene.getPuntos_requeridos();
+                        try (PreparedStatement updatePuntaje = con.prepareStatement("UPDATE Hunters SET puntaje = puntaje - ? WHERE id_hunter = ?")) {
+                            updatePuntaje.setInt(1, puntosDescontar);
+                            updatePuntaje.setInt(2, hunter.getIdHunter());
+                            updatePuntaje.executeUpdate();
                         }
-                    });
-                }
-                else{
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "Ocurrio un error al agregar el Beneficio", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
 
+                        con.commit();
+                        success.postValue(true);
+                    } else {
+                        con.rollback();
+                        loading.postValue(false);
+                        error.postValue(true);
+                    }
+                } catch (Exception e) {
+                    con.rollback();
+                    e.printStackTrace();
+                    error.postValue(true);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error al insertar el Beneficio", Toast.LENGTH_SHORT).show();
+                error.postValue(true);
             }
         });
     }

@@ -3,6 +3,8 @@ package com.example.ffh_rep.views.ui.hunter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterVerBeneficiosBinding;
@@ -26,6 +31,8 @@ import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.viewmodels.factory.HunterVerBeneficiosViewModelFactory;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +41,8 @@ public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosC
     private HunterVerBeneficiosViewModel mViewModel;
     private FragmentHunterVerBeneficiosBinding binding;
     private GridView gvBeneficios;
+    private TextView error;
+    private ProgressBar pbBeneficios;
     private BeneficiosAdapterHunter bAdapter;
     private Comercio commerce;
     private Hunter userSession;
@@ -71,6 +80,8 @@ public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosC
         gvBeneficios = view.findViewById(R.id.gv_beneficios);
         bAdapter = new BeneficiosAdapterHunter(requireContext(), new ArrayList<>(), this);
         mViewModel = new ViewModelProvider(requireActivity(), new HunterVerBeneficiosViewModelFactory(getActivity())).get(HunterVerBeneficiosViewModel.class);
+        pbBeneficios = view.findViewById(R.id.pbBeneficiosCargados);
+        error = view.findViewById(R.id.txtErrorBeneficios);
     }
 
     public void setUpObserver(){
@@ -81,20 +92,97 @@ public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosC
                     bAdapter.setlBeneficios(beneficios);
                 }
             });
+
+
+            mViewModel.getSuccessInsertBene().observe(getViewLifecycleOwner(), aBoolean -> {
+                if(aBoolean){
+                    showSuccessDialog();
+                }
+            });
+
+            mViewModel.getErrorInsertBene().observe(getViewLifecycleOwner(), aBoolean -> {
+                if (aBoolean){
+                    showErrorDialog();
+                }
+            });
+
+            mViewModel.getLoadingBeneficios().observe(getViewLifecycleOwner(), aBoolean -> {
+                if(aBoolean){
+                    pbBeneficios.setVisibility(View.VISIBLE);
+                    error.setVisibility(View.GONE);
+                    gvBeneficios.setVisibility(View.GONE);
+                }
+            });
+
+            mViewModel.getSuccessBeneficios().observe(getViewLifecycleOwner(), aBoolean -> {
+                if (aBoolean){
+                    pbBeneficios.setVisibility(View.GONE);
+                    gvBeneficios.setVisibility(View.VISIBLE);
+                    error.setVisibility(View.GONE);
+                }
+            });
+
+            mViewModel.getErrorBeneficios().observe(getViewLifecycleOwner(), aBoolean -> {
+                if(aBoolean){
+                    pbBeneficios.setVisibility(View.GONE);
+                    error.setVisibility(View.VISIBLE);
+                }
+            });
+
     }
 
     public void setUpListeners(){
 
     }
 
-    //Desarrollar una vez que este realizada la tabla beneficios
+
+
     @Override
     public void onCanjearBeneficio(Beneficio bene) {
         if(userSession.getPuntaje() >= bene.getPuntos_requeridos()){
-            Log.d("beneficio canjeable", "se puede canjear");
+            mViewModel.canjearBeneficio(this.userSession, bene);
+            bAdapter.setLoading(true);
+            bAdapter.notifyDataSetChanged();
         }
         else{
-            Log.d("beneficio canjeable", "no se puede canjear");
+            Toast.makeText(requireContext(), "No cuentas con los puntos suficientes para canjear el beneficio", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void showErrorDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Beneficios");
+        builder.setMessage("Ocurrió un error al canjear el beneficio. Intentelo mas tarde");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mViewModel.resetInsertValues();
+                bAdapter.setLoading(false);
+                bAdapter.notifyDataSetChanged();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Beneficios");
+        builder.setMessage("Haz canjeado el beneficio con exito");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mViewModel.resetInsertValues();
+                bAdapter.setLoading(false);
+                bAdapter.notifyDataSetChanged();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 }

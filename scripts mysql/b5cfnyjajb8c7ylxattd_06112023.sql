@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: b5cfnyjajb8c7ylxattd-mysql.services.clever-cloud.com:3306
--- Tiempo de generación: 06-11-2023 a las 13:36:05
+-- Tiempo de generación: 06-11-2023 a las 15:41:32
 -- Versión del servidor: 8.0.15-5
 -- Versión de PHP: 8.2.11
 
@@ -57,7 +57,8 @@ INSERT INTO `Articulos` (`id_articulo`, `descripcion`, `precio`, `imagen`, `id_c
 (1011, 'Agua', 200.00, 'https://jumboargentina.vtexassets.com/arquivos/ids/620132/Agua-Villa-Del-Sur-Sin-Gas-600cc-2-276804.jpg?v=637466226117600000', 6, 14, 8, '1'),
 (1012, 'Alfajor Chocolate', 100.00, 'https://www.distribuidorapop.com.ar/wp-content/uploads/2022/03/ALFAJOR-FANTOCHE-CHOCOLATE-POP-PRECIO.jpg', 7, 19, 8, '1'),
 (1013, '', 300.00, 'https://carrefourar.vtexassets.com/arquivos/ids/353141/7790670050766_E02.jpg?v=638247901687230000', 3, 4, 9, '1'),
-(1014, 'Yogurt', 150.00, 'https://www.ilolay.com.ar/uploads/productos/1684441268-ddl-respostero-405g-210.png', 4, 17, 9, '1');
+(1014, 'Yogurt', 150.00, 'https://www.ilolay.com.ar/uploads/productos/1684441268-ddl-respostero-405g-210.png', 4, 17, 9, '1'),
+(1015, 'tomatela', 60.00, 'http://res.cloudinary.com/dmtsek7j7/image/upload/v1699282006/un4juqxlq3i0klsecjrl.jpg', 2, 16, 6, '1');
 
 -- --------------------------------------------------------
 
@@ -110,8 +111,16 @@ INSERT INTO `Beneficios` (`id_beneficio`, `id_comercio`, `descripcion`, `puntos_
 CREATE TABLE `Beneficios_Hunters` (
   `id_beneficio_hunter` int(11) NOT NULL,
   `id_beneficio` int(11) DEFAULT NULL,
-  `id_hunter` int(11) DEFAULT NULL
+  `id_hunter` int(11) DEFAULT NULL,
+  `estado` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Beneficios_Hunters`
+--
+
+INSERT INTO `Beneficios_Hunters` (`id_beneficio_hunter`, `id_beneficio`, `id_hunter`, `estado`) VALUES
+(1, 19, 7, b'1');
 
 -- --------------------------------------------------------
 
@@ -180,7 +189,7 @@ CREATE TABLE `Caza_x_Articulo` (
 INSERT INTO `Caza_x_Articulo` (`ID_caza`, `id_articulo`, `Cantidad`) VALUES
 (1, 1000, 10),
 (1, 1001, 8),
-(2, 1002, 12),
+(2, 1002, 72),
 (2, 1004, 50),
 (2, 1006, 15);
 
@@ -210,7 +219,9 @@ INSERT INTO `Comercios` (`id_comercio`, `id_usuario`, `cuit`, `razon_social`, `r
 (6, 52, '12345678901', 'Comercio ABC', 'Alimentos', 'comercio@hero.com', 'androidx.appcompat.widget.AppCompatEditText{84d4459 VFED..CL. ........ 63,948-1017,1074 #7f080155 app:id/et_telefono_mc}', 'Calle Comercio 123', 'Aprobado'),
 (7, 57, '15-56987561-8', 'tscutti comercio', 'Varios', 't@s.c', '1569542365', 'Calle falsa', 'Aprobado'),
 (8, 58, '20333338881', 'Dia', 'Alimentos', 'dia@dia.com', '1188776655', 'garin', 'Aprobado'),
-(9, 59, '208383839', 'vital', 'Alimentos ', 'juancruzrey1@hotmail.com', '1177886688', 'garin', 'Aprobado');
+(9, 59, '208383839', 'vital', 'Alimentos ', 'juancruzrey1@hotmail.com', '1177886688', 'garin', 'Aprobado'),
+(12, 134, '20332226661', 'maxiconsumo ', 'alimentos', 'juanrey3d@gmail.com', '1199227733', 'garin', 'Pendiente'),
+(14, 138, '2233222444', 'test2', 'alimentos ', 'juancruzrey1@hotmail.commm', '1122874477', 'garin', 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -229,7 +240,8 @@ CREATE TABLE `Comercios_Favoritos` (
 --
 
 INSERT INTO `Comercios_Favoritos` (`id_comercio_favorito`, `id_comercio`, `id_usuario`) VALUES
-(6, 6, 51);
+(6, 6, 51),
+(8, 8, 51);
 
 -- --------------------------------------------------------
 
@@ -267,7 +279,7 @@ CREATE TABLE `Hunters` (
 --
 
 INSERT INTO `Hunters` (`id_hunter`, `id_usuario`, `nombre`, `apellido`, `dni`, `sexo`, `correo_electronico`, `telefono`, `direccion`, `fecha_nacimiento`, `id_rango`, `puntaje`) VALUES
-(7, 51, 'Hunter', 'hunter', '12345678', 'Masculino', 'hunter@hero.com', '202022626', '20202020', '2023-12-30', 1, 0),
+(7, 51, 'Hunter', 'hunter', '12345678', 'Masculino', 'hunter@hero.com', '202022626', '20202020', '2023-12-30', 1, 377),
 (8, 56, 'tscutti', 'hunter', '45966366', 'Femenino', 't@s.c', '1562369565', '1562369565', '1990-01-01', 5, 0),
 (9, 117, 'Felipe', 'Ruiz', '205038623', 'masculino', 'felipitopiola@yahoo.com', '115263015', 'Av Irigoyen 2212', '1998-11-11', 1, 0),
 (28, 118, 'Romina', 'Diaz', '204203560', 'Femenino', 'r_diaz12202@yahoo.com', '987654321', 'Av Liniers 220', '1991-02-02', 1, 0),
@@ -434,7 +446,7 @@ INSERT INTO `Usuarios` (`id_usuario`, `id_rol`, `username`, `password`, `estado`
 (52, 1, 'comercio', 'administrador', b'1'),
 (56, 2, 'tscutti_hunter', 'tscutti', b'1'),
 (57, 1, 'tscutti_comercio', 'tscutti', b'1'),
-(58, 1, 'dia', 'dia', b'1'),
+(58, 1, 'dia', 'dia', b'0'),
 (59, 1, 'vital', 'vital', b'1'),
 (60, 1, 'Teresa', 'kF2$7G6%&X5<9lK2', b'0'),
 (61, 1, 'Nellie', 'sC7~@}cdz', b'0'),
@@ -457,7 +469,13 @@ INSERT INTO `Usuarios` (`id_usuario`, `id_rol`, `username`, `password`, `estado`
 (120, 2, 'mantequita', 'mantecarda', b'1'),
 (121, 2, 'minion', 'Xjl9I23X', b'1'),
 (122, 2, 'sabriix', 'VentanaCaos233', b'1'),
-(123, 2, 'Lucardio', 'lucass1234', b'1');
+(123, 2, 'Lucardio', 'lucass1234', b'1'),
+(124, 1, 'juan', 'juan', b'1'),
+(129, 2, 'dia2', 'dia2', b'1'),
+(131, 1, 'maxiconsumo', 'maxiconsumo', b'1'),
+(134, 1, 'maxi2', 'maxi2', b'1'),
+(136, 1, 'test', 'test', b'1'),
+(138, 1, 'test2', 'test2', b'1');
 
 -- --------------------------------------------------------
 
@@ -592,7 +610,7 @@ ALTER TABLE `Usuarios`
 -- AUTO_INCREMENT de la tabla `Articulos`
 --
 ALTER TABLE `Articulos`
-  MODIFY `id_articulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1015;
+  MODIFY `id_articulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1016;
 
 --
 -- AUTO_INCREMENT de la tabla `Beneficios`
@@ -604,7 +622,7 @@ ALTER TABLE `Beneficios`
 -- AUTO_INCREMENT de la tabla `Beneficios_Hunters`
 --
 ALTER TABLE `Beneficios_Hunters`
-  MODIFY `id_beneficio_hunter` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_beneficio_hunter` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `Categorias`
@@ -622,13 +640,13 @@ ALTER TABLE `Cazas`
 -- AUTO_INCREMENT de la tabla `Comercios`
 --
 ALTER TABLE `Comercios`
-  MODIFY `id_comercio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_comercio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `Comercios_Favoritos`
 --
 ALTER TABLE `Comercios_Favoritos`
-  MODIFY `id_comercio_favorito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_comercio_favorito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `Hunters`
@@ -670,7 +688,7 @@ ALTER TABLE `Stocks`
 -- AUTO_INCREMENT de la tabla `Usuarios`
 --
 ALTER TABLE `Usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- Restricciones para tablas volcadas

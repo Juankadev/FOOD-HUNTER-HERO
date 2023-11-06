@@ -8,6 +8,8 @@
     tools:context=".views.ui.hunter.Hunter_VerBeneficios">
 
 
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -29,10 +31,35 @@
             android:textColor="#FDFDFD"
             android:textSize="20sp" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbBeneficiosCargados"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/txtErrorBeneficios"
+        android:layout_width="match_parent"
+        android:layout_height="608dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Ha ocurrido un error"
+        android:textColor="#FDFDFD"
+        android:textSize="34sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     <GridView
         android:id="@+id/gv_beneficios"
         android:layout_width="match_parent"
-        android:layout_height="608dp"
+        android:layout_height="650dp"
         android:numColumns="2"
         android:verticalSpacing="16dp"
         android:layout_marginTop="10dp"

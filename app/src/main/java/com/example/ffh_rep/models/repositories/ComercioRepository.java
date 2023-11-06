@@ -381,11 +381,12 @@ public class ComercioRepository {
         });
     }
 
-    public void cargarBeneficios(MutableLiveData<List<Beneficio>> listBeneficios, Comercio commerce){
+    public void cargarBeneficios(MutableLiveData<List<Beneficio>> listBeneficios, Comercio commerce, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.supplyAsync(() -> {
+            loading.postValue(true);
             List<Beneficio> lBeneficios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.id_comercio = ?")) {
+                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Beneficios b WHERE b.id_comercio = ? and b.estado = 1")) {
                 ps.setInt(1, commerce.getId());
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
@@ -398,11 +399,16 @@ public class ComercioRepository {
                     }
                 }
             } catch (Exception e) {
-                // Manejar la excepción
                 e.printStackTrace();
+                loading.postValue(false);
+                error.postValue(true);
             }
             return lBeneficios;
-        }).thenAcceptAsync(resenias -> listBeneficios.postValue(resenias));
+        }).thenAcceptAsync(resenias -> {
+            loading.postValue(false);
+            success.postValue(true);
+            listBeneficios.postValue(resenias);
+        });
     }
 }
 
