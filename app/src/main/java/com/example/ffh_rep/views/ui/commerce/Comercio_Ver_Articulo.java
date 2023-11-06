@@ -70,6 +70,8 @@ public class Comercio_Ver_Articulo extends Fragment {
         setUpListeners();
 
 
+
+
         return view;
     }
 
@@ -99,6 +101,8 @@ public class Comercio_Ver_Articulo extends Fragment {
     public void setUpListeners(){
         btnStock.setOnClickListener(v-> redirectToStockxArticulos());
 
+        btnModificar.setOnClickListener(v-> redirectToModificarArticulo());
+
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +122,12 @@ public class Comercio_Ver_Articulo extends Fragment {
         ArticuloRepository articuloRepository = new ArticuloRepository();
         articuloRepository.eliminarArticulo(getContext(), articulo);
         Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Articulo_to_commerce_MisArticulos2);
+    }
 
+    public void redirectToModificarArticulo(){
+        Bundle args = new Bundle();
+        args.putSerializable("articuloAseleccionar", this.article);
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_Ver_Articulo_to_comercio_ModificarArticulo, args);
     }
 
 

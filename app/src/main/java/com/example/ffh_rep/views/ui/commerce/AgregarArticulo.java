@@ -92,7 +92,6 @@ public class AgregarArticulo extends Fragment {
         setupListeners();
 
         imageViewArticulo = view.findViewById(R.id.imageViewArticulo);
-
         btnVolver = view.findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,10 +115,8 @@ public class AgregarArticulo extends Fragment {
             }
         });
 
-
         obtenerCategoriasDesdeRepositorio();
         obtenerMarcasDesdeRepositorio();
-
         btnAgregarArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
