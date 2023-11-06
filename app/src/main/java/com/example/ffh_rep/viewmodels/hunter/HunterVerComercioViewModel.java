@@ -1,6 +1,7 @@
 package com.example.ffh_rep.viewmodels.hunter;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,6 +21,7 @@ import java.util.List;
 public class HunterVerComercioViewModel extends ViewModel {
     private Context ctx;
     private MutableLiveData<List<Articulo>> mldArticulos;
+    private MutableLiveData<List<Stock>> originalStockList;
     private MutableLiveData<List<Stock>> mldStockArticulos;
     private MutableLiveData<Boolean> isMarkingAsFav;
     private MutableLiveData<Boolean>  markSuccess;
@@ -43,6 +45,7 @@ public class HunterVerComercioViewModel extends ViewModel {
         this.ctx = ctx;
         this.mldArticulos = new MutableLiveData<>();
         this.mldStockArticulos  = new MutableLiveData<>();
+        this.originalStockList = new MutableLiveData<>();
         this.isMarkingAsFav = new MutableLiveData<>(false);
         this.markSuccess = new MutableLiveData<>(false);
         this.errorMarking = new MutableLiveData<>(false);
@@ -74,9 +77,12 @@ public class HunterVerComercioViewModel extends ViewModel {
     }
 
     public void getStockbyArticulos(Comercio commerce){
-        sRepo.getStockByComercioAndFechaVencimiento(this.mldStockArticulos,this.loadingStocks,this.successStocks,this.errorStocks ,commerce);
+        sRepo.getStockByComercioAndFechaVencimiento(this.originalStockList, this.mldStockArticulos,this.loadingStocks,this.successStocks,this.errorStocks ,commerce);
     }
 
+    public void setListaOriginal(List<Stock> stock){
+        this.originalStockList.postValue(stock);
+    }
     public void setIsMarkingAsFav(boolean value) {
         isMarkingAsFav.setValue(value);
     }
@@ -150,15 +156,22 @@ public class HunterVerComercioViewModel extends ViewModel {
         return errorStocks;
     }
 
-    public void applyFilter(String _secuence){
-        List<Stock> lista = this.mldStockArticulos.getValue();
-        List<Stock> filtered = new ArrayList<>();
-        for (Stock item : lista) {
-            if (item.getId_articulo().getDescripcion().toLowerCase().contains(_secuence.toLowerCase())) {
-                filtered.add(item);
+    public void applyFilter(String _secuence) {
+        Log.d("Secuencia", _secuence);
+        List<Stock> originalList = originalStockList.getValue();
+        Log.d("Original List", originalList.toString());
+        if (originalList != null) {
+            if (_secuence.equals("") || _secuence.isEmpty() ) {
+                mldStockArticulos.postValue(originalList);
+            } else {
+                List<Stock> filtered = new ArrayList<>();
+                for (Stock item : originalList) {
+                    if (item.getId_articulo().getDescripcion().toLowerCase().contains(_secuence.toLowerCase())) {
+                        filtered.add(item);
+                    }
+                }
+                mldStockArticulos.postValue(filtered);
             }
         }
-
-        this.mldStockArticulos.postValue(filtered);
     }
 }

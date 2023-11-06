@@ -32,6 +32,10 @@
             android:windowSoftInputMode="adjustNothing"
         />
         <activity
+            android:name=".views.ui.commerce.Comercio_EscanearQr"
+            android:screenOrientation="portrait"
+            />
+        <activity
             android:name=".views.activitys.RegistroBasic"
             android:exported="false" />
         <activity

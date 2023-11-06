@@ -143,7 +143,9 @@ public class Hunter_VerComercio extends Fragment {
 
     public void setUpObservers(){
 
-        mViewModel.getMldStockArticulos().observe(getViewLifecycleOwner(), stocks-> aclAdapter.setData(stocks));
+        mViewModel.getMldStockArticulos().observe(getViewLifecycleOwner(), stocks->{
+            aclAdapter.setData(stocks);
+        });
 
         carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
             @Override

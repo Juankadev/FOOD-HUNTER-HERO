@@ -144,7 +144,7 @@ public class StockRepository {
         });
     }
 
-    public void getStockByComercioAndFechaVencimiento(MutableLiveData<List<Stock>> mlStocks, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Comercio commerce){
+    public void getStockByComercioAndFechaVencimiento(MutableLiveData<List<Stock>> listaOriginal, MutableLiveData<List<Stock>> mlStocks, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Comercio commerce){
         CompletableFuture.supplyAsync(() -> {
             loading.postValue(true);
             List<Stock> lStocks = new ArrayList<>();
@@ -195,6 +195,7 @@ public class StockRepository {
         }).thenAcceptAsync(stocks -> {
             loading.postValue(false);
             if (stocks != null) {
+                listaOriginal.postValue(stocks);
                 mlStocks.postValue(stocks.isEmpty() ? new ArrayList<>() : stocks);
                 success.postValue(true);
             } else {

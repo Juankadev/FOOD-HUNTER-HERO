@@ -40,8 +40,8 @@
 
             <ImageView
                 android:id="@+id/hunter__qr_container"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="357dp"
+                android:layout_height="295dp"
                 android:layout_gravity="center"
                 android:background="#FFFFFF"
                 android:backgroundTint="#FFFFFF" />

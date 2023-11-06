@@ -40,7 +40,7 @@ public class Hunter_GenerarQr extends Fragment {
     public void generateQr(String data, ImageView container){
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            BitMatrix bit = writer.encode(data, BarcodeFormat.QR_CODE, 512, 512);
+            BitMatrix bit = writer.encode(data, BarcodeFormat.QR_CODE, 620, 650);
 
             int width = bit.getWidth();
             int height = bit.getHeight();
