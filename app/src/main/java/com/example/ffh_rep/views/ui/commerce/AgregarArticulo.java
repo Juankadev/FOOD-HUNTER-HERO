@@ -126,8 +126,10 @@ public class AgregarArticulo extends Fragment {
 
                 String descripcionText = txtDescripcionArticulo.getText().toString().trim();
                 String precioText = txtPrecioArticulo.getText().toString().trim();
+                String cantidadInicial = txtCantidadStockInicial.getText().toString().trim();
+                String fechaInicial = txtFechaVencimientoStockInicial.getText().toString().trim();
 
-                if (descripcionText.isEmpty() || precioText.isEmpty() || imageUrlArticulo=="") {
+                if (descripcionText.isEmpty() || precioText.isEmpty() || imageUrlArticulo=="" || fechaInicial.isEmpty() || cantidadInicial.isEmpty()) {
                     Toast.makeText(getContext(), "Por favor, complete todos los campos e inserte imagen del producto", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -159,6 +161,8 @@ public class AgregarArticulo extends Fragment {
                 Stock stock = new Stock();
                 stock.setCantidad(Integer.valueOf(txtCantidadStockInicial.getText().toString()));
                 stock.setFecha_vencimiento(Date.valueOf(txtFechaVencimientoStockInicial.getText().toString()));
+                stock.setId_comercio(comercio);
+
                 Log.d("Fecha antes de mandar", stock.getFecha_vencimiento().toString());
 
                 insertarArticulo(articulo, stock);
@@ -259,26 +263,10 @@ public class AgregarArticulo extends Fragment {
         Context context = requireContext();
 
         CompletableFuture<Void> insertArticuloFuture = CompletableFuture.runAsync(() -> {
-            articuloRepository.insertArticulo(context, articulo);
+            articuloRepository.insertArticulo(context, articulo, stock);
         });
 
-        insertArticuloFuture.thenRun(() -> {
-            CompletableFuture<Articulo> obtenerUltimoArticuloFuture = articuloRepository.obtenerUltimoArticuloInsertadoAsync();
 
-            obtenerUltimoArticuloFuture.thenAccept(articuloInsertado -> {
-                Log.d("ULTIMO ARTICULO INSERTADO", "------------------------");
-                Log.d("Fecha antes de mandar", articuloInsertado.toString());
-                Log.d("ULTIMO ARTICULO INSERTADO", "------------------------");
-
-                stock.setId_articulo(articuloInsertado);
-                stock.setId_comercio(articuloInsertado.getComercio());
-
-                StockRepository stockRepository = new StockRepository();
-                stockRepository.insertarNuevoStock(context, stock);
-
-
-            });
-        });
         clearFields();
     }
 
@@ -290,6 +278,8 @@ public class AgregarArticulo extends Fragment {
     private void clearFields() {
         txtDescripcionArticulo.setText("");
         txtPrecioArticulo.setText("");
+        txtCantidadStockInicial.setText("");
+        txtFechaVencimientoStockInicial.setText("");
         spinnerIDCategoriaArticulo.setSelection(0);
         spinnerIDMarcaArticulo.setSelection(0);
         imageViewArticulo.setImageResource(R.mipmap.ic_launcher); 

@@ -1,6 +1,8 @@
 package com.example.ffh_rep.models.repositories;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -161,11 +163,14 @@ public class ArticuloRepository {
      * @param context   Contexto de la aplicación.
      * @param articulo  Artículo a ser insertado en la base de datos.
      */
-    public void insertArticulo(Context context, Articulo articulo) {
+    public void insertArticulo(Context context, Articulo articulo, Stock stock) {
 
         CompletableFuture.runAsync(() -> {
-            try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+            try (Connection con = DBUtil.getConnection()){
+
+                //GET ID_USUARIO
+                 con.setAutoCommit(false);
+                 PreparedStatement ps = con.prepareStatement("INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
                 ps.setString(1, articulo.getDescripcion());
                 ps.setInt(2, articulo.getComercio().getId());
@@ -180,14 +185,49 @@ public class ArticuloRepository {
 
                 if (rowsAffected > 0) {
 
-                    Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
+                        PreparedStatement ps_idarticulo = con.prepareStatement("SELECT id_articulo FROM Articulos ORDER BY id_articulo DESC LIMIT 1");
+                        ResultSet rs = ps_idarticulo.executeQuery();
+
+                        Integer id = -1;
+                        while (rs.next()) {
+                            id = rs.getInt("id_articulo");
+                        }
+
+                        try (PreparedStatement insertPs = con.prepareStatement("INSERT INTO Stocks (id_articulo, id_comercio, fecha_vencimiento, cantidad) VALUES (?, ?, ?, ?)")) {
+                            insertPs.setInt(1, id);
+                            insertPs.setInt(2, stock.getId_comercio().getId());
+                            insertPs.setDate(3, stock.getFecha_vencimiento());
+                            insertPs.setInt(4, stock.getCantidad());
+                            insertPs.executeUpdate();
+                        }
+
+                    con.commit();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Artículo agregado exitosamente", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 } else {
-                    Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Error al insertar el artículo", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
     }
@@ -246,14 +286,32 @@ public class ArticuloRepository {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    Toast.makeText(context, "Artículo actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Artículo actualizado exitosamente", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 } else {
-                    Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
         });
     }
