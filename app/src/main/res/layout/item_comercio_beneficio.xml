@@ -20,24 +20,25 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView24"
-                    android:layout_width="10dp"
+                    android:id="@+id/desc"
+                    android:layout_width="172dp"
                     android:layout_height="wrap_content"
-                    android:width="10dp"
-                    android:text="@string/id_general"
+                    android:layout_weight="1"
+                    android:text="@string/codigo"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_item_descuento_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="172dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/id_general"
                     android:textColor="#131313" />
             </TableRow>
@@ -48,16 +49,17 @@
 
                 <TextView
                     android:id="@+id/textView26"
-                    android:layout_width="10dp"
+                    android:layout_width="172dp"
                     android:layout_height="wrap_content"
-                    android:width="10dp"
+                    android:layout_weight="1"
                     android:text="@string/descripcion"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_item_descuento_descripcion"
-                    android:layout_width="wrap_content"
+                    android:layout_width="172dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/descripcion"
                     android:textColor="#131313" />
 
@@ -68,16 +70,18 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="10dp"
+                    android:id="@+id/puntos"
+                    android:layout_width="172dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/puntos"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_item_descuento_puntos"
-                    android:layout_width="wrap_content"
+                    android:layout_width="172dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/puntos"
                     android:textColor="#131313" />
 
@@ -85,7 +89,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="58dp">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btnModificarDescuento"

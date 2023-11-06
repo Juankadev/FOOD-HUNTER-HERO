@@ -18,7 +18,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
@@ -38,7 +37,7 @@ public class Comercio_MiCuenta extends Fragment {
     private CardView btnEditarActionerWithProgress;
     private ProgressBar pgBarEditar;
     private Comercio userSession, updateCommerce;
-    private String originalCuit, originalRazonSocial, originalRubro, originalCorreo, originalTelefono, originalDireccion;
+    private String originalRubro, originalCorreo, originalTelefono, originalDireccion;
     private SessionManager sessionManager;
 
 
@@ -177,7 +176,7 @@ public class Comercio_MiCuenta extends Fragment {
             updateCommerce.setRubro(et_rubro_mc.getText().toString());
             updateCommerce.setEmail(et_correo_mc.getText().toString());
             updateCommerce.setDireccion(et_direccion_mc.getText().toString());
-            updateCommerce.setTelefono(et_telefono_mc.toString());
+            updateCommerce.setTelefono(et_telefono_mc.getText().toString());
 
             mViewModel.updateInformation(updateCommerce);
         }
@@ -222,8 +221,6 @@ public class Comercio_MiCuenta extends Fragment {
      * modificaciones. Esto permite revertir los cambios en caso de que se cancele la edición.
      */
     private void saveOriginals(){
-        originalCuit = et_cuit_mc.getText().toString();
-        originalRazonSocial = et_razonsocial_mc.getText().toString();
         originalRubro = et_rubro_mc.getText().toString();
         originalCorreo = et_correo_mc.getText().toString();
         originalDireccion = et_direccion_mc.getText().toString();
@@ -233,8 +230,6 @@ public class Comercio_MiCuenta extends Fragment {
      * Revierte la edición restaurando los valores originales a los campos de información del usuario.
      */
     private void rollbackEdit(){
-        et_cuit_mc.setText(originalCuit);
-        et_razonsocial_mc.setText(originalRazonSocial);
         et_rubro_mc.setText(originalRubro);
         et_correo_mc.setText(originalCorreo);
         et_direccion_mc.setText(originalDireccion);
@@ -283,6 +278,9 @@ public class Comercio_MiCuenta extends Fragment {
         String telefono = et_telefono_mc.getText().toString();
         if (telefono.isEmpty()) {
             et_telefono_mc.setError("Este campo es requerido");
+            isValid = false;
+        } else if (!GeneralHelper.isNumeric(telefono)) {
+            et_telefono_mc.setError("El telefono debe ser numérico");
             isValid = false;
         }
         // Validar correo

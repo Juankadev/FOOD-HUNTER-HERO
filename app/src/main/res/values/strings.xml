@@ -184,6 +184,7 @@
     <string name="productos_aprobar">Productos a llevar</string>
     <string name="aprobar_caza">Aprobar Caza</string>
     <string name="id_general">ID</string>
+    <string name="codigo">Código</string>
 
 
 </resources>
