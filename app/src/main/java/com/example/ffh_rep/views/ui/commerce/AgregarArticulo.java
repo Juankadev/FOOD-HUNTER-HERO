@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
+import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.models.repositories.ArticuloRepository;
 import com.example.ffh_rep.models.repositories.CategoriaRepository;
 import com.example.ffh_rep.models.repositories.ImageRepository;
@@ -38,6 +40,8 @@ import com.example.ffh_rep.models.repositories.MarcaRepository;
 import com.example.ffh_rep.utils.SessionManager;
 
 import androidx.lifecycle.MutableLiveData;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,7 +154,14 @@ public class AgregarArticulo extends Fragment {
                 articulo.setImagen(imageUrlArticulo);
                 articulo.setEstado("1");
 
-                insertarArticulo(articulo);
+                Stock stock = new Stock();
+                stock.setCantidad(Integer.valueOf(txtCantidadStockInicial.getText().toString()));
+                stock.setFecha_vencimiento(Date.valueOf(txtFechaVencimientoStockInicial.getText().toString()));
+                Log.d("fecha antes de mandar", stock.getFecha_vencimiento().toString());
+
+                insertarArticulo(articulo, stock);
+
+
 
             }
         });
@@ -241,7 +252,7 @@ public class AgregarArticulo extends Fragment {
         }
     }
 
-    private void insertarArticulo(Articulo articulo) {
+    private void insertarArticulo(Articulo articulo, Stock stock) {
         ArticuloRepository articuloRepository = new ArticuloRepository();
         Context context = requireContext();
         articuloRepository.insertArticulo(context, articulo);

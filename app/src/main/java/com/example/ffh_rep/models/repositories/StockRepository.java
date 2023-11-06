@@ -41,6 +41,8 @@ public class StockRepository {
 
                 if (rowCount > 0) {
                     Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();
+
+
                 } else {
                     Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
                 }
