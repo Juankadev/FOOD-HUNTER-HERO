@@ -1,5 +1,6 @@
 package com.example.ffh_rep.viewmodels.hunter;
 
+import android.content.ClipData;
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
@@ -7,6 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.ItemCarrito;
+import com.example.ffh_rep.interfaces.CarritoActionsCallback;
+import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
+import com.example.ffh_rep.views.ui.hunter.Hunter_MiCarrito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +25,13 @@ public class CarritoViewModel extends ViewModel{
 
     public CarritoViewModel(){
     }
+
     public CarritoViewModel(Context ctx){
         this.ctx = ctx;
         this.carrito = new MutableLiveData<>();
         this.totArticulos = new MutableLiveData<>(0);
         this.puntos = new MutableLiveData<>(0);
     }
-
 
     public void setComercio(Comercio comercio){
         this.comercio = comercio;
@@ -117,6 +121,76 @@ public class CarritoViewModel extends ViewModel{
             recountPoints();
         }
     }
+
+    public void addOneUnitToCart(ItemCarrito itemToModify, ArticulosCarritoListAdapter adapter) {
+        List<ItemCarrito> _currCart = this.carrito.getValue();
+        Integer _currTot = this.totArticulos.getValue();
+
+        if (_currCart != null) {
+            for (ItemCarrito item : _currCart) {
+                if (item.getArtc().getId_stock() == itemToModify.getArtc().getId_stock()) {
+                    int newQuantity = item.getCantidad() + 1;
+                    item.setCantidad(newQuantity);
+                    _currTot += itemToModify.getCantidad();
+                    break;
+                }
+            }
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
+            recountPoints();
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+
+    public void subtractUnitsFromCart(ItemCarrito itemToModify, ArticulosCarritoListAdapter adapter) {
+        List<ItemCarrito> _currCart = this.carrito.getValue();
+        Integer _currTot = this.totArticulos.getValue();
+
+        if (_currCart != null) {
+            for (ItemCarrito item : _currCart) {
+                if (item.getArtc().getId_stock() == itemToModify.getArtc().getId_stock()) {
+                    int newQuantity = item.getCantidad() - 1;
+
+                    if (newQuantity <= 0) {
+                        _currCart.remove(item);
+                    } else {
+                        item.setCantidad(newQuantity);
+                    }
+
+                    _currTot -= itemToModify.getCantidad();
+                    break;
+                }
+            }
+
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
+            adapter.notifyDataSetChanged();
+            recountPoints();
+        }
+    }
+
+    public void removeItemFromCart(ItemCarrito itemToRemove, ArticulosCarritoListAdapter adapter) {
+        List<ItemCarrito> _currCart = this.carrito.getValue();
+        Integer _currTot = this.totArticulos.getValue();
+
+        if (_currCart != null) {
+            for (ItemCarrito item : _currCart) {
+                if (item.getArtc().getId_stock() == itemToRemove.getArtc().getId_stock()) {
+                    _currTot -= item.getCantidad();
+                    _currCart.remove(item);
+                    break;
+                }
+            }
+
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
+            adapter.notifyDataSetChanged();
+            recountPoints();
+        }
+    }
+
 
     public void recountPoints(){
         int quantity = this.totArticulos.getValue();

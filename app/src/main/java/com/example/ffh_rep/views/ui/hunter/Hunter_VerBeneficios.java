@@ -34,6 +34,8 @@ import com.example.ffh_rep.viewmodels.factory.HunterVerBeneficiosViewModelFactor
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosCallback {

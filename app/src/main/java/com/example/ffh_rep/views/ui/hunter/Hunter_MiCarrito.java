@@ -3,6 +3,8 @@ package com.example.ffh_rep.views.ui.hunter;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,12 +18,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterMiCarritoBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.interfaces.CarritoActionsCallback;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.hunter.CarritoViewModel;
 import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
@@ -36,7 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hunter_MiCarrito extends Fragment {
+public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback {
 
     private CarritoViewModel carrito;
     private FragmentHunterMiCarritoBinding binding;
@@ -107,10 +111,51 @@ public class Hunter_MiCarrito extends Fragment {
         lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
         tvPuntos = view.findViewById(R.id.tv_puntos_reemplazar);
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
-        alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
+        alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext(), this);
 
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
-
     }
 
+    @Override
+    public void onSumArticuloCallback(ItemCarrito item) {
+        carrito.addOneUnitToCart(item, alAdapter);
+    }
+
+    @Override
+    public void onAbsArticuloCallback(ItemCarrito item) {
+        if(item.getCantidad() - 1 >= 1){
+            carrito.subtractUnitsFromCart(item, alAdapter);
+        }
+        else{
+            Toast.makeText(requireActivity(),"Si quieres dejar en 0 el articulo, por favor eliminalo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onDeleteArticuloCallback(ItemCarrito item) {
+        showConfirmDialog(item);
+    }
+
+    public void showConfirmDialog(ItemCarrito item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Eliminar Articulo");
+        builder.setMessage("¿Estás seguro que quieres eliminar el artículo?");
+
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                carrito.removeItemFromCart(item, alAdapter);
+            }
+        });
+
+        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
