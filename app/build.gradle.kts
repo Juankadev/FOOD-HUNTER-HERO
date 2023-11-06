@@ -93,6 +93,7 @@ dependencies {
 
     implementation(group = "mysql", name = "mysql-connector-java", version="5.1.47")
 
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.0.3")
 }
 
 

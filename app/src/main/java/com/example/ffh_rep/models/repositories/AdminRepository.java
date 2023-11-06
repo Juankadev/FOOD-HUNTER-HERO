@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -161,9 +162,9 @@ public class AdminRepository {
         return result.toString();
     }
     //Devuelve 3 categorias principales
-    public String getCategoriasMasCazadas(String desde, String hasta) {
-        CompletableFuture<StringBuilder> task_result = CompletableFuture.supplyAsync(() -> {
-            StringBuilder categorias = new StringBuilder();
+    public Map getCategoriasMasCazadas(String desde, String hasta) {
+        CompletableFuture<Map> task_result = CompletableFuture.supplyAsync(() -> {
+            Map<String,Integer> categorias = new HashMap<>();
 
             try (Connection con = DBUtil.getConnection();
                  PreparedStatement ps = con.prepareStatement("select cat.descripcion as descripcion, COALESCE(SUM(cxa.Cantidad),0) as cantidad from Cazas as c inner join Caza_x_Articulo as cxa on c.id_caza = cxa.ID_caza inner join Articulos as a on a.id_articulo = cxa.id_articulo inner join Categorias as cat on a.id_categoria = cat.id_categoria where c.fecha between ? and ? GROUP BY cat.descripcion ORDER BY cantidad DESC LIMIT 3")) {
@@ -172,8 +173,7 @@ public class AdminRepository {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
-                        String result = rs.getString("descripcion") + rs.getInt("cantidad");
-                        categorias.append(result).append(" - ");
+                        categorias.put(rs.getString("descripcion"),rs.getInt("cantidad"));
                     }
                 }
             } catch (Exception e) {
@@ -183,8 +183,8 @@ public class AdminRepository {
         });
 
         // Espera a que el CompletableFuture se complete y obtiene el resultado
-        StringBuilder result = task_result.join(); // join() bloquea hasta que se complete la tarea completablefuture
-        return result.toString();
+        Map<String,Integer> result = task_result.join(); // join() bloquea hasta que se complete la tarea completablefuture
+        return result;
     }
     public String[] getEstadisticas(String desde, String hasta) {
         String[] results = new String[]{
@@ -194,7 +194,6 @@ public class AdminRepository {
                 getCantidadComercios(),
                 getArticuloMayorCazas(desde,hasta),
                 getCantidadCompras(desde,hasta),
-                getCategoriasMasCazadas(desde,hasta),
         };
 
         return results;

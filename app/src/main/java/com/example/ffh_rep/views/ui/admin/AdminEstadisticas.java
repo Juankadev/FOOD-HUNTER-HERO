@@ -3,6 +3,7 @@ package com.example.ffh_rep.views.ui.admin;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
@@ -24,18 +25,30 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentAdminEstadisticasBinding;
 import com.example.ffh_rep.viewmodels.admin.AdminEstadisticasViewModel;
 import com.example.ffh_rep.viewmodels.factory.AdminEstadisticasViewModelFactory;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
+
+
+import org.eazegraph.lib.models.PieModel;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class AdminEstadisticas extends Fragment {
 
     private AdminEstadisticasViewModel mViewModel;
     private EditText et_desde, et_hasta;
     private Button btn_filtrar;
-    private TextView result_categorias, result_cantidad_compras, result_articulo_mayor_cazas, result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
+    private PieChart pie_chart;
+    private TextView result_cantidad_compras, result_articulo_mayor_cazas, result_cazadores_rango_maximo, result_cazadores_rango_minimo, result_comercios_aprobados, result_productos_cazados;
     private FragmentAdminEstadisticasBinding binding;
 
     public static AdminEstadisticas newInstance() {
@@ -57,13 +70,13 @@ public class AdminEstadisticas extends Fragment {
         et_desde = view.findViewById(R.id.et_desde);
         et_hasta = view.findViewById(R.id.et_hasta);
         btn_filtrar = view.findViewById(R.id.filtrar);
+        pie_chart = view.findViewById(R.id.pie_chart);
         result_cazadores_rango_maximo = view.findViewById(R.id.result_cazadores_rango_maximo);
         result_cazadores_rango_minimo = view.findViewById(R.id.result_cazadores_rango_minimo);
         result_productos_cazados = view.findViewById(R.id.result_productos_cazados);
         result_comercios_aprobados = view.findViewById(R.id.result_comercios_aprobados);
         result_articulo_mayor_cazas = view.findViewById(R.id.result_articulo_mayor_cazas);
         result_cantidad_compras = view.findViewById(R.id.result_cantidad_compras);
-        result_categorias = view.findViewById(R.id.result_categorias);
         mViewModel = new ViewModelProvider(requireActivity(), new AdminEstadisticasViewModelFactory(getActivity())).get(AdminEstadisticasViewModel.class);
     }
 
@@ -137,9 +150,33 @@ public class AdminEstadisticas extends Fragment {
         result_comercios_aprobados.setText(results[3]);
         result_articulo_mayor_cazas.setText(results[4]);
         result_cantidad_compras.setText(results[5]);
-        result_categorias.setText(results[6]);
+
+        setPieChart(desde,hasta);
     }
 
+    private void setPieChart(String desde, String hasta){
+        Map<String,Integer> categorias = mViewModel.getCategoriasMasCazadas(desde,hasta);
+
+        ArrayList<Integer> colores = new ArrayList<>();
+        colores.add(Color.parseColor("#FFA726"));
+        colores.add(Color.parseColor("#66BB6A"));
+        colores.add(Color.parseColor("#2986F6"));
+
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+
+        for(String categoria: categorias.keySet()){
+            pieEntries.add(new PieEntry(categorias.get(categoria).floatValue(), categoria));
+        }
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Categorias");
+        pieDataSet.setValueTextSize(12f);
+        pieDataSet.setColors(colores);
+        PieData pieData = new PieData(pieDataSet);
+        pieData.setDrawValues(true);
+
+        pie_chart.setData(pieData);
+        pie_chart.invalidate();
+    }
     public void showDatePickerDesde(){
         int minYear = 2000;
         int maxYear = 2023;
