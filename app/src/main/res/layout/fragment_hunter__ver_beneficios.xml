@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="127dp"
+        android:layout_height="90dp"
         android:background="@color/bck_green"
         android:gravity="center"
         android:orientation="horizontal"
@@ -19,96 +19,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/imgShop"
-                android:layout_width="86dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="16dp"
-                android:layout_marginEnd="120dp"
-                android:src="@drawable/shop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.317"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/btn_HunterVerReseñasComercio"
-                android:layout_width="137dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/bck_gray"
-                android:text="Ver Articulos"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgShop" />
-
-            <Button
-                android:id="@+id/btn_hunterVerBeneficios"
-                android:layout_width="165dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="216dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/bck_gray"
-                android:text="Ver Beneficios"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgShop" />
-
-            <TextView
-                android:id="@+id/txt_shop_name_description"
-                android:layout_width="81dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/shop"
-                android:textColor="#FDFDFD"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/imgShop"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/progressBarMarkingFav"
-                android:layout_width="44dp"
-                android:layout_height="38dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/favDispatcher"
-                android:layout_width="41dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="32dp"
-                android:src="@drawable/baseline_favborder_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/favDispatcher_filled"
-                android:layout_width="41dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:src="@drawable/baseline_favfilled_white"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Beneficios"
+            android:textColor="#FDFDFD"
+            android:textSize="20sp" />
     </LinearLayout>
-
     <GridView
         android:id="@+id/gv_beneficios"
         android:layout_width="match_parent"

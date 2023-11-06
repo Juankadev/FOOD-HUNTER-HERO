@@ -90,7 +90,7 @@ public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosC
     //Desarrollar una vez que este realizada la tabla beneficios
     @Override
     public void onCanjearBeneficio(Beneficio bene) {
-        if(userSession.getPuntaje() > bene.getPuntos_requeridos()){
+        if(userSession.getPuntaje() >= bene.getPuntos_requeridos()){
             Log.d("beneficio canjeable", "se puede canjear");
         }
         else{

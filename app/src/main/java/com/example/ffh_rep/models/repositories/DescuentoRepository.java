@@ -180,4 +180,41 @@ public class DescuentoRepository {
             }
         });
     }
+
+    public void insert_Beneficios_hunter(Context context, Beneficio beneficio) {
+        CompletableFuture.runAsync(() -> {
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("INSERT INTO Beneficios (id_comercio, descripcion, puntos_requeridos, estado) VALUES (?, ?, ?, ?)")) {
+
+                ps.setInt(1, beneficio.getId_comercio().getId());
+                ps.setString(2, beneficio.getDescripcion());
+                ps.setInt(3, beneficio.getPuntos_requeridos());
+                ps.setBoolean(4, beneficio.getEstado());
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Beneficio agregado exitosamente", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Ocurrio un error al agregar el Beneficio", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Error al insertar el Beneficio", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

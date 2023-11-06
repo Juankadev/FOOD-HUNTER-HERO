@@ -91,7 +91,7 @@ public class CarritoViewModel extends ViewModel{
         List<ItemCarrito> _currCart = this.carrito.getValue();
         if (_currCart != null) {
             for (ItemCarrito item : _currCart) {
-                if (item.getArtc().getIdArticulo() == article.getArtc().getIdArticulo()) {
+                if (item.getArtc().getId_stock() == article.getArtc().getId_stock()) {
                     return true;
                 }
             }
@@ -105,7 +105,7 @@ public class CarritoViewModel extends ViewModel{
 
         if (_currCart != null) {
             for (ItemCarrito item : _currCart) {
-                if (item.getArtc().getIdArticulo() == itemToModify.getArtc().getIdArticulo()) {
+                if (item.getArtc().getId_stock() == itemToModify.getArtc().getId_stock()) {
                     int newQuantity = item.getCantidad() + itemToModify.getCantidad();
                     item.setCantidad(newQuantity);
                     _currTot += itemToModify.getCantidad();
