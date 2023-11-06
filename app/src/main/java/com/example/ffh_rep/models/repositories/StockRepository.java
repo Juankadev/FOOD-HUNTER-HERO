@@ -158,7 +158,7 @@ public class StockRepository {
                          "    SELECT MIN(fecha_vencimiento)" +
                          "    FROM Stocks AS S2" +
                          "    WHERE S2.id_articulo = S1.id_articulo AND S2.id_comercio = S1.id_comercio" +
-                         ") and S1.fecha_vencimiento >= CURDATE() and S1.id_comercio = ? and a.estado = 1");
+                         ") and S1.fecha_vencimiento >= CURDATE() and S1.id_comercio = ? and a.estado = 1 and S1.cantidad > 0");
             ) {
                 ps.setInt(1, commerce.getId());
                 ResultSet rs = ps.executeQuery();
