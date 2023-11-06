@@ -24,6 +24,7 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterVerArticuloBinding;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.ItemCarrito;
+import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.viewmodels.factory.ArticuloViewModelFactory;
 import com.example.ffh_rep.viewmodels.factory.CarritoViewModelFactory;
 import com.example.ffh_rep.viewmodels.hunter.ArticulosViewModel;
@@ -35,7 +36,7 @@ public class Hunter_VerArticulo extends Fragment {
 
     private ArticulosViewModel controller_articulos;
     private CarritoViewModel carrito;
-    private Articulo article;
+    private Stock stock;
     private FragmentHunterVerArticuloBinding binding;
     private TextView descripcion, precio, categoria, marca, cantidadArticulo;
     private ImageView ivArticulo;
@@ -59,13 +60,13 @@ public class Hunter_VerArticulo extends Fragment {
 
         Bundle bundle = getArguments();
         if(bundle != null){
-            if(bundle.containsKey("articuloSelected")){
-                article = (Articulo) bundle.getSerializable("articuloSelected");
+            if(bundle.containsKey("stockSelected")){
+                stock = (Stock) bundle.getSerializable("stockSelected");
             }
         }
 
-        settingComponents(article, view);
-        setUpListeners(article);
+        settingComponents(stock, view);
+        setUpListeners(stock);
 
 
         carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
@@ -93,24 +94,24 @@ public class Hunter_VerArticulo extends Fragment {
         btnRestar = view.findViewById(R.id.btnRestarItem);
     }
 
-    public void settingComponents(Articulo article, View view){
-        precio.setText(String.valueOf(article.getPrecio()));
-        descripcion.setText(article.getDescripcion());
-        marca.setText(article.getMarca().getDescripcion());
-        categoria.setText(article.getCategoria().getDescripcion());
-        Glide.with(view).load(article.getImagen()).into(ivArticulo);
+    public void settingComponents(Stock stock, View view){
+        precio.setText(String.valueOf(stock.getId_articulo().getPrecio()));
+        descripcion.setText(stock.getId_articulo().getDescripcion());
+        marca.setText(stock.getId_articulo().getMarca().getDescripcion());
+        categoria.setText(stock.getId_articulo().getCategoria().getDescripcion());
+        Glide.with(view).load(stock.getId_articulo().getImagen()).into(ivArticulo);
     }
 
-    public void setUpListeners(Articulo article){
-        btnAniadirCarrito.setOnClickListener(v -> addArticle(article));
+    public void setUpListeners(Stock stock){
+        btnAniadirCarrito.setOnClickListener(v -> addArticle(stock));
         btnSumar.setOnClickListener(v -> sumarItem());
         btnRestar.setOnClickListener(v -> restarItem());
     }
 
 
-    public void addArticle(Articulo article){
+    public void addArticle(Stock stock){
         if(this._cantidadArticulo > 0){
-            item = new ItemCarrito(article, this._cantidadArticulo);
+            item = new ItemCarrito(stock, this._cantidadArticulo);
             if(!carrito.isArticleInCart(item)){
                 carrito.addArticleToCart(item);
                 cantidadArticulo.setText(String.valueOf(0));

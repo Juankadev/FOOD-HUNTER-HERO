@@ -28,6 +28,10 @@ public class HunterVerBeneficiosViewModel extends ViewModel {
         cRepo.cargarBeneficios(listBeneficios, commerce);
     }
 
+    public void tomarBeneficios(Beneficio bene){
+
+    }
+
     public MutableLiveData<List<Beneficio>> getListBeneficios() {
         return listBeneficios;
     }

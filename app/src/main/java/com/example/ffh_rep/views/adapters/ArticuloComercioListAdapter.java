@@ -19,37 +19,38 @@ import androidx.navigation.Navigation;
 import com.bumptech.glide.Glide;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticuloComercioListAdapter extends BaseAdapter {
 
-    private List<Articulo> lArticulos;
+    private List<Stock> lStocks;
     private LayoutInflater  inflater;
 
-    public ArticuloComercioListAdapter(List<Articulo> lista, Context ctx){
-        this.lArticulos = lista;
+    public ArticuloComercioListAdapter(List<Stock> lStocks, Context ctx){
+        this.lStocks = lStocks;
         this.inflater = LayoutInflater.from(ctx);
     }
     @Override
     public int getCount() {
-        return this.lArticulos.size();
+        return this.lStocks.size();
     }
 
 
-    public void setData(List<Articulo> ldata){
-        this.lArticulos = ldata;
+    public void setData(List<Stock> ldata){
+        this.lStocks = ldata;
         notifyDataSetChanged();
     }
     @Override
     public Object getItem(int position) {
-        return this.lArticulos.get(position);
+        return this.lStocks.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return this.lArticulos.get(position).getIdArticulo();
+        return this.lStocks.get(position).getId_stock();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
             vh.nombre = convertView.findViewById(R.id.tv_item_articulo_nombre);
             vh.fecha = convertView.findViewById(R.id.tv_item_articulo_fecha_vencimiento);
             vh.marca = convertView.findViewById(R.id.tv_item_articulo_marca);
+            vh.precio = convertView.findViewById(R.id.tv_item_articulo_precio);
             vh.categoria = convertView.findViewById(R.id.tv_item_articulo_categoria);
             vh.imageArticle = convertView.findViewById(R.id.image_article_contain);
             convertView.setTag(vh);
@@ -68,18 +70,20 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
         else{
             vh = (ViewHolder) convertView.getTag();
         }
-        Articulo a = this.lArticulos.get(position);
-        vh.nombre.setText(a.getDescripcion());
-        vh.marca.setText(a.getMarca().getDescripcion());
-        vh.categoria.setText(a.getCategoria().getDescripcion());
-        if(a.getImagen() != null && a.getImagen() != ""){
-            Glide.with(convertView).load(a.getImagen()).into(vh.imageArticle);
+        Stock s = this.lStocks.get(position);
+        vh.nombre.setText(s.getId_articulo().getDescripcion());
+        vh.marca.setText(s.getId_articulo().getMarca().getDescripcion());
+        vh.precio.setText(String.valueOf(s.getId_articulo().getPrecio()));
+        vh.fecha.setText(s.getFecha_vencimiento().toString());
+        vh.categoria.setText(s.getId_articulo().getCategoria().getDescripcion());
+        if(s.getId_articulo().getImagen() != null && s.getId_articulo().getImagen() != ""){
+            Glide.with(convertView).load(s.getId_articulo().getImagen()).into(vh.imageArticle);
         }
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putSerializable("articuloSelected", a);
+                args.putSerializable("stockSelected", s);
                 Navigation.findNavController(v).navigate(R.id.action_hunter_VerComercio_to_hunter_VerArticulo, args);
             }
         });
@@ -88,7 +92,7 @@ public class ArticuloComercioListAdapter extends BaseAdapter {
 
 
     static class ViewHolder{
-        TextView nombre, fecha, marca, categoria;
+        TextView nombre, fecha, marca, categoria, precio;
         ImageView imageArticle;
 
     }

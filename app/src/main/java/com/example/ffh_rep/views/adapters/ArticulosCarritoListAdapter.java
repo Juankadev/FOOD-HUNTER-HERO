@@ -70,9 +70,9 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
         }
 
         ItemCarrito a = lArticulos.get(position);
-        vh.nombre.setText(a.getArtc().getDescripcion());
+        vh.nombre.setText(a.getArtc().getId_articulo().getDescripcion());
         vh.cantidad.setText("x"+ a.getCantidad());
-        Glide.with(convertView).load(a.getArtc().getImagen()).into(vh.ivItem);
+        Glide.with(convertView).load(a.getArtc().getId_articulo().getImagen()).into(vh.ivItem);
         return convertView;
     }
 

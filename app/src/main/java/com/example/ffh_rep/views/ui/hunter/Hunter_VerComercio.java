@@ -79,7 +79,7 @@ public class Hunter_VerComercio extends Fragment {
         sessionManager = new SessionManager(requireActivity());
         userSession = sessionManager.getHunterSession();
 
-        mViewModel.cargarArticulos(commerce.getId());
+        mViewModel.getStockbyArticulos(commerce);
         carrito.setComercio(commerce);
 
         isThisFavorite(commerce.isFavorite());
@@ -138,12 +138,7 @@ public class Hunter_VerComercio extends Fragment {
 
     public void setUpObservers(){
 
-        mViewModel.getMldArticulos().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
-            @Override
-            public void onChanged(List<Articulo> articulos) {
-                aclAdapter.setData(articulos);
-            }
-        });
+        mViewModel.getMldStockArticulos().observe(getViewLifecycleOwner(), stocks-> aclAdapter.setData(stocks));
 
         carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {
             @Override

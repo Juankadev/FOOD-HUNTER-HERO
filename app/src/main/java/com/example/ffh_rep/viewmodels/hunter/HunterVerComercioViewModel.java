@@ -9,14 +9,17 @@ import androidx.lifecycle.ViewModel;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.models.repositories.ArticuloRepository;
 import com.example.ffh_rep.models.repositories.ComercioRepository;
+import com.example.ffh_rep.models.repositories.StockRepository;
 
 import java.util.List;
 
 public class HunterVerComercioViewModel extends ViewModel {
     private Context ctx;
     private MutableLiveData<List<Articulo>> mldArticulos;
+    private MutableLiveData<List<Stock>> mldStockArticulos;
     private MutableLiveData<Boolean> isMarkingAsFav;
     private MutableLiveData<Boolean>  markSuccess;
     private MutableLiveData<Boolean>  errorMarking;
@@ -25,14 +28,20 @@ public class HunterVerComercioViewModel extends ViewModel {
     private MutableLiveData<Boolean>  dismarkSuccess;
     private MutableLiveData<Boolean>  errorDismarking;
 
+    private MutableLiveData<Boolean> loadingStocks;
+    private MutableLiveData<Boolean>  successStocks;
+    private MutableLiveData<Boolean>  errorStocks;
+
 
     private ArticuloRepository aRepo;
     private ComercioRepository cRepo;
+    private StockRepository sRepo;
 
     public HunterVerComercioViewModel(){}
     public HunterVerComercioViewModel(Context ctx){
         this.ctx = ctx;
         this.mldArticulos = new MutableLiveData<>();
+        this.mldStockArticulos  = new MutableLiveData<>();
         this.isMarkingAsFav = new MutableLiveData<>(false);
         this.markSuccess = new MutableLiveData<>(false);
         this.errorMarking = new MutableLiveData<>(false);
@@ -41,9 +50,13 @@ public class HunterVerComercioViewModel extends ViewModel {
         this.dismarkSuccess = new MutableLiveData<>(false);
         this.errorDismarking = new MutableLiveData<>(false);
 
+        this.loadingStocks = new MutableLiveData<>(false);
+        this.successStocks = new MutableLiveData<>(false);
+        this.errorStocks = new MutableLiveData<>(false);
+
         this.aRepo = new ArticuloRepository();
         this.cRepo = new ComercioRepository();
-
+        this.sRepo = new StockRepository();
 
     }
 
@@ -57,6 +70,10 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     public void dismarkAsFav(Comercio commerce, Hunter ht){
         cRepo.dismarkAsFavorite(commerce, ht, this.isDismarkingAsFav, this.dismarkSuccess, this.errorDismarking);
+    }
+
+    public void getStockbyArticulos(Comercio commerce){
+        sRepo.getStockByComercioAndFechaVencimiento(this.mldStockArticulos,this.loadingStocks,this.successStocks,this.errorStocks ,commerce);
     }
 
     public void setIsMarkingAsFav(boolean value) {
@@ -109,5 +126,26 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     public void setErrorDismarking(MutableLiveData<Boolean> errorDismarking) {
         this.errorDismarking = errorDismarking;
+    }
+
+
+    public MutableLiveData<List<Stock>> getMldStockArticulos() {
+        return mldStockArticulos;
+    }
+
+    public void setMldStockArticulos(List<Stock> mldStockArticulos) {
+        this.mldStockArticulos.postValue(mldStockArticulos);
+    }
+
+    public MutableLiveData<Boolean> getLoadingStocks() {
+        return loadingStocks;
+    }
+
+    public MutableLiveData<Boolean> getSuccessStocks() {
+        return successStocks;
+    }
+
+    public MutableLiveData<Boolean> getErrorStocks() {
+        return errorStocks;
     }
 }

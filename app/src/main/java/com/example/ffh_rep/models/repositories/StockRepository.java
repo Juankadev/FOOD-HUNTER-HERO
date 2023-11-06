@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Beneficio;
+import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Marca;
 import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.utils.DBUtil;
 
@@ -138,6 +140,66 @@ public class StockRepository {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+        });
+    }
+
+    public void getStockByComercioAndFechaVencimiento(MutableLiveData<List<Stock>> mlStocks, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Comercio commerce){
+        CompletableFuture.supplyAsync(() -> {
+            loading.postValue(true);
+            List<Stock> lStocks = new ArrayList<>();
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("SELECT S1.id_stock, S1.id_articulo, S1.id_comercio, S1.fecha_vencimiento, S1.cantidad, a.descripcion as articulodescripcion, a.precio, a.imagen,a.estado,c.id_categoria as idcategoria, c.descripcion as categoriadescripcion, m.id_marca as idmarca, m.descripcion as marcadescripcion" +
+                         " FROM Stocks AS S1" +
+                         " INNER JOIN Articulos a on a.id_articulo = S1.id_articulo" +
+                         " INNER JOIN Categorias c on c.id_categoria = a.id_categoria" +
+                         " INNER JOIN Marcas m on m.id_marca = a.id_marca" +
+                         " WHERE S1.fecha_vencimiento = (" +
+                         "    SELECT MIN(fecha_vencimiento)" +
+                         "    FROM Stocks AS S2" +
+                         "    WHERE S2.id_articulo = S1.id_articulo AND S2.id_comercio = S1.id_comercio" +
+                         ") and S1.fecha_vencimiento >= CURDATE() and S1.id_comercio = ? and a.estado = 1");
+            ) {
+                ps.setInt(1, commerce.getId());
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    Stock stock = new Stock();
+                    stock.setId_stock(rs.getInt("id_stock"));
+                    Articulo art = new Articulo();
+                    art.setIdArticulo(rs.getInt("id_articulo"));
+                    art.setDescripcion(rs.getString("articulodescripcion"));
+                    art.setPrecio(rs.getDouble("precio"));
+                    art.setImagen(rs.getString("imagen"));
+                    art.setMarca(new Marca());
+                    art.getMarca().setIdMarca(rs.getInt("idmarca"));
+                    art.getMarca().setDescripcion(rs.getString("marcadescripcion"));
+                    art.setCategoria(new Categoria());
+                    art.getCategoria().setIdCategoria(rs.getInt("idcategoria"));
+                    art.getCategoria().setDescripcion(rs.getString("categoriadescripcion"));
+                    art.setComercio(commerce);
+                    stock.setId_articulo(art);
+                    stock.setId_comercio(commerce);
+                    stock.setFecha_vencimiento(rs.getDate("fecha_vencimiento"));
+                    stock.setCantidad(rs.getInt("cantidad"));
+
+                    lStocks.add(stock);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                loading.postValue(false);
+                error.postValue(true);
+            }
+            return lStocks;
+
+        }).thenAcceptAsync(stocks -> {
+            loading.postValue(false);
+            if (stocks != null) {
+                mlStocks.postValue(stocks.isEmpty() ? new ArrayList<>() : stocks);
+                success.postValue(true);
+            } else {
+                success.postValue(true);
+                mlStocks.postValue(new ArrayList<>());
             }
         });
     }

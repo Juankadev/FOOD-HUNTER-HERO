@@ -3,21 +3,21 @@ package com.example.ffh_rep.entidades;
 import java.io.Serializable;
 
 public class ItemCarrito implements Serializable {
-    private Articulo artc;
+    private Stock stock;
     private int cantidad;
 
     public ItemCarrito(){}
 
-    public ItemCarrito(Articulo artc, int cant){
-        this.artc = artc;
+    public ItemCarrito(Stock stock, int cant){
+        this.stock = stock;
         this.cantidad = cant;
     }
-    public Articulo getArtc() {
-        return artc;
+    public Stock getArtc() {
+        return stock;
     }
 
-    public void setArtc(Articulo artc) {
-        this.artc = artc;
+    public void setArtc(Stock artc) {
+        this.stock = artc;
     }
 
     public int getCantidad() {
@@ -31,7 +31,7 @@ public class ItemCarrito implements Serializable {
     @Override
     public String toString() {
         return "ItemCarrito{" +
-                "artc=" + artc.toString() +
+                "stock=" + stock +
                 ", cantidad=" + cantidad +
                 '}';
     }
