@@ -415,4 +415,45 @@ public class ArticuloRepository {
             return articulos;
         });
     }
+
+
+    public void eliminarArticulo(Context context, Articulo articulo) {
+        CompletableFuture.runAsync(() -> {
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("UPDATE Articulos SET estado = '0' WHERE id_articulo = ?")) {
+
+                ps.setInt(1, articulo.getIdArticulo());
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Artículo eliminado exitosamente", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                } else {
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Error al eliminar el artículo", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "Error al actualizar el artículo", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+        });
+    }
 }
