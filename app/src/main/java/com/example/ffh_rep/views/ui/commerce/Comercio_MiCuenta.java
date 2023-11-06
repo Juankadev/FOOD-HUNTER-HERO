@@ -34,11 +34,11 @@ public class Comercio_MiCuenta extends Fragment {
     private ComercioMiCuentaViewModel mViewModel;
     private FragmentComercioMiCuentaBinding binding;
     private TextView et_cuit_mc, et_razonsocial_mc, et_rubro_mc, et_correo_mc, et_telefono_mc, et_direccion_mc, txtEditarActioner;
-    private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel, btnVolver;
+    private Button btnEditarInformacion, btnEliminarCuenta, btnEditAction, btnCancel;
     private CardView btnEditarActionerWithProgress;
     private ProgressBar pgBarEditar;
     private Comercio userSession, updateCommerce;
-    private String originalRubro, originalCorreo, originalTelefono, originalDireccion;
+    private String originalCuit, originalRazonSocial, originalRubro, originalCorreo, originalTelefono, originalDireccion;
     private SessionManager sessionManager;
 
 
@@ -80,7 +80,6 @@ public class Comercio_MiCuenta extends Fragment {
         btnEliminarCuenta = view.findViewById(R.id.btn_eliminarInfoComercio);
         btnEditAction = view.findViewById(R.id.btn_edit_actioner2);
         btnCancel = view.findViewById(R.id.btn_Cancel_Edit2);
-        btnVolver = view.findViewById(R.id.btn_back_menu3);
         btnEditarActionerWithProgress = view.findViewById(R.id.cv_actioner_edit);
 
         txtEditarActioner = view.findViewById(R.id.txtEditarActioner);
@@ -110,7 +109,6 @@ public class Comercio_MiCuenta extends Fragment {
         btnEditarInformacion.setOnClickListener(v -> enabledInputs(true));
         btnEditarActionerWithProgress.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
-        btnVolver.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.commerce_MisArticulos));
     }
     /**
      * Configura los observadores de la interfaz.
@@ -224,6 +222,8 @@ public class Comercio_MiCuenta extends Fragment {
      * modificaciones. Esto permite revertir los cambios en caso de que se cancele la edición.
      */
     private void saveOriginals(){
+        originalCuit = et_cuit_mc.getText().toString();
+        originalRazonSocial = et_razonsocial_mc.getText().toString();
         originalRubro = et_rubro_mc.getText().toString();
         originalCorreo = et_correo_mc.getText().toString();
         originalDireccion = et_direccion_mc.getText().toString();
@@ -233,6 +233,8 @@ public class Comercio_MiCuenta extends Fragment {
      * Revierte la edición restaurando los valores originales a los campos de información del usuario.
      */
     private void rollbackEdit(){
+        et_cuit_mc.setText(originalCuit);
+        et_razonsocial_mc.setText(originalRazonSocial);
         et_rubro_mc.setText(originalRubro);
         et_correo_mc.setText(originalCorreo);
         et_direccion_mc.setText(originalDireccion);
@@ -281,9 +283,6 @@ public class Comercio_MiCuenta extends Fragment {
         String telefono = et_telefono_mc.getText().toString();
         if (telefono.isEmpty()) {
             et_telefono_mc.setError("Este campo es requerido");
-            isValid = false;
-        } else if (!GeneralHelper.isNumeric(telefono)) {
-            et_telefono_mc.setError("El telefono debe ser numérico");
             isValid = false;
         }
         // Validar correo
