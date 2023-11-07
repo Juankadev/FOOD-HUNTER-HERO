@@ -135,6 +135,16 @@ CREATE TABLE Comercios_Favoritos (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
+CREATE TABLE Generar_Qr (
+    id_qr INT AUTO_INCREMENT,
+    id_comercio INT,
+    id_hunter INT,
+    estado TINYINT,
+    PRIMARY KEY (id_qr),
+    FOREIGN KEY (id_comercio) REFERENCES Comercios(id_comercio),
+    FOREIGN KEY (id_hunter) REFERENCES Hunters(id_hunter)
+);
+
 /*MODIFICACIONES*/
 
 ALTER TABLE Usuarios
