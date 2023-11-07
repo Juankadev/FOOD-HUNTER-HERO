@@ -148,7 +148,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
             }
         });
 
-        builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
