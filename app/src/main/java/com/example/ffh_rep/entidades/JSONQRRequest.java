@@ -7,12 +7,14 @@ public class JSONQRRequest implements Serializable {
     private int idHunter;
     private List<ItemCarrito> lCarrito;
     private int idComercio;
+    private int puntos;
 
 
-    public JSONQRRequest(int idHunter, List<ItemCarrito> lCarrito, int idComercio) {
+    public JSONQRRequest(int idHunter, List<ItemCarrito> lCarrito, int idComercio, int puntos) {
         this.idHunter = idHunter;
         this.lCarrito = lCarrito;
         this.idComercio = idComercio;
+        this.puntos = puntos;
     }
 
     public int getIdComercio() {
@@ -37,6 +39,14 @@ public class JSONQRRequest implements Serializable {
 
     public void setlCarrito(List<ItemCarrito> lCarrito) {
         this.lCarrito = lCarrito;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     @Override

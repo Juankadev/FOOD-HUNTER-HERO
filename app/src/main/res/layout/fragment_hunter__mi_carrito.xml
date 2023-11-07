@@ -60,25 +60,49 @@
         app:layout_constraintTop_toBottomOf="@+id/hunter_lista_miCarrito"
         />
 
-    <Button
-        android:id="@+id/btnVolver_carrito"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:backgroundTint="@color/bck_gray"
-        android:text="@string/btn_volver"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <Button
+    <androidx.cardview.widget.CardView
         android:id="@+id/btnEndHunting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:backgroundTint="@color/bck_green"
-        android:text="@string/finalizar_caza"
+        android:layout_width="202dp"
+        android:layout_height="55dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnVolver_carrito" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_puntos_reemplazar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bck_green">
+
+            <ProgressBar
+                android:id="@+id/pbFinalizando"
+                android:layout_width="41dp"
+                android:layout_height="35dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_initcontent"
+                android:layout_width="141dp"
+                android:layout_height="27dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="Finalizar Caza"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.517" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

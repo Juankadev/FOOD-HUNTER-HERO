@@ -1,5 +1,6 @@
 package com.example.ffh_rep.views.ui.hunter;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +27,12 @@ import com.example.ffh_rep.databinding.FragmentHunterMiCarritoBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.entidades.QrObject;
 import com.example.ffh_rep.interfaces.CarritoActionsCallback;
 import com.example.ffh_rep.utils.SessionManager;
+import com.example.ffh_rep.viewmodels.factory.GenerarQrViewModelFactory;
 import com.example.ffh_rep.viewmodels.hunter.CarritoViewModel;
+import com.example.ffh_rep.viewmodels.hunter.GenerarQrViewModel;
 import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.viewmodels.factory.CarritoViewModelFactory;
@@ -43,11 +48,13 @@ import java.util.List;
 public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback {
 
     private CarritoViewModel carrito;
+    private GenerarQrViewModel qrController;
     private FragmentHunterMiCarritoBinding binding;
     private ArticulosCarritoListAdapter alAdapter;
+    private ProgressBar pbFinalizando;
     private ListView lvArticulos;
     private TextView tvPuntos;
-    private Button btnEndHunting;
+    private CardView btnEndHunting;
     private List<ItemCarrito> _currChart;
     private Comercio comercio;
     private Hunter userSession;
@@ -91,28 +98,41 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
                 tvPuntos.setText(String.valueOf(integer));
             }
         });
+
+        qrController.getLoading().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                pbFinalizando.setVisibility(View.VISIBLE);
+            }
+        });
+
+        qrController.getSuccess().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                pbFinalizando.setVisibility(View.GONE);
+                generateJsonAndRedirect();
+            }
+        });
+
+
+        qrController.getError().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean){
+                pbFinalizando.setVisibility(View.GONE);
+                Toast.makeText(requireActivity(), "No se ha podido Finalizar la caza, intente mas tarde", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     public void setUpListeners(){
-        btnEndHunting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle args = new Bundle();
-                Gson gson = new Gson();
-                JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId());
-                String json = gson.toJson(req);
-                args.putString("json_request", json);
-                Navigation.findNavController(v).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
-            }
-        });
+        btnEndHunting.setOnClickListener( v -> generateQr());
     }
 
     public void initComponents(View view){
         lvArticulos = view.findViewById(R.id.hunter_lista_miCarrito);
         tvPuntos = view.findViewById(R.id.tv_puntos_reemplazar);
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
+        pbFinalizando = view.findViewById(R.id.pbFinalizando);
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext(), this);
-
+        qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
     }
 
@@ -157,5 +177,21 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void generateQr(){
+        QrObject qr = new QrObject();
+        qr.setHunter(userSession);
+        qr.setCommerce(comercio);
+        qrController.generarQr(qr);
+    }
+
+    public void generateJsonAndRedirect(){
+        Bundle args = new Bundle();
+        Gson gson = new Gson();
+        JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId(), carrito.getPuntos().getValue());
+        String json = gson.toJson(req);
+        args.putString("json_request", json);
+        Navigation.findNavController(requireView()).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
     }
 }
