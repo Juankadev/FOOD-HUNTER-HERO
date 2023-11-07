@@ -11,6 +11,7 @@ import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.DBUtil;
+import com.example.ffh_rep.utils.SessionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -183,7 +184,7 @@ public class DescuentoRepository {
         });
     }
 
-    public void insert_Beneficios_hunter(MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter, Beneficio bene) {
+    public void insert_Beneficios_hunter(MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter, Beneficio bene, SessionManager manager) {
         CompletableFuture.runAsync(() -> {
             loading.postValue(true);
             try (Connection con = DBUtil.getConnection()) {
@@ -195,7 +196,7 @@ public class DescuentoRepository {
                     int rowsAffected = insertBeneficio.executeUpdate();
 
                     if (rowsAffected > 0) {
-                        int puntosDescontar = bene.getPuntos_requeridos();
+                        int puntosDescontar = hunter.getPuntaje() - bene.getPuntos_requeridos();
                         try (PreparedStatement updatePuntaje = con.prepareStatement("UPDATE Hunters SET puntaje = puntaje - ? WHERE id_hunter = ?")) {
                             updatePuntaje.setInt(1, puntosDescontar);
                             updatePuntaje.setInt(2, hunter.getIdHunter());
@@ -203,6 +204,8 @@ public class DescuentoRepository {
                         }
 
                         con.commit();
+                        hunter.setPuntaje(puntosDescontar);
+                        manager.saveHunterSession(hunter);
                         success.postValue(true);
                     } else {
                         con.rollback();

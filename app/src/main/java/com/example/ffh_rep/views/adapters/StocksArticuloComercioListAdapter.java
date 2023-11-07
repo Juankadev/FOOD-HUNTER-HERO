@@ -69,7 +69,7 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
         vh.fecha_vencimiento.setText(s.getFecha_vencimiento().toString());
         vh.cantidad.setText(String.valueOf(s.getCantidad()));
         vh.idlote.setText(String.valueOf(s.getId_stock()));
-        
+
         return convertView;
     }
 

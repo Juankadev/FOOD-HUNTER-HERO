@@ -142,7 +142,7 @@ public class Hunter_VerBeneficios extends Fragment implements CanjearBeneficiosC
     @Override
     public void onCanjearBeneficio(Beneficio bene) {
         if(userSession.getPuntaje() >= bene.getPuntos_requeridos()){
-            mViewModel.canjearBeneficio(this.userSession, bene);
+            mViewModel.canjearBeneficio(this.userSession, bene, this.sessionManager);
             bAdapter.setLoading(true);
             bAdapter.notifyDataSetChanged();
         }

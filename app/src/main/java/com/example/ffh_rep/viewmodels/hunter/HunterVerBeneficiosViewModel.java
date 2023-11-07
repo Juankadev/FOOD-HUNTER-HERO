@@ -11,6 +11,7 @@ import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.models.repositories.ComercioRepository;
 import com.example.ffh_rep.models.repositories.DescuentoRepository;
 import com.example.ffh_rep.models.repositories.HunterRepository;
+import com.example.ffh_rep.utils.SessionManager;
 
 import java.util.List;
 
@@ -57,8 +58,8 @@ public class HunterVerBeneficiosViewModel extends ViewModel {
         return listBeneficios;
     }
 
-    public void canjearBeneficio(Hunter hunter, Beneficio bene) {
-        dRepo.insert_Beneficios_hunter(this.loadingInsertBene, this.successInsertBene, this.errorInsertBene, hunter, bene);
+    public void canjearBeneficio(Hunter hunter, Beneficio bene, SessionManager session) {
+        dRepo.insert_Beneficios_hunter(this.loadingInsertBene, this.successInsertBene, this.errorInsertBene, hunter, bene, session);
     }
 
     public MutableLiveData<Boolean> getSuccessInsertBene() {
