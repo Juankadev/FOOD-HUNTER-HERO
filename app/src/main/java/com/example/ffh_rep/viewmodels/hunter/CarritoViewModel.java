@@ -46,9 +46,11 @@ public class CarritoViewModel extends ViewModel{
         return carrito;
     }
 
+    //Se llama desde el detalle de articulo
     public void addArticleToCart(ItemCarrito article){
         List<ItemCarrito> _currCart = this.carrito.getValue();
-        Integer _currTot = this.totArticulos.getValue();
+        Integer _currTot = this.totArticulos.getValue(); //es 0
+
         if(_currCart == null){
             _currCart = new ArrayList<>();
         }
@@ -117,8 +119,8 @@ public class CarritoViewModel extends ViewModel{
                     break;
                 }
             }
-            this.carrito.postValue(_currCart);
-            this.totArticulos.postValue(_currTot);
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
             recountPoints();
         }
     }
@@ -136,8 +138,8 @@ public class CarritoViewModel extends ViewModel{
                     break;
                 }
             }
-            this.carrito.postValue(_currCart);
-            this.totArticulos.postValue(_currTot);
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
             recountPoints();
         }
 
@@ -158,8 +160,8 @@ public class CarritoViewModel extends ViewModel{
                     break;
                 }
             }
-            this.carrito.postValue(_currCart);
-            this.totArticulos.postValue(_currTot);
+            this.carrito.setValue(_currCart);
+            this.totArticulos.setValue(_currTot);
             recountPoints();
         }
 
@@ -178,15 +180,17 @@ public class CarritoViewModel extends ViewModel{
                     break;
                 }
             }
-            recountPoints();
+
             this.carrito.setValue(_currCart);
             this.totArticulos.setValue(_currTot);
+            recountPoints();
             adapter.notifyDataSetChanged();
         }
     }
 
 
     public void recountPoints(){
+        System.out.println("this.totArticulos.getValue(): "+this.totArticulos.getValue());
         int quantity = this.totArticulos.getValue();
         Log.d("QT", String.valueOf(quantity));
         if(quantity >= 1 && quantity < 5){
@@ -199,7 +203,7 @@ public class CarritoViewModel extends ViewModel{
             setPuntos(15);
         }
         else if(quantity >=20){
-            setPuntos(15);
+            setPuntos(25);
         }
         else{
             setPuntos(0);
