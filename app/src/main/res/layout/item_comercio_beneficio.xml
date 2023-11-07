@@ -32,7 +32,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/codigo"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/tv_item_descuento_id"
@@ -40,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/id_general"
-                    android:textColor="#131313" />
+                    android:textColor="#131313"
+                    android:visibility="gone"/>
             </TableRow>
 
             <TableRow
@@ -53,13 +55,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/descripcion"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/tv_item_descuento_descripcion"
                     android:layout_width="172dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:gravity="center"
                     android:text="@string/descripcion"
                     android:textColor="#131313" />
 
@@ -67,7 +73,9 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/puntos"
@@ -75,7 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/puntos"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textAlignment="viewEnd"/>
 
                 <TextView
                     android:id="@+id/tv_item_descuento_puntos"
@@ -93,16 +102,22 @@
 
                 <Button
                     android:id="@+id/btnModificarDescuento"
-                    android:layout_width="172dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="24dp"
                     android:layout_weight="1"
                     android:backgroundTint="#FFD500"
                     android:text="✎" />
 
                 <Button
                     android:id="@+id/btnEliminarDescuento"
-                    android:layout_width="172dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:backgroundTint="#FF0000"
                     android:text="x" />

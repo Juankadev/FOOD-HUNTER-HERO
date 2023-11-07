@@ -8,14 +8,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/edtTitulo"
             android:layout_width="match_parent"
             android:layout_height="92dp"
             android:text="@string/titulo_agregar_desc"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <EditText
             android:id="@+id/edtDesc"
@@ -23,7 +26,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/descripcion"
-            android:inputType="text" />
+            android:inputType="text"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <EditText
             android:id="@+id/edtPuntos"
@@ -31,18 +36,33 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/puntos"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
-        <Button
-            android:id="@+id/btnAgregarDescuento"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/agregar_desc" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btnAgregarDescuento"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/agregar_desc" />
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_volver" />
+            <Button
+                android:id="@+id/btnVolver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/btn_volver" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -30,6 +30,8 @@
             android:hint="Descripción"
             android:inputType="text"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -43,6 +45,8 @@
             android:hint="Precio"
             android:inputType="numberDecimal"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -55,6 +59,8 @@
             android:ems="10"
             android:inputType="date"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="Fecha de Vencimiento"
             android:textColor="#FFFFFF" />
 
@@ -69,6 +75,8 @@
             android:hint="Cantidad"
             android:inputType="number"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -79,6 +87,8 @@
             android:background="@drawable/border"
             android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="Categoria (DropDownList)"
             android:textColor="#FFFFFF" />
 
@@ -90,26 +100,39 @@
             android:background="@drawable/border"
             android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:hint="Marca (DropDownList)"
             android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/btnAgregarArticulo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="#4CAF50"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnAgregarArticulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="4dp"
             android:textColor="#FFFFFF"
             android:text="Agregar Articulo" />
 
         <Button
             android:id="@+id/btnVolver"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="4dp"
             android:backgroundTint="#B6B6B6"
             android:text="@string/btn_volver"
             android:textColor="#FFFFFF" />
-
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

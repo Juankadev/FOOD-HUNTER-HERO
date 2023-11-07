@@ -46,6 +46,8 @@
             android:inputType="date"
             android:padding="10dp"
             android:hint="Fecha de Vencimiento"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -59,6 +61,8 @@
             android:inputType="number"
             android:padding="10dp"
             android:hint="Cantidad"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
 

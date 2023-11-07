@@ -51,6 +51,8 @@
             android:inputType="text"
             android:padding="10dp"
             android:hint="Descripción"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <EditText
@@ -64,6 +66,8 @@
             android:inputType="numberDecimal"
             android:padding="10dp"
             android:hint="Precio"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -75,6 +79,8 @@
             android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
             android:hint="Categoria (DropDownList)"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -86,6 +92,8 @@
             android:backgroundTint="#75FFFFFF"
             android:padding="10dp"
             android:hint="Marca (DropDownList)"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:textColor="#FFFFFF" />
 
         <Button
