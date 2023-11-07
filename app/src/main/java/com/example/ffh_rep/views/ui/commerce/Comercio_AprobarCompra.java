@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.ffh_rep.R;
@@ -25,6 +26,7 @@ public class Comercio_AprobarCompra extends Fragment {
 
     private ComercioAprobarCompraViewModel mViewModel;
     private ArticulosCarritoListAdapter alAdapter;
+    private Button onAprobar;
 
     private ListView listaProductos;
 

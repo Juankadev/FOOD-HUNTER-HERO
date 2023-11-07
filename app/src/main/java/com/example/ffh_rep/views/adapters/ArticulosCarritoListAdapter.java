@@ -83,9 +83,17 @@ public class ArticulosCarritoListAdapter extends BaseAdapter {
         ItemCarrito a = lArticulos.get(position);
         vh.nombre.setText(a.getArtc().getId_articulo().getDescripcion());
         vh.cantidad.setText("x"+ a.getCantidad());
-        vh.btnMinus.setOnClickListener(v -> { this.cuCallback.onAbsArticuloCallback(a);});
-        vh.btnMax.setOnClickListener(v -> {this.cuCallback.onSumArticuloCallback(a);});
-        vh.trashBtn.setOnClickListener(v -> {this.cuCallback.onDeleteArticuloCallback(a);});
+        if(cuCallback != null){
+            vh.btnMinus.setOnClickListener(v -> { this.cuCallback.onAbsArticuloCallback(a);});
+            vh.btnMax.setOnClickListener(v -> {this.cuCallback.onSumArticuloCallback(a);});
+            vh.trashBtn.setOnClickListener(v -> {this.cuCallback.onDeleteArticuloCallback(a);});
+        }
+        else{
+            vh.trashBtn.setVisibility(View.GONE);
+            vh.btnMax.setVisibility(View.GONE);
+            vh.btnMinus.setVisibility(View.GONE);
+        }
+
         Glide.with(convertView).load(a.getArtc().getId_articulo().getImagen()).into(vh.ivItem);
         return convertView;
     }

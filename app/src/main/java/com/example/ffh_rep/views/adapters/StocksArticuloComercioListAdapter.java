@@ -69,15 +69,7 @@ public class StocksArticuloComercioListAdapter extends BaseAdapter {
         vh.fecha_vencimiento.setText(s.getFecha_vencimiento().toString());
         vh.cantidad.setText(String.valueOf(s.getCantidad()));
         vh.idlote.setText(String.valueOf(s.getId_stock()));
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle args = new Bundle();
-                args.putSerializable("stockSelected", s);
-                Navigation.findNavController(v).navigate(R.id.action_comercio_Ver_Articulo_to_comercio_Ver_Stock_x_Articulo, args);
-            }
-        });
+        
         return convertView;
     }
 
