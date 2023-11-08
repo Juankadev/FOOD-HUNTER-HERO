@@ -23,11 +23,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class QrRepository {
 
-    public void insertQrData(QrObject qr, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+    public void insertQrData(QrObject qr, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, MutableLiveData<Integer> generatedId){
         CompletableFuture.runAsync(() -> {
             loading.postValue(true);
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement insertPs = con.prepareStatement("INSERT INTO Generar_Qr (id_comercio, id_hunter, estado) VALUES (?, ?, ?)");
+                 PreparedStatement insertPs = con.prepareStatement("INSERT INTO Generar_Qr (id_comercio, id_hunter, estado) VALUES (?, ?, ?)",  Statement.RETURN_GENERATED_KEYS);
             ) {
                 insertPs.setInt(1, qr.getCommerce().getId());
                 insertPs.setInt(2, qr.getHunter().getIdHunter());
@@ -38,6 +38,11 @@ public class QrRepository {
 
 
                 if (rowCount > 0) {
+                    ResultSet generatedKeys = insertPs.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        int idGenerado = generatedKeys.getInt(1);
+                        generatedId.postValue(idGenerado);
+                    }
                     loading.postValue(false);
                     success.postValue(true);
                 }
@@ -169,5 +174,52 @@ public class QrRepository {
             updateGenerarQRStmt.setInt(3, request.getIdHunter());
             updateGenerarQRStmt.executeUpdate();
         }
+    }
+
+    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        long pollingInterval = 5000;
+
+        Runnable pollRunnable = new Runnable() {
+            @Override
+            public void run() {
+                CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+                    return checkQRState(qr.getIdQr());
+                });
+
+                future.thenAcceptAsync(state -> {
+                    if (state == 1) {
+                        handler.post(() -> qrState.postValue(true));
+                    } else if (state == 2) {
+                        // Haz algo en caso de que el estado sea 2
+                    } else if (state == -1) {
+                        // Haz algo en caso de error
+                    }
+                }).exceptionally(ex -> {
+                    ex.printStackTrace();
+                    return null;
+                });
+
+                handler.postDelayed(this, pollingInterval);
+            }
+        };
+
+        handler.post(pollRunnable);
+    }
+
+
+    private int checkQRState(int idQr) {
+        String sql = "SELECT estado FROM Generar_Qr WHERE id_qr = ?";
+        try (Connection con = DBUtil.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idQr);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("estado");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

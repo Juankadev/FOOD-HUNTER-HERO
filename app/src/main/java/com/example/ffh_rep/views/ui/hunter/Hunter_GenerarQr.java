@@ -1,9 +1,13 @@
 package com.example.ffh_rep.views.ui.hunter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +16,10 @@ import android.widget.ImageView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterGenerarQrBinding;
+import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.viewmodels.factory.GenerarQrViewModelFactory;
+import com.example.ffh_rep.viewmodels.hunter.GenerarQrViewModel;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -21,6 +29,7 @@ import com.google.zxing.qrcode.encoder.QRCode;
 public class Hunter_GenerarQr extends Fragment {
 
     private FragmentHunterGenerarQrBinding binding;
+    private GenerarQrViewModel qrController;
     private ImageView qrContain;
 
     @Override
@@ -29,14 +38,30 @@ public class Hunter_GenerarQr extends Fragment {
         binding = FragmentHunterGenerarQrBinding.inflate(inflater, container, false);
         View view =  binding.getRoot();
         Bundle args = getArguments();
+        initComponents(view);
 
-        qrContain = view.findViewById(R.id.hunter__qr_container);
         String data = args.getString("json_request");
-
         generateQr(data, qrContain);
+        Gson gson = new Gson();
+        JSONQRRequest jsonQRRequest = gson.fromJson(data, JSONQRRequest.class);
+        qrController.checkQRStatus(jsonQRRequest);
+        setUpObservers();
         return view;
     }
 
+
+    public void initComponents(View view){
+        qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
+        qrContain = view.findViewById(R.id.hunter__qr_container);
+    }
+
+    public void setUpObservers(){
+        qrController.getCazaAprobada().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean){
+                showSuccessDialog();
+            }
+        });
+    }
     public void generateQr(String data, ImageView container){
         QRCodeWriter writer = new QRCodeWriter();
         try {
@@ -60,5 +85,21 @@ public class Hunter_GenerarQr extends Fragment {
         catch (WriterException e){
             e.printStackTrace();
         }
+    }
+
+    public void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("CAZA APROBADA");
+        builder.setMessage("Tu caza ha sido aprobada con exito");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Navigation.findNavController(requireView()).navigate(R.id.nav_hunter_Home);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

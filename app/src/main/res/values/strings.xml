@@ -185,6 +185,7 @@
     <string name="aprobar_caza">Aprobar Caza</string>
     <string name="id_general">ID</string>
     <string name="codigo">Código</string>
+    <string name="Puntor_Req">Puntos requeridos</string>
 
 
 </resources>
