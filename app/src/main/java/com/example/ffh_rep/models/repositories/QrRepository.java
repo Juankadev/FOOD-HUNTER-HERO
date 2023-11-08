@@ -180,12 +180,11 @@ public class QrRepository {
         Handler handler = new Handler(Looper.getMainLooper());
         long pollingInterval = 5000;
 
-        if(!enabled.getValue()){
-
+        if(enabled.getValue()){
         Runnable pollRunnable = new Runnable() {
             @Override
             public void run() {
-                if(enabled.getValue()){
+                if(!enabled.getValue()){
                     return;
                 }
                 CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {

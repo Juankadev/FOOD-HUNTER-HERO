@@ -70,4 +70,12 @@ public class GenerarQrViewModel extends ViewModel {
     public void setPollingEnabled(MutableLiveData<Boolean> pollingEnabled) {
         this.pollingEnabled = pollingEnabled;
     }
+
+    public void resetAttributes(){
+        loading.setValue(false);
+        success.setValue(false);
+        error.setValue(false);
+        idGenerado.setValue(null);
+        cazaAprobada.setValue(false);
+    }
 }

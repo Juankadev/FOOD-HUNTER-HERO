@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -97,11 +98,21 @@ public class Hunter_GenerarQr extends Fragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                qrContain = null;
+                qrController.resetAttributes();
+                qrController = null;
                 Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qrController = null;
+        qrContain = null;
     }
 }

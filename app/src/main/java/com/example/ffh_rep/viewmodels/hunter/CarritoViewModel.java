@@ -24,6 +24,7 @@ public class CarritoViewModel extends ViewModel{
     private Comercio comercio;
     private Context ctx;
 
+
     public CarritoViewModel(){
     }
 
@@ -208,5 +209,11 @@ public class CarritoViewModel extends ViewModel{
         else{
             setPuntos(0);
         }
+    }
+
+    public void resetAttributes(){
+        this.carrito.setValue(new ArrayList<>());
+        this.totArticulos.setValue(0);
+        this.puntos.setValue(0);
     }
 }

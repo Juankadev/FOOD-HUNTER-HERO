@@ -194,6 +194,8 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         String json = gson.toJson(req);
         Log.d("JSON CREADO", json);
         args.putString("json_request", json);
+        carrito.clearChart();
+        carrito.resetAttributes();
         Navigation.findNavController(requireView()).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
     }
 }
