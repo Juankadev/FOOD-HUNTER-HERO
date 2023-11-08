@@ -22,8 +22,10 @@ import androidx.navigation.Navigation;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.utils.CustomDateAdapter;
 import com.example.ffh_rep.viewmodels.commerce.ComercioEscanearQrViewModel;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -32,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +58,9 @@ public class Comercio_EscanearQr extends Fragment {
                     if (data != null) {
                         String contenido = data.getStringExtra("SCAN_RESULT");
                         if (contenido != null) {
-                            Gson gson = new Gson();
+                            GsonBuilder gsonBuilder = new GsonBuilder();
+                            gsonBuilder.registerTypeAdapter(Date.class, new CustomDateAdapter());
+                            Gson gson = gsonBuilder.create();
                             JSONQRRequest res = gson.fromJson(contenido, JSONQRRequest.class);
                             Bundle args = new Bundle();
                             args.putSerializable("responseQr", res);

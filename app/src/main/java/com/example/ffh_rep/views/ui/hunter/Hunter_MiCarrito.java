@@ -189,7 +189,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
     public void generateJsonAndRedirect(){
         Bundle args = new Bundle();
         Gson gson = new Gson();
-        JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId(), carrito.getPuntos().getValue());
+        JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId(), carrito.getPuntos().getValue(), qrController.getIdGenerado().getValue());
         String json = gson.toJson(req);
         args.putString("json_request", json);
         Navigation.findNavController(requireView()).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
