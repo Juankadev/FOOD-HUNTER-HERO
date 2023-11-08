@@ -59,6 +59,7 @@ public class BeneficiosAdapterHunter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_hunter_lista_beneficio, null);
             vh = new BeneficiosAdapterHunter.ViewHolder();
             vh.nombre = convertView.findViewById(R.id.tv_nombre_beneficio);
+            vh.puntos = convertView.findViewById(R.id.tv_puntos_beneficio);
             vh.btn = convertView.findViewById(R.id.btn_canjear_bene);
             vh.pbCanjear = convertView.findViewById(R.id.pbCanjeandoBeneficio);
             convertView.setTag(vh);
@@ -70,12 +71,16 @@ public class BeneficiosAdapterHunter extends BaseAdapter {
 
         vh.btn.setEnabled(true);
         vh.nombre.setVisibility(View.VISIBLE);
+        vh.puntos.setVisibility(View.VISIBLE);
+
         vh.nombre.setText(bene.getDescripcion());
+        vh.puntos.setText(bene.getPuntos_requeridos().toString() + " Puntos");
         vh.pbCanjear.setVisibility(View.GONE);
 
         if (position == loadingPosition && isLoading) {
             vh.btn.setEnabled(false);
             vh.nombre.setVisibility(View.GONE);
+            vh.puntos.setVisibility(View.GONE);
             vh.pbCanjear.setVisibility(View.VISIBLE);
         }
 
@@ -90,6 +95,7 @@ public class BeneficiosAdapterHunter extends BaseAdapter {
 
     static class ViewHolder{
         TextView nombre;
+        TextView puntos;
         Button btn;
         ProgressBar pbCanjear;
     }
