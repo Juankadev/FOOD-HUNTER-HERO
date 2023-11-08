@@ -95,7 +95,7 @@ public class Hunter_VerArticulo extends Fragment {
     }
 
     public void settingComponents(Stock stock, View view){
-        precio.setText(String.valueOf(stock.getId_articulo().getPrecio()));
+        precio.setText("$" + String.valueOf(stock.getId_articulo().getPrecio()));
         descripcion.setText(stock.getId_articulo().getDescripcion());
         marca.setText(stock.getId_articulo().getMarca().getDescripcion());
         categoria.setText(stock.getId_articulo().getCategoria().getDescripcion());
