@@ -2,6 +2,8 @@ package com.example.ffh_rep.views.ui.commerce;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -69,9 +71,6 @@ public class Comercio_Ver_Articulo extends Fragment {
         settingComponents(article, view);
         setUpListeners();
 
-
-
-
         return view;
     }
 
@@ -106,7 +105,23 @@ public class Comercio_Ver_Articulo extends Fragment {
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eliminarArticulo(article);
+                AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                builder.setTitle("Eliminar articulo");
+                builder.setMessage("¿Estás seguro de que deseas eliminar este articulo? Esta acción no se puede deshacer.");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        eliminarArticulo(article);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 

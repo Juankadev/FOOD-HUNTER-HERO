@@ -133,11 +133,13 @@ public class Comercio_AgregarStockArticulo extends Fragment {
     private void setupListeners() {
 
         txtFechaVencimientoArticulo.setOnClickListener(v-> showDatePicker());
-        txtFechaVencimientoArticulo.setOnFocusChangeListener((view, hasFocus) -> {
+        // Comente esto porque generaba que que al retroceder desde esta vista se triggeree el date picker 3 veces en una vista incorrecta
+        // Deberiamos revisarlo.
+        /*txtFechaVencimientoArticulo.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
                 showDatePicker();
             }
-        });
+        });*/
     }
 
     public void goBack() {

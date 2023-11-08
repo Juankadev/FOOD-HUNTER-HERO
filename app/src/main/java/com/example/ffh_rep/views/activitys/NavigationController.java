@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +38,8 @@ public class NavigationController extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
-    TextView username;
+    TextView username, navHeaderTitle;
+    ImageView imgUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,9 @@ public class NavigationController extends AppCompatActivity {
         setSupportActionBar(binding.appBarNavigationController.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        navHeaderTitle = navigationView.getHeaderView(0).findViewById(R.id.navHeaderTitle);
+        imgUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
         sessionManager = new SessionManager(this);
-
 
         this.intent = getIntent();
 
@@ -78,6 +82,11 @@ public class NavigationController extends AppCompatActivity {
     private void initializeViews(Usuario u) {
         username = findViewById(R.id.username);
         username.setText(u.getUsername());
+        navHeaderTitle.setText(u.getUsername());
+        if(userRol(u) == 1)
+        {
+            imgUser.setImageDrawable(getResources().getDrawable(R.drawable.shop));
+        }
     }
     private int getNavGraphResId(int userRole) {
         switch (userRole) {

@@ -1,6 +1,8 @@
 package com.example.ffh_rep.views.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +76,23 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
         vh.btnEliminarDescuento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteBeneficio(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                builder.setTitle("Eliminar beneficio");
+                builder.setMessage("¿Estás seguro de que deseas eliminar este beneficio? Esta acción no se puede deshacer.");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteBeneficio(position);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
