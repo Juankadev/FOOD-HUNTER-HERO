@@ -176,21 +176,29 @@ public class QrRepository {
         }
     }
 
-    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr) {
+    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr, MutableLiveData<Boolean> enabled) {
         Handler handler = new Handler(Looper.getMainLooper());
         long pollingInterval = 5000;
+
+        if(!enabled.getValue()){
 
         Runnable pollRunnable = new Runnable() {
             @Override
             public void run() {
+                if(!enabled.getValue()){
+                    return;
+                }
                 CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
                     return checkQRState(qr.getIdQr());
                 });
 
                 future.thenAcceptAsync(state -> {
                     if (state == 1) {
-                        handler.post(() -> qrState.postValue(true));
-                        handler.removeCallbacks(this);
+                        handler.post(() -> {
+                            qrState.postValue(true);
+                            handler.removeCallbacks(this);
+                            enabled.postValue(false);
+                        });
                     } else if (state == 2) {
                         handler.removeCallbacks(this);
                     } else if (state == -1) {
@@ -199,6 +207,7 @@ public class QrRepository {
                     ex.printStackTrace();
                     return null;
                 });
+
                 if (future.join() != 1 && future.join() != 2) {
                     handler.postDelayed(this, pollingInterval);
                 }
@@ -206,6 +215,8 @@ public class QrRepository {
         };
 
         handler.post(pollRunnable);
+        }
+
     }
 
 

@@ -18,6 +18,7 @@ public class GenerarQrViewModel extends ViewModel {
     private MutableLiveData<Integer> idGenerado;
 
     private MutableLiveData<Boolean> cazaAprobada;
+    private MutableLiveData<Boolean> pollingEnabled;
 
     public QrRepository qrRepository;
 
@@ -30,6 +31,8 @@ public class GenerarQrViewModel extends ViewModel {
         this.idGenerado = new MutableLiveData<>();
         this.cazaAprobada = new MutableLiveData<>();
         this.qrRepository = new QrRepository();
+
+        this.pollingEnabled = new MutableLiveData<>(true);
     }
 
     public void generarQr(QrObject qr){
@@ -53,10 +56,18 @@ public class GenerarQrViewModel extends ViewModel {
     }
 
     public void checkQRStatus(JSONQRRequest obj){
-        qrRepository.pollingIntoQrState(this.cazaAprobada, obj);
+        qrRepository.pollingIntoQrState(this.cazaAprobada, obj, this.pollingEnabled);
     }
 
     public MutableLiveData<Boolean> getCazaAprobada() {
         return cazaAprobada;
+    }
+
+    public MutableLiveData<Boolean> getPollingEnabled() {
+        return pollingEnabled;
+    }
+
+    public void setPollingEnabled(MutableLiveData<Boolean> pollingEnabled) {
+        this.pollingEnabled = pollingEnabled;
     }
 }
