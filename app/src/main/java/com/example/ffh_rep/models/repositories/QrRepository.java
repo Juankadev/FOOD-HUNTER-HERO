@@ -190,17 +190,18 @@ public class QrRepository {
                 future.thenAcceptAsync(state -> {
                     if (state == 1) {
                         handler.post(() -> qrState.postValue(true));
+                        handler.removeCallbacks(this);
                     } else if (state == 2) {
-                        // Haz algo en caso de que el estado sea 2
+                        handler.removeCallbacks(this);
                     } else if (state == -1) {
-                        // Haz algo en caso de error
                     }
                 }).exceptionally(ex -> {
                     ex.printStackTrace();
                     return null;
                 });
-
-                handler.postDelayed(this, pollingInterval);
+                if (future.join() != 1 && future.join() != 2) {
+                    handler.postDelayed(this, pollingInterval);
+                }
             }
         };
 
