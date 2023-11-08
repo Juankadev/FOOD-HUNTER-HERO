@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.content.DialogInterface;
+import android.app.AlertDialog;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
@@ -64,14 +66,49 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
         vh.btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rechazarComercio(position);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                builder.setTitle("Rechazar Comercio");
+                builder.setMessage("¿Estás seguro que deseas rechazar este comercio? Esta acción no se puede deshacer.");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        rechazarComercio(position);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
         vh.btnAprobar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aprobarComercio(position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                builder.setTitle("Aprobar Comercio");
+                builder.setMessage("¿Estás seguro que deseas aprobar este comercio? Esta acción no se puede deshacer.");
+                builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        aprobarComercio(position);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 
