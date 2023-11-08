@@ -6,24 +6,24 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/comercio_MiCuenta"
+            android:icon="@drawable/img_3"
+            android:title="Mi Cuenta"
+            />
+        <item
             android:id="@+id/commerce_MisArticulos"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/img_6"
             android:title="Mis Articulos"
             />
         <item
             android:id="@+id/fragmentAgregarDescuentoComercio"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/img_2"
             android:title="Mis descuentos"
             />
         <item
             android:id="@+id/comercio_EscanearQr"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/img_7"
             android:title="Escanear QR"
-            />
-        <item
-            android:id="@+id/comercio_MiCuenta"
-            android:icon="@drawable/shop"
-            android:title="Mi Cuenta"
             />
     </group>
 </menu>
