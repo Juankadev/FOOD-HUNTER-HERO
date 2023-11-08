@@ -28,53 +28,66 @@ public class StockRepository {
 
     public void insertarNuevoStock(Context context, Stock stock) {
         CompletableFuture.runAsync(() -> {
-            try (Connection con = DBUtil.getConnection();
-                 PreparedStatement insertPs = con.prepareStatement("INSERT INTO Stocks (id_articulo, id_comercio, fecha_vencimiento, cantidad) VALUES (?, ?, ?, ?)");
-            ) {
-                insertPs.setInt(1, stock.getId_articulo().getIdArticulo());
-                insertPs.setInt(2, stock.getId_comercio().getId());
-                insertPs.setDate(3, stock.getFecha_vencimiento());
-                insertPs.setInt(4, stock.getCantidad());
+            try (Connection con = DBUtil.getConnection()) {
+                // Verificar si ya existe un registro con los mismos valores
+                String selectQuery = "SELECT id_stock, cantidad FROM Stocks WHERE id_articulo = ? AND id_comercio = ? AND fecha_vencimiento = ?";
+                try (PreparedStatement selectPs = con.prepareStatement(selectQuery)) {
+                    selectPs.setInt(1, stock.getId_articulo().getIdArticulo());
+                    selectPs.setInt(2, stock.getId_comercio().getId());
+                    selectPs.setDate(3, stock.getFecha_vencimiento());
 
-                int rowCount = insertPs.executeUpdate();
+                    try (ResultSet resultSet = selectPs.executeQuery()) {
+                        if (resultSet.next()) {
+                            int existingStockId = resultSet.getInt("id_stock");
+                            int existingQuantity = resultSet.getInt("cantidad");
 
-                Log.d("STOCK", "-----------");
-                Log.d("DEBUG", stock.toString());
-                Log.d("STOCK", "-----------");
+                            int newQuantity = existingQuantity + stock.getCantidad();
 
+                            String updateQuery = "UPDATE Stocks SET cantidad = ? WHERE id_stock = ?";
+                            try (PreparedStatement updatePs = con.prepareStatement(updateQuery)) {
+                                updatePs.setInt(1, newQuantity);
+                                updatePs.setInt(2, existingStockId);
 
-                if (rowCount > 0) {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "Stock agregado exitosamente", Toast.LENGTH_SHORT).show();
+                                int updateRowCount = updatePs.executeUpdate();
 
+                                if (updateRowCount > 0) {
+                                    mostrarToast(context, "Cantidad de stock actualizada exitosamente");
+                                } else {
+                                    mostrarToast(context, "Error al actualizar el stock");
+                                }
+                            }
+                        } else {
+                            String insertQuery = "INSERT INTO Stocks (id_articulo, id_comercio, fecha_vencimiento, cantidad) VALUES (?, ?, ?, ?)";
+                            try (PreparedStatement insertPs = con.prepareStatement(insertQuery)) {
+                                insertPs.setInt(1, stock.getId_articulo().getIdArticulo());
+                                insertPs.setInt(2, stock.getId_comercio().getId());
+                                insertPs.setDate(3, stock.getFecha_vencimiento());
+                                insertPs.setInt(4, stock.getCantidad());
+
+                                int insertRowCount = insertPs.executeUpdate();
+
+                                if (insertRowCount > 0) {
+                                    mostrarToast(context, "Stock agregado exitosamente");
+                                } else {
+                                    mostrarToast(context, "Error al insertar el stock");
+                                }
+                            }
                         }
-                    });
-
-
-                } else {
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, "Error al insertar Stock", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-
+                mostrarToast(context, "Error al insertar Stock");
             }
         });
     }
+
+    private void mostrarToast(Context context, String message) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        });
+    }
+
     public MutableLiveData<List<Stock>> getStock(MutableLiveData<List<Stock>> mlDataStocks, Articulo articulo, Comercio comercio) {
         CompletableFuture.supplyAsync(() -> {
             List<Stock> lStocks = new ArrayList<>();
