@@ -185,7 +185,7 @@ public class QrRepository {
         Runnable pollRunnable = new Runnable() {
             @Override
             public void run() {
-                if(!enabled.getValue()){
+                if(enabled.getValue()){
                     return;
                 }
                 CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
