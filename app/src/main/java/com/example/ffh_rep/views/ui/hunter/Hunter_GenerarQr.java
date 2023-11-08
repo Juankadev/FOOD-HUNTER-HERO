@@ -41,7 +41,7 @@ public class Hunter_GenerarQr extends Fragment {
         View view =  binding.getRoot();
         Bundle args = getArguments();
         initComponents(view);
-
+        qrController.setPollingEnabled(true);
         String data = args.getString("json_request");
         Log.d("Log Data in json generated", data);
         generateQr(data, qrContain);
