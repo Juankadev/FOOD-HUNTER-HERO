@@ -1,4 +1,4 @@
-/*VERSIÓN 2*/
+/*VERSIÓN 3*/
 CREATE DATABASE db_hunter;
 
 USE db_hunter;

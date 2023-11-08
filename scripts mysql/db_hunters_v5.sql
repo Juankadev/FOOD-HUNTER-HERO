@@ -1,4 +1,4 @@
-/*VERSIÓN 2*/
+/*VERSIÓN 5*/
 CREATE DATABASE db_hunter;
 
 USE db_hunter;
@@ -161,13 +161,10 @@ ADD FOREIGN KEY (id_comercio) REFERENCES Comercios(id_comercio);
 
 /*INSERTS A LAS TABLAS*/
 
-
-
-
 INSERT INTO Rangos (descripcion, puntaje) VALUES
-    ('Baby Hunter', 100),
-    ('Junior Hunter', 500),
-    ('Colossus Hunter', 1000),
+    ('Baby Hunter', 500),
+    ('Junior Hunter', 1500),
+    ('Colossus Hunter', 2500),
     ('Grand Hunter', 5000),
     ('THE HUNTER', 10000);
 
@@ -184,6 +181,14 @@ INSERT INTO Categorias (descripcion) VALUES
     ('Panadería'),
     ('Bebidas'),
     ('Dulces'),
+    ('Limpieza'),
+    ('Higiene'),
+    ('Electrónicos'),
+    ('Ropa'),
+    ('Juguetes'),
+    ('Hogar'),
+    ('Oficina'),
+    ('Deportes'),
     ('Otros');
 
 INSERT INTO Marcas (descripcion) VALUES
@@ -210,26 +215,141 @@ INSERT INTO Marcas (descripcion) VALUES
 INSERT INTO Usuarios (id_rol, username, password, estado) VALUES
 	(3, 'administrador', 'administrador', true),
     (1, 'hunter', 'administrador', true),
-    (2, 'comercio', 'administrador', true); 
+    (2, 'comercio', 'administrador', true),
+    (1, 'Gian', '111', true),
+    (1, 'Luq', '111', true),
+    (1, 'Juank', '111', true),
+    (1, 'Pablete', '111', true),
+    (1, 'Tom', '111', true),
+    (2, 'Dia', '222', true),
+    (2, 'Carrefour', '222', true),
+    (2, 'Walmart', '222', true),
+    (2, 'Easy', '222', true),
+    (2, 'COTO', '222', true),
+    (2, 'Fravega', '222', true),
+    (2, 'Musimundo', '222', true);
 
 INSERT INTO Comercios (id_usuario, cuit, razon_social, rubro, correo_electronico, telefono, direccion, aprobado) VALUES
-    (2, '12345678901', 'Comercio ABC', 'Alimentos', 'comercio@hero.com', '123-456-7890', 'Calle Comercio 123', 'Aprobado');
+    (2, '12345678901', 'Comercio ABC', 'Alimentos', 'comercio@hero.com', '123-456-7890', 'Calle Comercio 123', 'Aprobado'),
+    (2, '11223344556', 'Carrefour', 'Varios', 'Carrefour@hero.com', '1137845392', 'Calle Carrefour 123', 'Aprobado'),
+    (2, '66778899001', 'Walmart', 'Electrodomesticos', 'Walmart@hero.com', '11137456554', 'Calle Walmart 123', 'Aprobado'),
+    (2, '22446688001', 'Easy', 'Inmuebles', 'Easy@hero.com', '1198989098', 'Calle Easy 123', 'Aprobado'),
+    (2, '11335577990', 'COTO', 'Alimentos', 'COTO@hero.com', '1134234354', 'Calle COTO 123', 'Aprobado'),
+    (2, '12312312312', 'Fravega', 'Electrodomesticos', 'Fravega@hero.com', '1198989094', 'Calle Fravega 123', 'Aprobado'),
+    (2, '45645645645', 'Musimundo', 'Electrodomesticos', 'Musimundo@hero.com', '1198989032', 'Calle Musimundo 123', 'Aprobado'),
+    (2, '99999999999', 'DIA', 'Alimentos', 'DIA@hero.com', '1198989090', 'Calle DIA 123', 'Aprobado');
 
 INSERT INTO Hunters (id_usuario, nombre, apellido, dni, sexo, correo_electronico, telefono, direccion, fecha_nacimiento, id_rango) VALUES
-    (1, 'Hunter', 'Hero', '12345678', 'Masculino', 'hunter@hero.com', '987-654-3210', 'Calle Hunter 456', '1990-01-01', 1);   
+    (1, 'Hunter', 'Hero', '12345678', 'Masculino', 'hunter@hero.com', '987-654-3210', 'Calle Hunter 456', '1990-01-01', 1),
+    (1, 'Gianluca', 'Salvatori', '43520064', 'Masculino', 'gian@hero.com', '887-654-3210', 'Calle Gian 456', '2001-07-11', 2),
+    (1, 'Lucas', 'Gomez', '43543345', 'Masculino', 'lucas@hero.com', '787-654-3210', 'Calle Lucas 456', '2002-05-01', 3),
+    (1, 'Juan', 'Rey', '43433435', 'Masculino', 'juan@hero.com', '687-654-3210', 'Calle Juan 456', '2000-01-04', 3),
+    (1, 'Pablo', 'Caero', '43540095', 'Masculino', 'pablo@hero.com', '587-654-3210', 'Calle Pablo 456', '1999-03-01', 2),
+    (1, 'Tomas', 'Scutti', '43545540', 'Masculino', 'tomas@hero.com', '487-654-3210', 'Calle Tomas 456', '1999-02-01', 1);
 
 INSERT INTO Beneficios(id_comercio, descripcion, puntos_requeridos, estado) VALUES
-(6, '2x1 en Lacteos', 100, true),
-(6, '2x1 en Legumbres', 100, true),
-(6, '3x2 en Carnes', 150, true),
-(6, '15% de Descuento', 200, true),
-(6, '10% de Descuento', 150, true),
-(7, '3x2 en Carnes', 150, true),
-(7, '15% de Descuento', 200, true),
-(7, '10% de Descuento', 150, true),
-(7, 'La segunda unidad al 50%', 100, true);
+(1, '2x1 en Lacteos', 100, true),
+(2, '2x1 en Verduras', 100, true),
+(3, '3x2 en Carnes', 150, true),
+(4, '3x2 en Panaderia', 150, true),
+(5, '4x3 en Bebidas', 200, true),
+(1, '15% de Descuento', 200, true),
+(2, '10% de Descuento', 150, true),
+(3, '20% de Descuento', 300, true),
+(4, '30% de Descuento', 350, true),
+(5, '40% de Descuento', 400, true),
+(1, 'La segunda unidad al 30%', 100, true),
+(2, 'La segunda unidad al 40%', 150, true),
+(3, 'La segunda unidad al 50%', 200, true),
+(4, 'La segunda unidad al 60%', 300, true),
+(5, 'La segunda unidad al 70%', 500, true);
 
+INSERT INTO Cazas(id_hunter,id_comercio,puntos,fecha) VALUES
+(1, 1, 700, '2023-01-12'),
+(2, 2, 1700, '2023-02-11'),
+(3, 3, 2700, '2023-03-10'),
+(4, 4, 2700, '2023-04-09'),
+(5, 5, 1700, '2023-05-08'),
+(1, 5, 50, '2023-06-07'),
+(2, 4, 50, '2023-07-06'),
+(3, 2, 50, '2023-08-05'),
+(4, 3, 50, '2023-09-04'),
+(5, 1, 50, '2023-10-03'),
+(1, 2, 10, '2023-11-02'),
+(2, 4, 10, '2023-12-01'),
+(3, 1, 10, '2023-11-12'),
+(4, 2, 10, '2023-10-11'),
+(5, 3, 10, '2023-09-10');
 
+INSERT INTO Articulos(descripcion, precio, imagen, id_categoria, id_marca, id_comercio estado) VALUES
+///
+
+INSERT INTO Caza_x_Articulo(ID_caza, id_articulo, Cantidad) VALUES
+(1, 1, 4),
+(2, 2, 1),
+(3, 3, 3),
+(4, 4, 2),
+(5, 5, 6),
+(6, 6, 4),
+(7, 1, 2),
+(8, 2, 5),
+(9, 3, 5),
+(10, 4, 2),
+(11, 5, 1),
+(12, 9, 8),
+(13, 10, 4),
+(14, 11, 7),
+(15, 12, 5);
+
+INSERT INTO Stocks(id_articulo, id_comercio, fecha_vencimiento, cantidad) VALUES
+(1, 1, '2024-09-10', 500),
+(2, 2, '2024-09-10', 500),
+(3, 3, '2024-09-10', 500),
+(4, 1, '2025-09-10', 300),
+(5, 2, '2025-09-10', 300),
+(6, 3, '2025-09-10', 300),
+(7, 4, '2024-09-10', 500),
+(8, 4, '2024-09-10', 300),
+(9, 4, '2024-09-10', 400),
+(10, 1, '2026-09-10', 400),
+(11, 2, '2026-09-10', 400),
+(12, 3, '2026-09-10', 400),
+(13, 4, '2026-09-10', 200),
+(14, 5, '2024-09-10', 500),
+(15, 5, '2025-09-10', 400);
+
+INSERT INTO Resenas(id_comercio, id_usuario, calificacion, comentario) VALUES
+(1, 4, 1, 'Malisimo'),
+(2, 5, 2, 'No volveria'),
+(3, 6, 3, 'Mucho que desear'),
+(4, 7, 4, 'Mala atencion'),
+(5, 8, 5, 'Medio pelo'),
+(1, 8, 6, 'Podria ser mejor'),
+(2, 7, 7, 'Me gusto'),
+(3, 6, 8, 'Muy bueno'),
+(4, 5, 9, 'Excelente atencion!'),
+(5, 4, 10, 'Perfecto comercio!'),
+(1, 7, 9, 'Genial atencion!'),
+(2, 6, 8, 'Buen comercio'),
+(3, 5, 7, 'Me gusto mucho'),
+(4, 4, 6, 'Safa');
+
+INSERT INTO Comercios_Favoritos(id_comercio, id_usuario) VALUES
+(2, 4),
+(3, 4),
+(4, 4),
+(5, 5),
+(6, 5),
+(7, 5),
+(8, 6),
+(8, 7),
+(7, 6),
+(6, 6),
+(5, 7),
+(4, 8),
+(3, 8),
+(2, 8),
+(2, 7);
 
 
 
