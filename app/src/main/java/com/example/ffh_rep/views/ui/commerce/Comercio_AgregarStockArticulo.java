@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 
 import android.util.Log;
@@ -41,6 +42,7 @@ public class Comercio_AgregarStockArticulo extends Fragment {
     private EditText txtFechaVencimientoArticulo;
     private EditText txtCantidad;
     private Button btnAgregarStockArticulo;
+    private Button btnVolver;
     private Articulo article;
 
     public static Comercio_AgregarStockArticulo newInstance() {
@@ -56,7 +58,14 @@ public class Comercio_AgregarStockArticulo extends Fragment {
         txtFechaVencimientoArticulo = view.findViewById(R.id.txtFechaVencimientoArticulo);
         txtCantidad = view.findViewById(R.id.txtCantidad);
         btnAgregarStockArticulo = view.findViewById(R.id.btnAgregarStockArticulo);
+        btnVolver = view.findViewById(R.id.btnVolver);
 
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
 
         Bundle bundle = getArguments();
@@ -96,6 +105,10 @@ public class Comercio_AgregarStockArticulo extends Fragment {
         return view;
     }
 
+    public void redirectToStocks(){
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_AgregarStockArticulo_to_comercio_Ver_Stock_x_Articulo);
+    }
+
     public void showDatePicker(){
         DatePickerDialog dpdialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -114,6 +127,7 @@ public class Comercio_AgregarStockArticulo extends Fragment {
         Context context = requireContext();
         stockRepository.insertarNuevoStock(context, stock);
         clearFields();
+        //redirectToStocks();
     }
 
     private void setupListeners() {

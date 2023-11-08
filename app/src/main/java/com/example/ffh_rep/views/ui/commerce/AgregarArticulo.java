@@ -41,6 +41,7 @@ import com.example.ffh_rep.models.repositories.StockRepository;
 import com.example.ffh_rep.utils.SessionManager;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.Navigation;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -265,6 +266,7 @@ public class AgregarArticulo extends Fragment {
 
 
         clearFields();
+        //redirectToHome();
     }
 
 
@@ -294,6 +296,10 @@ public class AgregarArticulo extends Fragment {
         }, 2023, 11, 3);
 
         dpdialog.show();
+    }
+
+    public void redirectToHome(){
+        Navigation.findNavController(requireView()).navigate(R.id.action_agregarArticulo_to_commerce_MisArticulos);
     }
 
 }

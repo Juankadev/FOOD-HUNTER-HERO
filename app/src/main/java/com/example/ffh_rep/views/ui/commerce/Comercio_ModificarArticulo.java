@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,14 +27,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
+import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Marca;
+import com.example.ffh_rep.entidades.Stock;
+import com.example.ffh_rep.models.repositories.ArticuloRepository;
 import com.example.ffh_rep.models.repositories.CategoriaRepository;
 import com.example.ffh_rep.models.repositories.ImageRepository;
 import com.example.ffh_rep.models.repositories.MarcaRepository;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.commerce.ComercioModificarArticuloViewModel;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.viewmodels.commerce.ComercioVerStockXArticuloViewModel;
@@ -42,18 +49,21 @@ import com.example.ffh_rep.viewmodels.hunter.ArticulosViewModel;
 import com.example.ffh_rep.views.ui.hunter.Articulos;
 import com.squareup.picasso.Picasso;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class Comercio_ModificarArticulo extends Fragment {
 
     private ComercioVerStockXArticuloViewModel mViewModel;
 
-    private TextView descripcion, precio, tvCantidadArticulo;
+    private TextView descripcion, precio;
     private Spinner categoria, marca;
-    private Button editar;
+    private Button editar, btnVolver;
     private List<String> categorias;
     private List<String> marcas;
+    private int idArticulo;
 
 
     private static int IMAGE_REQ = 1;
@@ -76,10 +86,20 @@ public class Comercio_ModificarArticulo extends Fragment {
         if(args != null){
             this.article = (Articulo) args.getSerializable("articuloAseleccionar");
         }
+        ivArticulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*PREGUNTARLE AL USUARIO SI LE DA PERMISO PARA EL MEDIA GALLERY*/
+                requestPermission();
+
+            }
+        });
+
         obtenerCategoriasDesdeRepositorio();
         obtenerMarcasDesdeRepositorio();
 
         fillInputs();
+        setUpListeners();
 
 
         return view;
@@ -91,18 +111,65 @@ public class Comercio_ModificarArticulo extends Fragment {
         categoria = view.findViewById(R.id.spinnerIDCategoriaArticulo_Modif);
         marca = view.findViewById(R.id.spinnerIDMarcaArticulo_Modif);
         editar = view.findViewById(R.id.btnEditarArticulo);
-        ivArticulo = view.findViewById(R.id.imageViewArticulo);
+        ivArticulo = view.findViewById(R.id.imageViewArticuloModif);
+        btnVolver = view.findViewById(R.id.btnVolver);
 
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioVerStocksArticuloViewModelFactory(getActivity())).get(ComercioVerStockXArticuloViewModel.class);
 
     }
 
     public void setUpListeners(){
-        //FUNCION EDITAR
+
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String descripcionText = descripcion.getText().toString().trim();
+                String precioText = precio.getText().toString().trim();
+
+
+                if (descripcionText.isEmpty() || precioText.isEmpty()) {
+                    Toast.makeText(getContext(), "Por favor, complete todos los campos e inserte imagen del producto", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Articulo articulo = new Articulo();
+
+                String descripcionMod = descripcion.getText().toString();
+                double precioMod = Double.parseDouble(precio.getText().toString());
+                //SE AGREGA +1 PORQUE EL LISTADO SPINNER ARRANCA EN 0
+                int idCategoria = categoria.getSelectedItemPosition()+1;
+                int idMarca = marca.getSelectedItemPosition()+1;
+
+                articulo.setIdArticulo(idArticulo);
+                articulo.setDescripcion(descripcionMod);
+                Comercio comercio;
+                SessionManager session = new SessionManager(getContext());
+                comercio = session.getCommerceSession();
+                articulo.setComercio(comercio);
+                articulo.setPrecio(precioMod);
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(idCategoria);
+                articulo.setCategoria(categoria);
+                Marca marca = new Marca();
+                marca.setIdMarca(idMarca);
+                articulo.setMarca(marca);
+                articulo.setImagen(imageUrlArticulo);
+                articulo.setEstado("1");
 
 
 
-        editar.setOnClickListener(v-> {});
+
+                updateArticulo(articulo);
+
+            }
+        });
     }
 
     private void requestPermission() {
@@ -114,20 +181,14 @@ public class Comercio_ModificarArticulo extends Fragment {
     }
 
     public void fillInputs(){
+        idArticulo = article.getIdArticulo();
         descripcion.setText(this.article.getDescripcion());
         precio.setText(String.valueOf(this.article.getPrecio()));
-       //categoria.setSelection(this.article.getCategoria().getIdCategoria());
-        // marca.setSelection(this.article.getMarca().getIdMarca());
-        categoria.setSelection(5);
-        marca.setSelection(5);
+        categoria.setSelection(this.article.getCategoria().getIdCategoria());
+        marca.setSelection(this.article.getMarca().getIdMarca());
+        imageUrlArticulo = this.article.getImagen();
 
 
-        Log.d("DEBUG PABLO", "-----------");
-        Log.d("DEBUG PABLO", "CATEGORIA: "+this.article.getCategoria().getDescripcion());
-        Log.d("DEBUG PABLO", "-----------");
-        Log.d("DEBUG PABLO", "-----------");
-        Log.d("DEBUG PABLO", "MARCA: "+this.article.getMarca().getDescripcion());
-        Log.d("DEBUG PABLO", "-----------");
 
         Glide.with(ivArticulo).load(this.article.getImagen()).into(ivArticulo);
     }
@@ -196,4 +257,23 @@ public class Comercio_ModificarArticulo extends Fragment {
             marca.setAdapter(marcaAdapter);
         }
     }
+
+    private void updateArticulo(Articulo articulo) {
+        ArticuloRepository articuloRepository = new ArticuloRepository();
+        Context context = requireContext();
+        CompletableFuture<Void> updateArticuloFuture = CompletableFuture.runAsync(() -> {
+            articuloRepository.updateArticulo(context, articulo);
+        });
+        redirectToHome();
+    }
+    public void redirectToHome(){
+        Navigation.findNavController(requireView()).navigate(R.id.action_comercio_ModificarArticulo_to_commerce_MisArticulos);
+    }
+
+    public void goBack() {
+        requireActivity().onBackPressed();
+    }
+
+
+
 }

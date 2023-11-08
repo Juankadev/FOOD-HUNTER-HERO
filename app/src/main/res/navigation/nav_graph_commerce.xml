@@ -21,7 +21,11 @@
         android:id="@+id/agregarArticulo"
         android:name="com.example.ffh_rep.views.ui.commerce.AgregarArticulo"
         android:label="fragment_agregar_articulo"
-        tools:layout="@layout/fragment_agregar_articulo" />
+        tools:layout="@layout/fragment_agregar_articulo" >
+        <action
+            android:id="@+id/action_agregarArticulo_to_commerce_MisArticulos"
+            app:destination="@id/commerce_MisArticulos" />
+    </fragment>
     <fragment
         android:id="@+id/agregarDescuento"
         android:name="com.example.ffh_rep.views.ui.commerce.AgregarDescuento"
@@ -102,10 +106,18 @@
         android:id="@+id/comercio_ModificarArticulo"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_ModificarArticulo"
         android:label="fragment_comercio__modificar_articulo"
-        tools:layout="@layout/fragment_comercio__modificar_articulo" />
+        tools:layout="@layout/fragment_comercio__modificar_articulo" >
+        <action
+            android:id="@+id/action_comercio_ModificarArticulo_to_commerce_MisArticulos"
+            app:destination="@id/commerce_MisArticulos" />
+    </fragment>
     <fragment
         android:id="@+id/comercio_AgregarStockArticulo"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_AgregarStockArticulo"
         android:label="fragment_comercio__agregar_stock_articulo"
-        tools:layout="@layout/fragment_comercio__agregar_stock_articulo" />
+        tools:layout="@layout/fragment_comercio__agregar_stock_articulo" >
+        <action
+            android:id="@+id/action_comercio_AgregarStockArticulo_to_comercio_Ver_Stock_x_Articulo"
+            app:destination="@id/comercio_Ver_Stock_x_Articulo" />
+    </fragment>
 </navigation>
