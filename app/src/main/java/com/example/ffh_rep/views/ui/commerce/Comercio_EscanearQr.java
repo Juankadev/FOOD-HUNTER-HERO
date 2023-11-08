@@ -58,10 +58,7 @@ public class Comercio_EscanearQr extends Fragment {
                     if (data != null) {
                         String contenido = data.getStringExtra("SCAN_RESULT");
                         if (contenido != null) {
-                            GsonBuilder gsonBuilder = new GsonBuilder();
-                            gsonBuilder.registerTypeAdapter(Date.class, new CustomDateAdapter());
-                            Gson gson = gsonBuilder.create();
-                            JSONQRRequest res = gson.fromJson(contenido, JSONQRRequest.class);
+                            Gson gson = new GsonBuilder().setDateFormat("MMM dd, yyyy").create();                            JSONQRRequest res = gson.fromJson(contenido, JSONQRRequest.class);
                             Bundle args = new Bundle();
                             args.putSerializable("responseQr", res);
                             Navigation.findNavController(requireView()).navigate(R.id.action_comercio_EscanearQr_to_comercio_AprobarCompra, args);
@@ -82,7 +79,7 @@ public class Comercio_EscanearQr extends Fragment {
 
     private void initiateQRScan() {
         IntentIntegrator integrator = IntentIntegrator.forSupportFragment(this);
-        integrator.setPrompt("Escanea un código QR"); // Mensaje que se muestra al usuario
+        integrator.setPrompt("Escanea un código QR");
         Intent intent = integrator.createScanIntent();
         qrScanLauncher.launch(intent);
     }

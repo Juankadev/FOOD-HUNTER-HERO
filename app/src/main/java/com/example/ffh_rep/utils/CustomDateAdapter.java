@@ -1,5 +1,7 @@
 package com.example.ffh_rep.utils;
 
+import android.annotation.SuppressLint;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -16,7 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CustomDateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

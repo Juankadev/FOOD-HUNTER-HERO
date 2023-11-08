@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.ffh_rep.databinding.FragmentHunterGenerarQrBinding;
 import com.example.ffh_rep.entidades.JSONQRRequest;
 import com.example.ffh_rep.viewmodels.factory.GenerarQrViewModelFactory;
 import com.example.ffh_rep.viewmodels.hunter.GenerarQrViewModel;
+import com.example.ffh_rep.views.activitys.NavigationController;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -31,7 +33,6 @@ public class Hunter_GenerarQr extends Fragment {
     private FragmentHunterGenerarQrBinding binding;
     private GenerarQrViewModel qrController;
     private ImageView qrContain;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class Hunter_GenerarQr extends Fragment {
         initComponents(view);
 
         String data = args.getString("json_request");
+        Log.d("Log Data in json generated", data);
         generateQr(data, qrContain);
         Gson gson = new Gson();
         JSONQRRequest jsonQRRequest = gson.fromJson(data, JSONQRRequest.class);
@@ -95,7 +97,7 @@ public class Hunter_GenerarQr extends Fragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Navigation.findNavController(requireView()).navigate(R.id.nav_hunter_Home);
+                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
             }
         });
 

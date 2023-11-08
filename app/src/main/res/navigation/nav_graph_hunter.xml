@@ -94,16 +94,16 @@
         android:id="@+id/hunter_GenerarQr"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_GenerarQr"
         android:label="fragment_hunter__generar_qr"
-        tools:layout="@layout/fragment_hunter__generar_qr" />
+        tools:layout="@layout/fragment_hunter__generar_qr" >
+        <action
+            android:id="@+id/action_hunter_GenerarQr_to_nav_hunter_Home"
+            app:destination="@id/nav_hunter_Home" />
+    </fragment>
     <fragment
         android:id="@+id/hunter_ReseniarComercio"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_ReseniarComercio"
         android:label="fragment_hunter__reseniar_comercio"
-        tools:layout="@layout/fragment_hunter__reseniar_comercio" >
-        <action
-            android:id="@+id/action_hunter_ReseniarComercio_to_hunter_ReseniasComercio"
-            app:destination="@id/hunter_ReseniasComercio" />
-    </fragment>
+        tools:layout="@layout/fragment_hunter__reseniar_comercio" />
     <fragment
         android:id="@+id/hunter_VerBeneficios"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerBeneficios"

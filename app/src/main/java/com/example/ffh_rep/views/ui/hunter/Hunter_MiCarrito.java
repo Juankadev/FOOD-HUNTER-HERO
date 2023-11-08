@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,6 +192,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         Gson gson = new Gson();
         JSONQRRequest req = new JSONQRRequest(userSession.getIdHunter(), _currChart, comercio.getId(), carrito.getPuntos().getValue(), qrController.getIdGenerado().getValue());
         String json = gson.toJson(req);
+        Log.d("JSON CREADO", json);
         args.putString("json_request", json);
         Navigation.findNavController(requireView()).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
     }
