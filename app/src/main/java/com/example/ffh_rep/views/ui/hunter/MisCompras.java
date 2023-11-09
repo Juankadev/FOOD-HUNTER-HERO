@@ -1,6 +1,5 @@
 package com.example.ffh_rep.views.ui.hunter;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentMisComprasListBinding;
 import com.example.ffh_rep.entidades.Caza;
-import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.commerce.MisComprasViewModel;
@@ -72,7 +70,7 @@ public class MisCompras extends Fragment {
     }
 
     public void initComponents(View view){
-        lvMisCompras = view.findViewById(R.id.hunter_lista_misCompras);
+        lvMisCompras = view.findViewById(R.id.hunter_lista_miCarrito);
         tvPuntos = view.findViewById(R.id.tvPuntos);
         tvComercio = view.findViewById(R.id.razonSocial);
         tvFecha = view.findViewById(R.id.tvFecha);

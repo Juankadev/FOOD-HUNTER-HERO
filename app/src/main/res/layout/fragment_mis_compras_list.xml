@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/hunter_lista_misCompras"
+        android:id="@+id/hunter_lista_miCarrito"
         android:layout_width="410dp"
         android:layout_height="650dp"
         android:layout_marginTop="88dp"
