@@ -10,15 +10,14 @@ import android.widget.BaseAdapter;
 
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import com.example.ffh_rep.R;
-import com.example.ffh_rep.databinding.FragmentMisComprasItemBinding;
 import com.example.ffh_rep.entidades.Caza;
-import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.viewmodels.commerce.MisComprasViewModel;
 import com.example.ffh_rep.views.placeholder.PlaceholderContent.PlaceholderItem;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,14 +84,14 @@ public class MisComprasViewAdapter extends BaseAdapter {
 
         vh.RazonSocial.setText(c.getComercio().getRazonSocial());
 
-        System.out.println(c.getFecha());
-        // Crea un formato de fecha
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        // Convierte la fecha a String
-        String dateString = dateFormat.format(c.getFecha());
-        vh.Fecha.setText(dateString);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(c.getFecha());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        vh.Puntos.setText(String.valueOf( c.getPuntos() ));
+        vh.Fecha.setText(day + "-" + month + "-" + year);
+        vh.Puntos.setText("Sumaste " + String.valueOf(c.getPuntos()) + " Puntos");
 
         return convertView;
     }
