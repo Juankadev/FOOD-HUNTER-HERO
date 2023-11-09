@@ -196,7 +196,7 @@ public class QrRepository {
         }
     }
 
-    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr, MutableLiveData<Boolean> enabled) {
+    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr, MutableLiveData<Boolean> enabled, MutableLiveData<Boolean> reject) {
         Handler handler = new Handler(Looper.getMainLooper());
         long pollingInterval = 5000;
 
@@ -220,6 +220,8 @@ public class QrRepository {
                         });
                     } else if (state == 2) {
                         handler.removeCallbacks(this);
+                        reject.postValue(true);
+                        enabled.postValue(false);
                     } else if (state == -1) {
                     }
                 }).exceptionally(ex -> {
