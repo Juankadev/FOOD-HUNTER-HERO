@@ -30,8 +30,8 @@ public class GenerarQrViewModel extends ViewModel {
         this.error = new MutableLiveData<>();
         this.success = new MutableLiveData<>();
         this.idGenerado = new MutableLiveData<>();
-        this.cazaAprobada = new MutableLiveData<>();
-        this.cazaRechazada = new MutableLiveData<>();
+        this.cazaAprobada = new MutableLiveData<>(false);
+        this.cazaRechazada = new MutableLiveData<>(false);
         this.qrRepository = new QrRepository();
 
         this.pollingEnabled = new MutableLiveData<>(true);

@@ -74,7 +74,7 @@ public class Comercio_AprobarCompra extends Fragment {
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioAprobarCompraViewModelFactory(getActivity())).get(ComercioAprobarCompraViewModel.class);
         aprobar = view.findViewById(R.id.btnAprobarCaza);
-        rechazar = view.findViewById(R.id.btnRechazarCompra);
+        rechazar = view.findViewById(R.id.btnRechazarCaza);
         listaProductos = view.findViewById(R.id.comercio_lista_productos);
         txtTileDispatch = view.findViewById(R.id.txtTileDispatch);
         pbAprobando = view.findViewById(R.id.pbAprobando);
@@ -141,7 +141,7 @@ public class Comercio_AprobarCompra extends Fragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                
+
                 dialog.dismiss();
                 qrController.resetAttributes();
                 qrController = null;

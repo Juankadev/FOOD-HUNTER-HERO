@@ -219,9 +219,11 @@ public class QrRepository {
                             enabled.postValue(false);
                         });
                     } else if (state == 2) {
-                        handler.removeCallbacks(this);
-                        reject.postValue(true);
-                        enabled.postValue(false);
+                        handler.post(() -> {
+                            handler.removeCallbacks(this);
+                            reject.postValue(true);
+                            enabled.postValue(false);
+                        });
                     } else if (state == -1) {
                     }
                 }).exceptionally(ex -> {
