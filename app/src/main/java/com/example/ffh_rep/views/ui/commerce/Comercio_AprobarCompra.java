@@ -145,6 +145,8 @@ public class Comercio_AprobarCompra extends Fragment {
                 dialog.dismiss();
                 qrController.resetAttributes();
                 qrController = null;
+                mViewModel.resetVariables();
+                mViewModel = null;
                 Navigation.findNavController(requireView()).navigate(R.id.action_comercio_AprobarCompra_to_commerce_MisArticulos);
             }
         });
