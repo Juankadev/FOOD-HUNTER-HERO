@@ -182,16 +182,13 @@ public class StockRepository {
             loading.postValue(true);
             List<Stock> lStocks = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT S1.id_stock, S1.id_articulo, S1.id_comercio, S1.fecha_vencimiento, S1.cantidad, a.descripcion as articulodescripcion, a.precio, a.imagen,a.estado,c.id_categoria as idcategoria, c.descripcion as categoriadescripcion, m.id_marca as idmarca, m.descripcion as marcadescripcion" +
-                         " FROM Stocks AS S1" +
-                         " INNER JOIN Articulos a on a.id_articulo = S1.id_articulo" +
-                         " INNER JOIN Categorias c on c.id_categoria = a.id_categoria" +
-                         " INNER JOIN Marcas m on m.id_marca = a.id_marca" +
-                         " WHERE S1.fecha_vencimiento = (" +
-                         "    SELECT MIN(fecha_vencimiento)" +
-                         "    FROM Stocks AS S2" +
-                         "    WHERE S2.id_articulo = S1.id_articulo AND S2.id_comercio = S1.id_comercio" +
-                         ") and S1.fecha_vencimiento >= CURDATE() and S1.id_comercio = ? and a.estado = 1 and S1.cantidad > 0");
+                 PreparedStatement ps = con.prepareStatement("SELECT S1.id_stock, S1.id_articulo, S1.id_comercio, S1.fecha_vencimiento, S1.cantidad, a.descripcion as articulodescripcion, a.precio, a.imagen, a.estado, c.id_categoria as idcategoria, c.descripcion as categoriadescripcion, m.id_marca as idmarca, m.descripcion as marcadescripcion, MIN(S2.fecha_vencimiento) as fecha_vencimiento_minima " +
+                         "FROM Stocks AS S1 INNER JOIN Articulos a on a.id_articulo = S1.id_articulo " +
+                         "INNER JOIN Categorias c on c.id_categoria = a.id_categoria " +
+                         "INNER JOIN Marcas m on m.id_marca = a.id_marca " +
+                         "LEFT JOIN Stocks AS S2 ON S1.id_articulo = S2.id_articulo " +
+                         "AND S1.id_comercio = S2.id_comercio AND S2.fecha_vencimiento > S1.fecha_vencimiento " +
+                         "WHERE S1.id_comercio = ? AND a.estado = 1 AND S1.cantidad > 0 GROUP BY S1.id_stock, S1.id_articulo, S1.id_comercio, S1.fecha_vencimiento, a.descripcion, a.precio, a.imagen, a.estado, c.id_categoria, c.descripcion, m.id_marca, m.descripcion;");
             ) {
                 ps.setInt(1, commerce.getId());
                 ResultSet rs = ps.executeQuery();
@@ -226,6 +223,7 @@ public class StockRepository {
             return lStocks;
 
         }).thenAcceptAsync(stocks -> {
+            Log.d("Stocs", stocks.toString());
             loading.postValue(false);
             if (stocks != null) {
                 listaOriginal.postValue(stocks);

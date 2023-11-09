@@ -180,7 +180,7 @@
         android:background="@color/bck_green"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/gv_articulos_comerciodetail"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -189,9 +189,9 @@
             android:id="@+id/tv_cantArticulos"
             android:layout_width="200dp"
             android:layout_height="41dp"
-            android:gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center"
             android:shadowColor="#000000"
             android:text="TextView"
             android:textColor="#FFFFFF" />
@@ -200,10 +200,10 @@
             android:id="@+id/btnAbrirCarrito"
             android:layout_width="183dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="24dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
             android:drawableLeft="@drawable/baseline_shopcart_24"
             android:text="Ver Carrito"
             android:textColor="#000000" />
