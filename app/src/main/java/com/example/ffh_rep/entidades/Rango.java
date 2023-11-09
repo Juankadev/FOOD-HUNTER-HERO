@@ -34,4 +34,13 @@ public class Rango implements Serializable {
     public Integer getPuntaje() {
         return puntaje;
     }
+
+    @Override
+    public String toString() {
+        return "Rango{" +
+                "id_rango=" + id_rango +
+                ", descripcion='" + descripcion + '\'' +
+                ", puntaje=" + puntaje +
+                '}';
+    }
 }

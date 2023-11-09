@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.models.repositories.HunterRepository;
+import com.example.ffh_rep.utils.SessionManager;
 
 public class HunterMiCuentaViewModel extends ViewModel {
 
@@ -17,6 +18,10 @@ public class HunterMiCuentaViewModel extends ViewModel {
     private MutableLiveData<Boolean> updatingInfo;
     private MutableLiveData<Boolean> successUpdate;
     private MutableLiveData<Boolean> errorUpdate;
+    private MutableLiveData<Hunter> data;
+
+    private MutableLiveData<Boolean> successRangoUpdate;
+    private MutableLiveData<Boolean> errorRangoUpdate;
     public HunterMiCuentaViewModel(){}
 
     public HunterMiCuentaViewModel(Context ctx) {
@@ -26,10 +31,14 @@ public class HunterMiCuentaViewModel extends ViewModel {
         this.updatingInfo = new MutableLiveData<>(false);
         this.successUpdate = new MutableLiveData<>(false);
         this.errorUpdate = new MutableLiveData<>(false);
+        this.successRangoUpdate = new MutableLiveData<>(false);
+        this.errorRangoUpdate = new MutableLiveData<>(false);
         this.hunterRepo = new HunterRepository();
     }
 
-
+    public void refreshAccount(Hunter hunter, SessionManager session){
+        hunterRepo.actualizarRango(hunter, this.successRangoUpdate, this.errorRangoUpdate, session);
+    }
 
     public MutableLiveData<Hunter> getHunterData() {
         return hunterData;
@@ -77,5 +86,18 @@ public class HunterMiCuentaViewModel extends ViewModel {
 
     public void setErrorUpdate(boolean value) {
         this.errorUpdate.postValue(value);
+    }
+
+    public MutableLiveData<Boolean> getSuccessRangoUpdate() {
+        return successRangoUpdate;
+    }
+
+    public MutableLiveData<Boolean> getErrorRangoUpdate() {
+        return errorRangoUpdate;
+    }
+
+    public void resetSuccessRango(){
+        this.successRangoUpdate.setValue(false);
+        this.errorRangoUpdate.setValue(false);
     }
 }

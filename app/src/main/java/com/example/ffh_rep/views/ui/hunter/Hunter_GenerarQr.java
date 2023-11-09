@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.se.omapi.Session;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,13 @@ import android.widget.ImageView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterGenerarQrBinding;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.JSONQRRequest;
+import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.factory.GenerarQrViewModelFactory;
+import com.example.ffh_rep.viewmodels.factory.HunterMiCuentaViewModelFactory;
 import com.example.ffh_rep.viewmodels.hunter.GenerarQrViewModel;
+import com.example.ffh_rep.viewmodels.hunter.HunterMiCuentaViewModel;
 import com.example.ffh_rep.views.activitys.NavigationController;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
@@ -32,8 +37,11 @@ import com.google.zxing.qrcode.encoder.QRCode;
 public class Hunter_GenerarQr extends Fragment {
 
     private FragmentHunterGenerarQrBinding binding;
+    private HunterMiCuentaViewModel cuentaController;
     private GenerarQrViewModel qrController;
     private ImageView qrContain;
+    private SessionManager sessionManager;
+    private Hunter userSession;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +49,10 @@ public class Hunter_GenerarQr extends Fragment {
         View view =  binding.getRoot();
         Bundle args = getArguments();
         initComponents(view);
+
+        sessionManager = new SessionManager(requireActivity());
+        userSession = sessionManager.getHunterSession();
+
         qrController.setPollingEnabled(true);
         String data = args.getString("json_request");
         Log.d("Log Data in json generated", data);
@@ -56,11 +68,18 @@ public class Hunter_GenerarQr extends Fragment {
     public void initComponents(View view){
         qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
         qrContain = view.findViewById(R.id.hunter__qr_container);
+        cuentaController = new ViewModelProvider(requireActivity(), new HunterMiCuentaViewModelFactory(getActivity())).get(HunterMiCuentaViewModel.class);
     }
 
     public void setUpObservers(){
         qrController.getCazaAprobada().observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean){
+                cuentaController.refreshAccount(userSession, sessionManager);
+            }
+        });
+
+        cuentaController.getSuccessRangoUpdate().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
                 showSuccessDialog();
             }
         });
@@ -100,6 +119,7 @@ public class Hunter_GenerarQr extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 qrContain = null;
                 qrController.resetAttributes();
+                cuentaController.resetSuccessRango();
                 qrController = null;
                 Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
             }
