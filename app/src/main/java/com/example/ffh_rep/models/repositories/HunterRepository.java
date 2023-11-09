@@ -154,7 +154,7 @@ public class HunterRepository {
     }
 
     private Hunter obtenerHunterPorId(Connection con, int idHunter) throws SQLException {
-        String query = "SELECT h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.direccion, h.fecha_nacimiento," +
+        String query = "SELECT h.id_hunter, h.nombre, h.apellido, h.dni, h.sexo, h.correo_electronico, h.telefono, h.direccion, h.fecha_nacimiento, h.puntaje," +
                 " u.id_usuario, u.username, u.password," +
                 " r.id_rango, r.descripcion as rango" +
                 " FROM Hunters h" +
@@ -182,10 +182,10 @@ public class HunterRepository {
                             resultSet.getString("correo_electronico"),
                             resultSet.getString("telefono"),
                             resultSet.getString("direccion"),
-                            resultSet.getDate("fecha_nacimiento")
+                            resultSet.getDate("fecha_nacimiento"),
+                            resultSet.getInt("puntaje")
                     );
                     h.setId_rango(rango);
-
                     return h;
                 }
             }

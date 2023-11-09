@@ -34,7 +34,7 @@ public class Hunter implements Serializable {
     }
 
     //FOR UPDATE
-    public Hunter(Integer idHunter, Usuario id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento){
+    public Hunter(Integer idHunter, Usuario id_usuario, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Integer puntaje){
         this.idHunter = idHunter;
         this.user = id_usuario;
         this.nombre = nombre;
@@ -45,6 +45,7 @@ public class Hunter implements Serializable {
         this.telefono = telefono;
         this.direccion = direccion;
         this.fecha_nacimiento = fecha_nacimiento;
+        this.puntaje = puntaje;
     }
     public Hunter(Usuario user, String nombre, String apellido, String dni, String sexo, String correo_electronico, String telefono, String direccion, Date fecha_nacimiento, Rango id_rango, Integer puntaje) {
         this.user = user;
