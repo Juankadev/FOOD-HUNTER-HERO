@@ -8,6 +8,8 @@ public class Caza {
     private Comercio comercio;
     private int puntos;
     private Date fecha;
+    //agrego este atributo para usarlo en Mis Compras Hunter y no tener que hacer una entidad aparte
+    private int cantidad;
 
     public Caza() {
     }
@@ -20,10 +22,11 @@ public class Caza {
         this.fecha = fecha;
     }
 
-    public Caza(Comercio comercio, Date fecha, int puntos) {
+    public Caza(Comercio comercio, Date fecha, int puntos, int cantidad) {
         this.comercio = comercio;
         this.puntos = puntos;
         this.fecha = fecha;
+        this.cantidad = cantidad;
     }
 
     public int getIdCaza() {
@@ -53,6 +56,9 @@ public class Caza {
     public int getPuntos() {
         return puntos;
     }
+    public int getCantidad() {
+        return cantidad;
+    }
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
@@ -65,7 +71,9 @@ public class Caza {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
     @Override
     public String toString() {
         return "Caza{" +

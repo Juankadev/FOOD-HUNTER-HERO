@@ -75,14 +75,13 @@ public class MisComprasViewAdapter extends BaseAdapter {
             vh.RazonSocial = convertView.findViewById(R.id.razonSocial);
             vh.Fecha = convertView.findViewById(R.id.tvFecha);
             vh.Puntos = convertView.findViewById(R.id.tvPuntos);
+            vh.Cantidad = convertView.findViewById(R.id.tvCantidad);
             convertView.setTag(vh);
         } else {
             vh = (MisComprasViewAdapter.ViewHolder) convertView.getTag();
         }
 
         Caza c = this.lCazas.get(position);
-
-        vh.RazonSocial.setText(c.getComercio().getRazonSocial());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(c.getFecha());
@@ -91,13 +90,21 @@ public class MisComprasViewAdapter extends BaseAdapter {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         vh.Fecha.setText(day + "-" + month + "-" + year);
-        vh.Puntos.setText("Sumaste " + String.valueOf(c.getPuntos()) + " Puntos");
+        vh.RazonSocial.setText(c.getComercio().getRazonSocial());
+        vh.Puntos.setText("Sumaste " + String.valueOf(c.getPuntos()) +" Puntos");
+
+        if (c.getCantidad() > 1) {
+            vh.Cantidad.setText(String.valueOf(c.getCantidad()) + " Productos");
+        } else {
+            vh.Cantidad.setText(String.valueOf(c.getCantidad()) + " Producto");
+        }
+
 
         return convertView;
     }
 
     static class ViewHolder{
-        TextView RazonSocial, Puntos, Fecha;
+        TextView RazonSocial, Puntos, Fecha, Cantidad;
     }
 
 }

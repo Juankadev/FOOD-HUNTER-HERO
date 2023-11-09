@@ -179,10 +179,13 @@ public class CazaRepository {
             List<Caza> lCazas = new ArrayList<>();
 
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT com.razon_social as razon_social, c.fecha as fecha, c.puntos as puntos FROM `Hunters` as h" +
-                         "            inner join Cazas as c on h.id_hunter = c.id_hunter" +
-                         "            inner join Comercios as com on c.id_comercio = com.id_comercio" +
-                         "            where c.id_hunter = "+id_hunter +" order by c.fecha DESC");
+                 PreparedStatement ps = con.prepareStatement("SELECT com.razon_social as razon_social, c.fecha as fecha, c.puntos as puntos, cxa.Cantidad as cantidad " +
+                         "FROM Hunters as h " +
+                         "inner join Cazas as c on h.id_hunter = c.id_hunter " +
+                         "inner join Comercios as com on c.id_comercio = com.id_comercio " +
+                         "inner join Caza_x_Articulo as cxa on cxa.ID_caza = c.id_caza " +
+                         "where c.id_hunter = " + id_hunter +
+                         " ORDER BY c.fecha  DESC");
 
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -190,11 +193,12 @@ public class CazaRepository {
                     String razonsocial = rs.getString("razon_social");
                     Date fecha = rs.getDate("fecha");
                     int puntos = rs.getInt("puntos");
+                    int cantidad = rs.getInt("cantidad");
 
                     Comercio comercio = new Comercio();
                     comercio.setRazonSocial(razonsocial);
 
-                    Caza caza = new Caza(comercio,fecha, puntos);
+                    Caza caza = new Caza(comercio,fecha, puntos,cantidad);
                     lCazas.add(caza);
                 }
             } catch (Exception e) {
