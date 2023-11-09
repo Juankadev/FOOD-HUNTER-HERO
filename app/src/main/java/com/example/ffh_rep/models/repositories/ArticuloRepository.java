@@ -180,6 +180,9 @@ public class ArticuloRepository {
                 ps.setString(6, articulo.getImagen());
                 ps.setString(7, articulo.getEstado());
 
+                Log.d("INSERT PABLO", "------------------");
+                Log.d("INSERT PABLO", "INSERT INTO Articulos (descripcion, id_comercio, precio, id_categoria, id_marca, imagen, estado) VALUES ("+articulo.getDescripcion()+", "+articulo.getComercio().getId()+", "+articulo.getPrecio()+", "+articulo.getCategoria().getIdCategoria()+", "+articulo.getMarca().getIdMarca()+", "+articulo.getImagen()+", "+articulo.getEstado()+")");
+                Log.d("INSERT PABLO", "------------------");
 
                 int rowsAffected = ps.executeUpdate();
 
