@@ -82,14 +82,16 @@ public class MisComprasViewAdapter extends BaseAdapter {
         }
 
         Caza c = this.lCazas.get(position);
-        //vh.RazonSocial.setText(c.getComercio().getRazonSocial());
 
+        vh.RazonSocial.setText(c.getComercio().getRazonSocial());
+
+        System.out.println(c.getFecha());
         // Crea un formato de fecha
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // Convierte la fecha a String
-        //String dateString = dateFormat.format(currentDate);
+        String dateString = dateFormat.format(c.getFecha());
+        vh.Fecha.setText(dateString);
 
-        //vh.Fecha.setText(c.getFecha().toString());
         vh.Puntos.setText(String.valueOf( c.getPuntos() ));
 
         return convertView;

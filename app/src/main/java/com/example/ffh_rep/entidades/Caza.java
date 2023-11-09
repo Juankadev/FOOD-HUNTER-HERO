@@ -20,9 +20,10 @@ public class Caza {
         this.fecha = fecha;
     }
 
-    public Caza(int idCaza, int puntos) {
-        this.idCaza = idCaza;
+    public Caza(Comercio comercio, Date fecha, int puntos) {
+        this.comercio = comercio;
         this.puntos = puntos;
+        this.fecha = fecha;
     }
 
     public int getIdCaza() {

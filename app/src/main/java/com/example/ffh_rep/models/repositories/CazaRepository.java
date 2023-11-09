@@ -13,6 +13,7 @@ import com.example.ffh_rep.entidades.Caza;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -173,23 +174,27 @@ public class CazaRepository {
 
 
 
-
-
-
     public MutableLiveData<List<Caza>> getCazasByIdHunter(MutableLiveData<List<Caza>> mlDataComercio, int id_hunter) {
         CompletableFuture.supplyAsync(() -> {
             List<Caza> lCazas = new ArrayList<>();
 
             try (Connection con = DBUtil.getConnection();
-                 PreparedStatement ps = con.prepareStatement("SELECT id_caza, puntos from Cazas where id_hunter = "+id_hunter);
+                 PreparedStatement ps = con.prepareStatement("SELECT com.razon_social as razon_social, c.fecha as fecha, c.puntos as puntos FROM `Hunters` as h" +
+                         "            inner join Cazas as c on h.id_hunter = c.id_hunter" +
+                         "            inner join Comercios as com on c.id_comercio = com.id_comercio" +
+                         "            where c.id_hunter = "+id_hunter +" order by c.fecha DESC");
 
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int id = rs.getInt("id_caza");
-                    //String razonsocial = rs.getString("razon_social");
-                    //String fecha = rs.getString("fecha");
+                    //int id = rs.getInt("id_caza");
+                    String razonsocial = rs.getString("razon_social");
+                    Date fecha = rs.getDate("fecha");
                     int puntos = rs.getInt("puntos");
-                    Caza caza = new Caza(id, puntos);
+
+                    Comercio comercio = new Comercio();
+                    comercio.setRazonSocial(razonsocial);
+
+                    Caza caza = new Caza(comercio,fecha, puntos);
                     lCazas.add(caza);
                 }
             } catch (Exception e) {
@@ -210,8 +215,5 @@ public class CazaRepository {
 
 
 
-/*String query = "SELECT com.razon_social, c.fecha, c.puntos FROM `Hunters` as h \n" +
-            "inner join Cazas as c on h.id_hunter = c.id_hunter \n" +
-            "inner join Comercios as com on c.id_comercio = com.id_comercio\n" +
-            "where c.id_hunter = ?" ;
+/*String query =  ;
             */
