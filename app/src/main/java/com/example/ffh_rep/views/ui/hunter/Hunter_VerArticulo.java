@@ -38,7 +38,7 @@ public class Hunter_VerArticulo extends Fragment {
     private CarritoViewModel carrito;
     private Stock stock;
     private FragmentHunterVerArticuloBinding binding;
-    private TextView descripcion, precio, categoria, marca, cantidadArticulo;
+    private TextView descripcion, precio, categoria, marca, cantidadArticulo, stockDisponible;
     private ImageView ivArticulo;
     private Button btnAniadirCarrito, btnSumar, btnRestar;
     private ItemCarrito item;
@@ -91,6 +91,7 @@ public class Hunter_VerArticulo extends Fragment {
         btnAniadirCarrito = view.findViewById(R.id.btnAgregarCarrito);
         ivArticulo = view.findViewById(R.id.ivArticulo);
         btnSumar = view.findViewById(R.id.btnSumarItem);
+        stockDisponible = view.findViewById(R.id.tvStockDisponible);
         btnRestar = view.findViewById(R.id.btnRestarItem);
     }
 
@@ -99,6 +100,7 @@ public class Hunter_VerArticulo extends Fragment {
         descripcion.setText(stock.getId_articulo().getDescripcion());
         marca.setText(stock.getId_articulo().getMarca().getDescripcion());
         categoria.setText(stock.getId_articulo().getCategoria().getDescripcion());
+        stockDisponible.setText(String.valueOf(stock.getCantidad()));
         Glide.with(view).load(stock.getId_articulo().getImagen()).into(ivArticulo);
     }
 
@@ -110,7 +112,7 @@ public class Hunter_VerArticulo extends Fragment {
 
 
     public void addArticle(Stock stock){
-        if(this._cantidadArticulo > 0){
+        if(this._cantidadArticulo > 0 && this._cantidadArticulo <= stock.getCantidad()){
             item = new ItemCarrito(stock, this._cantidadArticulo);
             if(!carrito.isArticleInCart(item)){
                 carrito.addArticleToCart(item);
@@ -121,7 +123,9 @@ public class Hunter_VerArticulo extends Fragment {
             else{
                 showDuplicateItemDialog();
             }
-
+        }
+        else{
+            Toast.makeText(getContext(), "No se pudo agregar el articulo. Stock insuficiente", Toast.LENGTH_LONG).show();
         }
     }
 
