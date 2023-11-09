@@ -121,7 +121,12 @@ public class Hunter_VerArticulo extends Fragment {
                 this._cantidadArticulo=0;
             }
             else{
-                showDuplicateItemDialog();
+                if(this._cantidadArticulo > 0 && this._cantidadArticulo <= stock.getCantidad()){
+                    showDuplicateItemDialog();
+                }
+                else{
+                    Toast.makeText(getContext(), "No se pudo agregar el articulo. Stock insuficiente", Toast.LENGTH_LONG).show();
+                }
             }
         }
         else{

@@ -54,7 +54,27 @@ public class QrRepository {
         });
     }
 
-    public void aprobeHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+    public void rejectHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> succes, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+        loading.postValue(true);
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("UPDATE Generar_Qr SET estado = 2 WHERE id_qr = ?")) {
+                ps.setInt(1, request.getIdQr());
+
+                int rowsAffected = ps.executeUpdate();
+                if(rowsAffected > 0){
+                    loading.postValue(false);
+                    succes.postValue(true);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                loading.postValue(false);
+                error.postValue(true);
+            }
+        });
+    }
+            public void aprobeHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
             Log.d("aprobe", "INICIANDO");
             loading.postValue(true);
