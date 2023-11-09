@@ -20,6 +20,11 @@ public class Caza {
         this.fecha = fecha;
     }
 
+    public Caza(int idCaza, int puntos) {
+        this.idCaza = idCaza;
+        this.puntos = puntos;
+    }
+
     public int getIdCaza() {
         return idCaza;
     }
