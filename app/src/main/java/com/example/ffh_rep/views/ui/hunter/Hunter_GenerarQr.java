@@ -109,10 +109,4 @@ public class Hunter_GenerarQr extends Fragment {
         dialog.show();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        qrController = null;
-        qrContain = null;
-    }
 }
