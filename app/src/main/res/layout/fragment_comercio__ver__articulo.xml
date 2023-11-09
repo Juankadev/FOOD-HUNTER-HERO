@@ -40,10 +40,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="120dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="120dp"
-                android:text="@string/descripcion"
-                android:textSize="20sp"
                 android:gravity="center"
+                android:text="@string/descripcion"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivArticulo" />
 
@@ -55,65 +54,45 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="140dp"
                 android:text="@string/precio"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvDescripcionArt" />
-
-            <TextView
-                android:id="@+id/tvMarcaArt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="140dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="140dp"
-                android:text="Marca"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCategoriaArt" />
 
             <TextView
                 android:id="@+id/tvCategoriaArt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="140dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="28dp"
                 android:layout_marginEnd="140dp"
                 android:text="Categoria"
-                android:textSize="16sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPrecioArt" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/tvMarcaArt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="50dp"
-                android:text="Stock:"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="140dp"
+                android:text="Marca"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvMarcaArt" />
-
-            <TextView
-                android:id="@+id/tvCantidadArticulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
-                android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/tvMarcaArt" />
+                app:layout_constraintTop_toBottomOf="@+id/tvCategoriaArt" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/tvCantidadArticulo"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                tools:layout_editor_absoluteY="521dp">
 
                 <Button
                     android:id="@+id/btnStock"
