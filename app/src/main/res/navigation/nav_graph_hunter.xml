@@ -83,11 +83,7 @@
         android:id="@+id/hunter_ReseniasComercio"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_ReseniasComercio"
         android:label="fragment_hunter__resenias_comercio"
-        tools:layout="@layout/fragment_hunter__resenias_comercio" >
-        <action
-            android:id="@+id/action_hunter_ReseniasComercio_to_hunter_ReseniarComercio"
-            app:destination="@id/hunter_ReseniarComercio" />
-    </fragment>
+        tools:layout="@layout/fragment_hunter__resenias_comercio" />
     <fragment
         android:id="@+id/hunter_VerArticulo"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerArticulo"
@@ -99,14 +95,18 @@
         android:label="fragment_hunter__generar_qr"
         tools:layout="@layout/fragment_hunter__generar_qr" >
         <action
-            android:id="@+id/action_hunter_GenerarQr_to_nav_hunter_Home"
-            app:destination="@id/nav_hunter_Home" />
+            android:id="@+id/action_hunter_GenerarQr_to_hunter_ReseniarComercio"
+            app:destination="@id/hunter_ReseniarComercio" />
     </fragment>
     <fragment
         android:id="@+id/hunter_ReseniarComercio"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_ReseniarComercio"
         android:label="fragment_hunter__reseniar_comercio"
-        tools:layout="@layout/fragment_hunter__reseniar_comercio" />
+        tools:layout="@layout/fragment_hunter__reseniar_comercio" >
+        <action
+            android:id="@+id/action_hunter_ReseniarComercio_to_nav_hunter_Home"
+            app:destination="@id/nav_hunter_Home" />
+    </fragment>
     <fragment
         android:id="@+id/hunter_VerBeneficios"
         android:name="com.example.ffh_rep.views.ui.hunter.Hunter_VerBeneficios"

@@ -69,4 +69,10 @@ public class HunterReseniasComercioViewModel extends ViewModel {
     public void generarResenia(Resenia res){
        cRepo.generarResenia(res, this.loadingSendResenia, this.successSendResenia, this.errorSendResenia);
     }
+
+    public void resetValues(){
+        this.loadingSendResenia.setValue(false);
+        this.successSendResenia.setValue(false);
+        this.errorSendResenia.setValue(false);
+    }
 }

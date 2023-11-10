@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentHunterReseniarComercioBinding;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.JSONQRRequest;
 import com.example.ffh_rep.entidades.Resenia;
 import com.example.ffh_rep.viewmodels.factory.HunterReseniasComercioViewModelFactory;
 import com.example.ffh_rep.utils.SessionManager;
@@ -42,6 +44,7 @@ public class Hunter_ReseniarComercio extends Fragment {
 
     private Hunter userSession;
     private Comercio commerce;
+    private JSONQRRequest json;
     private ProgressBar pbBar;
     private SessionManager sessionManager;
 
@@ -58,7 +61,7 @@ public class Hunter_ReseniarComercio extends Fragment {
 
         Bundle bundle = getArguments();
         if(bundle != null){
-            commerce = (Comercio) bundle.getSerializable("comercioareseniar");
+            json = (JSONQRRequest) bundle.getSerializable("data");
         }
 
         setUpListeners();
@@ -126,8 +129,8 @@ public class Hunter_ReseniarComercio extends Fragment {
 
         if(validateInputs()){
             Resenia res = new Resenia();
-            Log.d("idcomercio", String.valueOf(commerce.getId()));
-            res.setComercio(commerce);
+            res.setComercio(new Comercio());
+            res.getComercio().setId(json.getIdComercio());
             res.setId_usuario(userSession.getUser());
             res.setComentario(etComentario.getText().toString());
             res.setCalificacion((int) rbPuntaje.getRating());
@@ -172,7 +175,6 @@ public class Hunter_ReseniarComercio extends Fragment {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // El usuario ha cancelado la operación
                 dialog.dismiss();
             }
         });
@@ -189,15 +191,12 @@ public class Hunter_ReseniarComercio extends Fragment {
         builder.setPositiveButton("Volver", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                requireActivity().getSupportFragmentManager().popBackStack();
+                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_ReseniarComercio_to_nav_hunter_Home);
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
-
 
 }
