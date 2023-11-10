@@ -37,7 +37,6 @@ public class Hunter_ReseniasComercio extends Fragment {
     private TextView nameShop;
     private GridView gvResenias;
     private Comercio commerce;
-    private FloatingActionButton btnReseniar;
 
     public static Hunter_ReseniasComercio newInstance() {
         return new Hunter_ReseniasComercio();
@@ -60,7 +59,6 @@ public class Hunter_ReseniasComercio extends Fragment {
 
         mViewModel.cargarResenias(commerce);
 
-        setUpListeners();
         setUpObservers();
 
         gvResenias.setAdapter(rAdapter);
@@ -69,7 +67,6 @@ public class Hunter_ReseniasComercio extends Fragment {
 
     public void initComponents(View view){
         gvResenias = view.findViewById(R.id.gv_resenias);
-        btnReseniar = view.findViewById(R.id.fabAddResenia);
 
         mViewModel = new ViewModelProvider(requireActivity(),new HunterReseniasComercioViewModelFactory(getActivity())).get(HunterReseniasComercioViewModel.class);
         rAdapter = new ReseniasAdapter(new ArrayList<>(), getContext());
@@ -87,14 +84,6 @@ public class Hunter_ReseniasComercio extends Fragment {
             });
     }
 
-    public void setUpListeners(){
-        btnReseniar.setOnClickListener(v -> openResenia());
-    }
 
-    public void openResenia(){
-        Bundle args = new Bundle();
-        args.putSerializable("comercioareseniar", commerce);
-        Navigation.findNavController(requireView()).navigate(R.id.action_hunter_ReseniasComercio_to_hunter_ReseniarComercio, args);
-    }
 
 }

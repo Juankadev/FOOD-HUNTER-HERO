@@ -172,7 +172,9 @@ public class Hunter_GenerarQr extends Fragment {
                 qrController.resetAttributes();
                 cuentaController.resetSuccessRango();
                 qrController = null;
-                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
+                Bundle args = new Bundle();
+                args.putSerializable("data",jsonQRRequest);
+                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_hunter_ReseniarComercio, args);
             }
         });
 
@@ -191,7 +193,7 @@ public class Hunter_GenerarQr extends Fragment {
                 qrController.resetAttributes();
                 cuentaController.resetSuccessRango();
                 qrController = null;
-                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
+                Navigation.findNavController(requireView()).popBackStack();
             }
         });
 

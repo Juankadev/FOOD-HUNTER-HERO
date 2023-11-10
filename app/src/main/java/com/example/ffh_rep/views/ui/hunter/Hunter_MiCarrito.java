@@ -58,7 +58,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
     private ProgressBar pbFinalizando;
     private ListView lvArticulos;
     private EditText etBuscador;
-    private TextView tvPuntos;
+    private TextView tvPuntos, tvContentButton;
     private CardView btnEndHunting;
     private List<ItemCarrito> _currChart;
     private Comercio comercio;
@@ -107,12 +107,15 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         qrController.getLoading().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 pbFinalizando.setVisibility(View.VISIBLE);
+                tvContentButton.setVisibility(View.GONE);
             }
         });
 
         qrController.getSuccess().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
+                tvContentButton.setVisibility(View.VISIBLE);
                 pbFinalizando.setVisibility(View.GONE);
+                Toast.makeText(requireActivity(), "Por favor, enseñe el qr en la caja", Toast.LENGTH_LONG).show();
                 generateJsonAndRedirect();
             }
         });
@@ -137,6 +140,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
         pbFinalizando = view.findViewById(R.id.pbFinalizando);
         etBuscador = view.findViewById(R.id.et_browserMisArticulos);
+        tvContentButton = view.findViewById(R.id.tv_initcontent);
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext(), this);
         qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
