@@ -31,10 +31,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
 
     @Override
     protected Usuario doInBackground(Void... voids) {
-        try {
-            Class.forName(DB_Env.DB_DRIVER);
-            Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
-
+        try (Connection con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD)) {
             String query = "SELECT u.id_usuario, u.username, u.password, u.estado, r.id_rol, r.descripcion " +
                     "FROM Usuarios u INNER JOIN Roles r ON r.id_rol = u.id_rol " +
                     "WHERE u.username = ? AND u.password = ? and estado = 1";
@@ -56,6 +53,7 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
             return null;
         }
     }
+
 
     private Usuario extractUsuarioFromResultSet(ResultSet rs) throws SQLException {
         Usuario uData = new Usuario();

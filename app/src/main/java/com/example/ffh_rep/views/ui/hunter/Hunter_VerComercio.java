@@ -50,7 +50,7 @@ public class Hunter_VerComercio extends Fragment {
     private CarritoViewModel carrito;
     private Comercio commerce;
     private LinearLayout bottomBar;
-    private TextView descripcion, cantArticulos;
+    private TextView descripcion, cantArticulos, tvNoData;
     private ImageView favDispatch, favDispatch_filled;
     private GridView gv_articulos;
     private EditText etBuscador;
@@ -108,6 +108,7 @@ public class Hunter_VerComercio extends Fragment {
         btnVerResenias = view.findViewById(R.id.btn_HunterVerReseñasComercio);
         btnVerBeneficios = view.findViewById(R.id.btn_hunterVerBeneficios);
         etBuscador = view.findViewById(R.id.et_browser_articulos);
+        tvNoData = view.findViewById(R.id.tvNoData);
     }
 
     public void initModelsAndAdapters(){
@@ -144,7 +145,15 @@ public class Hunter_VerComercio extends Fragment {
     public void setUpObservers(){
 
         mViewModel.getMldStockArticulos().observe(getViewLifecycleOwner(), stocks->{
-            aclAdapter.setData(stocks);
+            if(stocks.size() > 0){
+                tvNoData.setVisibility(View.GONE);
+                gv_articulos.setVisibility(View.VISIBLE);
+                aclAdapter.setData(stocks);
+            }
+            else{
+                tvNoData.setVisibility(View.VISIBLE);
+                gv_articulos.setVisibility(View.GONE);
+            }
         });
 
         carrito.getCarrito().observe(getViewLifecycleOwner(), new Observer<List<ItemCarrito>>() {

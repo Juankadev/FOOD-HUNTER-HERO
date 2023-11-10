@@ -90,10 +90,12 @@ public class Comercio_Home extends Fragment {
             public void onChanged(List<Articulo> articulos) {
                 if(articulos.size()>0)
                 {
+                    gv_articulos.setVisibility(View.VISIBLE);
                     tvNoData.setVisibility(View.GONE);
                     aclAdapter.setData(articulos);
                 }
                 else{
+                    gv_articulos.setVisibility(View.GONE);
                     tvNoData.setVisibility(View.VISIBLE);
                 }
 

@@ -28,6 +28,7 @@ public class MisDescuentosComercioViewModel extends ViewModel {
       this.mldListaBeneficios = new MutableLiveData<>();
       this.dRepo = new DescuentoRepository();
       this.cRepo = new ComercioRepository();
+      this.originalListBeneficios = new MutableLiveData<>();
    }
 
    public MutableLiveData<List<Beneficio>> getMldListaBeneficios() {
@@ -40,7 +41,7 @@ public class MisDescuentosComercioViewModel extends ViewModel {
    public void eliminarBeneficio(Beneficio bene){dRepo.eliminarDescuento(ctx, bene);}
    public void editarBeneficio(Beneficio bene){dRepo.modificarDescuento(ctx, bene);}
    public void listarDescuentos(int id){
-      dRepo.listarDescuentosByComercio(this.originalListBeneficios, mldListaBeneficios,id);
+      dRepo.listarDescuentosByComercio(this.originalListBeneficios, this.mldListaBeneficios,id);
    }
 
    public void applyFilter(String _secuence) {

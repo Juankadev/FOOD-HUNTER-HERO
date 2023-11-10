@@ -70,7 +70,6 @@ public class UserDetailsByRoleTask extends AsyncTask<Void, Void, Object> {
                     Log.d("Error en RS", "Hubo un error al obtener resultados");
                     return null;
                 }
-                rs.close();
             }
             preparedStatement.close();
             con.close();

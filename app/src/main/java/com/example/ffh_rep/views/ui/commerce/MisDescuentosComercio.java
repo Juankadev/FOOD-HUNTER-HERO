@@ -60,7 +60,7 @@ public class MisDescuentosComercio extends Fragment {
 
         setUpListeners();
         setUpObserver();
-
+        searcher();
         gv_descuentos.setAdapter(mdcListAdapter);
 
         return view;
@@ -92,11 +92,13 @@ public class MisDescuentosComercio extends Fragment {
             public void onChanged(List<Beneficio> beneficios) {
                 if(beneficios.size()>0)
                 {
+                    gv_descuentos.setVisibility(View.VISIBLE);
                     tvNoData.setVisibility(View.GONE);
                     mdcListAdapter.setData(beneficios);
                 }
                 else{
                     tvNoData.setVisibility(View.VISIBLE);
+                    gv_descuentos.setVisibility(View.GONE);
                 }
             }
         });
