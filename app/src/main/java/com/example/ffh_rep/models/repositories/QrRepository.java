@@ -54,6 +54,23 @@ public class QrRepository {
         });
     }
 
+    public void qrDelete(JSONQRRequest request, MutableLiveData<Boolean> success){
+        CompletableFuture.runAsync(()->{
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("DELETE FROM Generar_Qr WHERE id_qr = ?")) {
+                ps.setInt(1, request.getIdQr());
+
+                int rowsAffected = ps.executeUpdate();
+                if(rowsAffected > 0){
+                    success.setValue(true);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     public void rejectHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> succes, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
         loading.postValue(true);

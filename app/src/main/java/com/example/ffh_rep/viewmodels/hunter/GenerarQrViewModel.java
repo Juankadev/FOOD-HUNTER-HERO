@@ -21,6 +21,8 @@ public class GenerarQrViewModel extends ViewModel {
     private MutableLiveData<Boolean> cazaRechazada;
     private MutableLiveData<Boolean> pollingEnabled;
 
+    private MutableLiveData<Boolean> qrDeleted;
+
     public QrRepository qrRepository;
 
     public GenerarQrViewModel(Context ctx){
@@ -32,6 +34,7 @@ public class GenerarQrViewModel extends ViewModel {
         this.idGenerado = new MutableLiveData<>();
         this.cazaAprobada = new MutableLiveData<>(false);
         this.cazaRechazada = new MutableLiveData<>(false);
+        this.qrDeleted = new MutableLiveData<>(false);
         this.qrRepository = new QrRepository();
 
         this.pollingEnabled = new MutableLiveData<>(true);
@@ -39,6 +42,10 @@ public class GenerarQrViewModel extends ViewModel {
 
     public void generarQr(QrObject qr){
         qrRepository.insertQrData(qr, this.loading, this.success, this.error, this.idGenerado);
+    }
+
+    public void deleteQr(JSONQRRequest response){
+        qrRepository.qrDelete(response, this.qrDeleted);
     }
 
     public MutableLiveData<Boolean> getLoading() {
