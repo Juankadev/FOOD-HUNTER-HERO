@@ -110,9 +110,7 @@ public class AgregarArticulo extends Fragment {
         imageViewArticulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*PREGUNTARLE AL USUARIO SI LE DA PERMISO PARA EL MEDIA GALLERY*/
                 requestPermission();
-
             }
         });
 

@@ -14,14 +14,18 @@ import java.util.Map;
 public class ImageRepository {
 
     private String imageUrl;
- public ImageRepository(Context context){
-     Map config = new HashMap();
-     config.put("cloud_name", "dmtsek7j7");
-     config.put("api_key", "264587117157862");
-     config.put("api_secret", "sIfXmNyf87WSxkgIiWk3uhjLJNg");
-     //config.put("secure", true);
-     MediaManager.init(context, config);
- }
+    private static boolean isInitialized = false;
+
+    public ImageRepository(Context context) {
+        if (!isInitialized) {
+            Map<String, String> config = new HashMap<>();
+            config.put("cloud_name", "dmtsek7j7");
+            config.put("api_key", "264587117157862");
+            config.put("api_secret", "sIfXmNyf87WSxkgIiWk3uhjLJNg");
+            MediaManager.init(context, config);
+            isInitialized = true;
+        }
+    }
 
  public void uploadImage(Uri imagePath, ImageUploadCallback callback){
 
