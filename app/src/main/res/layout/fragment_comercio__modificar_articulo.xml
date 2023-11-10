@@ -48,12 +48,14 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/border"
-            android:backgroundTint="#75FFFFFF"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:hint="Descripción"
             android:inputType="text"
             android:padding="10dp"
-            android:textColor="#FFFFFF" />
+            android:text="@string/descripcion"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtPrecioArticulo_Modif"
@@ -63,12 +65,14 @@
             android:layout_marginTop="15dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/border"
-            android:backgroundTint="#75FFFFFF"
+            android:backgroundTint="@color/bck_inputs"
             android:ems="10"
             android:hint="Precio"
             android:inputType="numberDecimal"
             android:padding="10dp"
-            android:textColor="#FFFFFF" />
+            android:text="@string/precio"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinnerIDCategoriaArticulo_Modif"
