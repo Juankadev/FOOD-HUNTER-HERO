@@ -54,6 +54,7 @@ public class Hunter_GenerarQr extends Fragment {
         userSession = sessionManager.getHunterSession();
 
         qrController.setPollingEnabled(true);
+
         String data = args.getString("json_request");
         Log.d("Log Data in json generated", data);
         generateQr(data, qrContain);
@@ -81,6 +82,12 @@ public class Hunter_GenerarQr extends Fragment {
         cuentaController.getSuccessRangoUpdate().observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 showSuccessDialog();
+            }
+        });
+
+        qrController.getCazaRechazada().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                showRejectDialog();
             }
         });
     }
@@ -128,5 +135,23 @@ public class Hunter_GenerarQr extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+    public void showRejectDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("CAZA RECHAZADA");
+        builder.setMessage("Tu caza ha rechazada por el comercio");
 
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                qrContain = null;
+                qrController.resetAttributes();
+                cuentaController.resetSuccessRango();
+                qrController = null;
+                Navigation.findNavController(requireView()).navigate(R.id.action_hunter_GenerarQr_to_nav_hunter_Home);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

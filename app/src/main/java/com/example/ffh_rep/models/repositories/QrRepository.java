@@ -54,7 +54,27 @@ public class QrRepository {
         });
     }
 
-    public void aprobeHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
+    public void rejectHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> succes, MutableLiveData<Boolean> error){
+        CompletableFuture.runAsync(() -> {
+        loading.postValue(true);
+            try (Connection con = DBUtil.getConnection();
+                 PreparedStatement ps = con.prepareStatement("UPDATE Generar_Qr SET estado = 2 WHERE id_qr = ?")) {
+                ps.setInt(1, request.getIdQr());
+
+                int rowsAffected = ps.executeUpdate();
+                if(rowsAffected > 0){
+                    loading.postValue(false);
+                    succes.postValue(true);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                loading.postValue(false);
+                error.postValue(true);
+            }
+        });
+    }
+            public void aprobeHunt(JSONQRRequest request, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
             Log.d("aprobe", "INICIANDO");
             loading.postValue(true);
@@ -176,7 +196,7 @@ public class QrRepository {
         }
     }
 
-    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr, MutableLiveData<Boolean> enabled) {
+    public void pollingIntoQrState(MutableLiveData<Boolean> qrState, JSONQRRequest qr, MutableLiveData<Boolean> enabled, MutableLiveData<Boolean> reject) {
         Handler handler = new Handler(Looper.getMainLooper());
         long pollingInterval = 5000;
 
@@ -199,7 +219,11 @@ public class QrRepository {
                             enabled.postValue(false);
                         });
                     } else if (state == 2) {
-                        handler.removeCallbacks(this);
+                        handler.post(() -> {
+                            handler.removeCallbacks(this);
+                            reject.postValue(true);
+                            enabled.postValue(false);
+                        });
                     } else if (state == -1) {
                     }
                 }).exceptionally(ex -> {

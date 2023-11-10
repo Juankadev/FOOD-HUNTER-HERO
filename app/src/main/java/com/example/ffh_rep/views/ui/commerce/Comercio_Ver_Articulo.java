@@ -88,7 +88,7 @@ public class Comercio_Ver_Articulo extends Fragment {
     }
 
     public void settingComponents(Articulo article, View view){
-        precio.setText(String.valueOf(article.getPrecio()));
+        precio.setText("$"+String.valueOf(article.getPrecio()));
         descripcion.setText(article.getDescripcion());
         marca.setText(article.getMarca().getDescripcion());
         categoria.setText(article.getCategoria().getDescripcion());

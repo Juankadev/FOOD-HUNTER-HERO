@@ -52,7 +52,10 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.fragment_aprobar_comercios_item, null);
             vh = new AprobarComerciosViewAdapter.ViewHolder();
-            vh.nombre = convertView.findViewById(R.id.razonSocial);
+            vh.razonSocial = convertView.findViewById(R.id.razonSocial);
+            vh.cuit = convertView.findViewById(R.id.cuit);
+            vh.direccion = convertView.findViewById(R.id.direccion);
+            vh.rubro = convertView.findViewById(R.id.rubro);
             vh.btnRechazar = convertView.findViewById(R.id.btnRechazar);
             vh.btnAprobar = convertView.findViewById(R.id.btnAprobar);
             convertView.setTag(vh);
@@ -61,7 +64,10 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
         }
 
         Comercio c = this.lComercios.get(position);
-        vh.nombre.setText(c.getRazonSocial());
+        vh.razonSocial.setText(c.getRazonSocial());
+        vh.cuit.setText(c.getCuit());
+        vh.direccion.setText(c.getDireccion());
+        vh.rubro.setText(c.getRubro());
 
         vh.btnRechazar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +138,7 @@ public class AprobarComerciosViewAdapter extends BaseAdapter {
     }
 
     static class ViewHolder{
-        TextView nombre;
+        TextView razonSocial, cuit, rubro, direccion;
         ImageButton btnRechazar;
         ImageButton btnAprobar;
     }

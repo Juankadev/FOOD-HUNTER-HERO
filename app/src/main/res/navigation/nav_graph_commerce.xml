@@ -96,7 +96,11 @@
         android:id="@+id/comercio_AprobarCompra"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_AprobarCompra"
         android:label="fragment_comercio__aprobar_compra"
-        tools:layout="@layout/fragment_comercio__aprobar_compra" />
+        tools:layout="@layout/fragment_comercio__aprobar_compra" >
+        <action
+            android:id="@+id/action_comercio_AprobarCompra_to_commerce_MisArticulos"
+            app:destination="@id/commerce_MisArticulos" />
+    </fragment>
     <fragment
         android:id="@+id/comercio_MiCuenta"
         android:name="com.example.ffh_rep.views.ui.commerce.Comercio_MiCuenta"

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,10 +36,9 @@ public class Comercio_AprobarCompra extends Fragment {
     private ComercioAprobarCompraViewModel mViewModel;
     private GenerarQrViewModel qrController;
     private ArticulosCarritoListAdapter alAdapter;
-    private CardView aprobar;
-    private TextView txtTileDispatch;
-    private ProgressBar pbAprobando;
-
+    private CardView aprobar, rechazar;
+    private TextView txtTileDispatch, txtTitleRechazar;
+    private ProgressBar pbAprobando, pbRechazando;
     private ListView listaProductos;
 
     private JSONQRRequest response;
@@ -74,9 +74,12 @@ public class Comercio_AprobarCompra extends Fragment {
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext());
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioAprobarCompraViewModelFactory(getActivity())).get(ComercioAprobarCompraViewModel.class);
         aprobar = view.findViewById(R.id.btnAprobarCaza);
+        rechazar = view.findViewById(R.id.btnRechazarCaza);
         listaProductos = view.findViewById(R.id.comercio_lista_productos);
         txtTileDispatch = view.findViewById(R.id.txtTileDispatch);
         pbAprobando = view.findViewById(R.id.pbAprobando);
+        pbRechazando = view.findViewById(R.id.pbRechazando);
+        txtTitleRechazar = view.findViewById(R.id.txtTitleRechazar);
         qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
     }
 
@@ -90,12 +93,11 @@ public class Comercio_AprobarCompra extends Fragment {
             }
         });
 
-
         mViewModel.getSuccess().observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean){
                 txtTileDispatch.setVisibility(View.VISIBLE);
                 pbAprobando.setVisibility(View.GONE);
-                Toast.makeText(requireContext(), "APROBADO!", Toast.LENGTH_SHORT);
+                showSuccessDialog();
             }
         });
 
@@ -104,20 +106,60 @@ public class Comercio_AprobarCompra extends Fragment {
                 showErrorDialog();
             }
         });
+
+        mViewModel.getLoadingReject().observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                pbRechazando.setVisibility(View.VISIBLE);
+                txtTitleRechazar.setVisibility(View.GONE);
+            }
+        });
+
+        mViewModel.getSuccessReject().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean){
+                pbRechazando.setVisibility(View.GONE);
+                txtTitleRechazar.setVisibility(View.VISIBLE);
+                showSuccessDialog();
+            }
+        });
     }
 
     public void setUpListeners(){
         aprobar.setOnClickListener(v -> generateAprobe());
+        rechazar.setOnClickListener(v -> generateReject());
     }
 
     public void generateAprobe(){
         mViewModel.aprobeHunt(response);
     }
 
+    public void generateReject(){mViewModel.rejectHunt(response);}
+    public void showSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("GENIAL");
+        builder.setMessage("La operación se realizó con exito");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                qrController.resetAttributes();
+                qrController = null;
+                mViewModel.resetVariables();
+                mViewModel = null;
+                Navigation.findNavController(requireView()).navigate(R.id.action_comercio_AprobarCompra_to_commerce_MisArticulos);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
     public void showErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Beneficios");
-        builder.setMessage("Ocurrió un error al canjear el beneficio. Intentelo mas tarde");
+        builder.setTitle("ERROR");
+        builder.setMessage("Ocurrio un error al aprobar la compra, intente mas tarde");
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override

@@ -22,6 +22,11 @@ public class ComercioAprobarCompraViewModel extends ViewModel {
     private MutableLiveData<Boolean> success;
     private MutableLiveData<Boolean> error;
 
+    private MutableLiveData<Boolean> loadingReject;
+    private MutableLiveData<Boolean> successReject;
+    private MutableLiveData<Boolean> errorReject;
+
+
     private QrRepository qrRepository;
 
     public ComercioAprobarCompraViewModel(Context ctx){
@@ -34,6 +39,10 @@ public class ComercioAprobarCompraViewModel extends ViewModel {
         this.loading = new MutableLiveData<>(false);
         this.error = new MutableLiveData<>(false);
         this.success = new MutableLiveData<>(false);
+
+        this.loadingReject = new MutableLiveData<>(false);
+        this.successReject = new MutableLiveData<>(false);
+        this.errorReject = new MutableLiveData<>(false);
     }
 
     public MutableLiveData<List<ItemCarrito>> getMlArticulos() {
@@ -64,6 +73,10 @@ public class ComercioAprobarCompraViewModel extends ViewModel {
         qrRepository.aprobeHunt(response, this.loading, this.success, this.error);
     }
 
+    public void rejectHunt(JSONQRRequest response){
+        qrRepository.rejectHunt(response, this.loadingReject, this.successReject, this.errorReject);
+    }
+
     public MutableLiveData<Boolean> getLoading() {
         return loading;
     }
@@ -74,5 +87,27 @@ public class ComercioAprobarCompraViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getError() {
         return error;
+    }
+
+    public MutableLiveData<Boolean> getLoadingReject() {
+        return loadingReject;
+    }
+
+    public MutableLiveData<Boolean> getSuccessReject() {
+        return successReject;
+    }
+
+    public MutableLiveData<Boolean> getErrorReject() {
+        return errorReject;
+    }
+
+    public void resetVariables(){
+        this.loading.setValue(false);
+        this.error.setValue(false);
+        this.success.setValue(false);
+
+        this.loadingReject.setValue(false);
+        this.successReject.setValue(false);
+        this.errorReject.setValue(false);
     }
 }
