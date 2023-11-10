@@ -17,8 +17,8 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.hunter.ComerciosViewModel;
-import com.example.ffh_rep.views.adapters.ComerciosAdapter;
 import com.example.ffh_rep.viewmodels.factory.ComercioViewModelFactory;
+import com.example.ffh_rep.views.adapters.ComerciosAdapter;
 
 import java.util.ArrayList;
 

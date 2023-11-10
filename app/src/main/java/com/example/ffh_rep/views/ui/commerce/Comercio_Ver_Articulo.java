@@ -85,8 +85,6 @@ public class Comercio_Ver_Articulo extends Fragment {
         marca = view.findViewById(R.id.tvMarcaArt);
         categoria = view.findViewById(R.id.tvCategoriaArt);
         ivArticulo = view.findViewById(R.id.ivArticulo);
-        tvCantidadArticulo = view.findViewById(R.id.tvCantidadArticulo);
-
     }
 
     public void settingComponents(Articulo article, View view){

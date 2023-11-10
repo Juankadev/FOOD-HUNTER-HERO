@@ -33,7 +33,7 @@ public class Comercio_Home extends Fragment {
 
     private ComercioHomeViewModel mViewModel;
     private FragmentComercioHomeBinding binding;
-    private Button btnAniadirArticulo, btnIrBeneficios;
+    private Button btnAniadirArticulo;
     private GridView gv_articulos;
     private SessionManager sessionManager;
     private Comercio userSession;
@@ -67,10 +67,7 @@ public class Comercio_Home extends Fragment {
 
     private void initViews(View view){
         btnAniadirArticulo = view.findViewById(R.id.btn_commerce_addArticle);
-        btnIrBeneficios = view.findViewById(R.id.btn_MisDescuentos);
         gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail2);
-        Log.d("Debug Pablo", gv_articulos.toString());
-
     }
 
     public void initModelsAndAdapters(){

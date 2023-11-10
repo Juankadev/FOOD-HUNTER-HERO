@@ -100,7 +100,7 @@ public class MisDescuentosComercioListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Bundle args = new Bundle();
-                args.putSerializable("idBeneficioSelect", a.getId_beneficio());
+                args.putSerializable("idBeneficioSelect", a);
                 Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_modificarDescuento, args);
             }
         });

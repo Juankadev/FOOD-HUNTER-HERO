@@ -3,7 +3,6 @@ package com.example.ffh_rep.views.ui.commerce;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,34 +15,18 @@ import com.example.ffh_rep.databinding.FragmentComercioEscanearQrBinding;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.ffh_rep.entidades.Articulo;
-import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.entidades.JSONQRRequest;
-import com.example.ffh_rep.utils.CustomDateAdapter;
-import com.example.ffh_rep.viewmodels.commerce.ComercioEscanearQrViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 //FALTA DESARROLLAR
 public class Comercio_EscanearQr extends Fragment {
 
-    private ComercioEscanearQrViewModel mViewModel;
     private FragmentComercioEscanearQrBinding binding;
 
 

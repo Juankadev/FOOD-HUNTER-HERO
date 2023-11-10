@@ -24,6 +24,8 @@ public class ModificarDescuento extends Fragment {
     private MisDescuentosComercioViewModel mViewModel;
     private EditText txtDescripcion, txtPuntos;
     private Button btnModificarDescuento, btnVolverMisDescuentos;
+    private Beneficio b;
+    private  Bundle bundle;
 
     public static ModificarDescuento newInstance() {
         return new ModificarDescuento();
@@ -34,8 +36,11 @@ public class ModificarDescuento extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercio_modificar_descuento, container, false);
 
+        bundle = getArguments();
+        b = (Beneficio) bundle.getSerializable("idBeneficioSelect");
         initComponentes(view);
         setupListeners();
+        fillInputs();
         mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
 
         return view;
@@ -48,15 +53,17 @@ public class ModificarDescuento extends Fragment {
         btnVolverMisDescuentos = view.findViewById(R.id.btnVolverMisDescuentosDesdeModificar);
     }
 
+    public void fillInputs(){
+        txtDescripcion.setText(b.getDescripcion().toString());
+        txtPuntos.setText(b.getPuntos_requeridos().toString());
+    }
+
     private void setupListeners() {
         btnModificarDescuento.setOnClickListener((v-> modBeneficio()));
         btnVolverMisDescuentos.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_modificarDescuento_to_fragmentAgregarDescuentoComercio));
     }
 
     private void modBeneficio(){
-        /// OBTENGO EL ID DEL ARTICULO A MODIFICAR
-        Bundle bundle = getArguments();
-        int id = (int) bundle.getSerializable("idBeneficioSelect");
 
         if (!txtPuntos.getText().toString().isEmpty() && !txtDescripcion.getText().toString().isEmpty()) {
             // Verificar que txtPuntos contenga un número mayor a 0
@@ -67,7 +74,7 @@ public class ModificarDescuento extends Fragment {
 
                 beneficio.setDescripcion(txtDescripcion.getText().toString());
                 beneficio.setPuntos_requeridos(puntos);
-                beneficio.setId_beneficio(id);
+                beneficio.setId_beneficio(b.getId_beneficio());
 
                 mViewModel.editarBeneficio(beneficio);
 

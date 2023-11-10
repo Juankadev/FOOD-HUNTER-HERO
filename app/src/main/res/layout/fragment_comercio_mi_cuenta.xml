@@ -7,198 +7,204 @@
     android:background="#68dd6b"
     tools:context=".views.ui.commerce.Comercio_MiCuenta">>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#68dd6b"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/indicaciones2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
+            android:background="#68dd6b"
             android:gravity="center"
-            android:text="@string/micuenta"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_cuit_mc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:hint="@string/input_cuit_rc"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_cuit_rc"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/indicaciones2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:text="@string/micuenta"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_razonsocial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:hint="@string/input_razonsocial_rc"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_razonsocial_rc"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_rubro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_rubro_rc"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/et_email_c"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_email_r"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/et_telefono_mc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_telefono_r"
-            android:textColor="#FFFFFF" />
-
-        <EditText
-            android:id="@+id/et_direccion_mc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/border"
-            android:backgroundTint="@color/bck_inputs"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="text"
-            android:minHeight="48dp"
-            android:padding="10dp"
-            android:text="@string/input_direccion_r"
-            android:textColor="#FFFFFF" />
-
-        <Button
-            android:id="@+id/btn_editarInfoComercio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="#2400FF"
-            android:text="@string/hunter_micuenta_btn_editar" />
-
-        <Button
-            android:id="@+id/btn_edit_actioner2"
-            android:layout_width="166dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="#2400FF"
-            android:text="Editar"
-            android:visibility="gone" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="160dp"
-            android:layout_height="36dp"
-            app:cardBackgroundColor="#2400FF"
-            android:layout_marginTop="24dp"
-            app:cardCornerRadius="18dp"
-            android:id="@+id/cv_actioner_edit"
-            android:visibility="gone">
-
-            <RelativeLayout
+            <EditText
+                android:id="@+id/et_cuit_mc"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/input_cuit_rc"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_cuit_rc"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
-                <ProgressBar
-                    android:id="@+id/progressbarEditar"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/txtEditarActioner"
-                    android:visibility="gone" />
+            <EditText
+                android:id="@+id/et_razonsocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/input_razonsocial_rc"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_razonsocial_rc"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txtEditarActioner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/white"
-                    android:text="@string/hunter_micuenta_btn_editar" />
+            <EditText
+                android:id="@+id/et_rubro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_rubro_rc"
+                android:textColor="#FFFFFF" />
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+            <EditText
+                android:id="@+id/et_email_c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_email_r"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/btn_eliminarInfoComercio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#FF0000"
-            android:text="@string/comercio_micuenta_btn_eliminar"
-            android:textColor="#FFFFFF" />
+            <EditText
+                android:id="@+id/et_telefono_mc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_telefono_r"
+                android:textColor="#FFFFFF" />
 
-        <Button
-            android:id="@+id/btn_Cancel_Edit2"
-            android:layout_width="169dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="#B6B6B6"
-            android:text="Cancelar"
-            android:textColor="#FFFFFF"
-            android:visibility="gone" />
+            <EditText
+                android:id="@+id/et_direccion_mc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/border"
+                android:backgroundTint="@color/bck_inputs"
+                android:ems="10"
+                android:enabled="false"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:text="@string/input_direccion_r"
+                android:textColor="#FFFFFF" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_editarInfoComercio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#2400FF"
+                android:text="@string/hunter_micuenta_btn_editar" />
+
+            <Button
+                android:id="@+id/btn_edit_actioner2"
+                android:layout_width="166dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#2400FF"
+                android:text="Editar"
+                android:visibility="gone" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_actioner_edit"
+                android:layout_width="160dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="#2400FF"
+                app:cardCornerRadius="18dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/progressbarEditar"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/txtEditarActioner"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/txtEditarActioner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/hunter_micuenta_btn_editar"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_eliminarInfoComercio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#FF0000"
+                android:text="@string/comercio_micuenta_btn_eliminar"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btn_Cancel_Edit2"
+                android:layout_width="169dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#B6B6B6"
+                android:text="Cancelar"
+                android:textColor="#FFFFFF"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>

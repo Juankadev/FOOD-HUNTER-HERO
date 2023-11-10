@@ -1,6 +1,8 @@
 package com.example.ffh_rep.entidades;
 
-public class Beneficio {
+import java.io.Serializable;
+
+public class Beneficio implements Serializable {
     private Integer id_beneficio;
     private Comercio id_comercio;
     private String descripcion;
