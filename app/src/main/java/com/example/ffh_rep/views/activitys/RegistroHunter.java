@@ -21,6 +21,8 @@ import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
 import com.example.ffh_rep.models.tasks.RegistrarHunterTask;
 import com.example.ffh_rep.models.tasks.RegistrarUsuario;
+import com.example.ffh_rep.utils.EmailSenderTask;
+import com.example.ffh_rep.utils.EmailTemplate;
 import com.example.ffh_rep.utils.GeneralHelper;
 
 public class RegistroHunter extends AppCompatActivity implements RegistrarUsuarioCallback {
@@ -81,6 +83,11 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         btnRegistro.setOnClickListener(v -> onRegistroButtonClick());
         btnVolver.setOnClickListener(v -> onVolverButtonClick());
         etFechaNac.setOnClickListener(v -> showDatePicker());
+        etFechaNac.setOnFocusChangeListener((view, focus) -> {
+            if(focus){
+                showDatePicker();
+            }
+        });
     }
     /**
      * Maneja el clic en el botón de registro.
@@ -139,6 +146,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         Log.d("[registrarHunter]", hunter.toString());
         RegistrarHunterTask registrarHunterTask = new RegistrarHunterTask(RegistroHunter.this, hunter, RegistroHunter.this);
         registrarHunterTask.execute();
+        sendRegistrationEmail();
     }
     /**
      * Construye un objeto cazador con la información proporcionada en los campos de la interfaz.
@@ -152,7 +160,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         hunter.setNombre(etNombre.getText().toString());
         hunter.setApellido(etApellido.getText().toString());
         hunter.setDni(etDni.getText().toString());
-        hunter.setFecha_nacimiento(GeneralHelper.returnSQLDate(etFechaNac.getText().toString()));
+        hunter.setFecha_nacimiento(GeneralHelper.returnSQLFORMAT2(etFechaNac.getText().toString()));
         hunter.setDireccion(etDireccion.getText().toString());
         hunter.setSexo(spinnerSexo.getSelectedItem().toString());
         hunter.setCorreo_electronico(etCorreo.getText().toString());
@@ -186,11 +194,23 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         DatePickerDialog dpdialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                String formattedMonth = (month + 1 < 10) ? "0" + (month + 1) : String.valueOf(month + 1);
+                String date = year + "-" + formattedMonth + "-" + (dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth);
                 etFechaNac.setText(date);
             }
-        }, 1990, 0, 1);
-
+        }, 2000, 0, 1);
         dpdialog.show();
+    }
+
+    private void sendRegistrationEmail() {
+        String subjectMail = "Registro de Hunter " + etNombre.getText().toString() + " Exitoso ";
+        EmailTemplate plantilla = new EmailTemplate();
+        String messageBodyMail = plantilla.templateRegistroExitosoHunter(
+                etNombre.getText().toString(),
+                etCorreo.getText().toString()
+        );
+
+        EmailSenderTask emailSenderTask = new EmailSenderTask(etCorreo.getText().toString(), subjectMail, messageBodyMail);
+        emailSenderTask.execute();
     }
 }

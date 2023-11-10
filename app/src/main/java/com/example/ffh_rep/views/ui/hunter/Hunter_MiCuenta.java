@@ -361,7 +361,8 @@ public class Hunter_MiCuenta extends Fragment {
         DatePickerDialog dpdialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                String formattedMonth = (month + 1 < 10) ? "0" + (month + 1) : String.valueOf(month + 1);
+                String date = year + "-" + formattedMonth + "-" + (dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth);
                 et_fechanacimiento.setText(date);
             }
         }, 2023, 11, 3);
@@ -380,7 +381,6 @@ public class Hunter_MiCuenta extends Fragment {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Elimina la cuenta aquí
                 mViewModel.eliminarMiCuenta();
             }
         });

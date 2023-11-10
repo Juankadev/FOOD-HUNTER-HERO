@@ -149,7 +149,6 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
         EmailTemplate plantilla = new EmailTemplate();
         String messageBodyMail = plantilla.templateRegistroExitosoComercio(
                 etRazonSocial.getText().toString(),
-                etEmailC.getText().toString(),
                 etEmailC.getText().toString()
         );
 

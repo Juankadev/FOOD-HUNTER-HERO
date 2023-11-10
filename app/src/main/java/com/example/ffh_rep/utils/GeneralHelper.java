@@ -27,6 +27,21 @@ public  class GeneralHelper {
 
         return _date;
     }
+
+    public static java.sql.Date returnSQLFORMAT2(String dateArg){
+        java.sql.Date _date = null;
+        try {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date uDate = dateformat.parse(dateArg);
+            _date = new java.sql.Date(uDate.getTime());
+            return _date;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return _date;
+    }
     /**
      * Verifica si la cadena de texto proporcionada es una dirección de correo electrónico válida.
      *

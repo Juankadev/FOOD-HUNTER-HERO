@@ -6,7 +6,7 @@ public class EmailTemplate {
 
     }
 
-    public String templateRegistroExitosoHunter(String name, String email, String password) {
+    public String templateRegistroExitosoHunter(String name, String email) {
         String htmlContent = "<body style=\"margin:0; padding:10px 0;\" bgcolor=\"\" leftmargin=\"0\" topmargin=\"0\" marginwidth=\"0\" marginheight=\"0\">";
         htmlContent += "<br>";
 
@@ -35,8 +35,6 @@ public class EmailTemplate {
         htmlContent += "A continuaci&oacute;n, compartimos tus credenciales para poder acceder a la plataforma.";
         htmlContent += "<br><br>";
         htmlContent += "<strong>Usuario: </strong>" + email;
-        htmlContent += "<br>";
-        htmlContent += "<strong>Contrase&ntilde;a: </strong>" + password;
         htmlContent += "</div>";
         htmlContent += "</td>";
         htmlContent += "</tr>";
@@ -75,7 +73,7 @@ public class EmailTemplate {
         return htmlContent;
     }
 
-    public String templateRegistroExitosoComercio(String name, String email, String password) {
+    public String templateRegistroExitosoComercio(String name, String email) {
         String htmlContent = "<body style=\"margin:0; padding:10px 0;\" bgcolor=\"\" leftmargin=\"0\" topmargin=\"0\" marginwidth=\"0\" marginheight=\"0\">";
         htmlContent += "<br>";
 
@@ -103,8 +101,6 @@ public class EmailTemplate {
         htmlContent += "<br><br>";
         htmlContent += "<strong>Usuario: </strong>" + email;
         htmlContent += "<br>";
-        htmlContent += "<strong>Contrase&ntilde;a: </strong>" + password;
-        htmlContent += "<br><br>";
         htmlContent += "Aguarde su activaci&oacute;n como comercio adherido.";
         htmlContent += "<br><br>";
         htmlContent += "Gracias por unirte a nuestra plataforma y ser parte de la comunidad.";
