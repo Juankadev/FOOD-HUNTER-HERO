@@ -36,6 +36,7 @@ public class MisCompras extends Fragment {
     private Hunter userSession;
     private SessionManager sessionManager;
     private MisComprasViewModel viewModel;
+    private TextView tvNoData;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -74,6 +75,7 @@ public class MisCompras extends Fragment {
         tvPuntos = view.findViewById(R.id.tvPuntos);
         tvComercio = view.findViewById(R.id.razonSocial);
         tvFecha = view.findViewById(R.id.tvFecha);
+        tvNoData = view.findViewById(R.id.tvNoData);
         listAdapter = new MisComprasViewAdapter(new ArrayList<>(), viewModel, getContext());
         viewModel = new ViewModelProvider(requireActivity(), new MisComprasViewModelFactory(getActivity())).get(MisComprasViewModel.class);
     }
@@ -82,7 +84,15 @@ public class MisCompras extends Fragment {
         viewModel.getCazasDelHunter().observe(getViewLifecycleOwner(), new Observer<List<Caza>>() {
             @Override
             public void onChanged(List<Caza> cazas) {
-                listAdapter.setData(cazas);
+                if(cazas.size()>0)
+                {
+                    tvNoData.setVisibility(View.GONE);
+                    listAdapter.setData(cazas);
+                }
+                else{
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

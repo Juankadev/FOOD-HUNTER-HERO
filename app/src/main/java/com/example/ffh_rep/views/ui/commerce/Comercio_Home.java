@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioHomeBinding;
@@ -37,6 +38,7 @@ public class Comercio_Home extends Fragment {
     private GridView gv_articulos;
     private SessionManager sessionManager;
     private Comercio userSession;
+    private TextView tvNoData;
 
     private ArticuloUsuarioComercioListAdapter aclAdapter;
 
@@ -68,6 +70,7 @@ public class Comercio_Home extends Fragment {
     private void initViews(View view){
         btnAniadirArticulo = view.findViewById(R.id.btn_commerce_addArticle);
         gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail2);
+        tvNoData = view.findViewById(R.id.tvNoData);
     }
 
     public void initModelsAndAdapters(){
@@ -79,7 +82,15 @@ public class Comercio_Home extends Fragment {
         mViewModel.getMldArticulos().observe(getViewLifecycleOwner(), new Observer<List<Articulo>>() {
             @Override
             public void onChanged(List<Articulo> articulos) {
-                aclAdapter.setData(articulos);
+                if(articulos.size()>0)
+                {
+                    tvNoData.setVisibility(View.GONE);
+                    aclAdapter.setData(articulos);
+                }
+                else{
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

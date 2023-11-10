@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.databinding.FragmentComercioMisDescuentosBinding;
@@ -37,6 +38,7 @@ public class MisDescuentosComercio extends Fragment {
     private SessionManager sessionManager;
     private Comercio userSession;
     private MisDescuentosComercioListAdapter mdcListAdapter;
+    private TextView tvNoData;
 
     public static MisDescuentosComercio newInstance() {return new MisDescuentosComercio();}
 
@@ -67,6 +69,7 @@ public class MisDescuentosComercio extends Fragment {
     public void initializeViews(View view){
         this.btnAddDescuento = view.findViewById(R.id.btnAddDescuento);
         this.gv_descuentos = view.findViewById(R.id.gv_descuentos_comerciodetail);
+        this.tvNoData = view.findViewById(R.id.tvNoData);
     }
 
     public void setUpListeners() {
@@ -81,7 +84,16 @@ public class MisDescuentosComercio extends Fragment {
     public void setUpObserver() {
         mViewModel.getMldListaBeneficios().observe(getViewLifecycleOwner(), new Observer<List<Beneficio>>() {
             @Override
-            public void onChanged(List<Beneficio> beneficios) {mdcListAdapter.setData(beneficios);}
+            public void onChanged(List<Beneficio> beneficios) {
+                if(beneficios.size()>0)
+                {
+                    tvNoData.setVisibility(View.GONE);
+                    mdcListAdapter.setData(beneficios);
+                }
+                else{
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
+            }
         });
     }
 

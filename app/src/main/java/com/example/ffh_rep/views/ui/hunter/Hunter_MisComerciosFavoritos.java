@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ffh_rep.databinding.FragmentHunterMisComerciosFavoritosBinding;
 import com.example.ffh_rep.entidades.Comercio;
@@ -38,6 +39,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
     private RecyclerView rvFavorites;
     private Hunter userSession;
     private SessionManager sessionManager;
+    private TextView tvNoData;
 
 
     @Override
@@ -61,6 +63,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
     public void initComponents(View view){
         nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation_controller);
         rvFavorites = view.findViewById(R.id.hunter_list_favorites);
+        tvNoData = view.findViewById(R.id.tvNoData);
         comerciosController = new ViewModelProvider(this, new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
         cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav, 2);
     }
@@ -70,13 +73,22 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
         comerciosController.getMldComercios().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
             @Override
             public void onChanged(List<Comercio> comercios) {
-                List<Comercio> comerciosFavoritos = new ArrayList<>();
-                for (Comercio comercio : comercios) {
-                    if (comercio.isFavorite()) {
-                        comerciosFavoritos.add(comercio);
+                if(comercios.size()>0)
+                {
+                    tvNoData.setVisibility(View.GONE);
+
+                    List<Comercio> comerciosFavoritos = new ArrayList<>();
+                    for (Comercio comercio : comercios) {
+                        if (comercio.isFavorite()) {
+                            comerciosFavoritos.add(comercio);
+                        }
                     }
+                    cAdapter.setData(comerciosFavoritos);
                 }
-                cAdapter.setData(comerciosFavoritos);
+                else{
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

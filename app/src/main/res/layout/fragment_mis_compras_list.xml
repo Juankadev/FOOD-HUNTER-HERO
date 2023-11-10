@@ -46,4 +46,15 @@
 
     </ListView>
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="408dp"
+        android:layout_height="208dp"
+        android:paddingTop="120dp"
+        android:text="No hay información disponible"
+        android:textAlignment="center"
+        android:textColor="#272727"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

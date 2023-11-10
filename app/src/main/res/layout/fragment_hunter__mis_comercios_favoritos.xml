@@ -8,6 +8,22 @@
     tools:context=".views.ui.hunter.Hunter_MisComerciosFavoritos">
 
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="414dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="52dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="No hay información disponible"
+        android:textColor="#272727"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -36,6 +52,7 @@
         android:name="com.example.ffh_rep.Comercios"
         android:layout_width="match_parent"
         android:layout_height="600dp"
+        android:visibility="visible"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"

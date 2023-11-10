@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".views.ui.hunter.Hunter_MisBeneficios">
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="120dp"
+        android:gravity="center"
+        android:text="No hay información disponible"
+        android:textAlignment="center"
+        android:textColor="#272727"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"

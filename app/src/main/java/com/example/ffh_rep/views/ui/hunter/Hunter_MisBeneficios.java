@@ -36,6 +36,7 @@ public class Hunter_MisBeneficios extends Fragment {
     private BeneficioHunterAdapter beneAdapter;
     private SessionManager sessionManager;
     private TextView txtError;
+    private TextView tvNoData;
 
     public static Hunter_MisBeneficios newInstance() {
         return new Hunter_MisBeneficios();
@@ -64,11 +65,20 @@ public class Hunter_MisBeneficios extends Fragment {
         beneAdapter = new BeneficioHunterAdapter(requireActivity(), new ArrayList<>());
         pbBeneficios = view.findViewById(R.id.pbLoadingBeneficios);
         txtError = view.findViewById(R.id.errorBeneficiosLoad);
+        tvNoData = view.findViewById(R.id.tvNoData);
     }
 
     public void setUpObservers(){
         mViewModel.getMlBeneficios().observe(getViewLifecycleOwner(), beneficios -> {
-            beneAdapter.setLista(beneficios);
+            if(beneficios.size()>0)
+            {
+                tvNoData.setVisibility(View.GONE);
+                beneAdapter.setLista(beneficios);
+            }
+            else{
+                tvNoData.setVisibility(View.VISIBLE);
+            }
+
         });
 
         mViewModel.getIsLoading().observe(getViewLifecycleOwner(), aBoolean -> {

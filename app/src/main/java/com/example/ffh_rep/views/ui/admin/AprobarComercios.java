@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.ffh_rep.databinding.FragmentAprobarComerciosListBinding;
 import com.example.ffh_rep.viewmodels.admin.AdminAprobarComerciosViewModel;
@@ -29,6 +30,7 @@ public class AprobarComercios extends Fragment {
     private GridView gv_comercios;
     private FragmentAprobarComerciosListBinding binding;
     private AprobarComerciosViewAdapter listAdapter;
+    private TextView tvNoData;
 
     public static AprobarComercios newInstance() {
         return new AprobarComercios();
@@ -47,6 +49,7 @@ public class AprobarComercios extends Fragment {
     }
     public void initComponents(View view){
         gv_comercios = view.findViewById(R.id.gv_comercios);
+        tvNoData = view.findViewById(R.id.tvNoData);
         mViewModel = new ViewModelProvider(requireActivity(), new AprobarComerciosViewModelFactory(getActivity())).get(AdminAprobarComerciosViewModel.class);
         listAdapter = new AprobarComerciosViewAdapter(new ArrayList<>(), mViewModel, getContext());
     }
@@ -54,7 +57,15 @@ public class AprobarComercios extends Fragment {
         mViewModel.getListComerciosNoAprobados().observe(getViewLifecycleOwner(), new Observer<List<Comercio>>() {
             @Override
             public void onChanged(List<Comercio> comercios) {
-                listAdapter.setData(comercios);
+                if(comercios.size()>0)
+                {
+                    tvNoData.setVisibility(View.GONE);
+                    listAdapter.setData(comercios);
+                }
+                else{
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

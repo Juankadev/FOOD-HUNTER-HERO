@@ -12,22 +12,38 @@
 
     <TextView
         android:id="@+id/tvAprobar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_width="378dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:text="Comercios a aprobar"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:text="No hay información disponible"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#272727"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAprobar" />
+
     <GridView
         android:id="@+id/gv_comercios"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="381dp"
+        android:layout_height="707dp"
         android:numColumns="2"
         android:paddingStart="0dp"
         android:paddingLeft="0dp"
@@ -35,10 +51,11 @@
         android:paddingEnd="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tvNoData">
 
     </GridView>
 </androidx.constraintlayout.widget.ConstraintLayout>
