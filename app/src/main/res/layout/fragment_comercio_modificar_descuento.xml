@@ -33,11 +33,11 @@
             android:id="@+id/edtModificarPrecioDescuento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/puntos"
-            android:inputType="number"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginRight="16dp"
+            android:ems="10"
+            android:hint="@string/Puntor_Req"
+            android:inputType="number" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
