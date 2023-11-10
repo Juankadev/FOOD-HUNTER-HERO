@@ -38,7 +38,7 @@ public class NavigationController extends AppCompatActivity {
 
     private SessionManager sessionManager;
 
-    TextView username, navHeaderTitle;
+    TextView username, navHeaderTitle, tvTitle;
     ImageView imgUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class NavigationController extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         navHeaderTitle = navigationView.getHeaderView(0).findViewById(R.id.navHeaderTitle);
+        tvTitle = navigationView.getHeaderView(0).findViewById(R.id.tvTitulo);
         imgUser = navigationView.getHeaderView(0).findViewById(R.id.imageView);
         sessionManager = new SessionManager(this);
 
@@ -83,7 +84,20 @@ public class NavigationController extends AppCompatActivity {
         username = findViewById(R.id.username);
         username.setText(u.getUsername());
         navHeaderTitle.setText(u.getUsername());
-        if(userRol(u) == 1)
+        if(commerceLogged != null && this.IdRole == 1)
+        {
+            tvTitle.setText(commerceLogged.getEmail());
+        }
+        else if(hunterLogged != null && this.IdRole == 2)
+        {
+            tvTitle.setText(hunterLogged.getCorreo_electronico());
+        }
+        else
+        {
+            tvTitle.setText("");
+        }
+
+        if(this.IdRole == 1)
         {
             imgUser.setImageDrawable(getResources().getDrawable(R.drawable.shop));
         }
@@ -148,7 +162,6 @@ public class NavigationController extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation_controller);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
 
     public void redirectToLoginScreen(){
         Toast.makeText(this, "Nos vemos luego!", Toast.LENGTH_LONG).show();
