@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ffh_rep.entidades.Beneficio;
 import com.example.ffh_rep.entidades.Comercio;
 import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.interfaces.CarritoActionsCallback;
@@ -22,6 +23,8 @@ public class CarritoViewModel extends ViewModel{
     private MutableLiveData<Integer> totArticulos;
     private MutableLiveData<Integer> puntos;
     private Comercio comercio;
+
+    private List<ItemCarrito> temporalCarrito;
     private Context ctx;
 
 
@@ -33,6 +36,7 @@ public class CarritoViewModel extends ViewModel{
         this.carrito = new MutableLiveData<>();
         this.totArticulos = new MutableLiveData<>(0);
         this.puntos = new MutableLiveData<>(0);
+        this.temporalCarrito = new ArrayList<>();
     }
 
     public void setComercio(Comercio comercio){
@@ -47,7 +51,7 @@ public class CarritoViewModel extends ViewModel{
         return carrito;
     }
 
-    //Se llama desde el detalle de articulo
+
     public void addArticleToCart(ItemCarrito article){
         List<ItemCarrito> _currCart = this.carrito.getValue();
         Integer _currTot = this.totArticulos.getValue(); //es 0
@@ -172,7 +176,6 @@ public class CarritoViewModel extends ViewModel{
     public void removeItemFromCart(ItemCarrito itemToRemove, ArticulosCarritoListAdapter adapter) {
         List<ItemCarrito> _currCart = this.carrito.getValue();
         Integer _currTot = this.totArticulos.getValue();
-
         if (_currCart != null) {
             for (ItemCarrito item : _currCart) {
                 if (item.getArtc().getId_stock() == itemToRemove.getArtc().getId_stock()) {
@@ -181,7 +184,6 @@ public class CarritoViewModel extends ViewModel{
                     break;
                 }
             }
-
             this.carrito.setValue(_currCart);
             this.totArticulos.setValue(_currTot);
             recountPoints();
@@ -191,7 +193,6 @@ public class CarritoViewModel extends ViewModel{
 
 
     public void recountPoints(){
-        System.out.println("this.totArticulos.getValue(): "+this.totArticulos.getValue());
         int quantity = this.totArticulos.getValue();
         Log.d("QT", String.valueOf(quantity));
         if(quantity >= 1 && quantity < 5){
@@ -215,5 +216,26 @@ public class CarritoViewModel extends ViewModel{
         this.carrito.setValue(new ArrayList<>());
         this.totArticulos.setValue(0);
         this.puntos.setValue(0);
+    }
+
+
+    public void applyFilter(String _secuence) {
+        if(temporalCarrito.isEmpty()){
+            temporalCarrito  = carrito.getValue();
+        }
+        List<ItemCarrito> originalList = carrito.getValue();
+        if (originalList != null) {
+            if (_secuence.equals("") || _secuence.isEmpty() ) {
+                carrito.postValue(temporalCarrito);
+            } else {
+                List<ItemCarrito> filtered = new ArrayList<>();
+                for (ItemCarrito item : originalList) {
+                    if (item.getArtc().getId_articulo().getDescripcion().toLowerCase().contains(_secuence.toLowerCase())) {
+                        filtered.add(item);
+                    }
+                }
+                carrito.postValue(filtered);
+            }
+        }
     }
 }

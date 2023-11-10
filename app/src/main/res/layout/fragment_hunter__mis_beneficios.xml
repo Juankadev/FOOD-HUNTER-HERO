@@ -41,13 +41,40 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearBuscador"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/linearLayout"
+        android:layout_height="87dp"
+        android:background="#68dd6b"
+        android:backgroundTint="#68dd6b"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_browserBeneficios"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:backgroundTint="#8DCA8F"
+            android:backgroundTintMode="add"
+            android:drawableStart="@drawable/baseline_search_20"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="@string/buscar"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
     <GridView
         android:id="@+id/gv_descuentos_comerciodetail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout"
+        android:layout_height="555dp"
+        android:layout_below="@+id/linearBuscador"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="2dp"
         android:verticalSpacing="16dp">
 

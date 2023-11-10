@@ -28,7 +28,7 @@ public class DescuentoRepository {
      * @param mlDataBeneficios MutableLiveData que se actualizará con la lista de beneficios obtenida.
      * @return MutableLiveData actualizado con la lista de beneficios activos o una lista vacía en caso de error o ausencia de datos.
      */
-    public MutableLiveData<List<Beneficio>> listarDescuentosByComercio(MutableLiveData<List<Beneficio>> mlDataBeneficios, int id) {
+    public MutableLiveData<List<Beneficio>> listarDescuentosByComercio(MutableLiveData<List<Beneficio>> original,MutableLiveData<List<Beneficio>> mlDataBeneficios, int id) {
         CompletableFuture.supplyAsync(() -> {
             List<Beneficio> lBeneficios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -49,9 +49,11 @@ public class DescuentoRepository {
             return lBeneficios;
         }).thenAcceptAsync(beneficios -> {
             if (beneficios != null) {
+                original.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
                 mlDataBeneficios.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
             } else {
                 mlDataBeneficios.postValue(new ArrayList<>());
+                original.postValue(new ArrayList<>());
             }
         });
         return mlDataBeneficios;
@@ -224,7 +226,7 @@ public class DescuentoRepository {
         });
     }
 
-    public void listarDescuentos_byIdHunter(MutableLiveData<List<Beneficio>> list, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter){
+    public void listarDescuentos_byIdHunter(MutableLiveData<List<Beneficio>> noEditableList, MutableLiveData<List<Beneficio>> list, MutableLiveData<Boolean> loading, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error, Hunter hunter){
         CompletableFuture.supplyAsync(() -> {
             List<Beneficio> lBeneficios = new ArrayList<>();
             loading.postValue(true);
@@ -256,10 +258,12 @@ public class DescuentoRepository {
             return lBeneficios;
         }).thenAcceptAsync(beneficios -> {
             if (beneficios != null) {
+                noEditableList.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
                 loading.postValue(false);
                 success.postValue(true);
                 list.postValue(beneficios.isEmpty() ? new ArrayList<>() : beneficios);
             } else {
+                noEditableList.postValue(new ArrayList<>());
                 list.postValue(new ArrayList<>());
                 loading.postValue(false);
                 success.postValue(true);

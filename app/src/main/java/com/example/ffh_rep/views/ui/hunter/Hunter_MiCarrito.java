@@ -13,11 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -54,6 +57,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
     private ArticulosCarritoListAdapter alAdapter;
     private ProgressBar pbFinalizando;
     private ListView lvArticulos;
+    private EditText etBuscador;
     private TextView tvPuntos;
     private CardView btnEndHunting;
     private List<ItemCarrito> _currChart;
@@ -79,7 +83,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
 
         setUpObservers();
         setUpListeners();
-
+        searcher();
         lvArticulos.setAdapter(alAdapter);
         return view;
     }
@@ -132,6 +136,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         tvPuntos = view.findViewById(R.id.tv_puntos_reemplazar);
         btnEndHunting = view.findViewById(R.id.btnEndHunting);
         pbFinalizando = view.findViewById(R.id.pbFinalizando);
+        etBuscador = view.findViewById(R.id.et_browserMisArticulos);
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext(), this);
         qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
@@ -195,5 +200,23 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         Log.d("JSON CREADO", json);
         args.putString("json_request", json);
         Navigation.findNavController(requireView()).navigate(R.id.action_hunter_MiCarrito_to_hunter_GenerarQr, args);
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                carrito.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 }

@@ -10,11 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -36,6 +39,7 @@ public class MisDescuentosComercio extends Fragment {
     private Button btnAddDescuento;
     private GridView gv_descuentos;
     private SessionManager sessionManager;
+    private EditText etBuscador;
     private Comercio userSession;
     private MisDescuentosComercioListAdapter mdcListAdapter;
     private TextView tvNoData;
@@ -70,6 +74,7 @@ public class MisDescuentosComercio extends Fragment {
         this.btnAddDescuento = view.findViewById(R.id.btnAddDescuento);
         this.gv_descuentos = view.findViewById(R.id.gv_descuentos_comerciodetail);
         this.tvNoData = view.findViewById(R.id.tvNoData);
+        this.etBuscador = view.findViewById(R.id.et_browsermisDescuentos);
     }
 
     public void setUpListeners() {
@@ -101,6 +106,24 @@ public class MisDescuentosComercio extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initModelsAndAdapters();
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                mViewModel.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
 }

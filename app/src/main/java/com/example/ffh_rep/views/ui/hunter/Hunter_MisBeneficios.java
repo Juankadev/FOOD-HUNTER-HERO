@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.VerifiedInputEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,9 +22,8 @@ import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.utils.SessionManager;
 import com.example.ffh_rep.viewmodels.factory.HunterMisBeneficiosViewModelFactory;
+import com.example.ffh_rep.viewmodels.hunter.HunterMisBeneficiosViewModel;
 import com.example.ffh_rep.views.adapters.BeneficioHunterAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,8 @@ public class Hunter_MisBeneficios extends Fragment {
 
     private Hunter userSession;
     private ProgressBar pbBeneficios;
+    private EditText etBuscador;
+
     private BeneficioHunterAdapter beneAdapter;
     private SessionManager sessionManager;
     private TextView txtError;
@@ -53,7 +56,7 @@ public class Hunter_MisBeneficios extends Fragment {
         mViewModel.cargarMisBeneficios(userSession);
 
         setUpObservers();
-
+        searcher();
         gvBeneficios.setAdapter(beneAdapter);
 
         return view;
@@ -66,6 +69,7 @@ public class Hunter_MisBeneficios extends Fragment {
         pbBeneficios = view.findViewById(R.id.pbLoadingBeneficios);
         txtError = view.findViewById(R.id.errorBeneficiosLoad);
         tvNoData = view.findViewById(R.id.tvNoData);
+        etBuscador = view.findViewById(R.id.et_browserBeneficios);
     }
 
     public void setUpObservers(){
@@ -100,6 +104,24 @@ public class Hunter_MisBeneficios extends Fragment {
                 gvBeneficios.setVisibility(View.GONE);
                 pbBeneficios.setVisibility(View.GONE);
                 txtError.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                mViewModel.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }

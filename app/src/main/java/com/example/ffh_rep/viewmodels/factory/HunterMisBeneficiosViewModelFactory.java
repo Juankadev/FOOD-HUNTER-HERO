@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ffh_rep.viewmodels.hunter.HunterMiCuentaViewModel;
-import com.example.ffh_rep.views.ui.hunter.HunterMisBeneficiosViewModel;
+import com.example.ffh_rep.viewmodels.hunter.HunterMisBeneficiosViewModel;
 
 public class HunterMisBeneficiosViewModelFactory implements ViewModelProvider.Factory {
     private final Context context;

@@ -31,7 +31,7 @@ public class ArticuloRepository {
      * @param id Identificador del comercio para el cual se buscan los artículos.
      * @return MutableLiveData actualizado con la lista de artículos o una lista vacía en caso de error o ausencia de datos.
      */
-    public MutableLiveData<List<Articulo>> getArticulosByIdComercio(MutableLiveData<List<Articulo>> mlDataArticulos, int id) {
+    public MutableLiveData<List<Articulo>> getArticulosByIdComercio(MutableLiveData<List<Articulo>> original, MutableLiveData<List<Articulo>> mlDataArticulos, int id) {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -67,8 +67,10 @@ public class ArticuloRepository {
         }).thenAcceptAsync(articulos -> {
             if (articulos != null) {
                 mlDataArticulos.postValue(articulos.isEmpty() ? new ArrayList<>() : articulos);
+                original.postValue(articulos.isEmpty() ? new ArrayList<>() : articulos);
             } else {
                 mlDataArticulos.postValue(new ArrayList<>());
+                original.postValue(new ArrayList<>());
             }
         });
         return mlDataArticulos;

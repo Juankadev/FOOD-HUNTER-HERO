@@ -10,11 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -38,6 +41,7 @@ public class Comercio_Home extends Fragment {
     private GridView gv_articulos;
     private SessionManager sessionManager;
     private Comercio userSession;
+    private EditText etBuscador;
     private TextView tvNoData;
 
     private ArticuloUsuarioComercioListAdapter aclAdapter;
@@ -60,6 +64,7 @@ public class Comercio_Home extends Fragment {
         mViewModel.cargarArticulos(userSession.getId());
         setUpListeners();
         setUpObservers();
+        searcher();
         gv_articulos.setAdapter(aclAdapter);
 
 
@@ -71,6 +76,7 @@ public class Comercio_Home extends Fragment {
         btnAniadirArticulo = view.findViewById(R.id.btn_commerce_addArticle);
         gv_articulos = view.findViewById(R.id.gv_articulos_comerciodetail2);
         tvNoData = view.findViewById(R.id.tvNoData);
+        etBuscador = view.findViewById(R.id.et_browserMisArticulos);
     }
 
     public void initModelsAndAdapters(){
@@ -104,6 +110,24 @@ public class Comercio_Home extends Fragment {
     private void setUpListeners(){
         btnAniadirArticulo.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_agregarArticulo));
         //btnIrBeneficios.setOnClickListener(v->Navigation.findNavController(v).navigate(R.id.action_commerce_MisArticulos_to_fragmentAgregarDescuentoComercio));
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                mViewModel.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
 
