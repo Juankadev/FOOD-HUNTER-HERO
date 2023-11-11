@@ -50,7 +50,6 @@ public class HunterRepository {
                 if(rowsAffected > 0){
                     updatingInfo.postValue(false);
                     success.postValue(true);
-                    mlHunter.postValue(hunter);
                 }
             }
             catch (Exception e){

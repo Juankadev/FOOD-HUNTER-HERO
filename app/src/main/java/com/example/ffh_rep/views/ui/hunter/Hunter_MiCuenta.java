@@ -405,6 +405,9 @@ public class Hunter_MiCuenta extends Fragment {
                     mViewModel.setSuccessUpdate(false);
                     mViewModel.setUpdatingInfo(false);
                     enabledInputs(false);
+                    updateHunter.setId_rango(userSession.getId_rango());
+                    updateHunter.setUser(userSession.getUser());
+                    updateHunter.setPuntaje(userSession.getPuntaje());
                     mViewModel.setHunterDataWithHunte(updateHunter);
                     sessionManager.saveHunterSession(updateHunter);
                     dialog.dismiss();
