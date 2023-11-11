@@ -101,12 +101,10 @@ public class Hunter_MiCuenta extends Fragment {
      */
     private void setupSpinner() {
         String[] opcionesSexo = {"Masculino", "Femenino", "Otro"};
-        // Define un ArrayAdapter y especifica el estilo de apariencia de texto
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, opcionesSexo) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
-                // Establece el color del texto aquí
                 ((TextView) view).setTextColor(getResources().getColor(R.color.white));
                 return view;
             }
