@@ -89,7 +89,7 @@ public class MisComprasViewAdapter extends BaseAdapter {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        vh.Fecha.setText(day + "-" + month + "-" + year);
+        vh.Fecha.setText(day + "-" + (month + 1) + "-" + year);
         vh.RazonSocial.setText(c.getComercio().getRazonSocial());
         vh.Puntos.setText("Sumaste " + String.valueOf(c.getPuntos()) +" Puntos");
 
