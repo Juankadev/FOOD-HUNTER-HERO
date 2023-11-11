@@ -64,6 +64,16 @@ public class HunterVerComercioViewModel extends ViewModel {
 
     }
 
+    public void resetFavAtts(){
+        this.isMarkingAsFav.setValue(false);
+        this.markSuccess.setValue(false);
+        this.errorMarking.setValue(false);
+
+        this.isDismarkingAsFav.setValue(false);
+        this.dismarkSuccess.setValue(false);
+        this.errorDismarking.setValue(false);
+    }
+
     public void cargarArticulos(int id){
         aRepo.getArticulosByIdComercioWithStock(mldArticulos, id);
     }

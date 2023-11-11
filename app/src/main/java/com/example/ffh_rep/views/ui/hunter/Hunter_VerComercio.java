@@ -297,6 +297,7 @@ public class Hunter_VerComercio extends Fragment {
     }
 
     public void isThisFavorite(boolean value){
+        mViewModel.resetFavAtts();
         if(value){
             favDispatch.setVisibility(View.GONE);
             favDispatch_filled.setVisibility(View.VISIBLE);
@@ -326,5 +327,6 @@ public class Hunter_VerComercio extends Fragment {
             }
         });
     }
+
 
 }
