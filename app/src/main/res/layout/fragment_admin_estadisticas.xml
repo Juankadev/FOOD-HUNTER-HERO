@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#68dd6b"
     tools:context=".views.ui.admin.AdminEstadisticas">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout_busqueda"
         android:layout_width="414dp"
         android:layout_height="206dp"
-        android:background="#00BE15"
+        android:background="#68dd6b"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -190,6 +191,7 @@
         android:id="@+id/tv_pie_chart"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="340dp"
         android:layout_marginEnd="128dp"
         android:text="Top 3 Categorias"
