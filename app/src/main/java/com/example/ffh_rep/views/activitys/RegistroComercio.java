@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.ffh_rep.MainActivity;
 import com.example.ffh_rep.R;
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
 import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
 import com.example.ffh_rep.interfaces.RegistrarUsuarioCallback;
@@ -175,5 +176,10 @@ public class RegistroComercio extends AppCompatActivity implements RegistrarUsua
     public void onCompleteInsert(String username, String password) {
         Intent intent = new Intent(RegistroComercio.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCompleteInsertAndRedirectToApp(Hunter hunter) {
+
     }
 }

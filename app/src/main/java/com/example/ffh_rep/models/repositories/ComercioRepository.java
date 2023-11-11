@@ -88,7 +88,7 @@ public class ComercioRepository {
      * @param mlDataComercio MutableLiveData que se actualizará con la lista de comercios obtenida.
      * @return MutableLiveData que contiene la lista de comercios, actualizado de forma asíncrona.
      */
-    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> mlDataComercio, int id_user, MutableLiveData<Boolean> success) {
+    public MutableLiveData<List<Comercio>> getComercios(MutableLiveData<List<Comercio>> original, MutableLiveData<List<Comercio>> mlDataComercio, int id_user, MutableLiveData<Boolean> success) {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -122,7 +122,10 @@ public class ComercioRepository {
                 e.printStackTrace();
             }
             return lComercios;
-        }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
+        }).thenAcceptAsync(comercios -> {
+            mlDataComercio.postValue(comercios);
+            original.postValue(comercios);
+        });
         success.postValue(true);
         return mlDataComercio;
     }
@@ -133,7 +136,7 @@ public class ComercioRepository {
      * @param mlDataComercio MutableLiveData que se actualizará con la lista de comercios obtenida.
      * @param strComercio Cadena que se utilizará para buscar comercios por razón social.
      */
-    public void getComercioByName(MutableLiveData<List<Comercio>> mlDataComercio, String strComercio) {
+    public void getComercioByName(MutableLiveData<List<Comercio>> original, MutableLiveData<List<Comercio>> mlDataComercio, String strComercio) {
         CompletableFuture.supplyAsync(() -> {
             List<Comercio> lComercios = new ArrayList<>();
             try (Connection con = DBUtil.getConnection();
@@ -158,7 +161,11 @@ public class ComercioRepository {
                 e.printStackTrace();
             }
             return lComercios;
-        }).thenAcceptAsync(comercios -> mlDataComercio.postValue(comercios));
+        }).thenAcceptAsync(comercios -> {
+            original.postValue(comercios);
+            mlDataComercio.postValue(comercios);
+        }
+        );
     }
 
 

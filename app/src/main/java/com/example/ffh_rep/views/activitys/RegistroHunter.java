@@ -31,6 +31,8 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
     private Spinner spinnerSexo;
     private Button btnRegistro, btnVolver;
     private String username, password;
+    private Hunter hunter;
+    private Usuario usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,14 +100,14 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         if (validateFields())
         {
             Rol rol = new Rol(2, "Hunter");
-            Usuario usuario = new Usuario(rol, username, password, true);
+            usuario = new Usuario(rol, username, password, true);
 
             RegistrarUsuario registrarUsuarioTask = new RegistrarUsuario(this, usuario, this);
             registrarUsuarioTask.execute();
         }
         else
         {
-            Toast.makeText(this, "Por favor, antes de continuar verifique la informacio provista sea correcta.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor, antes de continuar que verifique la informacion provista sea correcta.", Toast.LENGTH_SHORT).show();
         }
     }
     /**
@@ -142,7 +144,7 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
      * @param userId ID del usuario asociado al cazador.
      */
     private void registrarHunter(Integer userId) {
-        Hunter hunter = buildHunterObject(userId);
+        hunter = buildHunterObject(userId);
         Log.d("[registrarHunter]", hunter.toString());
         RegistrarHunterTask registrarHunterTask = new RegistrarHunterTask(RegistroHunter.this, hunter, RegistroHunter.this);
         registrarHunterTask.execute();
@@ -169,11 +171,13 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
     }
     @Override
     public void onUsuarioInsertado(Integer userId) {
+        usuario.setId_usuario(userId);
         registrarHunter(userId);
     }
     @Override
     public void onUsuarioError() {
-        // Manejar errores si es necesario
+        Intent intent = new Intent(RegistroHunter.this, MainActivity.class);
+        startActivity(intent);
     }
     /**
      * Callback que se llama cuando se completa la inserción de un nuevo usuario.
@@ -183,9 +187,19 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
      */
     @Override
     public void onCompleteInsert(String username, String password) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NavigationController.class);
+        hunter.setUser(usuario);
+        intent.putExtra("hunter", hunter);
         startActivity(intent);
     }
+
+    @Override
+    public void onCompleteInsertAndRedirectToApp(Hunter hunter) {
+        Intent intent = new Intent(this, NavigationController.class);
+        intent.putExtra("hunter", hunter);
+        startActivity(intent);
+    }
+
     /**
      * Muestra un diálogo de selección de fecha (DatePickerDialog) y actualiza el campo de fecha de nacimiento
      * con la fecha seleccionada por el usuario.
@@ -213,4 +227,5 @@ public class RegistroHunter extends AppCompatActivity implements RegistrarUsuari
         EmailSenderTask emailSenderTask = new EmailSenderTask(etCorreo.getText().toString(), subjectMail, messageBodyMail);
         emailSenderTask.execute();
     }
+
 }

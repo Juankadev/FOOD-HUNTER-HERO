@@ -13,8 +13,9 @@ import com.example.ffh_rep.utils.DB_Env;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
+public class RegistrarComercioTask extends AsyncTask<Void, String, Boolean> {
     private Context ctx;
     private Comercio comercio;
     private RegistrarUsuarioCallback ruc;
@@ -45,8 +46,6 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
             int rowsAffected = preparedStatement.executeUpdate();
             preparedStatement.close();
 
-
-            //Dar de baja usuario, hasta que sea aprobado por el admin
             query = "UPDATE Usuarios set estado = 0 where id_usuario = ?";
             preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, this.comercio.getUser().getId_usuario());
@@ -54,13 +53,24 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
             preparedStatement.close();
 
             con.close();
-           
+
             return rowsAffected > 0;
 
-        } catch (Exception e) {
+        }
+         catch (SQLException e){
+            e.printStackTrace();
+            String sqlState = e.getSQLState();
+             if("23000".equals(sqlState)) {
+                 if (e.getMessage().contains("correo_electronico")) {
+                     publishProgress("El Correo electrónico ya se encuentra en uso");
+                     eliminarUsuarioActual();
+                 }
+             }
+        }catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+        return false;
     }
 
     @Override
@@ -72,5 +82,45 @@ public class RegistrarComercioTask extends AsyncTask<Void, Void, Boolean> {
         else{
             Toast.makeText(ctx, "Error al registrarse", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onProgressUpdate(String... messages) {
+        super.onProgressUpdate(messages);
+        Toast.makeText(ctx, messages[0], Toast.LENGTH_SHORT).show();
+    }
+
+    private void eliminarUsuarioActual() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Connection con = null;
+                try {
+                    Class.forName(DB_Env.DB_DRIVER);
+                    con = DriverManager.getConnection(DB_Env.DB_URL_MYSQL, DB_Env.DB_USER, DB_Env.DB_PASSWORD);
+
+                    String query = "DELETE FROM Usuarios WHERE id_usuario = ?";
+                    try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+                        preparedStatement.setInt(1, comercio.getUser().getId_usuario());
+                        preparedStatement.executeUpdate();
+                    }
+                } catch (ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        try {
+                            con.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+            }
+        }.execute();
     }
 }

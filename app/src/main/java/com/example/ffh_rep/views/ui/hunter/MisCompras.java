@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ public class MisCompras extends Fragment {
     private MisComprasViewAdapter listAdapter;
     private ListView lvMisCompras;
     private TextView tvPuntos, tvComercio, tvFecha;
+    private EditText etBuscador;
     private Hunter userSession;
     private SessionManager sessionManager;
     private MisComprasViewModel viewModel;
@@ -65,7 +69,7 @@ public class MisCompras extends Fragment {
         viewModel.cargarCazasPorIdHunter(userSession.getIdHunter());
 
         setUpObservers();
-
+        searcher();
         lvMisCompras.setAdapter(listAdapter);
         return view;
     }
@@ -76,6 +80,7 @@ public class MisCompras extends Fragment {
         tvComercio = view.findViewById(R.id.razonSocial);
         tvFecha = view.findViewById(R.id.tvFecha);
         tvNoData = view.findViewById(R.id.tvNoData);
+        etBuscador = view.findViewById(R.id.et_browserMisCompras);
         listAdapter = new MisComprasViewAdapter(new ArrayList<>(), viewModel, getContext());
         viewModel = new ViewModelProvider(requireActivity(), new MisComprasViewModelFactory(getActivity())).get(MisComprasViewModel.class);
     }
@@ -86,13 +91,33 @@ public class MisCompras extends Fragment {
             public void onChanged(List<Caza> cazas) {
                 if(cazas.size()>0)
                 {
+                    lvMisCompras.setVisibility(View.VISIBLE);
                     tvNoData.setVisibility(View.GONE);
                     listAdapter.setData(cazas);
                 }
                 else{
                     tvNoData.setVisibility(View.VISIBLE);
+                    lvMisCompras.setVisibility(View.GONE);
                 }
 
+            }
+        });
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                viewModel.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements LoginUsuarioCallb
     private ProgressBar pgBarInit;
     private TextView initSessionText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

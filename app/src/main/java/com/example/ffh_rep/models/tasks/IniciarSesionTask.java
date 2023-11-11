@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.ffh_rep.entidades.Rol;
 import com.example.ffh_rep.entidades.Usuario;
+import com.example.ffh_rep.interfaces.LoginHunterCallback;
 import com.example.ffh_rep.interfaces.LoginUsuarioCallback;
 import com.example.ffh_rep.utils.DB_Env;
 import java.sql.Connection;
@@ -22,11 +23,20 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
     private String password;
     private LoginUsuarioCallback luCallback;
 
+    private LoginHunterCallback hunterCallback;
+
     public IniciarSesionTask(Context ctx, String username, String password, LoginUsuarioCallback luCallback) {
         this.ctx = ctx;
         this.username = username;
         this.password = password;
         this.luCallback = luCallback;
+    }
+
+    public IniciarSesionTask(Context ctx, String username, String password, LoginHunterCallback hunterCallback) {
+        this.ctx = ctx;
+        this.username = username;
+        this.password = password;
+        this.hunterCallback = hunterCallback;
     }
 
     @Override
@@ -72,7 +82,9 @@ public class IniciarSesionTask extends AsyncTask<Void, Void, Usuario> {
     @Override
     protected void onPostExecute(Usuario user) {
         if (user != null) {
-            luCallback.doGetUserDescriptionByRole(user);
+            if(luCallback != null){
+                luCallback.doGetUserDescriptionByRole(user);
+            }
         } else {
             luCallback.onErrorLogin();
             Toast.makeText(ctx, "Usuario o contraseña inválida", Toast.LENGTH_SHORT).show();

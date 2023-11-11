@@ -18,6 +18,7 @@ public class HunterHomeViewModel extends ViewModel {
    private Context context;
    private MutableLiveData<List<Comercio>> mlDataComercio;
    private MutableLiveData<List<Articulo>> mlDataArticulo;
+   private MutableLiveData<List<Comercio>> originalList;
 
    private MutableLiveData<Boolean> successComercios;
    private MutableLiveData<Boolean> sucessArticulos;
@@ -37,7 +38,7 @@ public class HunterHomeViewModel extends ViewModel {
    }
 
    public void cargarComercios(int id){
-      cRepo.getComercios(mlDataComercio, id, successComercios);
+      cRepo.getComercios(originalList, mlDataComercio, id, successComercios);
    }
 
    public void cargarListArticulo(){

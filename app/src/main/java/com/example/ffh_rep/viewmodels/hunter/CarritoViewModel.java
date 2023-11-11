@@ -205,7 +205,7 @@ public class CarritoViewModel extends ViewModel{
             setPuntos(15);
         }
         else if(quantity >=20){
-            setPuntos(25);
+            setPuntos(100);
         }
         else{
             setPuntos(0);

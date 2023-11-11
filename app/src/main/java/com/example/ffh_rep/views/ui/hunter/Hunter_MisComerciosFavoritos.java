@@ -12,9 +12,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.ffh_rep.databinding.FragmentHunterMisComerciosFavoritosBinding;
@@ -37,6 +40,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
     private FragmentHunterMisComerciosFavoritosBinding binding;
 
     private RecyclerView rvFavorites;
+    private EditText etBuscador;
     private Hunter userSession;
     private SessionManager sessionManager;
     private TextView tvNoData;
@@ -54,7 +58,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
         comerciosController.cargarComercios(userSession.getUser().getId_usuario());
 
         setUpObservers();
-
+        searcher();
         rvFavorites.setAdapter(cAdapter);
 
         return view;
@@ -64,6 +68,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
         nav = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_navigation_controller);
         rvFavorites = view.findViewById(R.id.hunter_list_favorites);
         tvNoData = view.findViewById(R.id.tvNoData);
+        etBuscador = view.findViewById(R.id.et_browserFavoritos);
         comerciosController = new ViewModelProvider(this, new ComercioViewModelFactory(getActivity())).get(ComerciosViewModel.class);
         cAdapter = new ComerciosAdapter(new ArrayList<>(), getContext(), nav, 2);
     }
@@ -76,7 +81,7 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
                 if(comercios.size()>0)
                 {
                     tvNoData.setVisibility(View.GONE);
-
+                    rvFavorites.setVisibility(View.VISIBLE);
                     List<Comercio> comerciosFavoritos = new ArrayList<>();
                     for (Comercio comercio : comercios) {
                         if (comercio.isFavorite()) {
@@ -87,8 +92,27 @@ public class Hunter_MisComerciosFavoritos extends Fragment {
                 }
                 else{
                     tvNoData.setVisibility(View.VISIBLE);
+                    rvFavorites.setVisibility(View.GONE);
                 }
 
+            }
+        });
+    }
+
+    public void searcher(){
+        etBuscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String _secuente = s.toString();
+                comerciosController.applyFilter(_secuente);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }

@@ -12,13 +12,13 @@
         android:id="@+id/tvNoData"
         android:layout_width="414dp"
         android:layout_height="192dp"
-        android:layout_marginTop="52dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="No hay información disponible"
         android:textColor="#272727"
         android:textSize="20sp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,18 +46,47 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearBuscador"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:background="#68dd6b"
+        android:backgroundTint="#68dd6b"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="0dp">
+
+        <EditText
+            android:id="@+id/et_browserFavoritos"
+            android:layout_width="311dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:backgroundTint="#8DCA8F"
+            android:backgroundTintMode="add"
+            android:drawableStart="@drawable/baseline_search_20"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Buscar por razon social"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hunter_list_favorites"
         android:name="com.example.ffh_rep.Comercios"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="518dp"
         android:visibility="visible"
         app:layoutManager="LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearBuscador"
         tools:context=".views.ui.hunter.Comercios"
-        tools:layout_editor_absoluteX="41dp"
         tools:listitem="@layout/fragment_comercios_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

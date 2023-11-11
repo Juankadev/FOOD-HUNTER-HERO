@@ -222,7 +222,7 @@ public class Hunter_MiCuenta extends Fragment {
             updateHunter.setApellido(et_apellido.getText().toString());
             updateHunter.setNombre(et_nombre.getText().toString());
 
-            updateHunter.setFecha_nacimiento(GeneralHelper.returnSQLDate(et_fechanacimiento.getText().toString()));
+            updateHunter.setFecha_nacimiento(GeneralHelper.returnSQLFORMAT2(et_fechanacimiento.getText().toString()));
 
             updateHunter.setSexo(spinnerSexo.getSelectedItem().toString());
             updateHunter.setTelefono(et_telefono.getText().toString());

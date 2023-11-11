@@ -174,7 +174,7 @@ public class CazaRepository {
 
 
 
-    public MutableLiveData<List<Caza>> getCazasByIdHunter(MutableLiveData<List<Caza>> mlDataComercio, int id_hunter) {
+    public MutableLiveData<List<Caza>> getCazasByIdHunter(MutableLiveData<List<Caza>> original,MutableLiveData<List<Caza>> mlDataComercio, int id_hunter) {
         CompletableFuture.supplyAsync(() -> {
             List<Caza> lCazas = new ArrayList<>();
 
@@ -207,7 +207,10 @@ public class CazaRepository {
             }
 
             return lCazas;
-        }).thenAcceptAsync(cazas -> mlDataComercio.postValue(cazas));
+        }).thenAcceptAsync(cazas -> {
+            original.postValue(cazas);
+            mlDataComercio.postValue(cazas);
+        });
 
 
         return mlDataComercio;
