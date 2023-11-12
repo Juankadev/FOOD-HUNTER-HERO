@@ -4,265 +4,303 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#68dd6b"
+    android:background="#FFFFFF"
     tools:context=".views.ui.admin.AdminEstadisticas">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ConstraintLayout_busqueda"
-        android:layout_width="414dp"
-        android:layout_height="206dp"
-        android:background="#68dd6b"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="172dp">
 
-        <TextView
-            android:id="@+id/tv_nota"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
-            android:text="@string/estadisticas_titulo"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginBottom="38dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-        <EditText
-            android:id="@+id/et_desde"
-            android:layout_width="155dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="#929497"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="@string/desde"
-            android:inputType="date"
-            android:minHeight="48dp"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_nota"
-            tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="#68dd6b"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_hasta"
-            android:layout_width="155dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="#929497"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="@string/hasta"
-            android:inputType="date"
-            android:minHeight="32dp"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_nota"
-            tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+                <TextView
+                    android:id="@+id/tv_nota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="@string/estadisticas_titulo"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="102dp"
-            android:layout_marginBottom="28dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/et_desde"
-            app:layout_constraintTop_toBottomOf="@+id/et_desde" />
+                <LinearLayout
+                    android:layout_width="372dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/filtrar"
-            android:layout_width="225dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/filtrar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_hasta" />
+                    <EditText
+                        android:id="@+id/et_desde"
+                        android:layout_width="184dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#929497"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/desde"
+                        android:inputType="date"
+                        android:minHeight="48dp"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
+                        tools:ignore="MissingConstraints" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/et_hasta"
+                        android:layout_width="155dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="#929497"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/hasta"
+                        android:inputType="date"
+                        android:minHeight="32dp"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
+                        tools:ignore="MissingConstraints,TouchTargetSizeCheck" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_productos_cazados"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Cantidad de productos cazados"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_cazadores_rango_maximo" />
+                <Button
+                    android:id="@+id/filtrar"
+                    android:layout_width="225dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/filtrar" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_cantidad_compras"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Cantidad de Compras"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_productos_cazados"
-        tools:text="Cantidad de Compras" />
+            <TextView
+                android:id="@+id/tv_pie_chart"
+                android:layout_width="382dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Top 3 Categorias con mas productos cazados"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_producto_mayor_caza"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Producto mas cazado"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_comercios_aprobados"
-        tools:text="Producto más cazado" />
+            <LinearLayout
+                android:id="@+id/PieChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_comercios_aprobados"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/comercios_aprobados"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_cazadores_rango_minimo" />
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pie_chart"
+                    android:layout_width="313dp"
+                    android:layout_height="178dp" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_cazadores_rango_maximo"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/cazadores_rango"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+            <LinearLayout
+                android:id="@+id/Producto_mayor_caza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/result_cazadores_rango_maximo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="16dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_cazadores_rango_maximo" />
+                <TextView
+                    android:id="@+id/tv_producto_mayor_caza"
+                    android:layout_width="228dp"
+                    android:layout_height="wrap_content"
+                    android:text="Producto mas cazado"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Producto más cazado" />
 
-    <TextView
-        android:id="@+id/tv_cazadores_rango_minimo"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/cazadores_rango_m"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+                <TextView
+                    android:id="@+id/result_articulo_mayor_cazas"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_pie_chart"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="340dp"
-        android:layout_marginEnd="128dp"
-        android:text="Top 3 Categorias"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConstraintLayout_busqueda" />
+            <LinearLayout
+                android:id="@+id/Cazadores_rango_maximo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/result_cazadores_rango_minimo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="92dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_cazadores_rango_minimo" />
+                <TextView
+                    android:id="@+id/tv_cazadores_rango_maximo"
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cazadores_rango"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="222dp" />
 
-    <TextView
-        android:id="@+id/result_comercios_aprobados"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="92dp"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_comercios_aprobados" />
+                <TextView
+                    android:id="@+id/result_cazadores_rango_maximo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/result_productos_cazados"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_productos_cazados" />
+            <LinearLayout
+                android:id="@+id/Cazadores_rango_minimo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/result_articulo_mayor_cazas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_pie_chart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_producto_mayor_caza" />
+                <TextView
+                    android:id="@+id/tv_cazadores_rango_minimo"
+                    android:layout_width="248dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cazadores_rango_m"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/result_cazadores_rango_minimo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="319dp"
+                    tools:layout_editor_absoluteY="278dp" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/result_cantidad_compras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_pie_chart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_cantidad_compras" />
+            <LinearLayout
+                android:id="@+id/Comercios_aprobados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pie_chart"
-        android:layout_width="313dp"
-        android:layout_height="178dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/tv_comercios_aprobados"
+                    android:layout_width="281dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comercios_aprobados"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/result_comercios_aprobados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Cantidad_compras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cantidad_compras"
+                    android:layout_width="282dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cantidad de Compras"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Cantidad de Compras" />
+
+                <TextView
+                    android:id="@+id/result_cantidad_compras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/Productos_cazados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@android:drawable/gallery_thumb"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_productos_cazados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cantidad de productos cazados"
+                    android:textAlignment="viewStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/result_productos_cazados"
+                    android:layout_width="86dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="84dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textColor="#68DC6B"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_productos_cazados" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
