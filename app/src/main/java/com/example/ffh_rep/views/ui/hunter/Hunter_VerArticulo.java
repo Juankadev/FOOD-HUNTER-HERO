@@ -115,6 +115,7 @@ public class Hunter_VerArticulo extends Fragment {
         if(this._cantidadArticulo > 0 && this._cantidadArticulo <= stock.getCantidad()){
             item = new ItemCarrito(stock, this._cantidadArticulo);
             if(!carrito.isArticleInCart(item)){
+                controller_articulos.reducirStock(item); //descuento el stock en la db, para que otro usuario no pueda reservarlo
                 carrito.addArticleToCart(item);
                 cantidadArticulo.setText(String.valueOf(0));
                 Toast.makeText(getContext(), "Articulo Agregado", Toast.LENGTH_LONG).show();
@@ -161,6 +162,7 @@ public class Hunter_VerArticulo extends Fragment {
     }
 
     public void addQuantityToChart(){
+        controller_articulos.reducirStock(this.item); //descuento el stock en la db, para que otro usuario no pueda reservarlo
         carrito.addMoreUnitsToCart(this.item);
         this._cantidadArticulo=0;
         cantidadArticulo.setText(String.valueOf(0));

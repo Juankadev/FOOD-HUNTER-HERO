@@ -6,8 +6,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ffh_rep.entidades.Articulo;
+import com.example.ffh_rep.entidades.ItemCarrito;
+import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.models.repositories.ArticuloRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public class ArticulosViewModel extends ViewModel {
@@ -30,4 +33,6 @@ public class ArticulosViewModel extends ViewModel {
     public MutableLiveData<List<Articulo>> getMldArticulos() {
         return mldArticulos;
     }
+    public void reducirStock(ItemCarrito item) { aRepo.reducirStock(item); }
+    public void agregarStock(ItemCarrito item) { aRepo.agregarStock(item); }
 }

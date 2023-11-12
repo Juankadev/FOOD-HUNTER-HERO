@@ -34,7 +34,9 @@ import com.example.ffh_rep.entidades.JSONQRRequest;
 import com.example.ffh_rep.entidades.QrObject;
 import com.example.ffh_rep.interfaces.CarritoActionsCallback;
 import com.example.ffh_rep.utils.SessionManager;
+import com.example.ffh_rep.viewmodels.factory.ArticuloViewModelFactory;
 import com.example.ffh_rep.viewmodels.factory.GenerarQrViewModelFactory;
+import com.example.ffh_rep.viewmodels.hunter.ArticulosViewModel;
 import com.example.ffh_rep.viewmodels.hunter.CarritoViewModel;
 import com.example.ffh_rep.viewmodels.hunter.GenerarQrViewModel;
 import com.example.ffh_rep.views.adapters.ArticulosCarritoListAdapter;
@@ -52,6 +54,7 @@ import java.util.List;
 public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback {
 
     private CarritoViewModel carrito;
+    private ArticulosViewModel articulosViewModel;
     private GenerarQrViewModel qrController;
     private FragmentHunterMiCarritoBinding binding;
     private ArticulosCarritoListAdapter alAdapter;
@@ -144,16 +147,19 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         alAdapter = new ArticulosCarritoListAdapter(new ArrayList<>(), getContext(), this);
         qrController = new ViewModelProvider(requireActivity(), new GenerarQrViewModelFactory(getActivity())).get(GenerarQrViewModel.class);
         carrito = new ViewModelProvider(requireActivity(), new CarritoViewModelFactory(getActivity())).get(CarritoViewModel.class);
+        articulosViewModel = new ViewModelProvider(requireActivity(), new ArticuloViewModelFactory(getActivity())).get(ArticulosViewModel.class);
     }
 
     @Override
     public void onSumArticuloCallback(ItemCarrito item) {
+        articulosViewModel.reducirStock(item);
         carrito.addOneUnitToCart(item, alAdapter);
     }
 
     @Override
     public void onAbsArticuloCallback(ItemCarrito item) {
         if(item.getCantidad() - 1 >= 1){
+            articulosViewModel.agregarStock(item);
             carrito.subtractUnitsFromCart(item, alAdapter);
         }
         else{
@@ -174,6 +180,7 @@ public class Hunter_MiCarrito extends Fragment implements CarritoActionsCallback
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                articulosViewModel.agregarStock(item);
                 carrito.removeItemFromCart(item, alAdapter);
             }
         });

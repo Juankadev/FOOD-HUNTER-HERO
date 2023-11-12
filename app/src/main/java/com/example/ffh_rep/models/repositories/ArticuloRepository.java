@@ -11,14 +11,19 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ffh_rep.entidades.Articulo;
 import com.example.ffh_rep.entidades.Categoria;
 import com.example.ffh_rep.entidades.Comercio;
+import com.example.ffh_rep.entidades.Hunter;
+import com.example.ffh_rep.entidades.ItemCarrito;
 import com.example.ffh_rep.entidades.Marca;
+import com.example.ffh_rep.entidades.Rango;
 import com.example.ffh_rep.entidades.Stock;
 import com.example.ffh_rep.utils.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,6 +36,56 @@ public class ArticuloRepository {
      * @param id Identificador del comercio para el cual se buscan los artículos.
      * @return MutableLiveData actualizado con la lista de artículos o una lista vacía en caso de error o ausencia de datos.
      */
+    public void reducirStock(ItemCarrito item){
+        CompletableFuture.runAsync(() -> {
+            try {
+                Connection con = DBUtil.getConnection();
+                String updateQuery = "UPDATE Stocks SET cantidad = ? where id_stock = ?";
+
+                try (PreparedStatement updateStatement = con.prepareStatement(updateQuery)) {
+                    updateStatement.setInt(1, item.getArtc().getCantidad() - item.getCantidad());
+                    updateStatement.setInt(2, item.getArtc().getId_stock());
+                    updateStatement.executeUpdate();
+                }
+                DBUtil.closeConnection(con);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void agregarStock(ItemCarrito item){
+        CompletableFuture.runAsync(() -> {
+            try {
+                Connection con = DBUtil.getConnection();
+                int cantidad=0;
+
+                String selectQuery = "SELECT cantidad from Stocks where id_stock = ?";
+                try (PreparedStatement updateStatement = con.prepareStatement(selectQuery)) {
+                    updateStatement.setInt(1, item.getArtc().getId_stock());
+                    ResultSet rs = updateStatement.executeQuery();
+                        while (rs.next()) {
+                            cantidad = rs.getInt("cantidad");
+                            System.out.println("Cantidad actual: "+cantidad);
+                        }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                String updateQuery = "UPDATE Stocks SET cantidad = ? where id_stock = ?";
+                try (PreparedStatement updateStatement = con.prepareStatement(updateQuery)) {
+                    updateStatement.setInt(1, cantidad+1);
+                    updateStatement.setInt(2, item.getArtc().getId_stock());
+                    updateStatement.executeUpdate();
+                }
+                DBUtil.closeConnection(con);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     public MutableLiveData<List<Articulo>> getArticulosByIdComercio(MutableLiveData<List<Articulo>> original, MutableLiveData<List<Articulo>> mlDataArticulos, int id) {
         CompletableFuture.supplyAsync(() -> {
             List<Articulo> lArticulos = new ArrayList<>();
