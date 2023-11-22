@@ -31,10 +31,13 @@ public class MisDescuentosComercioViewModel extends ViewModel {
       this.originalListBeneficios = new MutableLiveData<>();
    }
 
+   /**
+    * Esta función proporciona acceso a un objeto MutableLiveData que contiene una lista de beneficios. Esta función
+    * observa y obtiene la lista actualizada de beneficios en tiempo real
+    */
    public MutableLiveData<List<Beneficio>> getMldListaBeneficios() {
       return mldListaBeneficios;
    }
-
    public void insertarBeneficio(Beneficio bene){
       dRepo.agregarDescuento(ctx, bene);
    }
@@ -44,6 +47,11 @@ public class MisDescuentosComercioViewModel extends ViewModel {
       dRepo.listarDescuentosByComercio(this.originalListBeneficios, this.mldListaBeneficios,id);
    }
 
+   /**
+    * Esta función toma una lista de beneficios, filtra los elementos según una secuencia proporcionada y actualiza un
+    * objeto MutableLiveData con la lista filtrada.
+    * @param _secuence
+    */
    public void applyFilter(String _secuence) {
       List<Beneficio> originalList = mldListaBeneficios.getValue();
       Log.d("Original List", originalList.toString());

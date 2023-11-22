@@ -56,6 +56,7 @@ public class SessionManager {
         return null;
     }
 
+    // Recupero la información del comercio almacenada en las preferencias compartidas
     public Comercio getCommerceSession() {
         String userSessionJson = this.sharedPrefs.getString("user_session_data", null);
         if (userSessionJson != null) {

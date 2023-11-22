@@ -77,15 +77,30 @@ public class MisDescuentosComercio extends Fragment {
         this.etBuscador = view.findViewById(R.id.et_browsermisDescuentos);
     }
 
+    /**
+     * Esta función se encarga de configurar un listener para el evento de clic en un botón (btnAddDescuento).
+     * Cuando se hace clic en ese botón, se navega a otro destino utilizando el componente de navegación (Navigation).
+     * La navegación se realiza mediante el ID de acción action_fragmentAgregarDescuentoComercio_to_agregarDescuento, que está definido
+     * en el archivo de recursos de navegación. Esta acción está destinada a llevar al usuario desde el fragmento actual
+     * (fragmentAgregarDescuentoComercio) al fragmento de agregar descuento (agregarDescuento).
+     */
     public void setUpListeners() {
         btnAddDescuento.setOnClickListener(v-> Navigation.findNavController(v).navigate(R.id.action_fragmentAgregarDescuentoComercio_to_agregarDescuento));
     }
 
+    /**
+     * Esta función se encarga de inicializar modelos y adaptadores relacionados con la gestión de descuentos comerciales
+     */
     public void initModelsAndAdapters(){
         mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
         mdcListAdapter = new MisDescuentosComercioListAdapter(new ArrayList<>(), getContext(), mViewModel);
     }
 
+    /**
+     * Este observador responde a cambios en la lista de beneficios y actualiza la interfaz de usuario en consecuencia.
+     * Si la lista de beneficios no está vacía, se hace visible el GridView que muestra la lista de beneficios. Además, se oculta el mensaje de "No hay datos".
+     * Si la lista de beneficios está vacía, se hace visible el mensaje de "No hay datos" y se oculta el GridView
+     */
     public void setUpObserver() {
         mViewModel.getMldListaBeneficios().observe(getViewLifecycleOwner(), new Observer<List<Beneficio>>() {
             @Override
@@ -104,12 +119,20 @@ public class MisDescuentosComercio extends Fragment {
         });
     }
 
+    /**
+     * En el método onCreate se está realizando la inicialización inicial necesaria para preparar el fragmento para su uso,
+     * específicamente configurando modelos y adaptadores que pueden ser utilizados en la lógica y la interfaz de usuario del fragmento.
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initModelsAndAdapters();
     }
 
+    /**
+     * Esta función searcher() está diseñada para proporcionar una funcionalidad de búsqueda en tiempo real al observar y reaccionar a los
+     * cambios en el texto de etBuscador y filtrar la lista de beneficios en consecuencia a través del ViewModel.
+     */
     public void searcher(){
         etBuscador.addTextChangedListener(new TextWatcher() {
             @Override

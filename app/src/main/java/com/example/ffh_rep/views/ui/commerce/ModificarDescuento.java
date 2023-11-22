@@ -36,11 +36,21 @@ public class ModificarDescuento extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comercio_modificar_descuento, container, false);
 
+        /**
+         * Este método se utiliza para obtener el Bundle que se adjuntó a este fragmento cuando fue creado.
+         * El Bundle es una forma de pasar datos entre fragmentos.
+         */
         bundle = getArguments();
+        /**
+         * El resultado de bundle.getSerializable("idBeneficioSelect") se almacena en la variable b.
+         * Aquí, se está realizando un casting para asegurarse de que el objeto obtenido sea de tipo Beneficio.
+         */
         b = (Beneficio) bundle.getSerializable("idBeneficioSelect");
+
         initComponentes(view);
         setupListeners();
         fillInputs();
+
         mViewModel = new ViewModelProvider(requireActivity(), new DescuentosViewModelFactory(getActivity())).get(MisDescuentosComercioViewModel.class);
 
         return view;

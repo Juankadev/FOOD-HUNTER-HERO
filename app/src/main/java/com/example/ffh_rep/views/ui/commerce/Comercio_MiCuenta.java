@@ -49,10 +49,13 @@ public class Comercio_MiCuenta extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        // Se está utiliza el patrón de View Binding para inflar el diseño del fragment
         binding = FragmentComercioMiCuentaBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         initializeViews(view);
 
+        // Se inicializa utilizando el constructor de SessionManager y se pasa como argumento el objeto requireActivity()
         sessionManager = new SessionManager(requireActivity());
         userSession = sessionManager.getCommerceSession();
 
@@ -60,12 +63,12 @@ public class Comercio_MiCuenta extends Fragment {
 
         settingObservers();
         setupListeners();
+
         return view;
     }
 
     /**
-     * Inicializa las vistas necesarias para la interfaz de registro.
-     * Asigna las instancias de los elementos de la interfaz a las variables correspondientes.
+     * inicializo y asigno las vistas del fragment a las variables correspondientes.
      */
     private void initializeViews(View view) {
         et_cuit_mc = view.findViewById(R.id.et_cuit_mc);
@@ -86,19 +89,7 @@ public class Comercio_MiCuenta extends Fragment {
 
         mViewModel = new ViewModelProvider(requireActivity(), new ComercioMiCuentaViewModelFactory(getActivity())).get(ComercioMiCuentaViewModel.class);
     }
-    /**
-     * Configura los elementos de entrada (EditText) con los datos del usuario.
-     *
-     * @param user Objeto Comercio que contiene la información del usuario.
-     */
-    private void settingInputs(Comercio user){
-        et_cuit_mc.setText(user.getCuit());
-        et_razonsocial_mc.setText(user.getRazonSocial());
-        et_rubro_mc.setText(user.getRubro());
-        et_correo_mc.setText(user.getEmail());
-        et_telefono_mc.setText(user.getTelefono());
-        et_direccion_mc.setText(user.getDireccion());
-    }
+
     /**
      * Configura los listeners de la interfaz.
      * Asigna los métodos correspondientes a los eventos.
@@ -109,11 +100,16 @@ public class Comercio_MiCuenta extends Fragment {
         btnEditarActionerWithProgress.setOnClickListener(v -> updateInformation());
         btnCancel.setOnClickListener(v-> enabledInputs(false));
     }
+
     /**
-     * Configura los observadores de la interfaz.
-     * Implementa las funciones correspondientes.
+     * Se configuran varios observadores para escuchar los cambios en distintos LiveData dentro del ViewModel.
      */
     private void settingObservers(){
+        /**
+         * Este observador escucha cambios en el LiveData llamado CommerceData en el ViewModel.
+         * Cuando cambian los datos (onChanged), se llama al método settingInputs(comercio) para actualizar la interfaz de usuario
+         * con los nuevos datos del comercio.
+         */
         mViewModel.getCommerceData().observe(getViewLifecycleOwner(), new Observer<Comercio>() {
             @Override
             public void onChanged(Comercio comercio) {
@@ -121,6 +117,11 @@ public class Comercio_MiCuenta extends Fragment {
             }
         });
 
+        /**
+         * Este observador escucha cambios en el LiveData llamado DeleteAccount en el ViewModel.
+         * Cuando cambia a true (onChanged), se muestra un mensaje tost indicando que la cuenta se eliminó con éxito, y se llama al
+         * método closeSession().
+         */
         mViewModel.getDeleteAccount().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -131,6 +132,11 @@ public class Comercio_MiCuenta extends Fragment {
             }
         });
 
+        /**
+         * Este observador escucha cambios en el LiveData llamado UpdatingInfo en el ViewModel.
+         * Si cambia a true, se muestra un ProgressBar y se actualiza un TextView con el
+         * texto "Actualizando...". Si cambia a false, se oculta el ProgressBar y se restablece el texto a "Editar".
+         */
         mViewModel.getUpdatingInfo().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -145,6 +151,10 @@ public class Comercio_MiCuenta extends Fragment {
             }
         });
 
+        /**
+         * Este observador escucha cambios en el LiveData llamado SuccessUpdate en el ViewModel.
+         * Si cambia a true, se llama al método updateMessage.
+         */
         mViewModel.getSuccessUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -154,6 +164,10 @@ public class Comercio_MiCuenta extends Fragment {
             }
         });
 
+        /**
+         * Este observador escucha cambios en el LiveData llamado ErrorUpdate en el ViewModel.
+         * Si cambia a true, se llama al método updateMessage.
+         */
         mViewModel.getErrorUpdate().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -163,6 +177,21 @@ public class Comercio_MiCuenta extends Fragment {
             }
         });
     }
+
+    /**
+     * Configura los EditText con los datos del usuario.
+     *
+     * @param user Objeto Comercio que contiene la información del usuario.
+     */
+    private void settingInputs(Comercio user){
+        et_cuit_mc.setText(user.getCuit());
+        et_razonsocial_mc.setText(user.getRazonSocial());
+        et_rubro_mc.setText(user.getRubro());
+        et_correo_mc.setText(user.getEmail());
+        et_telefono_mc.setText(user.getTelefono());
+        et_direccion_mc.setText(user.getDireccion());
+    }
+
     /**
      * Actualiza la información del usuario con los valores ingresados en los campos de edición.
      * Crea un objeto Comercio con los datos actualizados y lo envía al ViewModel para su procesamiento.
@@ -217,6 +246,7 @@ public class Comercio_MiCuenta extends Fragment {
             btnCancel.setVisibility(View.GONE);
         }
     }
+
     /**
      * Guarda los valores originales de los campos de información del usuario antes de realizar
      * modificaciones. Esto permite revertir los cambios en caso de que se cancele la edición.
@@ -227,6 +257,7 @@ public class Comercio_MiCuenta extends Fragment {
         originalDireccion = et_direccion_mc.getText().toString();
         originalTelefono = et_telefono_mc.getText().toString();
     }
+
     /**
      * Revierte la edición restaurando los valores originales a los campos de información del usuario.
      */
@@ -236,6 +267,7 @@ public class Comercio_MiCuenta extends Fragment {
         et_direccion_mc.setText(originalDireccion);
         et_telefono_mc.setText(originalTelefono);
     }
+
     /**
      * Muestra un cuadro de diálogo de confirmación para eliminar la cuenta del usuario.
      * Si el usuario confirma, se invoca el método para eliminar la cuenta a través del ViewModel.
@@ -267,6 +299,9 @@ public class Comercio_MiCuenta extends Fragment {
         startActivity(intent);
     }
 
+    /**
+     * Valido los inputs
+     */
     private boolean validateInput() {
         boolean isValid = true;
         // Validar rubro
@@ -303,6 +338,12 @@ public class Comercio_MiCuenta extends Fragment {
         return isValid;
     }
 
+    /**
+     * Muestro un cuadro de dialogo con un mensaje sobre el resultado de la actualizacion
+     * Se configuran botones positivos para cerrar el cuadro de diálogo con un mensaje "Ok".
+     * Si value es true, se agrega una acción adicional que incluye la actualización del ViewModel con la nueva información del comercio
+     * y la actualización de la sesión del comercio mediante sessionManager.saveCommerceSession(updateCommerce).
+     */
     private void updateMessage(boolean value){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Actualizar información");

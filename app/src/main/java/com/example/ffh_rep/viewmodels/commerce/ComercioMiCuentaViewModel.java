@@ -21,6 +21,7 @@ public class ComercioMiCuentaViewModel extends ViewModel {
 
     public ComercioMiCuentaViewModel(Context ctx) {
         this.ctx = ctx;
+        //Se crea una instancia de MutableLiveData llamada comercioData. MutableLiveData es una clase de LiveData que puede ser modificada,
         this.comercioData = new MutableLiveData<>();
         this.deleteAccount = new MutableLiveData<>(false);
         this.updatingInfo = new MutableLiveData<>(false);
@@ -33,6 +34,8 @@ public class ComercioMiCuentaViewModel extends ViewModel {
         return comercioData;
     }
 
+    //Se define un método llamado setCommerceDataWithCommerce que toma un objeto Comercio como argumento y utiliza setValue de
+    //MutableLiveData para establecer el valor de comercioData con ese objeto Comercio.
     public void setCommerceDataWithCommerce(Comercio comercio){this.comercioData.setValue(comercio);}
 
     public void updateInformation(Comercio comercio){

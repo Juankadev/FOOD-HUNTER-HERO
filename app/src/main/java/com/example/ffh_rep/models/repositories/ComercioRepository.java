@@ -24,6 +24,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class ComercioRepository {
 
+    /**
+     * Esta función realiza una operación asíncrona para actualizar la información del comercio en una base de datos,
+     * utilizando MutableLiveData para informar sobre el progreso y el resultado de la operación.
+     */
     public void updateUserInfo(MutableLiveData<Comercio> mlCommerce, Comercio comercio, MutableLiveData<Boolean> updatingInfo, MutableLiveData<Boolean> success, MutableLiveData<Boolean> error){
         CompletableFuture.runAsync(() -> {
             updatingInfo.postValue(true);
@@ -55,6 +59,11 @@ public class ComercioRepository {
         });
     }
 
+    /**
+     * Esta función realiza una operación asíncrona para "eliminar" la cuenta de un comercio actualizando el estado del usuario en la
+     * base de datos. Utiliza MutableLiveData para informar sobre el resultado de la operación y muestra mensajes Toast en caso de éxito o
+     * fallo.
+     */
     public void eliminarCuenta(Comercio comercio, MutableLiveData<Boolean> isDelete, Context ctx){
         CompletableFuture.runAsync(() -> {
             try {
@@ -81,6 +90,7 @@ public class ComercioRepository {
         });
 
     }
+
     /**
      * Obtiene y retorna la lista de comercios aprobados desde la base de datos de manera asíncrona.
      * Utiliza un CompletableFuture para ejecutar la consulta en un hilo separado y actualiza el MutableLiveData con los resultados.
@@ -129,6 +139,7 @@ public class ComercioRepository {
         success.postValue(true);
         return mlDataComercio;
     }
+
     /**
      * Obtiene y retorna la lista de comercios cuya razón social contiene la cadena proporcionada de manera asíncrona.
      * Utiliza un CompletableFuture para ejecutar la consulta en un hilo separado y actualiza el MutableLiveData con los resultados.
@@ -196,8 +207,6 @@ public class ComercioRepository {
         return mlDataComercio;
     }
 
-
-
     public void rechazarComercio(Comercio comercio, Context ctx){
         CompletableFuture.runAsync(() -> {
             try {
@@ -235,7 +244,6 @@ public class ComercioRepository {
         });
 
     }
-
 
     public void aprobarComercio(Comercio comercio, Context ctx){
         CompletableFuture.runAsync(() -> {
